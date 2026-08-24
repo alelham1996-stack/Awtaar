@@ -1,0 +1,1525 @@
+/* =========================================================
+   AWTAAR — SPACETIME CURVATURE
+   PROFESSIONAL EXPERIMENT INTERFACE
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+#awtaar-spacetime {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    color: #f5ead0;
+
+    background:
+        radial-gradient(
+            circle at 50% 58%,
+            rgba(
+                190,
+                165,
+                112,
+                0.055
+            ),
+            transparent 38%
+        );
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease;
+
+    isolation: isolate;
+
+}
+
+
+/* =========================================================
+   ATMOSPHERIC GRID
+   ========================================================= */
+
+#awtaar-spacetime::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    opacity: 0.22;
+
+    background-image:
+        linear-gradient(
+            rgba(
+                245,
+                234,
+                208,
+                0.018
+            ) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(
+                245,
+                234,
+                208,
+                0.018
+            ) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        80px 80px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 18%,
+            black 78%,
+            transparent 100%
+        );
+
+}
+
+
+/* =========================================================
+   CENTRAL ATMOSPHERIC GLOW
+   ========================================================= */
+
+#awtaar-spacetime::after {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 2;
+
+    left: 50%;
+
+    top: 58%;
+
+    width: 850px;
+
+    height: 850px;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                220,
+                201,
+                160,
+                0.045
+            ),
+            transparent 67%
+        );
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.spacetime-top {
+
+    position: absolute;
+
+    z-index: 30;
+
+    top: 0;
+
+    left: 32px;
+
+    right: 32px;
+
+    height: 78px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    border-bottom:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.10
+        );
+
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.spacetime-title {
+
+    margin: 0;
+
+    color:
+        #f5ead0;
+
+    font-size:
+        23px;
+
+    font-weight:
+        400;
+
+    letter-spacing:
+        -0.02em;
+
+    text-shadow:
+        0 0 20px
+        rgba(
+            220,
+            201,
+            160,
+            0.08
+        );
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.spacetime-back {
+
+    min-width:
+        125px;
+
+    padding:
+        10px 18px;
+
+    border:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.22
+        );
+
+    border-radius:
+        4px;
+
+    background:
+        rgba(
+            245,
+            234,
+            208,
+            0.025
+        );
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.70
+        );
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    font-size:
+        11px;
+
+    cursor:
+        pointer;
+
+    transition:
+        all 0.3s ease;
+
+}
+
+
+.spacetime-back:hover {
+
+    border-color:
+        rgba(
+            214,
+            197,
+            158,
+            0.55
+        );
+
+    color:
+        #f5ead0;
+
+    background:
+        rgba(
+            245,
+            234,
+            208,
+            0.07
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(
+            214,
+            197,
+            158,
+            0.07
+        );
+
+}
+
+
+/* =========================================================
+   INTRO / EYEBROW
+   ========================================================= */
+
+.spacetime-intro {
+
+    position: absolute;
+
+    z-index: 25;
+
+    top: 91px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    margin: 0;
+
+}
+
+
+.spacetime-line {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    white-space: nowrap;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.30
+        );
+
+    font-size:
+        8px;
+
+    letter-spacing:
+        0.30em;
+
+}
+
+
+.spacetime-line::before,
+.spacetime-line::after {
+
+    content: "";
+
+    width:
+        42px;
+
+    height:
+        1px;
+
+    background:
+        rgba(
+            214,
+            197,
+            158,
+            0.20
+        );
+
+}
+
+
+/* =========================================================
+   INFORMATION CARDS
+   ========================================================= */
+
+.spacetime-info {
+
+    position: absolute;
+
+    z-index: 25;
+
+    top: 126px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            720px,
+            calc(100vw - 390px)
+        );
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:
+        12px;
+
+    margin: 0;
+
+}
+
+
+/* =========================================================
+   DATA CARD
+   ========================================================= */
+
+.spacetime-data-box {
+
+    min-height:
+        72px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        10px 14px;
+
+    border:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.15
+        );
+
+    border-radius:
+        4px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(
+                245,
+                234,
+                208,
+                0.035
+            ),
+            rgba(
+                245,
+                234,
+                208,
+                0.012
+            )
+        );
+
+    backdrop-filter:
+        blur(8px);
+
+    box-shadow:
+        0 10px 35px
+        rgba(
+            0,
+            0,
+            0,
+            0.16
+        );
+
+}
+
+
+.spacetime-data-box.mass {
+
+    border-top:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.48
+        );
+
+}
+
+
+.spacetime-data-box.velocity {
+
+    border-top:
+        1px solid
+        rgba(
+            180,
+            165,
+            130,
+            0.48
+        );
+
+}
+
+
+.spacetime-data-box.curvature {
+
+    border-top:
+        1px solid
+        rgba(
+            245,
+            234,
+            208,
+            0.34
+        );
+
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.spacetime-label {
+
+    margin-bottom:
+        5px;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.43
+        );
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+/* =========================================================
+   VALUE
+   ========================================================= */
+
+.spacetime-value {
+
+    color:
+        #f5ead0;
+
+    font-size:
+        17px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.2;
+
+}
+
+
+/* =========================================================
+   CONTROL PANEL
+   ========================================================= */
+
+.spacetime-controls {
+
+    position: absolute;
+
+    z-index: 30;
+
+    top: 150px;
+
+    right: 32px;
+
+    width:
+        285px;
+
+    box-sizing:
+        border-box;
+
+    margin: 0;
+
+    padding:
+        22px 20px;
+
+    border:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.16
+        );
+
+    border-radius:
+        5px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                15,
+                15,
+                21,
+                0.78
+            ),
+            rgba(
+                7,
+                7,
+                12,
+                0.66
+            )
+        );
+
+    backdrop-filter:
+        blur(14px);
+
+    box-shadow:
+        0 20px 60px
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
+
+}
+
+
+/* =========================================================
+   CONTROL ROW
+   ========================================================= */
+
+.spacetime-control-row {
+
+    margin:
+        0 0 23px;
+
+}
+
+
+.spacetime-control-row:last-child {
+
+    margin-bottom:
+        0;
+
+}
+
+
+/* =========================================================
+   CONTROL HEADER
+   ========================================================= */
+
+.spacetime-control-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    margin-bottom:
+        13px;
+
+}
+
+
+.spacetime-control-header span {
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.54
+        );
+
+    font-size:
+        10px;
+
+}
+
+
+.spacetime-control-header strong {
+
+    color:
+        #d7c7a4;
+
+    font-size:
+        11px;
+
+    font-weight:
+        400;
+
+}
+
+
+/* =========================================================
+   SLIDER
+   ========================================================= */
+
+.spacetime-slider {
+
+    width:
+        100%;
+
+    height:
+        3px;
+
+    margin:
+        0;
+
+    appearance:
+        none;
+
+    outline:
+        none;
+
+    border-radius:
+        10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(
+                214,
+                197,
+                158,
+                0.32
+            ),
+            rgba(
+                245,
+                234,
+                208,
+                0.10
+            )
+        );
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =========================================================
+   WEBKIT THUMB
+   ========================================================= */
+
+.spacetime-slider::-webkit-slider-thumb {
+
+    appearance:
+        none;
+
+    width:
+        17px;
+
+    height:
+        17px;
+
+    border:
+        1px solid
+        #d9c9a6;
+
+    border-radius:
+        50%;
+
+    background:
+        #09090d;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 0 14px
+        rgba(
+            220,
+            201,
+            160,
+            0.25
+        );
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.spacetime-slider::-webkit-slider-thumb:hover {
+
+    transform:
+        scale(1.15);
+
+    box-shadow:
+        0 0 20px
+        rgba(
+            220,
+            201,
+            160,
+            0.42
+        );
+
+}
+
+
+/* =========================================================
+   MOZ THUMB
+   ========================================================= */
+
+.spacetime-slider::-moz-range-thumb {
+
+    width:
+        17px;
+
+    height:
+        17px;
+
+    border:
+        1px solid
+        #d9c9a6;
+
+    border-radius:
+        50%;
+
+    background:
+        #09090d;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 0 14px
+        rgba(
+            220,
+            201,
+            160,
+            0.25
+        );
+
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.spacetime-actions {
+
+    position: absolute;
+
+    z-index: 35;
+
+    top: 372px;
+
+    right: 32px;
+
+    width:
+        285px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        9px;
+
+    margin: 0;
+
+}
+
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.spacetime-action {
+
+    width:
+        100%;
+
+    min-height:
+        42px;
+
+    padding:
+        10px 18px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.20
+        );
+
+    border-radius:
+        4px;
+
+    background:
+        rgba(
+            245,
+            234,
+            208,
+            0.025
+        );
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.70
+        );
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    font-size:
+        10px;
+
+    cursor:
+        pointer;
+
+    transition:
+        all 0.3s ease;
+
+}
+
+
+.spacetime-action:hover {
+
+    border-color:
+        rgba(
+            214,
+            197,
+            158,
+            0.52
+        );
+
+    color:
+        #f5ead0;
+
+    background:
+        rgba(
+            245,
+            234,
+            208,
+            0.06
+        );
+
+}
+
+
+.spacetime-action.primary {
+
+    background:
+        rgba(
+            214,
+            197,
+            158,
+            0.075
+        );
+
+    border-color:
+        rgba(
+            214,
+            197,
+            158,
+            0.34
+        );
+
+}
+
+
+/* =========================================================
+   NOTE
+   ========================================================= */
+
+.spacetime-note {
+
+    position: absolute;
+
+    z-index: 30;
+
+    top: 480px;
+
+    right: 32px;
+
+    width:
+        285px;
+
+    box-sizing:
+        border-box;
+
+    margin: 0;
+
+    padding:
+        15px 17px;
+
+    border-top:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.12
+        );
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.36
+        );
+
+    font-size:
+        9px;
+
+    line-height:
+        1.9;
+
+    text-align:
+        right;
+
+}
+
+
+/* =========================================================
+   RIGHT PANEL SEPARATOR
+   ========================================================= */
+
+#awtaar-spacetime .spacetime-controls::before {
+
+    content:
+        "التحكم";
+
+    display:
+        block;
+
+    margin-bottom:
+        19px;
+
+    padding-bottom:
+        12px;
+
+    border-bottom:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.10
+        );
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.50
+        );
+
+    font-size:
+        10px;
+
+    text-align:
+        center;
+
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+#awtaar-spacetime[dir="rtl"] {
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+}
+
+
+#awtaar-spacetime[dir="rtl"]
+.spacetime-top {
+
+    direction:
+        rtl;
+
+}
+
+
+#awtaar-spacetime[dir="rtl"]
+.spacetime-control-header {
+
+    direction:
+        rtl;
+
+}
+
+
+#awtaar-spacetime[dir="rtl"]
+.spacetime-note {
+
+    text-align:
+        right;
+
+}
+
+
+/* =========================================================
+   LTR
+   ========================================================= */
+
+#awtaar-spacetime[dir="ltr"]
+.spacetime-controls {
+
+    right:
+        auto;
+
+    left:
+        32px;
+
+}
+
+
+#awtaar-spacetime[dir="ltr"]
+.spacetime-actions {
+
+    right:
+        auto;
+
+    left:
+        32px;
+
+}
+
+
+#awtaar-spacetime[dir="ltr"]
+.spacetime-note {
+
+    right:
+        auto;
+
+    left:
+        32px;
+
+    text-align:
+        left;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (
+    max-width: 1050px
+) {
+
+    .spacetime-info {
+
+        width:
+            calc(
+                100vw - 380px
+            );
+
+    }
+
+    .spacetime-controls,
+    .spacetime-actions,
+    .spacetime-note {
+
+        right:
+            20px;
+
+    }
+
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-controls,
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-actions,
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-note {
+
+        left:
+            20px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 760px
+) {
+
+    #awtaar-spacetime {
+
+        overflow-y:
+            auto;
+
+    }
+
+
+    .spacetime-top {
+
+        left:
+            18px;
+
+        right:
+            18px;
+
+        height:
+            65px;
+
+    }
+
+
+    .spacetime-title {
+
+        font-size:
+            18px;
+
+    }
+
+
+    .spacetime-back {
+
+        min-width:
+            90px;
+
+        padding:
+            8px 12px;
+
+        font-size:
+            10px;
+
+    }
+
+
+    .spacetime-intro {
+
+        top:
+            77px;
+
+    }
+
+
+    .spacetime-info {
+
+        position:
+            absolute;
+
+        top:
+            110px;
+
+        width:
+            calc(
+                100vw - 36px
+            );
+
+        grid-template-columns:
+            repeat(
+                3,
+                1fr
+            );
+
+    }
+
+
+    .spacetime-data-box {
+
+        min-height:
+            62px;
+
+    }
+
+
+    .spacetime-controls {
+
+        top:
+            200px;
+
+        right:
+            18px;
+
+        width:
+            250px;
+
+    }
+
+
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-controls {
+
+        left:
+            18px;
+
+    }
+
+
+    .spacetime-actions {
+
+        top:
+            420px;
+
+        right:
+            18px;
+
+        width:
+            250px;
+
+    }
+
+
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-actions {
+
+        left:
+            18px;
+
+    }
+
+
+    .spacetime-note {
+
+        top:
+            525px;
+
+        right:
+            18px;
+
+        width:
+            250px;
+
+    }
+
+
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-note {
+
+        left:
+            18px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 520px
+) {
+
+    .spacetime-info {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            7px;
+
+    }
+
+
+    .spacetime-data-box {
+
+        min-height:
+            48px;
+
+        flex-direction:
+            row;
+
+        justify-content:
+            space-between;
+
+        padding:
+            8px 14px;
+
+    }
+
+
+    .spacetime-label {
+
+        margin:
+            0;
+
+    }
+
+
+    .spacetime-value {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .spacetime-controls {
+
+        top:
+            280px;
+
+        width:
+            calc(
+                100vw - 36px
+            );
+
+        right:
+            18px;
+
+    }
+
+
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-controls {
+
+        left:
+            18px;
+
+    }
+
+
+    .spacetime-actions {
+
+        top:
+            505px;
+
+        width:
+            calc(
+                100vw - 36px
+            );
+
+        right:
+            18px;
+
+    }
+
+
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-actions {
+
+        left:
+            18px;
+
+    }
+
+
+    .spacetime-note {
+
+        top:
+            610px;
+
+        width:
+            calc(
+                100vw - 36px
+            );
+
+        right:
+            18px;
+
+    }
+
+
+    #awtaar-spacetime[dir="ltr"]
+    .spacetime-note {
+
+        left:
+            18px;
+
+    }
+
+}

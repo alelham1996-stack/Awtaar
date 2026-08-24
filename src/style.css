@@ -1,0 +1,327 @@
+@import url(
+    'https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap'
+);
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+html,
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #050510;
+
+}
+
+
+/* =========================================================
+   THREE.JS CANVAS
+   ========================================================= */
+
+canvas {
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   AWTAAR INTRO
+   ========================================================= */
+
+#awtaar-intro {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: transparent;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 1.8s ease;
+
+    z-index: 1000;
+
+}
+
+
+#awtaar-intro.show {
+
+    opacity: 1;
+
+}
+
+
+#awtaar-intro.hide {
+
+    opacity: 0;
+
+}
+
+
+/* =========================================================
+   AWTAAR LOGO
+   ========================================================= */
+
+.awtaar-logo {
+
+    text-align: center;
+
+    user-select: none;
+
+}
+
+
+/* =========================================================
+   ENGLISH LOGO
+   ========================================================= */
+
+.awtaar-logo h1 {
+
+    margin: 0;
+
+    font-family:
+
+        Arial,
+
+        sans-serif;
+
+    font-size: 72px;
+
+    font-weight: 300;
+
+    letter-spacing: 18px;
+
+    color: #f4d38a;
+
+    animation:
+
+        awtaarPulse
+
+        3s
+
+        infinite
+
+        ease-in-out;
+
+}
+
+
+/* =========================================================
+   ARABIC LOGO — AWTAAR
+   ========================================================= */
+
+.awtaar-logo h2 {
+
+    margin:
+
+        14px
+
+        0
+
+        10px;
+
+    font-family:
+
+        'Amiri',
+
+        serif !important;
+
+    font-size: 40px;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    letter-spacing: 0;
+
+    direction: rtl;
+
+    color: #e8c982;
+
+    text-shadow:
+
+        0 0 10px
+
+        rgba(
+            232,
+            201,
+            130,
+            0.25
+        ),
+
+        0 0 30px
+
+        rgba(
+            232,
+            201,
+            130,
+            0.10
+        );
+
+}
+
+
+/* =========================================================
+   SUBTITLE
+   ========================================================= */
+
+.awtaar-logo p {
+
+    margin: 0;
+
+    font-family:
+
+        Arial,
+
+        sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 300;
+
+    letter-spacing: 6px;
+
+    color:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.7
+        );
+
+    text-transform: uppercase;
+
+}
+
+
+/* =========================================================
+   ENERGY PULSE
+   ========================================================= */
+
+@keyframes awtaarPulse {
+
+    0% {
+
+        transform:
+
+            scale(1);
+
+        text-shadow:
+
+            0 0 12px
+
+            rgba(
+                244,
+                211,
+                138,
+                0.35
+            );
+
+    }
+
+
+    50% {
+
+        transform:
+
+            scale(1.04);
+
+        text-shadow:
+
+            0 0 25px
+
+            rgba(
+                244,
+                211,
+                138,
+                0.8
+            ),
+
+            0 0 60px
+
+            rgba(
+                212,
+                154,
+                50,
+                0.45
+            );
+
+    }
+
+
+    100% {
+
+        transform:
+
+            scale(1);
+
+        text-shadow:
+
+            0 0 12px
+
+            rgba(
+                244,
+                211,
+                138,
+                0.35
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .awtaar-logo h1 {
+
+        font-size: 48px;
+
+        letter-spacing: 12px;
+
+    }
+
+
+    .awtaar-logo h2 {
+
+        font-size: 32px;
+
+    }
+
+
+    .awtaar-logo p {
+
+        font-size: 11px;
+
+        letter-spacing: 4px;
+
+    }
+
+}

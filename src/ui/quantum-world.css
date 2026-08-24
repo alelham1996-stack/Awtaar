@@ -1,0 +1,1683 @@
+/* =========================================================
+   AWTAAR — QUANTUM WORLD
+   ========================================================= */
+
+#awtaar-quantum-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    z-index: 300;
+
+    color: #f5ead0;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    box-sizing: border-box;
+
+    direction: rtl;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.quantum-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 42%,
+            rgba(241, 210, 139, 0.10),
+            transparent 42%
+        ),
+
+        radial-gradient(
+            circle at 18% 82%,
+            rgba(241, 210, 139, 0.035),
+            transparent 34%
+        ),
+
+        radial-gradient(
+            circle at 85% 18%,
+            rgba(255, 255, 255, 0.018),
+            transparent 30%
+        );
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.quantum-content {
+
+    position: relative;
+
+    z-index: 20;
+
+    width: min(
+        1080px,
+        90vw
+    );
+
+    max-height: 90vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 34px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(241, 210, 139, 0.18)
+        transparent;
+
+    direction: rtl;
+}
+
+
+/* =========================================================
+   QUANTUM SYMBOL
+   ========================================================= */
+
+.quantum-symbol {
+
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 16px;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.32
+        );
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(241, 210, 139, 0.12),
+            rgba(8, 7, 11, 0.70)
+        );
+
+    color: #f1d28b;
+
+    font-size: 34px;
+
+    font-weight: 300;
+
+    box-shadow:
+        0 0 35px
+        rgba(
+            241,
+            210,
+            139,
+            0.07
+        );
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+#awtaar-quantum-world h1 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        #f4dfae;
+
+    font-size:
+        clamp(
+            30px,
+            4vw,
+            44px
+        );
+
+    font-weight:
+        500;
+
+    line-height:
+        1.4;
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.quantum-content > p {
+
+    margin:
+        0 0 30px;
+
+    max-width:
+        620px;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.62
+        );
+
+    font-size:
+        14px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.9;
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   EXPERIMENTS GRID
+   ========================================================= */
+
+.quantum-experiments {
+
+    width:
+        100%;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:
+        14px;
+
+    margin-top:
+        2px;
+
+    direction:
+        rtl;
+}
+
+
+/* =========================================================
+   EXPERIMENT ITEM
+   ========================================================= */
+
+.quantum-experiment-item {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    min-height:
+        116px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+
+    padding:
+        20px 22px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.14
+        );
+
+    border-radius:
+        17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 23, 30, 0.88),
+            rgba(9, 8, 13, 0.78)
+        );
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+    color:
+        #f5ead0;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    text-align:
+        right;
+
+    direction:
+        rtl;
+
+    cursor:
+        pointer;
+
+    outline:
+        none;
+
+    overflow:
+        hidden;
+
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        background 0.28s ease,
+        box-shadow 0.28s ease;
+}
+
+
+/* =========================================================
+   SUBTLE CARD LIGHT
+   ========================================================= */
+
+.quantum-experiment-item::before {
+
+    content:
+        '';
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    right:
+        0;
+
+    width:
+        100%;
+
+    height:
+        1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(241, 210, 139, 0.22),
+            transparent
+        );
+
+    opacity:
+        0.7;
+
+    pointer-events:
+        none;
+}
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.quantum-experiment-item:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.34
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(31, 28, 37, 0.94),
+            rgba(10, 9, 14, 0.86)
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        ),
+
+        0 0 26px
+        rgba(
+            241,
+            210,
+            139,
+            0.045
+        );
+}
+
+
+/* =========================================================
+   EXPERIMENT SYMBOL
+   ========================================================= */
+
+.quantum-experiment-symbol {
+
+    flex:
+        0 0 56px;
+
+    width:
+        56px;
+
+    height:
+        56px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.25
+        );
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(241, 210, 139, 0.10),
+            rgba(241, 210, 139, 0.025)
+        );
+
+    color:
+        #f1d28b;
+
+    font-size:
+        25px;
+
+    font-weight:
+        300;
+
+    box-shadow:
+        inset 0 0 18px
+        rgba(
+            241,
+            210,
+            139,
+            0.025
+        );
+
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        box-shadow 0.28s ease;
+}
+
+
+/* =========================================================
+   SYMBOL HOVER
+   ========================================================= */
+
+.quantum-experiment-item:hover
+.quantum-experiment-symbol {
+
+    transform:
+        scale(1.05);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.48
+        );
+
+    box-shadow:
+        0 0 20px
+        rgba(
+            241,
+            210,
+            139,
+            0.08
+        );
+}
+
+
+/* =========================================================
+   INFORMATION
+   ========================================================= */
+
+.quantum-experiment-information {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        flex-start;
+
+    gap:
+        5px;
+
+    text-align:
+        right;
+
+    direction:
+        rtl;
+}
+
+
+/* =========================================================
+   EXPERIMENT NAME
+   ========================================================= */
+
+.quantum-experiment-name {
+
+    display:
+        block;
+
+    margin:
+        0;
+
+    color:
+        #f4dfae;
+
+    font-size:
+        17px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1.5;
+
+    text-align:
+        right;
+}
+
+
+/* =========================================================
+   EXPERIMENT DESCRIPTION
+   ========================================================= */
+
+.quantum-experiment-description {
+
+    display:
+        block;
+
+    margin:
+        0;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.52
+        );
+
+    font-size:
+        12px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.75;
+
+    text-align:
+        right;
+}
+
+
+/* =========================================================
+   DISABLED STATE
+   ========================================================= */
+
+.quantum-experiment-item:disabled {
+
+    cursor:
+        default;
+
+    opacity:
+        0.55;
+}
+
+
+.quantum-experiment-item:disabled:hover {
+
+    transform:
+        none;
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.14
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 23, 30, 0.88),
+            rgba(9, 8, 13, 0.78)
+        );
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.quantum-back-button {
+
+    margin-top:
+        24px;
+
+    padding:
+        10px 22px;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.20
+        );
+
+    border-radius:
+        28px;
+
+    background:
+        rgba(
+            8,
+            7,
+            11,
+            0.58
+        );
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.70
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        12px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        color 0.28s ease,
+        background 0.28s ease;
+}
+
+
+.quantum-back-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.46
+        );
+
+    background:
+        rgba(
+            20,
+            18,
+            24,
+            0.72
+        );
+
+    color:
+        #f4dfae;
+}
+
+
+/* =========================================================
+   EXPERIMENT UI — PANEL
+   ========================================================= */
+
+.quantum-experiment-ui {
+
+    position:
+        fixed;
+
+    right:
+        28px;
+
+    bottom:
+        28px;
+
+    top:
+        auto;
+
+    left:
+        auto;
+
+    z-index:
+        500;
+
+    width:
+        290px;
+
+    min-height:
+        170px;
+
+    box-sizing:
+        border-box;
+
+    display:
+        none;
+
+    flex-direction:
+        column;
+
+    align-items:
+        stretch;
+
+    justify-content:
+        flex-start;
+
+    padding:
+        22px;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.22
+        );
+
+    border-radius:
+        20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 23, 30, 0.92),
+            rgba(7, 6, 10, 0.88)
+        );
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 18px 45px
+        rgba(
+            0,
+            0,
+            0,
+            0.38
+        ),
+
+        0 0 30px
+        rgba(
+            241,
+            210,
+            139,
+            0.035
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    direction:
+        rtl;
+
+    pointer-events:
+        auto;
+
+    overflow:
+        hidden;
+}
+
+
+/* =========================================================
+   PANEL TOP LIGHT
+   ========================================================= */
+
+.quantum-experiment-ui::before {
+
+    content:
+        '';
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        18%;
+
+    right:
+        18%;
+
+    height:
+        1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(241, 210, 139, 0.38),
+            transparent
+        );
+
+    pointer-events:
+        none;
+}
+
+
+/* =========================================================
+   REMOVE OLD PANEL
+   ========================================================= */
+
+.quantum-experiment-ui::after {
+
+    display:
+        none;
+}
+
+
+/* =========================================================
+   EXPERIMENT TITLE
+   ========================================================= */
+
+.quantum-experiment-title {
+
+    position:
+        relative;
+
+    inset:
+        auto;
+
+    width:
+        100%;
+
+    margin:
+        0 0 8px;
+
+    padding:
+        0;
+
+    box-sizing:
+        border-box;
+
+    color:
+        #f4dfae;
+
+    font-size:
+        17px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1.5;
+
+    text-align:
+        right;
+
+    white-space:
+        normal;
+
+    direction:
+        rtl;
+}
+
+
+/* =========================================================
+   EXPERIMENT HINT
+   ========================================================= */
+
+.quantum-experiment-hint {
+
+    position:
+        relative;
+
+    inset:
+        auto;
+
+    width:
+        100%;
+
+    max-width:
+        none;
+
+    margin:
+        0;
+
+    padding:
+        0;
+
+    box-sizing:
+        border-box;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.54
+        );
+
+    font-size:
+        11px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.8;
+
+    text-align:
+        right;
+
+    direction:
+        rtl;
+}
+
+
+/* =========================================================
+   SUPERPOSITION CONTROLS
+   ========================================================= */
+
+.quantum-superposition-controls {
+
+    width:
+        100%;
+
+    display:
+        flex;
+
+    flex-direction:
+        row;
+
+    align-items:
+        center;
+
+    justify-content:
+        stretch;
+
+    gap:
+        10px;
+
+    margin-top:
+        18px;
+
+    padding-top:
+        16px;
+
+    border-top:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.10
+        );
+
+    box-sizing:
+        border-box;
+}
+
+
+/* =========================================================
+   MEASURE BUTTON
+   ========================================================= */
+
+.quantum-measure-button {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    height:
+        38px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.24
+        );
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(
+            241,
+            210,
+            139,
+            0.055
+        );
+
+    color:
+        #f4dfae;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        400;
+
+    white-space:
+        nowrap;
+
+    cursor:
+        pointer;
+
+    outline:
+        none;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.quantum-measure-button:hover {
+
+    transform:
+        translateY(-1px);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.52
+        );
+
+    background:
+        rgba(
+            241,
+            210,
+            139,
+            0.10
+        );
+
+    box-shadow:
+        0 5px 18px
+        rgba(
+            241,
+            210,
+            139,
+            0.06
+        );
+}
+
+
+/* =========================================================
+   RESET BUTTON
+   ========================================================= */
+
+.quantum-reset-button {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    height:
+        38px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.18
+        );
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(
+            8,
+            7,
+            11,
+            0.42
+        );
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.70
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        400;
+
+    white-space:
+        nowrap;
+
+    cursor:
+        pointer;
+
+    outline:
+        none;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.quantum-reset-button:hover {
+
+    transform:
+        translateY(-1px);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.42
+        );
+
+    background:
+        rgba(
+            241,
+            210,
+            139,
+            0.065
+        );
+
+    color:
+        #f4dfae;
+}
+
+
+/* =========================================================
+   EXIT BUTTON
+   ========================================================= */
+
+.quantum-exit-experiment-button {
+
+    position:
+        relative;
+
+    inset:
+        auto;
+
+    width:
+        100%;
+
+    height:
+        34px;
+
+    margin-top:
+        12px;
+
+    padding:
+        0 14px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.16
+        );
+
+    border-radius:
+        18px;
+
+    background:
+        transparent;
+
+    color:
+        rgba(
+            244,
+            223,
+            174,
+            0.58
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        10px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    pointer-events:
+        auto;
+
+    outline:
+        none;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.quantum-exit-experiment-button:hover {
+
+    transform:
+        translateY(-1px);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.42
+        );
+
+    background:
+        rgba(
+            241,
+            210,
+            139,
+            0.055
+        );
+
+    color:
+        #f4dfae;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.quantum-content::-webkit-scrollbar {
+
+    width:
+        5px;
+}
+
+
+.quantum-content::-webkit-scrollbar-track {
+
+    background:
+        transparent;
+}
+
+
+.quantum-content::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(
+            241,
+            210,
+            139,
+            0.18
+        );
+
+    border-radius:
+        10px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .quantum-content {
+
+        width:
+            94vw;
+
+        max-height:
+            92vh;
+
+        padding:
+            22px;
+    }
+
+
+    .quantum-experiments {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            12px;
+    }
+
+
+    .quantum-experiment-item {
+
+        min-height:
+            104px;
+
+        padding:
+            17px 18px;
+
+        gap:
+            14px;
+    }
+
+
+    .quantum-experiment-symbol {
+
+        flex-basis:
+            50px;
+
+        width:
+            50px;
+
+        height:
+            50px;
+
+        font-size:
+            22px;
+    }
+
+
+    .quantum-experiment-name {
+
+        font-size:
+            16px;
+    }
+
+
+    .quantum-experiment-description {
+
+        font-size:
+            11px;
+    }
+
+
+    .quantum-back-button {
+
+        margin-top:
+            20px;
+    }
+
+
+    /* =====================================================
+       MOBILE EXPERIMENT PANEL
+       ===================================================== */
+
+    .quantum-experiment-ui {
+
+        right:
+            14px;
+
+        bottom:
+            14px;
+
+        width:
+            min(
+                290px,
+                calc(100vw - 28px)
+            );
+
+        min-height:
+            0;
+
+        padding:
+            20px;
+
+        border-radius:
+            18px;
+    }
+
+
+    .quantum-experiment-title {
+
+        font-size:
+            15px;
+    }
+
+
+    .quantum-experiment-hint {
+
+        font-size:
+            10px;
+
+        line-height:
+            1.75;
+    }
+
+
+    .quantum-superposition-controls {
+
+        gap:
+            8px;
+
+        margin-top:
+            15px;
+
+        padding-top:
+            14px;
+    }
+
+
+    .quantum-measure-button,
+    .quantum-reset-button {
+
+        height:
+            36px;
+
+        font-size:
+            10px;
+
+        padding:
+            0 8px;
+    }
+
+
+    .quantum-exit-experiment-button {
+
+        height:
+            33px;
+
+        margin-top:
+            10px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .quantum-symbol {
+
+        width:
+            64px;
+
+        height:
+            64px;
+
+        font-size:
+            30px;
+    }
+
+
+    #awtaar-quantum-world h1 {
+
+        font-size:
+            27px;
+    }
+
+
+    .quantum-content > p {
+
+        font-size:
+            12px;
+
+        margin-bottom:
+            22px;
+    }
+
+
+    .quantum-experiment-item {
+
+        min-height:
+            98px;
+
+        padding:
+            14px;
+    }
+
+
+    .quantum-experiment-symbol {
+
+        flex-basis:
+            44px;
+
+        width:
+            44px;
+
+        height:
+            44px;
+
+        font-size:
+            19px;
+    }
+
+
+    .quantum-experiment-name {
+
+        font-size:
+            15px;
+    }
+
+
+    .quantum-experiment-description {
+
+        font-size:
+            10px;
+    }
+
+
+    /* =====================================================
+       VERY SMALL EXPERIMENT PANEL
+       ===================================================== */
+
+    .quantum-experiment-ui {
+
+        right:
+            10px;
+
+        bottom:
+            10px;
+
+        width:
+            calc(100vw - 20px);
+
+        padding:
+            18px;
+
+        border-radius:
+            17px;
+    }
+
+
+    .quantum-experiment-title {
+
+        font-size:
+            14px;
+    }
+
+
+    .quantum-experiment-hint {
+
+        font-size:
+            10px;
+    }
+
+
+    .quantum-superposition-controls {
+
+        flex-direction:
+            column;
+
+        gap:
+            8px;
+    }
+
+
+    .quantum-measure-button,
+    .quantum-reset-button {
+
+        width:
+            100%;
+
+        flex:
+            none;
+    }
+
+
+    .quantum-exit-experiment-button {
+
+        margin-top:
+            10px;
+    }
+
+}

@@ -1,0 +1,693 @@
+/* =========================================================
+   AWTAAR — PHYSICS WORLD
+   ========================================================= */
+
+#awtaar-physics-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: 40px;
+
+    overflow: hidden;
+
+    color: #f5ead0;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    text-align: center;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   ALL TEXT
+   ========================================================= */
+
+#awtaar-physics-world,
+#awtaar-physics-world button,
+#awtaar-physics-world h2,
+#awtaar-physics-world p,
+#awtaar-physics-world span {
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+#awtaar-physics-world h2 {
+
+    margin: 0 0 12px;
+
+    color: #f4dfae;
+
+    font-size: clamp(
+        28px,
+        4vw,
+        46px
+    );
+
+    font-weight: 500;
+
+    letter-spacing: 0.3px;
+
+    line-height: 1.4;
+
+    text-shadow:
+        0 0 30px
+        rgba(
+            241,
+            210,
+            139,
+            0.08
+        );
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+#awtaar-physics-world > p {
+
+    margin: 0 0 42px;
+
+    max-width: 650px;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.62
+        );
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 2;
+
+}
+
+
+/* =========================================================
+   PHYSICS WORLDS
+   ========================================================= */
+
+.awtaar-physics-worlds {
+
+    width: min(
+        1000px,
+        90vw
+    );
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(
+                150px,
+                1fr
+            )
+        );
+
+    gap: 18px;
+
+    align-items: stretch;
+
+}
+
+
+/* =========================================================
+   WORLD ITEM
+   ========================================================= */
+
+.awtaar-physics-world-item {
+
+    position: relative;
+
+    min-height: 190px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 24px 18px;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.18
+        );
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                25,
+                23,
+                29,
+                0.78
+            ),
+            rgba(
+                8,
+                7,
+                11,
+                0.62
+            )
+        );
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+
+    color: #f5ead0;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+
+}
+
+
+/* =========================================================
+   WORLD ITEM — HOVER
+   ========================================================= */
+
+.awtaar-physics-world-item:hover {
+
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.52
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                38,
+                34,
+                42,
+                0.90
+            ),
+            rgba(
+                10,
+                9,
+                14,
+                0.78
+            )
+        );
+
+    box-shadow:
+        0 14px 40px
+        rgba(
+            0,
+            0,
+            0,
+            0.30
+        ),
+
+        0 0 30px
+        rgba(
+            241,
+            210,
+            139,
+            0.07
+        );
+
+}
+
+
+/* =========================================================
+   WORLD CORE
+   ========================================================= */
+
+.physics-world-core {
+
+    width: 68px;
+    height: 68px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.36
+        );
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                241,
+                210,
+                139,
+                0.13
+            ),
+            rgba(
+                0,
+                0,
+                0,
+                0.20
+            )
+        );
+
+    color:
+        #f1d28b;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 30px;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    box-shadow:
+        0 0 28px
+        rgba(
+            241,
+            210,
+            139,
+            0.07
+        );
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+
+}
+
+
+/* =========================================================
+   CORE HOVER
+   ========================================================= */
+
+.awtaar-physics-world-item:hover
+.physics-world-core {
+
+    transform:
+        scale(1.08);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.65
+        );
+
+    box-shadow:
+        0 0 35px
+        rgba(
+            241,
+            210,
+            139,
+            0.13
+        );
+
+}
+
+
+/* =========================================================
+   WORLD NAME
+   ========================================================= */
+
+.physics-world-name {
+
+    display: block;
+
+    color:
+        #f4dfae;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    line-height: 1.6;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-physics-world-back {
+
+    margin-top: 34px;
+
+    padding:
+        12px 28px;
+
+    border:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.22
+        );
+
+    border-radius: 30px;
+
+    background:
+        rgba(
+            8,
+            7,
+            11,
+            0.62
+        );
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.76
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        background 0.3s ease;
+
+}
+
+
+/* =========================================================
+   BACK BUTTON — HOVER
+   ========================================================= */
+
+.awtaar-physics-world-back:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(
+            241,
+            210,
+            139,
+            0.55
+        );
+
+    background:
+        rgba(
+            20,
+            18,
+            24,
+            0.82
+        );
+
+    color:
+        #f4dfae;
+
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.awtaar-physics-world-item:focus-visible,
+.awtaar-physics-world-back:focus-visible {
+
+    outline:
+        1px solid
+        rgba(
+            241,
+            210,
+            139,
+            0.65
+        );
+
+    outline-offset: 4px;
+
+}
+
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
+
+.awtaar-physics-world-item:disabled,
+.awtaar-physics-world-back:disabled {
+
+    cursor: default;
+
+    opacity: 0.55;
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (
+    max-width: 1000px
+) {
+
+    .awtaar-physics-worlds {
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(
+                    150px,
+                    1fr
+                )
+            );
+
+        max-width: 700px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 650px
+) {
+
+    #awtaar-physics-world {
+
+        padding:
+            25px 18px;
+
+        overflow-y: auto;
+
+    }
+
+
+    #awtaar-physics-world h2 {
+
+        font-size: 30px;
+
+    }
+
+
+    #awtaar-physics-world > p {
+
+        margin-bottom: 28px;
+
+        font-size: 13px;
+
+    }
+
+
+    .awtaar-physics-worlds {
+
+        width: 94vw;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    130px,
+                    1fr
+                )
+            );
+
+        gap: 12px;
+
+    }
+
+
+    .awtaar-physics-world-item {
+
+        min-height: 155px;
+
+        padding:
+            18px 12px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .physics-world-core {
+
+        width: 55px;
+        height: 55px;
+
+        font-size: 25px;
+
+    }
+
+
+    .physics-world-name {
+
+        font-size: 14px;
+
+    }
+
+
+    .awtaar-physics-world-back {
+
+        margin-top: 24px;
+
+        padding:
+            10px 22px;
+
+        font-size: 13px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (
+    max-width: 400px
+) {
+
+    .awtaar-physics-worlds {
+
+        grid-template-columns:
+            1fr;
+
+        width: 88vw;
+
+    }
+
+
+    .awtaar-physics-world-item {
+
+        min-height: 125px;
+
+        flex-direction: row;
+
+        justify-content: flex-start;
+
+        text-align: right;
+
+        padding:
+            16px 20px;
+
+    }
+
+
+    .physics-world-name {
+
+        white-space: normal;
+
+    }
+
+}

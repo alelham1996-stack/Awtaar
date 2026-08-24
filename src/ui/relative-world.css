@@ -1,0 +1,680 @@
+/* =========================================================
+   AWTAAR — RELATIVITY WORLD
+   ========================================================= */
+
+#awtaar-relative-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 250;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding:
+        80px 7vw 70px;
+
+    overflow: hidden;
+
+    color: #f5ead0;
+
+    background:
+        radial-gradient(
+            circle at 50% 42%,
+            rgba(181, 160, 116, 0.075),
+            transparent 42%
+        );
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease;
+
+}
+
+
+#awtaar-relative-world::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(245, 234, 208, 0.025),
+            transparent
+        );
+
+}
+
+
+#awtaar-relative-world::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 65vw;
+
+    height: 65vw;
+
+    max-width: 850px;
+
+    max-height: 850px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(205, 186, 142, 0.045),
+            transparent 68%
+        );
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.relative-world-header {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(
+        760px,
+        90vw
+    );
+
+    text-align: center;
+
+    margin-bottom: 52px;
+
+}
+
+
+.relative-world-eyebrow {
+
+    margin-bottom: 12px;
+
+    color: #a99b7d;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.32em;
+
+    text-transform: uppercase;
+
+    opacity: 0.8;
+
+}
+
+
+.relative-world-title {
+
+    margin: 0;
+
+    color: #f5ead0;
+
+    font-size: clamp(
+        34px,
+        5vw,
+        62px
+    );
+
+    font-weight: 400;
+
+    letter-spacing: -0.025em;
+
+}
+
+
+.relative-world-subtitle {
+
+    max-width: 620px;
+
+    margin: 16px auto 0;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.58
+        );
+
+    font-size: 15px;
+
+    line-height: 1.9;
+
+    font-weight: 300;
+
+}
+
+
+/* =========================================================
+   EXPERIMENTS
+   ========================================================= */
+
+.relative-experiments {
+
+    position: relative;
+
+    z-index: 3;
+
+    width: min(
+        1000px,
+        90vw
+    );
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap: 22px;
+
+}
+
+
+.relative-experiment-card {
+
+    position: relative;
+
+    min-height: 190px;
+
+    display: grid;
+
+    grid-template-columns:
+        70px
+        1fr
+        30px;
+
+    align-items: center;
+
+    gap: 22px;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.16
+        );
+
+    border-radius: 4px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                245,
+                234,
+                208,
+                0.055
+            ),
+            rgba(
+                245,
+                234,
+                208,
+                0.018
+            )
+        );
+
+    color: #f5ead0;
+
+    text-align: start;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease;
+
+}
+
+
+.relative-experiment-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(
+            214,
+            197,
+            158,
+            0.42
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                245,
+                234,
+                208,
+                0.085
+            ),
+            rgba(
+                245,
+                234,
+                208,
+                0.025
+            )
+        );
+
+}
+
+
+.relative-card-glow {
+
+    position: absolute;
+
+    width: 170px;
+
+    height: 170px;
+
+    left: -70px;
+
+    top: -70px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                220,
+                200,
+                155,
+                0.12
+            ),
+            transparent 68%
+        );
+
+    pointer-events: none;
+
+}
+
+
+.relative-experiment-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 62px;
+
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.25
+        );
+
+    border-radius: 50%;
+
+    color: #d9c9a6;
+
+    font-size: 28px;
+
+    font-weight: 300;
+
+}
+
+
+.relative-experiment-content {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.relative-experiment-content h2 {
+
+    margin: 0 0 9px;
+
+    color: #f5ead0;
+
+    font-size: 21px;
+
+    font-weight: 400;
+
+}
+
+
+.relative-experiment-content p {
+
+    margin: 0;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.48
+        );
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    font-weight: 300;
+
+}
+
+
+.relative-experiment-arrow {
+
+    position: relative;
+
+    z-index: 2;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.45
+        );
+
+    font-size: 20px;
+
+    transition:
+        transform 0.3s ease;
+
+}
+
+
+.relative-experiment-card:hover
+.relative-experiment-arrow {
+
+    transform:
+        translateX(5px);
+
+}
+
+
+/* =========================================================
+   HINT
+   ========================================================= */
+
+.relative-world-hint {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 38px;
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.30
+        );
+
+    font-size: 11px;
+
+    letter-spacing: 0.14em;
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+.relative-back-button {
+
+    position: fixed;
+
+    z-index: 20;
+
+    left: 34px;
+
+    bottom: 30px;
+
+    min-width: 120px;
+
+    padding: 11px 20px;
+
+    border:
+        1px solid
+        rgba(
+            214,
+            197,
+            158,
+            0.20
+        );
+
+    border-radius: 3px;
+
+    background:
+        rgba(
+            8,
+            8,
+            12,
+            0.72
+        );
+
+    backdrop-filter:
+        blur(12px);
+
+    color:
+        rgba(
+            245,
+            234,
+            208,
+            0.72
+        );
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.3s ease,
+        color 0.3s ease,
+        background 0.3s ease;
+
+}
+
+
+.relative-back-button:hover {
+
+    border-color:
+        rgba(
+            214,
+            197,
+            158,
+            0.50
+        );
+
+    color: #f5ead0;
+
+    background:
+        rgba(
+            245,
+            234,
+            208,
+            0.07
+        );
+
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+#awtaar-relative-world[dir="rtl"] {
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+}
+
+
+#awtaar-relative-world[dir="rtl"]
+.relative-back-button {
+
+    left: auto;
+
+    right: 34px;
+
+}
+
+
+#awtaar-relative-world[dir="rtl"]
+.relative-experiment-card {
+
+    text-align: right;
+
+}
+
+
+#awtaar-relative-world[dir="rtl"]
+.relative-experiment-arrow {
+
+    transform:
+        rotate(180deg);
+
+}
+
+
+#awtaar-relative-world[dir="rtl"]
+.relative-experiment-card:hover
+.relative-experiment-arrow {
+
+    transform:
+        rotate(180deg)
+        translateX(5px);
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (
+    max-width: 760px
+) {
+
+    #awtaar-relative-world {
+
+        padding:
+            70px 20px
+            90px;
+
+    }
+
+
+    .relative-experiments {
+
+        grid-template-columns:
+            1fr;
+
+        width: 100%;
+
+        max-width: 520px;
+
+    }
+
+
+    .relative-experiment-card {
+
+        min-height: 155px;
+
+        padding: 23px;
+
+    }
+
+
+    .relative-world-header {
+
+        margin-bottom: 32px;
+
+    }
+
+
+    .relative-world-subtitle {
+
+        font-size: 13px;
+
+    }
+
+}

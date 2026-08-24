@@ -1,0 +1,1450 @@
+/* =========================================================
+   AWTAAR PLATFORM UI
+   Elegant / Scientific / Premium
+   Arabic / English
+   ========================================================= */
+
+
+/* =========================================================
+   FONT
+   ========================================================= */
+
+@import url(
+    'https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600&display=swap'
+);
+
+
+/* =========================================================
+   PLATFORM ROOT
+   ========================================================= */
+
+#awtaar-platform {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    color:
+        #f4ead8;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.awtaar-header {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 92px;
+
+    padding:
+        0 54px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    z-index: 100;
+
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.awtaar-platform-logo {
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 20px;
+
+    font-weight: 400;
+
+    letter-spacing: 8px;
+
+    color:
+        #f1d28b;
+
+    opacity: 0.96;
+
+    text-shadow:
+        0 0 20px
+        rgba(241, 210, 139, 0.20);
+
+}
+
+
+/* =========================================================
+   LANGUAGE BUTTON
+   ========================================================= */
+
+.awtaar-language-button {
+
+    position: absolute;
+
+    top: 104px;
+
+    right: 116px;
+
+    min-width: 42px;
+
+    height: 32px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.28);
+
+    border-radius: 20px;
+
+    background:
+        rgba(5, 5, 15, 0.32);
+
+    color:
+        rgba(245, 236, 223, 0.72);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+
+    box-shadow:
+        0 6px 25px
+        rgba(0, 0, 0, 0.16);
+
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.awtaar-language-button:hover {
+
+    color:
+        #f1d28b;
+
+    background:
+        rgba(241, 210, 139, 0.07);
+
+    border-color:
+        rgba(241, 210, 139, 0.62);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* =========================================================
+   MENU BUTTON
+   ========================================================= */
+
+.awtaar-menu-button {
+
+    width: 44px;
+
+    height: 44px;
+
+    padding: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.28);
+
+    border-radius: 50%;
+
+    background:
+        rgba(5, 5, 15, 0.22);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease;
+
+}
+
+
+.awtaar-menu-button span {
+
+    width: 13px;
+
+    height: 1px;
+
+    display: block;
+
+    background:
+        #f1d28b;
+
+    opacity: 0.85;
+
+    transition:
+        transform 0.35s ease,
+        opacity 0.25s ease;
+
+}
+
+
+.awtaar-menu-button:hover {
+
+    transform:
+        scale(1.06);
+
+    border-color:
+        rgba(241, 210, 139, 0.65);
+
+    background:
+        rgba(241, 210, 139, 0.06);
+
+}
+
+
+/* =========================================================
+   MENU BUTTON ACTIVE
+   ========================================================= */
+
+.awtaar-menu-button.active {
+
+    border-color:
+        rgba(241, 210, 139, 0.62);
+
+    background:
+        rgba(241, 210, 139, 0.07);
+
+}
+
+
+.awtaar-menu-button.active span:nth-child(1) {
+
+    transform:
+        translateY(6px)
+        rotate(45deg);
+
+}
+
+
+.awtaar-menu-button.active span:nth-child(2) {
+
+    opacity:
+        0;
+
+}
+
+
+.awtaar-menu-button.active span:nth-child(3) {
+
+    transform:
+        translateY(-6px)
+        rotate(-45deg);
+
+}
+
+
+/* =========================================================
+   PLATFORM SIDE MENU
+   ========================================================= */
+
+.awtaar-platform-menu {
+
+    position: fixed;
+
+    /*
+     * أسفل منطقة الهيدر
+     * حتى لا تغطي زر الثلاث خطوط
+     */
+
+    top: 104px;
+
+    /*
+     * الوضع العربي الافتراضي
+     */
+
+    left: 54px;
+
+    width: 250px;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.20);
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13, 13, 24, 0.84),
+            rgba(5, 5, 15, 0.72)
+        );
+
+    backdrop-filter:
+        blur(24px);
+
+    -webkit-backdrop-filter:
+        blur(24px);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.42),
+
+        inset 0 0 30px
+        rgba(241, 210, 139, 0.025);
+
+    z-index: 120;
+
+    opacity:
+        0;
+
+    visibility:
+        hidden;
+
+    pointer-events:
+        none;
+
+    transform:
+        translateY(-10px)
+        translateX(-16px)
+        scale(0.97);
+
+    transform-origin:
+        left top;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.45s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        ),
+        visibility 0.35s ease;
+
+}
+
+
+/* =========================================================
+   MENU OPEN
+   ========================================================= */
+
+.awtaar-platform-menu.open {
+
+    opacity:
+        1;
+
+    visibility:
+        visible;
+
+    pointer-events:
+        auto;
+
+    transform:
+        translateY(0)
+        translateX(0)
+        scale(1);
+
+}
+
+
+/* =========================================================
+   ENGLISH MENU POSITION
+   ========================================================= */
+
+#awtaar-platform[dir="ltr"]
+.awtaar-platform-menu {
+
+    left:
+        auto;
+
+    right:
+        54px;
+
+    transform:
+        translateY(-10px)
+        translateX(16px)
+        scale(0.97);
+
+    transform-origin:
+        right top;
+
+}
+
+
+/* =========================================================
+   ENGLISH MENU OPEN
+   ========================================================= */
+
+#awtaar-platform[dir="ltr"]
+.awtaar-platform-menu.open {
+
+    transform:
+        translateY(0)
+        translateX(0)
+        scale(1);
+
+}
+
+
+/* =========================================================
+   MENU DECORATIVE LINE
+   ========================================================= */
+
+.awtaar-platform-menu::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 18px;
+
+    left: 18px;
+
+    width: 32px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(241, 210, 139, 0.75),
+            transparent
+        );
+
+    opacity:
+        0.8;
+
+}
+
+
+/* =========================================================
+   ENGLISH DECORATIVE LINE
+   ========================================================= */
+
+#awtaar-platform[dir="ltr"]
+.awtaar-platform-menu::before {
+
+    left:
+        auto;
+
+    right:
+        18px;
+
+    background:
+        linear-gradient(
+            270deg,
+            rgba(241, 210, 139, 0.75),
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   MENU TITLE
+   ========================================================= */
+
+.awtaar-platform-menu-title {
+
+    padding:
+        14px 10px 17px;
+
+    margin-bottom:
+        7px;
+
+    border-bottom:
+        1px solid
+        rgba(241, 210, 139, 0.10);
+
+    color:
+        rgba(241, 210, 139, 0.78);
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        4px;
+
+    text-align:
+        left;
+
+}
+
+
+/* =========================================================
+   MENU ITEMS
+   ========================================================= */
+
+.awtaar-platform-menu-item {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 44px;
+
+    padding:
+        10px 13px;
+
+    margin:
+        3px 0;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius:
+        12px;
+
+    background:
+        transparent;
+
+    color:
+        rgba(245, 236, 223, 0.68);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        13px;
+
+    font-weight:
+        400;
+
+    text-align:
+        left;
+
+    cursor:
+        pointer;
+
+    pointer-events:
+        auto;
+
+    transition:
+        color 0.28s ease,
+        background 0.28s ease,
+        border-color 0.28s ease,
+        transform 0.28s ease;
+
+}
+
+
+.awtaar-platform-menu-item::before {
+
+    content: '';
+
+    width:
+        4px;
+
+    height:
+        4px;
+
+    margin-right:
+        10px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(241, 210, 139, 0.35);
+
+    transition:
+        background 0.28s ease,
+        box-shadow 0.28s ease;
+
+}
+
+
+.awtaar-platform-menu-item:hover {
+
+    color:
+        #f1d28b;
+
+    background:
+        rgba(241, 210, 139, 0.055);
+
+    border-color:
+        rgba(241, 210, 139, 0.12);
+
+    transform:
+        translateX(3px);
+
+}
+
+
+.awtaar-platform-menu-item:hover::before {
+
+    background:
+        #f1d28b;
+
+    box-shadow:
+        0 0 9px
+        rgba(241, 210, 139, 0.55);
+
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.awtaar-content {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 8%;
+
+    width: 520px;
+
+    max-width: 42vw;
+
+    transform:
+        translateY(-40%);
+
+    direction:
+        rtl;
+
+    text-align:
+        right;
+
+}
+
+
+/* =========================================================
+   MAIN TITLE
+   ========================================================= */
+
+.awtaar-content h1 {
+
+    margin:
+        0;
+
+    max-width:
+        520px;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(38px, 4vw, 60px);
+
+    line-height:
+        1.28;
+
+    font-weight:
+        400;
+
+    letter-spacing:
+        -0.8px;
+
+    color:
+        #f5ecdf;
+
+    text-shadow:
+        0 5px 35px
+        rgba(0, 0, 0, 0.70);
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.awtaar-content p {
+
+    margin:
+        22px 0 31px;
+
+    max-width:
+        430px;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        17px;
+
+    line-height:
+        2;
+
+    font-weight:
+        300;
+
+    color:
+        rgba(245, 236, 223, 0.62);
+
+    text-shadow:
+        0 3px 18px
+        rgba(0, 0, 0, 0.65);
+
+}
+
+
+/* =========================================================
+   EXPLORE BUTTON
+   ========================================================= */
+
+.awtaar-explore-button {
+
+    position:
+        relative;
+
+    padding:
+        13px 28px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.48);
+
+    border-radius:
+        30px;
+
+    background:
+        rgba(241, 210, 139, 0.035);
+
+    color:
+        #f1d28b;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        15px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    pointer-events:
+        auto;
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    box-shadow:
+        0 0 30px
+        rgba(0, 0, 0, 0.12);
+
+    transition:
+        transform 0.35s ease,
+        background 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+
+}
+
+
+.awtaar-explore-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(241, 210, 139, 0.09);
+
+    border-color:
+        rgba(241, 210, 139, 0.78);
+
+    box-shadow:
+        0 0 28px
+        rgba(241, 210, 139, 0.12);
+
+}
+
+
+.awtaar-explore-button:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+.awtaar-explore-button:disabled {
+
+    opacity:
+        0.45;
+
+    cursor:
+        default;
+
+    transform:
+        none;
+
+}
+
+
+/* =========================================================
+   EXPLORATION
+   ========================================================= */
+
+#awtaar-exploration {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    z-index:
+        60;
+
+    pointer-events:
+        none;
+
+    overflow:
+        hidden;
+
+    box-sizing:
+        border-box;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    color:
+        #f4ead8;
+
+}
+
+
+/* =========================================================
+   EXPLORATION NAVIGATION
+   ========================================================= */
+
+.awtaar-exploration-nav {
+
+    position:
+        fixed;
+
+    top:
+        30px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        4px;
+
+    padding:
+        6px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.18);
+
+    border-radius:
+        32px;
+
+    background:
+        rgba(5, 5, 15, 0.38);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 10px 40px
+        rgba(0, 0, 0, 0.22);
+
+    pointer-events:
+        auto;
+
+    z-index:
+        70;
+
+}
+
+
+/* =========================================================
+   EXPLORATION ITEMS
+   ========================================================= */
+
+.awtaar-exploration-item {
+
+    padding:
+        9px 18px;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius:
+        24px;
+
+    background:
+        transparent;
+
+    color:
+        rgba(245, 236, 223, 0.58);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        14px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    white-space:
+        nowrap;
+
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.awtaar-exploration-item:hover {
+
+    color:
+        #f1d28b;
+
+    background:
+        rgba(241, 210, 139, 0.045);
+
+}
+
+
+.awtaar-exploration-item.active {
+
+    color:
+        #f1d28b;
+
+    border-color:
+        rgba(241, 210, 139, 0.28);
+
+    background:
+        rgba(241, 210, 139, 0.075);
+
+}
+
+
+/* =========================================================
+   EXPLORATION BACK BUTTON
+   ========================================================= */
+
+.awtaar-exploration-back {
+
+    position:
+        fixed;
+
+    bottom:
+        34px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        10px 23px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.28);
+
+    border-radius:
+        26px;
+
+    background:
+        rgba(5, 5, 15, 0.42);
+
+    color:
+        rgba(241, 210, 139, 0.82);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        13px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    pointer-events:
+        auto;
+
+    white-space:
+        nowrap;
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+
+    z-index:
+        70;
+
+}
+
+
+.awtaar-exploration-back:hover {
+
+    transform:
+        translateX(-50%)
+        translateY(-2px);
+
+    background:
+        rgba(241, 210, 139, 0.065);
+
+    border-color:
+        rgba(241, 210, 139, 0.62);
+
+    color:
+        #f1d28b;
+
+}
+
+
+/* =========================================================
+   LARGE SCREENS
+   ========================================================= */
+
+@media (min-width: 1400px) {
+
+    .awtaar-content {
+
+        left:
+            9%;
+
+        width:
+            560px;
+
+    }
+
+
+    .awtaar-content h1 {
+
+        font-size:
+            62px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .awtaar-header {
+
+        height:
+            82px;
+
+        padding:
+            0 32px;
+
+    }
+
+
+    .awtaar-content {
+
+        left:
+            6%;
+
+        width:
+            460px;
+
+        max-width:
+            48vw;
+
+    }
+
+
+    .awtaar-content h1 {
+
+        font-size:
+            clamp(34px, 5vw, 50px);
+
+    }
+
+
+    .awtaar-content p {
+
+        font-size:
+            16px;
+
+    }
+
+
+    .awtaar-language-button {
+
+        right:
+            92px;
+
+        top:
+            94px;
+
+    }
+
+
+    .awtaar-platform-menu {
+
+        left:
+            32px;
+
+        top:
+            94px;
+
+    }
+
+
+    #awtaar-platform[dir="ltr"]
+    .awtaar-platform-menu {
+
+        left:
+            auto;
+
+        right:
+            32px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .awtaar-header {
+
+        height:
+            76px;
+
+        padding:
+            0 22px;
+
+    }
+
+
+    .awtaar-platform-logo {
+
+        font-size:
+            17px;
+
+        letter-spacing:
+            6px;
+
+    }
+
+
+    .awtaar-menu-button {
+
+        width:
+            40px;
+
+        height:
+            40px;
+
+    }
+
+
+    .awtaar-language-button {
+
+        top:
+            84px;
+
+        right:
+            70px;
+
+        min-width:
+            38px;
+
+        height:
+            29px;
+
+        padding:
+            0 9px;
+
+        font-size:
+            11px;
+
+    }
+
+
+    .awtaar-platform-menu {
+
+        top:
+            88px;
+
+        left:
+            18px;
+
+        right:
+            auto;
+
+        width:
+            250px;
+
+    }
+
+
+    #awtaar-platform[dir="ltr"]
+    .awtaar-platform-menu {
+
+        left:
+            auto;
+
+        right:
+            18px;
+
+    }
+
+
+    .awtaar-content {
+
+        left:
+            24px;
+
+        right:
+            24px;
+
+        width:
+            auto;
+
+        max-width:
+            none;
+
+        top:
+            56%;
+
+        transform:
+            translateY(-50%);
+
+    }
+
+
+    .awtaar-content h1 {
+
+        font-size:
+            34px;
+
+        line-height:
+            1.4;
+
+        font-weight:
+            400;
+
+    }
+
+
+    .awtaar-content p {
+
+        margin:
+            17px 0 25px;
+
+        max-width:
+            100%;
+
+        font-size:
+            14px;
+
+        line-height:
+            1.9;
+
+    }
+
+
+    .awtaar-explore-button {
+
+        padding:
+            11px 23px;
+
+        font-size:
+            14px;
+
+    }
+
+
+    .awtaar-exploration-nav {
+
+        top:
+            20px;
+
+        width:
+            calc(100% - 24px);
+
+        padding:
+            5px;
+
+        gap:
+            1px;
+
+        overflow-x:
+            auto;
+
+        scrollbar-width:
+            none;
+
+    }
+
+
+    .awtaar-exploration-nav::-webkit-scrollbar {
+
+        display:
+            none;
+
+    }
+
+
+    .awtaar-exploration-item {
+
+        padding:
+            8px 10px;
+
+        font-size:
+            12px;
+
+    }
+
+
+    .awtaar-exploration-back {
+
+        bottom:
+            22px;
+
+        padding:
+            9px 18px;
+
+        font-size:
+            12px;
+
+    }
+
+}

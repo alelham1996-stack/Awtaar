@@ -1,0 +1,1216 @@
+/* =========================================================
+   AWTAAR — WAVES WORLD + WAVE INTERFERENCE
+   ========================================================= */
+
+
+/* =========================================================
+   FONT
+   ========================================================= */
+
+#awtaar-wave-world,
+#awtaar-wave-world *,
+.wave-interference-container,
+.wave-interference-container * {
+
+    font-family:
+        "Tajawal",
+        Arial,
+        sans-serif;
+
+}
+
+
+/* =========================================================
+   WORLD ROOT
+   ========================================================= */
+
+#awtaar-wave-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: 30px 40px 32px;
+
+    overflow: hidden;
+
+    color: #f5ead0;
+
+    background:
+
+        radial-gradient(
+
+            circle at 50% 48%,
+
+            rgba(172, 151, 108, 0.065),
+
+            transparent 42%
+
+        ),
+
+        rgba(7, 7, 11, 0.16);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+
+        opacity 0.55s ease,
+
+        visibility 0.55s ease;
+
+    isolation: isolate;
+
+}
+
+
+/* =========================================================
+   WORLD ATMOSPHERE
+   ========================================================= */
+
+#awtaar-wave-world::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    background-image:
+
+        linear-gradient(
+
+            rgba(245, 234, 208, 0.018) 1px,
+
+            transparent 1px
+
+        ),
+
+        linear-gradient(
+
+            90deg,
+
+            rgba(245, 234, 208, 0.018) 1px,
+
+            transparent 1px
+
+        );
+
+    background-size:
+
+        80px 80px;
+
+    opacity: 0.28;
+
+}
+
+
+#awtaar-wave-world::after {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 1;
+
+    left: 50%;
+
+    top: 52%;
+
+    width: 900px;
+
+    height: 500px;
+
+    transform:
+
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+
+            ellipse,
+
+            rgba(220, 201, 160, 0.05),
+
+            transparent 70%
+
+        );
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   WORLD HEADER
+   ========================================================= */
+
+.wave-world-header {
+
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+
+    max-width: 1320px;
+
+    padding: 26px 0 18px;
+
+    text-align: center;
+
+}
+
+
+.wave-world-eyebrow {
+
+    margin: 0 0 8px;
+
+    color:
+
+        rgba(220, 201, 160, 0.72);
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.22em;
+
+}
+
+
+.wave-world-title {
+
+    margin: 0;
+
+    color: #f5ead0;
+
+    font-size:
+
+        clamp(32px, 4vw, 54px);
+
+    font-weight: 400;
+
+    letter-spacing: -0.025em;
+
+}
+
+
+.wave-world-subtitle {
+
+    max-width: 680px;
+
+    margin: 12px auto 0;
+
+    color:
+
+        rgba(245, 234, 208, 0.62);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   EXPERIMENT CARDS
+   ========================================================= */
+
+.wave-experiments {
+
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    display: grid;
+
+    grid-template-columns:
+
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+
+    margin: 36px auto 0;
+
+}
+
+
+.wave-experiment-card {
+
+    position: relative;
+
+    min-height: 190px;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    padding: 28px;
+
+    box-sizing: border-box;
+
+    border:
+
+        1px solid
+
+        rgba(214, 197, 158, 0.16);
+
+    border-radius: 20px;
+
+    color: #f5ead0;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    background:
+
+        linear-gradient(
+
+            145deg,
+
+            rgba(255, 255, 255, 0.045),
+
+            rgba(255, 255, 255, 0.012)
+
+        );
+
+    transition:
+
+        transform 0.35s ease,
+
+        border-color 0.35s ease,
+
+        background 0.35s ease;
+
+}
+
+
+.wave-experiment-card:hover {
+
+    transform:
+
+        translateY(-5px);
+
+    border-color:
+
+        rgba(214, 197, 158, 0.38);
+
+    background:
+
+        linear-gradient(
+
+            145deg,
+
+            rgba(255, 255, 255, 0.075),
+
+            rgba(255, 255, 255, 0.02)
+
+        );
+
+}
+
+
+.wave-card-glow {
+
+    position: absolute;
+
+    width: 220px;
+
+    height: 220px;
+
+    left: -80px;
+
+    top: 50%;
+
+    transform:
+
+        translateY(-50%);
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(220, 201, 160, 0.13),
+
+            transparent 70%
+
+        );
+
+    pointer-events: none;
+
+}
+
+
+.wave-experiment-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 64px;
+
+    height: 64px;
+
+    flex: 0 0 64px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+
+        1px solid
+
+        rgba(214, 197, 158, 0.22);
+
+    border-radius: 50%;
+
+    color: #e7d4a8;
+
+    font-size: 30px;
+
+    background:
+
+        rgba(214, 197, 158, 0.055);
+
+}
+
+
+.wave-experiment-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    flex: 1;
+
+}
+
+
+.wave-experiment-content h2 {
+
+    margin: 0 0 8px;
+
+    color: #f5ead0;
+
+    font-size: 21px;
+
+    font-weight: 500;
+
+}
+
+
+.wave-experiment-content p {
+
+    margin: 0;
+
+    color:
+
+        rgba(245, 234, 208, 0.58);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+}
+
+
+.wave-experiment-arrow {
+
+    position: relative;
+
+    z-index: 2;
+
+    color:
+
+        rgba(245, 234, 208, 0.5);
+
+    font-family:
+
+        Arial,
+
+        sans-serif;
+
+    font-size: 22px;
+
+    transition:
+
+        transform 0.3s ease;
+
+}
+
+
+.wave-experiment-card:hover
+.wave-experiment-arrow {
+
+    transform:
+
+        translateX(5px);
+
+}
+
+
+/* =========================================================
+   WORLD HINT
+   ========================================================= */
+
+.wave-world-hint {
+
+    position: relative;
+
+    z-index: 20;
+
+    max-width: 760px;
+
+    margin: 30px auto 0;
+
+    color:
+
+        rgba(245, 234, 208, 0.42);
+
+    font-size: 13px;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   WORLD BACK BUTTON
+   ========================================================= */
+
+.wave-back-button {
+
+    position: relative;
+
+    z-index: 20;
+
+    margin: auto 0 0;
+
+    min-width: 170px;
+
+    padding: 11px 20px;
+
+    border:
+
+        1px solid
+
+        rgba(214, 197, 158, 0.22);
+
+    border-radius: 999px;
+
+    color:
+
+        rgba(245, 234, 208, 0.8);
+
+    background:
+
+        rgba(255, 255, 255, 0.025);
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+
+        transform 0.3s ease,
+
+        background 0.3s ease,
+
+        border-color 0.3s ease;
+
+}
+
+
+.wave-back-button:hover {
+
+    transform:
+
+        translateY(-2px);
+
+    border-color:
+
+        rgba(214, 197, 158, 0.4);
+
+    background:
+
+        rgba(255, 255, 255, 0.055);
+
+}
+
+
+/* =========================================================
+   WAVE INTERFERENCE EXPERIMENT
+   ========================================================= */
+
+.wave-interference-container {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1500;
+
+    display: flex;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    padding: 24px 40px 28px;
+
+    overflow: hidden;
+
+    color: #f5ead0;
+
+    background:
+
+        radial-gradient(
+
+            ellipse at center,
+
+            rgba(80, 68, 43, 0.22),
+
+            transparent 55%
+
+        ),
+
+        rgba(5, 5, 9, 0.97);
+
+}
+
+
+/* =========================================================
+   EXPERIMENT HEADER
+   ========================================================= */
+
+.wave-interference-top {
+
+    position: relative;
+
+    z-index: 20;
+
+    width: 100%;
+
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 14px;
+
+    border-bottom:
+
+        1px solid
+
+        rgba(214, 197, 158, 0.12);
+
+}
+
+
+.wave-interference-title {
+
+    margin: 0;
+
+    color: #f5ead0;
+
+    font-size: 22px;
+
+    font-weight: 500;
+
+}
+
+
+.wave-interference-back {
+
+    min-width: 125px;
+
+    padding: 10px 18px;
+
+    border:
+
+        1px solid
+
+        rgba(214, 197, 158, 0.24);
+
+    border-radius: 999px;
+
+    color:
+
+        rgba(245, 234, 208, 0.8);
+
+    background:
+
+        rgba(255, 255, 255, 0.025);
+
+    cursor: pointer;
+
+    transition:
+
+        transform 0.3s ease,
+
+        background 0.3s ease,
+
+        border-color 0.3s ease;
+
+}
+
+
+.wave-interference-back:hover {
+
+    transform:
+
+        translateY(-2px);
+
+    border-color:
+
+        rgba(214, 197, 158, 0.45);
+
+    background:
+
+        rgba(255, 255, 255, 0.05);
+
+}
+
+
+/* =========================================================
+   EXPERIMENT LAYOUT
+   ========================================================= */
+
+.wave-interference-layout {
+
+    position: relative;
+
+    z-index: 10;
+
+    flex: 1;
+
+    width: 100%;
+
+    min-height: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   INTERFERENCE CONTROLS
+   ========================================================= */
+
+.wave-interference-controls {
+
+    position: relative;
+
+    z-index: 30;
+
+    width: min(900px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+
+    margin: 18px auto 0;
+
+    padding: 16px 22px;
+
+    box-sizing: border-box;
+
+    border:
+
+        1px solid
+
+        rgba(214, 197, 158, 0.12);
+
+    border-radius: 18px;
+
+    background:
+
+        rgba(255, 255, 255, 0.025);
+
+    backdrop-filter:
+
+        blur(10px);
+
+}
+
+
+.wave-interference-control {
+
+    min-width: 0;
+
+}
+
+
+.wave-interference-control-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.wave-interference-control-header span {
+
+    color:
+
+        rgba(245, 234, 208, 0.58);
+
+    font-size: 12px;
+
+}
+
+
+.wave-interference-control-header strong {
+
+    color: #e7d4a8;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+}
+
+
+/* =========================================================
+   SLIDERS
+   ========================================================= */
+
+.wave-interference-slider {
+
+    width: 100%;
+
+    height: 4px;
+
+    appearance: none;
+
+    border-radius: 999px;
+
+    outline: none;
+
+    background:
+
+        rgba(245, 234, 208, 0.16);
+
+    cursor: pointer;
+
+}
+
+
+.wave-interference-slider::-webkit-slider-thumb {
+
+    width: 15px;
+
+    height: 15px;
+
+    appearance: none;
+
+    border:
+
+        1px solid
+
+        rgba(245, 234, 208, 0.75);
+
+    border-radius: 50%;
+
+    background: #d8c28f;
+
+    cursor: pointer;
+
+}
+
+
+.wave-interference-slider::-moz-range-thumb {
+
+    width: 15px;
+
+    height: 15px;
+
+    border:
+
+        1px solid
+
+        rgba(245, 234, 208, 0.75);
+
+    border-radius: 50%;
+
+    background: #d8c28f;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   CENTRAL THREE.JS STAGE
+   ========================================================= */
+
+.wave-interference-stage {
+
+    position: relative;
+
+    z-index: 5;
+
+    flex: 1;
+
+    width: 100%;
+
+    min-height: 260px;
+
+    margin: 18px auto 10px;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+
+            ellipse at center,
+
+            rgba(216, 194, 143, 0.045),
+
+            transparent 65%
+
+        );
+
+}
+
+
+.wave-interference-stage canvas {
+
+    display: block;
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    border-radius: inherit;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.wave-interference-actions {
+
+    position: relative;
+
+    z-index: 30;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    padding-top: 10px;
+
+    padding-bottom: 8px;
+
+}
+
+
+.wave-interference-action {
+
+    min-width: 165px;
+
+    padding: 12px 22px;
+
+    border:
+
+        1px solid
+
+        rgba(214, 197, 158, 0.25);
+
+    border-radius: 999px;
+
+    color:
+
+        rgba(245, 234, 208, 0.9);
+
+    background:
+
+        rgba(255, 255, 255, 0.035);
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+
+        transform 0.25s ease,
+
+        background 0.25s ease,
+
+        border-color 0.25s ease;
+
+}
+
+
+.wave-interference-action:hover {
+
+    transform:
+
+        translateY(-2px);
+
+    border-color:
+
+        rgba(220, 201, 160, 0.55);
+
+    background:
+
+        rgba(220, 201, 160, 0.08);
+
+}
+
+
+.wave-interference-action.primary {
+
+    color: #17140e;
+
+    border-color:
+
+        rgba(220, 201, 160, 0.65);
+
+    background: #d8c28f;
+
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+#awtaar-wave-world[dir="rtl"] {
+
+    text-align: right;
+
+}
+
+
+#awtaar-wave-world[dir="rtl"]
+.wave-experiment-card {
+
+    text-align: right;
+
+}
+
+
+#awtaar-wave-world[dir="rtl"]
+.wave-experiment-arrow {
+
+    transform:
+
+        rotate(180deg);
+
+}
+
+
+#awtaar-wave-world[dir="rtl"]
+.wave-experiment-card:hover
+.wave-experiment-arrow {
+
+    transform:
+
+        translateX(-5px)
+
+        rotate(180deg);
+
+}
+
+
+.wave-interference-container[dir="rtl"]
+.wave-interference-top {
+
+    direction: rtl;
+
+}
+
+
+.wave-interference-container[dir="rtl"]
+.wave-interference-control-header {
+
+    direction: rtl;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .wave-interference-controls {
+
+        grid-template-columns:
+
+            1fr;
+
+        gap: 14px;
+
+    }
+
+}
+
+
+@media (max-width: 760px) {
+
+    #awtaar-wave-world {
+
+        padding:
+
+            22px 18px 24px;
+
+    }
+
+
+    .wave-world-title {
+
+        font-size: 34px;
+
+    }
+
+
+    .wave-experiments {
+
+        grid-template-columns:
+
+            1fr;
+
+        margin-top: 24px;
+
+    }
+
+
+    .wave-experiment-card {
+
+        min-height: 160px;
+
+        padding: 22px;
+
+    }
+
+
+    .wave-interference-container {
+
+        padding: 18px;
+
+    }
+
+
+    .wave-interference-top {
+
+        min-height: 50px;
+
+    }
+
+
+    .wave-interference-title {
+
+        font-size: 18px;
+
+    }
+
+
+    .wave-interference-back {
+
+        min-width: 100px;
+
+        padding: 9px 14px;
+
+    }
+
+
+    .wave-interference-controls {
+
+        padding: 15px;
+
+    }
+
+
+    .wave-interference-stage {
+
+        min-height: 220px;
+
+    }
+
+
+    .wave-interference-actions {
+
+        flex-direction: column;
+
+    }
+
+
+    .wave-interference-action {
+
+        width: min(100%, 280px);
+
+    }
+
+}

@@ -1,0 +1,525 @@
+/* =========================================================
+   AWTAAR GALAXIES UI
+   Knowledge Galaxies
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+#awtaar-galaxies {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    isolation: isolate;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 40px;
+
+    box-sizing: border-box;
+
+    direction: rtl;
+
+    text-align: center;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(18, 17, 32, 0.18),
+            rgba(3, 3, 10, 0.08) 55%,
+            transparent 80%
+        );
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.6s ease,
+        visibility 0s linear 0.6s;
+
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+#awtaar-galaxies h2 {
+
+    margin: 0;
+
+    font-size:
+        clamp(32px, 4vw, 52px);
+
+    font-weight: 300;
+
+    letter-spacing: -0.5px;
+
+    color:
+        #f4ecdf;
+
+    text-shadow:
+        0 4px 30px
+        rgba(0, 0, 0, 0.65);
+
+}
+
+
+/* =========================================================
+   SUBTITLE
+   ========================================================= */
+
+#awtaar-galaxies > p {
+
+    margin:
+        12px 0 45px;
+
+    font-size: 16px;
+
+    font-weight: 300;
+
+    line-height: 1.9;
+
+    color:
+        rgba(245, 236, 223, 0.52);
+
+}
+
+
+/* =========================================================
+   GALAXIES CONTAINER
+   ========================================================= */
+
+.awtaar-galaxies-list {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 34px;
+
+    width: min(
+        1000px,
+        90vw
+    );
+
+}
+
+
+/* =========================================================
+   GALAXY ITEM
+   ========================================================= */
+
+.awtaar-galaxy {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: 150px;
+
+    height: 180px;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 22px;
+
+    color:
+        rgba(245, 236, 223, 0.62);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        transform 0.5s ease,
+        color 0.4s ease;
+
+}
+
+
+/* =========================================================
+   GALAXY CORE
+   ========================================================= */
+
+.awtaar-galaxy-core {
+
+    position: relative;
+
+    width: 88px;
+
+    height: 88px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.30);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(241, 210, 139, 0.11),
+            rgba(241, 210, 139, 0.025) 50%,
+            transparent 72%
+        );
+
+    color:
+        rgba(241, 210, 139, 0.85);
+
+    font-size: 21px;
+
+    font-weight: 300;
+
+    box-shadow:
+        0 0 25px
+        rgba(241, 210, 139, 0.06);
+
+    backdrop-filter:
+        blur(8px);
+
+    -webkit-backdrop-filter:
+        blur(8px);
+
+    transition:
+        transform 0.5s ease,
+        border-color 0.5s ease,
+        box-shadow 0.5s ease,
+        background 0.5s ease;
+
+}
+
+
+/* =========================================================
+   OUTER ORBIT
+   ========================================================= */
+
+.awtaar-galaxy-core::before {
+
+    content: '';
+
+    position: absolute;
+
+    width: 108px;
+
+    height: 44px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.14);
+
+    border-radius: 50%;
+
+    transform:
+        rotate(-22deg);
+
+    transition:
+        transform 0.6s ease,
+        border-color 0.5s ease;
+
+}
+
+
+/* =========================================================
+   INNER GLOW
+   ========================================================= */
+
+.awtaar-galaxy-core::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 5px;
+
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        #f1d28b;
+
+    box-shadow:
+        0 0 12px
+        rgba(241, 210, 139, 0.65);
+
+    opacity: 0.65;
+
+}
+
+
+/* =========================================================
+   GALAXY NAME
+   ========================================================= */
+
+.awtaar-galaxy-name {
+
+    font-size: 15px;
+
+    font-weight: 300;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.4s ease,
+        transform 0.4s ease;
+
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.awtaar-galaxy:hover {
+
+    transform:
+        translateY(-8px);
+
+    color:
+        #f1d28b;
+
+}
+
+
+.awtaar-galaxy:hover
+.awtaar-galaxy-core {
+
+    transform:
+        scale(1.10);
+
+    border-color:
+        rgba(241, 210, 139, 0.65);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(241, 210, 139, 0.18),
+            rgba(241, 210, 139, 0.035) 55%,
+            transparent 75%
+        );
+
+    box-shadow:
+        0 0 38px
+        rgba(241, 210, 139, 0.13);
+
+}
+
+
+.awtaar-galaxy:hover
+.awtaar-galaxy-core::before {
+
+    transform:
+        rotate(18deg)
+        scale(1.05);
+
+    border-color:
+        rgba(241, 210, 139, 0.30);
+
+}
+
+
+.awtaar-galaxy:hover
+.awtaar-galaxy-name {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-galaxies-back {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 48px;
+
+    padding:
+        10px 24px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.24);
+
+    border-radius: 25px;
+
+    background:
+        rgba(241, 210, 139, 0.025);
+
+    color:
+        rgba(245, 236, 223, 0.55);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 300;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    transition:
+        color 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease;
+
+}
+
+
+.awtaar-galaxies-back:hover {
+
+    color:
+        #f1d28b;
+
+    border-color:
+        rgba(241, 210, 139, 0.55);
+
+    background:
+        rgba(241, 210, 139, 0.06);
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #awtaar-galaxies {
+
+        padding:
+            30px 20px;
+
+    }
+
+
+    #awtaar-galaxies h2 {
+
+        font-size: 34px;
+
+    }
+
+
+    #awtaar-galaxies > p {
+
+        margin-bottom: 28px;
+
+        font-size: 14px;
+
+    }
+
+
+    .awtaar-galaxies-list {
+
+        gap:
+            12px;
+
+    }
+
+
+    .awtaar-galaxy {
+
+        width: 125px;
+
+        height: 150px;
+
+        gap: 17px;
+
+    }
+
+
+    .awtaar-galaxy-core {
+
+        width: 70px;
+
+        height: 70px;
+
+        font-size: 17px;
+
+    }
+
+
+    .awtaar-galaxy-core::before {
+
+        width: 88px;
+
+        height: 36px;
+
+    }
+
+
+    .awtaar-galaxy-name {
+
+        font-size: 13px;
+
+    }
+
+
+    .awtaar-galaxies-back {
+
+        margin-top: 25px;
+
+    }
+
+}
