@@ -3,39 +3,7 @@ import * as THREE from 'three'
 
 /* =========================================================
    AWTAAR — WAVE INTERFERENCE EXPERIMENT
-   =========================================================
-
-   Standalone Three.js experiment.
-
-   Compatible with WavesWorldUI.js
-
-   Public API:
-
-   addToScene(scene)
-   removeFromScene()
-   setVisible(visible)
-
-   start()
-   stop()
-   pause()
-   resume()
-   togglePause()
-
-   reset()
-
-   setAmplitude(value)
-   setWavelength(value)
-   setSourceDistance(value)
-   setFrequency(value)
-
-   getWaveData()
-
-   update(delta)
-
-   destroy()
-
    ========================================================= */
-
 
 export default class WaveInterferenceExperiment {
 
@@ -116,16 +84,8 @@ export default class WaveInterferenceExperiment {
 
 
         /* =====================================================
-           WAVE SETTINGS
+           SURFACE SETTINGS
            ===================================================== */
-
-        this.waveSpeed =
-            2.4
-
-
-        this.surfaceHeight =
-            0.8
-
 
         this.width =
             16
@@ -136,11 +96,19 @@ export default class WaveInterferenceExperiment {
 
 
         this.segmentsX =
-            100
+            140
 
 
         this.segmentsZ =
-            70
+            90
+
+
+        this.surfaceHeight =
+            0.72
+
+
+        this.waveSpeed =
+            2.6
 
 
         /* =====================================================
@@ -183,7 +151,19 @@ export default class WaveInterferenceExperiment {
             null
 
 
-        this.grid =
+        this.positionAttribute =
+            null
+
+
+        this.colorAttribute =
+            null
+
+
+        this.gridHelper =
+            null
+
+
+        this.frame =
             null
 
 
@@ -200,6 +180,14 @@ export default class WaveInterferenceExperiment {
 
 
         this.coreB =
+            null
+
+
+        this.glowA =
+            null
+
+
+        this.glowB =
             null
 
 
@@ -227,19 +215,7 @@ export default class WaveInterferenceExperiment {
             null
 
 
-        /* =====================================================
-           HELPERS
-           ===================================================== */
-
-        this.gridHelper =
-            null
-
-
-        /* =====================================================
-           BUFFER
-           ===================================================== */
-
-        this.positionAttribute =
+        this.topLight =
             null
 
 
@@ -250,18 +226,6 @@ export default class WaveInterferenceExperiment {
         this.resizeObserver =
             null
 
-
-        this.widthPixels =
-            0
-
-
-        this.heightPixels =
-            0
-
-
-        /* =====================================================
-           BUILD
-           ===================================================== */
 
         this.create()
 
@@ -295,7 +259,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE SCENE
+       SCENE
        ========================================================= */
 
     createScene() {
@@ -307,15 +271,15 @@ export default class WaveInterferenceExperiment {
 
         this.experimentScene.background =
             new THREE.Color(
-                0x050510
+                0x03050a
             )
 
 
         this.experimentScene.fog =
             new THREE.Fog(
-                0x050510,
-                10,
-                28
+                0x03050a,
+                12,
+                30
             )
 
 
@@ -323,7 +287,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE CAMERA
+       CAMERA
        ========================================================= */
 
     createCamera() {
@@ -331,7 +295,7 @@ export default class WaveInterferenceExperiment {
 
         this.camera =
             new THREE.PerspectiveCamera(
-                42,
+                40,
                 1,
                 0.1,
                 100
@@ -340,8 +304,8 @@ export default class WaveInterferenceExperiment {
 
         this.camera.position.set(
             0,
-            9.5,
-            11
+            10.5,
+            11.5
         )
 
 
@@ -356,7 +320,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE RENDERER
+       RENDERER
        ========================================================= */
 
     createRenderer() {
@@ -386,6 +350,10 @@ export default class WaveInterferenceExperiment {
             1,
             1
         )
+
+
+        this.renderer.outputColorSpace =
+            THREE.SRGBColorSpace
 
 
         this.renderer.domElement.style.width =
@@ -431,7 +399,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE LIGHTS
+       LIGHTS
        ========================================================= */
 
     createLights() {
@@ -439,8 +407,8 @@ export default class WaveInterferenceExperiment {
 
         this.ambientLight =
             new THREE.AmbientLight(
-                0xffffff,
-                0.7
+                0x7aa6c9,
+                1.1
             )
 
 
@@ -451,15 +419,15 @@ export default class WaveInterferenceExperiment {
 
         this.pointLightA =
             new THREE.PointLight(
-                0x66ccff,
-                3.5,
-                10
+                0x28a8ff,
+                5,
+                12
             )
 
 
         this.pointLightA.position.set(
             -2,
-            2,
+            2.5,
             1
         )
 
@@ -471,15 +439,15 @@ export default class WaveInterferenceExperiment {
 
         this.pointLightB =
             new THREE.PointLight(
-                0xffcc66,
-                3.5,
-                10
+                0xffc66d,
+                5,
+                12
             )
 
 
         this.pointLightB.position.set(
             2,
-            2,
+            2.5,
             1
         )
 
@@ -489,11 +457,30 @@ export default class WaveInterferenceExperiment {
         )
 
 
+        this.topLight =
+            new THREE.DirectionalLight(
+                0xe7f3ff,
+                1.2
+            )
+
+
+        this.topLight.position.set(
+            0,
+            10,
+            4
+        )
+
+
+        this.experimentScene.add(
+            this.topLight
+        )
+
+
     }
 
 
     /* =========================================================
-       CREATE EXPERIMENT
+       EXPERIMENT
        ========================================================= */
 
     createExperiment() {
@@ -507,10 +494,6 @@ export default class WaveInterferenceExperiment {
             'AwtaarWaveInterference'
 
 
-        this.group.visible =
-            true
-
-
         this.experimentScene.add(
             this.group
         )
@@ -519,6 +502,8 @@ export default class WaveInterferenceExperiment {
         this.createSurface()
 
         this.createGrid()
+
+        this.createFrame()
 
         this.createSources()
 
@@ -535,7 +520,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE SURFACE
+       SURFACE
        ========================================================= */
 
     createSurface() {
@@ -561,23 +546,46 @@ export default class WaveInterferenceExperiment {
             )
 
 
+        /* =====================================================
+           VERTEX COLORS
+           ===================================================== */
+
+        const colors =
+            new Float32Array(
+                this.positionAttribute.count * 3
+            )
+
+
+        this.colorAttribute =
+            new THREE.BufferAttribute(
+                colors,
+                3
+            )
+
+
+        this.surfaceGeometry.setAttribute(
+            'color',
+            this.colorAttribute
+        )
+
+
         this.surfaceMaterial =
             new THREE.MeshStandardMaterial({
 
-                color:
-                    0x123c62,
+                vertexColors:
+                    true,
 
                 transparent:
                     true,
 
                 opacity:
-                    0.88,
+                    0.96,
 
                 roughness:
-                    0.45,
+                    0.32,
 
                 metalness:
-                    0.15,
+                    0.18,
 
                 side:
                     THREE.DoubleSide
@@ -605,7 +613,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE GRID
+       GRID
        ========================================================= */
 
     createGrid() {
@@ -614,14 +622,14 @@ export default class WaveInterferenceExperiment {
         this.gridHelper =
             new THREE.GridHelper(
                 this.width,
-                20,
-                0x2a6f97,
-                0x12324d
+                24,
+                0x2d6d96,
+                0x16324b
             )
 
 
         this.gridHelper.position.y =
-            -0.03
+            -0.08
 
 
         this.gridHelper.material.transparent =
@@ -629,7 +637,7 @@ export default class WaveInterferenceExperiment {
 
 
         this.gridHelper.material.opacity =
-            0.3
+            0.22
 
 
         this.group.add(
@@ -641,7 +649,106 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE SOURCES
+       FRAME
+       ========================================================= */
+
+    createFrame() {
+
+
+        const shape =
+            new THREE.Shape()
+
+
+        const halfWidth =
+            this.width * 0.5
+
+
+        const halfDepth =
+            this.depth * 0.5
+
+
+        shape.moveTo(
+            -halfWidth,
+            -halfDepth
+        )
+
+
+        shape.lineTo(
+            halfWidth,
+            -halfDepth
+        )
+
+
+        shape.lineTo(
+            halfWidth,
+            halfDepth
+        )
+
+
+        shape.lineTo(
+            -halfWidth,
+            halfDepth
+        )
+
+
+        shape.lineTo(
+            -halfWidth,
+            -halfDepth
+        )
+
+
+        const points =
+            shape.getPoints()
+
+
+        const geometry =
+            new THREE.BufferGeometry()
+                .setFromPoints(
+                    points
+                )
+
+
+        geometry.rotateX(
+            -Math.PI / 2
+        )
+
+
+        const material =
+            new THREE.LineBasicMaterial({
+
+                color:
+                    0xd8bc7a,
+
+                transparent:
+                    true,
+
+                opacity:
+                    0.65
+
+            })
+
+
+        this.frame =
+            new THREE.LineLoop(
+                geometry,
+                material
+            )
+
+
+        this.frame.position.y =
+            0.02
+
+
+        this.group.add(
+            this.frame
+        )
+
+
+    }
+
+
+    /* =========================================================
+       SOURCES
        ========================================================= */
 
     createSources() {
@@ -649,7 +756,7 @@ export default class WaveInterferenceExperiment {
 
         const sourceGeometry =
             new THREE.SphereGeometry(
-                0.32,
+                0.34,
                 32,
                 32
             )
@@ -659,19 +766,19 @@ export default class WaveInterferenceExperiment {
             new THREE.MeshStandardMaterial({
 
                 color:
-                    0x47bfff,
+                    0x55caff,
 
                 emissive:
-                    0x1976d2,
+                    0x1477d1,
 
                 emissiveIntensity:
-                    2.5,
+                    3,
 
                 roughness:
-                    0.25,
+                    0.18,
 
                 metalness:
-                    0.25
+                    0.35
 
             })
 
@@ -680,19 +787,19 @@ export default class WaveInterferenceExperiment {
             new THREE.MeshStandardMaterial({
 
                 color:
-                    0xffc15c,
+                    0xffcf73,
 
                 emissive:
-                    0xff8c00,
+                    0xff9700,
 
                 emissiveIntensity:
-                    2.5,
+                    3,
 
                 roughness:
-                    0.25,
+                    0.18,
 
                 metalness:
-                    0.25
+                    0.35
 
             })
 
@@ -711,14 +818,6 @@ export default class WaveInterferenceExperiment {
             )
 
 
-        this.sourceA.position.y =
-            0.3
-
-
-        this.sourceB.position.y =
-            0.3
-
-
         this.group.add(
             this.sourceA
         )
@@ -730,27 +829,18 @@ export default class WaveInterferenceExperiment {
 
 
         /* =====================================================
-           INNER CORES
+           CORES
            ===================================================== */
 
         const coreGeometry =
             new THREE.SphereGeometry(
-                0.12,
-                20,
-                20
+                0.14,
+                24,
+                24
             )
 
 
-        const coreMaterialA =
-            new THREE.MeshBasicMaterial({
-
-                color:
-                    0xffffff
-
-            })
-
-
-        const coreMaterialB =
+        const coreMaterial =
             new THREE.MeshBasicMaterial({
 
                 color:
@@ -762,14 +852,14 @@ export default class WaveInterferenceExperiment {
         this.coreA =
             new THREE.Mesh(
                 coreGeometry,
-                coreMaterialA
+                coreMaterial
             )
 
 
         this.coreB =
             new THREE.Mesh(
                 coreGeometry,
-                coreMaterialB
+                coreMaterial.clone()
             )
 
 
@@ -783,18 +873,84 @@ export default class WaveInterferenceExperiment {
         )
 
 
+        /* =====================================================
+           GLOW
+           ===================================================== */
+
+        const glowGeometry =
+            new THREE.SphereGeometry(
+                0.58,
+                32,
+                32
+            )
+
+
+        const glowMaterialA =
+            new THREE.MeshBasicMaterial({
+
+                color:
+                    0x198fff,
+
+                transparent:
+                    true,
+
+                opacity:
+                    0.13
+
+            })
+
+
+        const glowMaterialB =
+            new THREE.MeshBasicMaterial({
+
+                color:
+                    0xffb52d,
+
+                transparent:
+                    true,
+
+                opacity:
+                    0.13
+
+            })
+
+
+        this.glowA =
+            new THREE.Mesh(
+                glowGeometry,
+                glowMaterialA
+            )
+
+
+        this.glowB =
+            new THREE.Mesh(
+                glowGeometry,
+                glowMaterialB
+            )
+
+
+        this.group.add(
+            this.glowA
+        )
+
+
+        this.group.add(
+            this.glowB
+        )
+
+
     }
 
 
     /* =========================================================
-       CREATE WAVE RINGS
+       WAVE RINGS
        ========================================================= */
 
     createWaveRings() {
 
 
         const ringCount =
-            7
+            9
 
 
         for (
@@ -806,7 +962,7 @@ export default class WaveInterferenceExperiment {
 
             const ringA =
                 this.createRing(
-                    0x47bfff
+                    0x36b9ff
                 )
 
 
@@ -843,6 +999,7 @@ export default class WaveInterferenceExperiment {
                 ringB
             )
 
+
         }
 
 
@@ -871,14 +1028,15 @@ export default class WaveInterferenceExperiment {
 
         const points =
             curve.getPoints(
-                80
+                100
             )
 
 
         const geometry =
-            new THREE.BufferGeometry().setFromPoints(
-                points
-            )
+            new THREE.BufferGeometry()
+                .setFromPoints(
+                    points
+                )
 
 
         geometry.rotateX(
@@ -895,7 +1053,7 @@ export default class WaveInterferenceExperiment {
                     true,
 
                 opacity:
-                    0.45
+                    0.5
 
             })
 
@@ -908,7 +1066,7 @@ export default class WaveInterferenceExperiment {
 
 
         ring.position.y =
-            0.08
+            0.11
 
 
         ring.scale.set(
@@ -925,7 +1083,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       UPDATE SOURCE POSITIONS
+       SOURCE POSITIONS
        ========================================================= */
 
     updateSourcePositions() {
@@ -943,20 +1101,19 @@ export default class WaveInterferenceExperiment {
 
 
         const halfDistance =
-            this.sourceDistance *
-            0.5
+            this.sourceDistance * 0.5
 
 
         this.sourceA.position.set(
             -halfDistance,
-            0.28,
+            0.32,
             0
         )
 
 
         this.sourceB.position.set(
             halfDistance,
-            0.28,
+            0.32,
             0
         )
 
@@ -983,11 +1140,55 @@ export default class WaveInterferenceExperiment {
         }
 
 
+        if (
+            this.glowA
+        ) {
+
+            this.glowA.position.copy(
+                this.sourceA.position
+            )
+
+        }
+
+
+        if (
+            this.glowB
+        ) {
+
+            this.glowB.position.copy(
+                this.sourceB.position
+            )
+
+        }
+
+
+        if (
+            this.pointLightA
+        ) {
+
+            this.pointLightA.position.x =
+                this.sourceA.position.x
+
+
+        }
+
+
+        if (
+            this.pointLightB
+        ) {
+
+            this.pointLightB.position.x =
+                this.sourceB.position.x
+
+
+        }
+
+
     }
 
 
     /* =========================================================
-       UPDATE SURFACE
+       SURFACE UPDATE
        ========================================================= */
 
     updateSurface() {
@@ -995,6 +1196,8 @@ export default class WaveInterferenceExperiment {
 
         if (
             !this.positionAttribute
+            ||
+            !this.colorAttribute
         ) {
 
             return
@@ -1025,9 +1228,7 @@ export default class WaveInterferenceExperiment {
 
 
         const waveNumber =
-            (
-                Math.PI * 2
-            )
+            (Math.PI * 2)
             /
             wavelength
 
@@ -1039,12 +1240,36 @@ export default class WaveInterferenceExperiment {
 
 
         const damping =
-            0.16
+            0.13
 
 
         const amplitude =
             this.amplitude *
             this.surfaceHeight
+
+
+        const baseColor =
+            new THREE.Color(
+                0x0c2940
+            )
+
+
+        const constructiveColor =
+            new THREE.Color(
+                0xffbd55
+            )
+
+
+        const destructiveColor =
+            new THREE.Color(
+                0x154f79
+            )
+
+
+        const crestColor =
+            new THREE.Color(
+                0x4bc7ff
+            )
 
 
         for (
@@ -1066,13 +1291,8 @@ export default class WaveInterferenceExperiment {
                 )
 
 
-            /* ================================================
-               DISTANCE FROM SOURCE A
-               ================================================ */
-
             const dxA =
-                x -
-                sourceAX
+                x - sourceAX
 
 
             const distanceA =
@@ -1082,13 +1302,8 @@ export default class WaveInterferenceExperiment {
                 )
 
 
-            /* ================================================
-               DISTANCE FROM SOURCE B
-               ================================================ */
-
             const dxB =
-                x -
-                sourceBX
+                x - sourceBX
 
 
             const distanceB =
@@ -1097,10 +1312,6 @@ export default class WaveInterferenceExperiment {
                     z * z
                 )
 
-
-            /* ================================================
-               WAVE A
-               ================================================ */
 
             const waveA =
                 Math.sin(
@@ -1116,14 +1327,9 @@ export default class WaveInterferenceExperiment {
                 )
                 *
                 Math.exp(
-                    -distanceA *
-                    damping
+                    -distanceA * damping
                 )
 
-
-            /* ================================================
-               WAVE B
-               ================================================ */
 
             const waveB =
                 Math.sin(
@@ -1139,14 +1345,9 @@ export default class WaveInterferenceExperiment {
                 )
                 *
                 Math.exp(
-                    -distanceB *
-                    damping
+                    -distanceB * damping
                 )
 
-
-            /* ================================================
-               INTERFERENCE
-               ================================================ */
 
             const interference =
                 (
@@ -1163,10 +1364,98 @@ export default class WaveInterferenceExperiment {
             )
 
 
+            /* =================================================
+               INTERFERENCE VISUALIZATION
+               ================================================= */
+
+            const difference =
+                Math.abs(
+                    waveA +
+                    waveB
+                )
+
+
+            const cancellation =
+                1 -
+                Math.min(
+                    1,
+                    difference
+                )
+
+
+            const constructive =
+                Math.min(
+                    1,
+                    difference
+                )
+
+
+            const normalizedHeight =
+                Math.min(
+                    1,
+                    Math.abs(
+                        interference
+                    )
+                    /
+                    Math.max(
+                        0.001,
+                        amplitude * 2
+                    )
+                )
+
+
+            const color =
+                baseColor.clone()
+
+
+            if (
+                constructive > 0.72
+            ) {
+
+                color.lerp(
+                    constructiveColor,
+                    (constructive - 0.72) / 0.28
+                )
+
+            }
+
+            else if (
+                cancellation > 0.82
+            ) {
+
+                color.lerp(
+                    destructiveColor,
+                    (cancellation - 0.82) / 0.18
+                )
+
+            }
+
+            else {
+
+                color.lerp(
+                    crestColor,
+                    normalizedHeight * 0.38
+                )
+
+            }
+
+
+            this.colorAttribute.setXYZ(
+                i,
+                color.r,
+                color.g,
+                color.b
+            )
+
+
         }
 
 
         this.positionAttribute.needsUpdate =
+            true
+
+
+        this.colorAttribute.needsUpdate =
             true
 
 
@@ -1177,7 +1466,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       UPDATE RINGS
+       RINGS UPDATE
        ========================================================= */
 
     updateRings() {
@@ -1185,7 +1474,7 @@ export default class WaveInterferenceExperiment {
 
         const spacing =
             Math.max(
-                0.8,
+                0.7,
                 this.wavelength
             )
 
@@ -1213,10 +1502,6 @@ export default class WaveInterferenceExperiment {
 
     }
 
-
-    /* =========================================================
-       UPDATE RING SET
-       ========================================================= */
 
     updateRingSet(
         rings,
@@ -1251,15 +1536,13 @@ export default class WaveInterferenceExperiment {
 
 
             const offset =
-                i *
-                spacing
+                i * spacing
 
 
             const radius =
                 (
                     (
-                        this.time *
-                        speed
+                        this.time * speed
                     )
                     +
                     offset
@@ -1284,7 +1567,7 @@ export default class WaveInterferenceExperiment {
 
 
             ring.position.y =
-                0.09
+                0.12
 
 
             ring.scale.set(
@@ -1295,13 +1578,11 @@ export default class WaveInterferenceExperiment {
 
 
             const opacity =
-                0.5 *
+                0.48 *
                 (
                     1 -
-                    (
-                        safeRadius /
-                        maxRadius
-                    )
+                    safeRadius /
+                    maxRadius
                 )
 
 
@@ -1319,7 +1600,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       UPDATE SOURCE PULSE
+       SOURCE PULSE
        ========================================================= */
 
     updateSourcePulse() {
@@ -1346,7 +1627,7 @@ export default class WaveInterferenceExperiment {
                     this.frequency
                 )
                 *
-                0.22
+                0.16
             )
 
 
@@ -1360,6 +1641,36 @@ export default class WaveInterferenceExperiment {
         )
 
 
+        if (
+            this.glowA
+        ) {
+
+            this.glowA.scale.setScalar(
+                1 +
+                (
+                    pulse - 1
+                ) *
+                1.8
+            )
+
+        }
+
+
+        if (
+            this.glowB
+        ) {
+
+            this.glowB.scale.setScalar(
+                1 +
+                (
+                    pulse - 1
+                ) *
+                1.8
+            )
+
+        }
+
+
         const corePulse =
             1 +
             (
@@ -1370,7 +1681,7 @@ export default class WaveInterferenceExperiment {
                     this.frequency
                 )
                 *
-                0.3
+                0.28
             )
 
 
@@ -1400,18 +1711,11 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       ADD TO SCENE
+       COMPATIBILITY
        ========================================================= */
 
     addToScene(scene = null) {
 
-
-        /*
-         * This experiment has its own scene.
-         *
-         * The argument is accepted only to maintain
-         * compatibility with WavesWorldUI.
-         */
 
         if (
             scene
@@ -1425,10 +1729,6 @@ export default class WaveInterferenceExperiment {
 
     }
 
-
-    /* =========================================================
-       REMOVE FROM SCENE
-       ========================================================= */
 
     removeFromScene() {
 
@@ -1449,33 +1749,26 @@ export default class WaveInterferenceExperiment {
     }
 
 
-    /* =========================================================
-       SET VISIBLE
-       ========================================================= */
-
     setVisible(visible) {
 
 
         if (
-            !this.group
+            this.group
         ) {
 
-            return
+            this.group.visible =
+                Boolean(
+                    visible
+                )
 
         }
-
-
-        this.group.visible =
-            Boolean(
-                visible
-            )
 
 
     }
 
 
     /* =========================================================
-       START
+       START / STOP
        ========================================================= */
 
     start() {
@@ -1510,7 +1803,6 @@ export default class WaveInterferenceExperiment {
 
         this.resize()
 
-
         this.updateSurface()
 
         this.updateRings()
@@ -1520,10 +1812,6 @@ export default class WaveInterferenceExperiment {
 
     }
 
-
-    /* =========================================================
-       STOP
-       ========================================================= */
 
     stop() {
 
@@ -1539,10 +1827,6 @@ export default class WaveInterferenceExperiment {
     }
 
 
-    /* =========================================================
-       PAUSE
-       ========================================================= */
-
     pause() {
 
 
@@ -1553,10 +1837,6 @@ export default class WaveInterferenceExperiment {
     }
 
 
-    /* =========================================================
-       RESUME
-       ========================================================= */
-
     resume() {
 
 
@@ -1566,10 +1846,6 @@ export default class WaveInterferenceExperiment {
 
     }
 
-
-    /* =========================================================
-       TOGGLE PAUSE
-       ========================================================= */
 
     togglePause() {
 
@@ -1585,22 +1861,18 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       SET AMPLITUDE
+       PARAMETERS
        ========================================================= */
 
     setAmplitude(value) {
 
 
         const number =
-            Number(
-                value
-            )
+            Number(value)
 
 
         if (
-            !Number.isFinite(
-                number
-            )
+            !Number.isFinite(number)
         ) {
 
             return
@@ -1621,23 +1893,15 @@ export default class WaveInterferenceExperiment {
     }
 
 
-    /* =========================================================
-       SET WAVELENGTH
-       ========================================================= */
-
     setWavelength(value) {
 
 
         const number =
-            Number(
-                value
-            )
+            Number(value)
 
 
         if (
-            !Number.isFinite(
-                number
-            )
+            !Number.isFinite(number)
         ) {
 
             return
@@ -1658,23 +1922,15 @@ export default class WaveInterferenceExperiment {
     }
 
 
-    /* =========================================================
-       SET SOURCE DISTANCE
-       ========================================================= */
-
     setSourceDistance(value) {
 
 
         const number =
-            Number(
-                value
-            )
+            Number(value)
 
 
         if (
-            !Number.isFinite(
-                number
-            )
+            !Number.isFinite(number)
         ) {
 
             return
@@ -1698,23 +1954,15 @@ export default class WaveInterferenceExperiment {
     }
 
 
-    /* =========================================================
-       SET FREQUENCY
-       ========================================================= */
-
     setFrequency(value) {
 
 
         const number =
-            Number(
-                value
-            )
+            Number(value)
 
 
         if (
-            !Number.isFinite(
-                number
-            )
+            !Number.isFinite(number)
         ) {
 
             return
@@ -1736,7 +1984,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       GET WAVE DATA
+       DATA
        ========================================================= */
 
     getWaveData() {
@@ -1903,7 +2151,7 @@ export default class WaveInterferenceExperiment {
 
 
     /* =========================================================
-       CREATE RESIZE OBSERVER
+       RESIZE
        ========================================================= */
 
     createResizeObserver() {
@@ -1912,26 +2160,6 @@ export default class WaveInterferenceExperiment {
         if (
             !this.container
         ) {
-
-            return
-
-        }
-
-
-        if (
-            typeof ResizeObserver ===
-            'undefined'
-        ) {
-
-            window.addEventListener(
-                'resize',
-                () => {
-
-                    this.resize()
-
-                }
-            )
-
 
             return
 
@@ -1955,10 +2183,6 @@ export default class WaveInterferenceExperiment {
 
     }
 
-
-    /* =========================================================
-       RESIZE
-       ========================================================= */
 
     resize() {
 
@@ -1995,17 +2219,8 @@ export default class WaveInterferenceExperiment {
         }
 
 
-        this.widthPixels =
-            width
-
-
-        this.heightPixels =
-            height
-
-
         this.camera.aspect =
-            width /
-            height
+            width / height
 
 
         this.camera.updateProjectionMatrix()
@@ -2015,14 +2230,6 @@ export default class WaveInterferenceExperiment {
             width,
             height,
             false
-        )
-
-
-        this.renderer.setPixelRatio(
-            Math.min(
-                window.devicePixelRatio,
-                2
-            )
         )
 
 
@@ -2043,20 +2250,11 @@ export default class WaveInterferenceExperiment {
             false
 
 
-        this.paused =
-            false
-
-
-        /* =====================================================
-           RESIZE OBSERVER
-           ===================================================== */
-
         if (
             this.resizeObserver
         ) {
 
             this.resizeObserver.disconnect()
-
 
             this.resizeObserver =
                 null
@@ -2064,17 +2262,12 @@ export default class WaveInterferenceExperiment {
         }
 
 
-        /* =====================================================
-           DISPOSE GROUP
-           ===================================================== */
-
         if (
             this.group
         ) {
 
             this.group.traverse(
                 object => {
-
 
                     if (
                         object.geometry
@@ -2089,7 +2282,6 @@ export default class WaveInterferenceExperiment {
                         object.material
                     ) {
 
-
                         if (
                             Array.isArray(
                                 object.material
@@ -2097,11 +2289,7 @@ export default class WaveInterferenceExperiment {
                         ) {
 
                             object.material.forEach(
-                                material => {
-
-                                    material.dispose()
-
-                                }
+                                material => material.dispose()
                             )
 
                         }
@@ -2112,25 +2300,18 @@ export default class WaveInterferenceExperiment {
 
                         }
 
-
                     }
 
 
                 }
             )
 
-
         }
 
-
-        /* =====================================================
-           REMOVE CANVAS
-           ===================================================== */
 
         if (
             this.renderer
         ) {
-
 
             this.renderer.dispose()
 
@@ -2147,13 +2328,8 @@ export default class WaveInterferenceExperiment {
 
             }
 
-
         }
 
-
-        /* =====================================================
-           CLEAR SCENE
-           ===================================================== */
 
         if (
             this.experimentScene
@@ -2164,31 +2340,11 @@ export default class WaveInterferenceExperiment {
         }
 
 
-        /* =====================================================
-           NULL REFERENCES
-           ===================================================== */
-
         this.group =
             null
 
 
         this.surface =
-            null
-
-
-        this.surfaceGeometry =
-            null
-
-
-        this.surfaceMaterial =
-            null
-
-
-        this.positionAttribute =
-            null
-
-
-        this.gridHelper =
             null
 
 
@@ -2200,31 +2356,7 @@ export default class WaveInterferenceExperiment {
             null
 
 
-        this.coreA =
-            null
-
-
-        this.coreB =
-            null
-
-
-        this.ringsA =
-            []
-
-
-        this.ringsB =
-            []
-
-
-        this.ambientLight =
-            null
-
-
-        this.pointLightA =
-            null
-
-
-        this.pointLightB =
+        this.renderer =
             null
 
 
@@ -2232,23 +2364,7 @@ export default class WaveInterferenceExperiment {
             null
 
 
-        this.renderer =
-            null
-
-
-        this.clock =
-            null
-
-
         this.experimentScene =
-            null
-
-
-        this.scene =
-            null
-
-
-        this.parent =
             null
 
 

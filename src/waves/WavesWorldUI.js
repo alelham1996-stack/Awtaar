@@ -1,13 +1,69 @@
+/* =========================================================
+   AWTAAR — WAVES WORLD UI
+   =========================================================
+
+   RESPONSIBILITY
+   --------------
+   Wave World navigation + experiment management.
+
+   EXPERIMENTS
+   -----------
+   1. Wave Interference
+   2. Doppler Effect
+
+   ARCHITECTURE
+   ------------
+   PhysicsWorldUI
+        ↓
+   WavesWorldUI
+        ↓
+   ┌─────────────────────────────┐
+   │ WaveInterferenceExperiment  │
+   │ WaveDopplerUI               │
+   └─────────────────────────────┘
+        ↓
+   DopplerExperiment
+        ↓
+   Three.js Scene
+
+   ========================================================= */
+
+
+console.log(
+    '🔥 AWTAAR TEST — WAVES WORLD UI IS LOADED'
+)
+
+
+/* =========================================================
+   THREE
+   ========================================================= */
+
 import * as THREE from 'three'
+
+
+/* =========================================================
+   CSS
+   ========================================================= */
 
 import './WaveInterference.css'
 import './WaveDoppler.css'
 
+
+/* =========================================================
+   EXPERIMENTS
+   ========================================================= */
+
 import WaveInterferenceExperiment
     from './WaveInterferenceExperiment.js'
 
+
 import WaveDopplerUI
     from './WaveDopplerUI.js'
+
+
+/* =========================================================
+   LANGUAGE
+   ========================================================= */
 
 import {
     getLanguage
@@ -36,7 +92,19 @@ export default class WavesWorldUI {
 
 
         this.scene =
-            scene
+            scene || null
+
+
+        console.log(
+            '🌊 WavesWorldUI: constructor',
+            {
+                physicsWorldUI:
+                    this.physicsWorldUI,
+
+                scene:
+                    this.scene
+            }
+        )
 
 
         /* =====================================================
@@ -56,26 +124,10 @@ export default class WavesWorldUI {
 
 
         /* =====================================================
-           INTERFERENCE CONTAINER
+           INTERFERENCE
            ===================================================== */
 
         this.interferenceContainer =
-            null
-
-
-        /* =====================================================
-           INTERFERENCE THREE.JS
-           ===================================================== */
-
-        this.interferenceScene =
-            null
-
-
-        this.interferenceCamera =
-            null
-
-
-        this.interferenceRenderer =
             null
 
 
@@ -91,17 +143,13 @@ export default class WavesWorldUI {
             null
 
 
-        this.interferenceResizeHandler =
+        this.waveInterferenceExperiment =
             null
 
 
         /* =====================================================
-           EXPERIMENTS
+           DOPPLER
            ===================================================== */
-
-        this.waveInterferenceExperiment =
-            null
-
 
         this.dopplerUI =
             null
@@ -116,7 +164,7 @@ export default class WavesWorldUI {
 
 
         this.isInterferenceRunning =
-            true
+            false
 
 
         /* =====================================================
@@ -136,11 +184,10 @@ export default class WavesWorldUI {
 
 
         /* =====================================================
-           BUILD
+           CREATE
            ===================================================== */
 
         this.create()
-
 
     }
 
@@ -151,6 +198,28 @@ export default class WavesWorldUI {
 
     create() {
 
+
+        console.log(
+            '🌊 WavesWorldUI: CREATE'
+        )
+
+
+        if (
+            this.root
+        ) {
+
+            console.warn(
+                '⚠️ WavesWorldUI: root already exists'
+            )
+
+            return
+
+        }
+
+
+        /* =====================================================
+           ROOT
+           ===================================================== */
 
         this.root =
             document.createElement(
@@ -195,8 +264,17 @@ export default class WavesWorldUI {
             'none'
 
 
-        this.bindWorldEvents()
+        this.root.style.display =
+            'none'
 
+
+        console.log(
+            '🌊 WavesWorldUI: ROOT CREATED',
+            this.root
+        )
+
+
+        this.bindWorldEvents()
 
     }
 
@@ -274,9 +352,11 @@ export default class WavesWorldUI {
                     ${eyebrow}
                 </p>
 
+
                 <h1 class="wave-world-title">
                     ${title}
                 </h1>
+
 
                 <p class="wave-world-subtitle">
                     ${subtitle}
@@ -293,7 +373,7 @@ export default class WavesWorldUI {
 
 
                 <!-- =========================================
-                     WAVE INTERFERENCE
+                     INTERFERENCE
                      ========================================= -->
 
                 <button
@@ -316,6 +396,7 @@ export default class WavesWorldUI {
                             ${interferenceTitle}
                         </h2>
 
+
                         <p>
                             ${interferenceDescription}
                         </p>
@@ -331,7 +412,7 @@ export default class WavesWorldUI {
 
 
                 <!-- =========================================
-                     DOPPLER EFFECT
+                     DOPPLER
                      ========================================= -->
 
                 <button
@@ -354,6 +435,7 @@ export default class WavesWorldUI {
                             ${dopplerTitle}
                         </h2>
 
+
                         <p>
                             ${dopplerDescription}
                         </p>
@@ -367,7 +449,6 @@ export default class WavesWorldUI {
 
                 </button>
 
-
             </div>
 
 
@@ -376,9 +457,7 @@ export default class WavesWorldUI {
                  ============================================= -->
 
             <div class="wave-world-hint">
-
                 ${hint}
-
             </div>
 
 
@@ -391,13 +470,10 @@ export default class WavesWorldUI {
                 class="wave-back-button"
                 data-action="back"
             >
-
                 ${back}
-
             </button>
 
         `
-
 
     }
 
@@ -412,6 +488,10 @@ export default class WavesWorldUI {
         if (
             !this.root
         ) {
+
+            console.error(
+                '❌ WavesWorldUI: root missing'
+            )
 
             return
 
@@ -436,8 +516,23 @@ export default class WavesWorldUI {
             )
 
 
+        console.log(
+            '🌊 WavesWorldUI: buttons',
+            {
+                interference:
+                    !!interferenceButton,
+
+                doppler:
+                    !!dopplerButton,
+
+                back:
+                    !!backButton
+            }
+        )
+
+
         /* =====================================================
-           OPEN INTERFERENCE
+           INTERFERENCE
            ===================================================== */
 
         if (
@@ -446,7 +541,17 @@ export default class WavesWorldUI {
 
             interferenceButton.addEventListener(
                 'click',
-                () => {
+                event => {
+
+                    event.preventDefault()
+
+                    event.stopPropagation()
+
+
+                    console.log(
+                        '〰️ WavesWorldUI: INTERFERENCE CLICKED'
+                    )
+
 
                     this.openInterferenceExperiment()
 
@@ -457,7 +562,7 @@ export default class WavesWorldUI {
 
 
         /* =====================================================
-           OPEN DOPPLER
+           DOPPLER
            ===================================================== */
 
         if (
@@ -466,7 +571,17 @@ export default class WavesWorldUI {
 
             dopplerButton.addEventListener(
                 'click',
-                () => {
+                event => {
+
+                    event.preventDefault()
+
+                    event.stopPropagation()
+
+
+                    console.log(
+                        '🔵 WavesWorldUI: DOPPLER CLICKED'
+                    )
+
 
                     this.openDopplerExperiment()
 
@@ -486,7 +601,17 @@ export default class WavesWorldUI {
 
             backButton.addEventListener(
                 'click',
-                () => {
+                event => {
+
+                    event.preventDefault()
+
+                    event.stopPropagation()
+
+
+                    console.log(
+                        '↩️ WavesWorldUI: BACK CLICKED'
+                    )
+
 
                     this.hide()
 
@@ -495,13 +620,14 @@ export default class WavesWorldUI {
                         () => {
 
                             if (
-                                this.physicsWorldUI
-                                &&
-                                typeof this.physicsWorldUI.returnFromWaves
+                                this.physicsWorldUI &&
+                                typeof this.physicsWorldUI
+                                    .returnFromWaves
                                 === 'function'
                             ) {
 
-                                this.physicsWorldUI.returnFromWaves()
+                                this.physicsWorldUI
+                                    .returnFromWaves()
 
                             }
 
@@ -514,7 +640,6 @@ export default class WavesWorldUI {
 
         }
 
-
     }
 
 
@@ -525,9 +650,18 @@ export default class WavesWorldUI {
     show() {
 
 
+        console.log(
+            '🌊 WavesWorldUI: SHOW'
+        )
+
+
         if (
             !this.root
         ) {
+
+            console.error(
+                '❌ WavesWorldUI: cannot show — root missing'
+            )
 
             return
 
@@ -565,6 +699,10 @@ export default class WavesWorldUI {
         )
 
 
+        console.log(
+            '🌊 WavesWorldUI: WORLD VISIBLE'
+        )
+
     }
 
 
@@ -584,7 +722,9 @@ export default class WavesWorldUI {
         }
 
 
-        this.closeExperiment()
+        console.log(
+            '🌊 WavesWorldUI: HIDE'
+        )
 
 
         this.root.style.opacity =
@@ -599,8 +739,7 @@ export default class WavesWorldUI {
             () => {
 
                 if (
-                    this.root
-                    &&
+                    this.root &&
                     this.root.style.opacity === '0'
                 ) {
 
@@ -617,34 +756,45 @@ export default class WavesWorldUI {
             550
         )
 
-
     }
 
 
     /* =========================================================
-       OPEN / CLOSE
+       OPEN
        ========================================================= */
 
     open() {
 
 
+        console.log(
+            '🌊 STEP 5 — WavesWorldUI.open() CALLED'
+        )
+
+
         this.show()
-
-
-    }
-
-
-    close() {
-
-
-        this.hide()
-
 
     }
 
 
     /* =========================================================
-       UPDATE LANGUAGE
+       CLOSE
+       ========================================================= */
+
+    close() {
+
+
+        console.log(
+            '🌊 WavesWorldUI.close() CALLED'
+        )
+
+
+        this.hide()
+
+    }
+
+
+    /* =========================================================
+       LANGUAGE
        ========================================================= */
 
     updateLanguage() {
@@ -671,18 +821,25 @@ export default class WavesWorldUI {
         )
 
 
+        /*
+         * Never rebuild the world while
+         * an experiment is active.
+         */
+
         if (
-            !this.activeExperiment
+            this.activeExperiment
         ) {
 
-            this.root.innerHTML =
-                this.getWorldHTML()
-
-
-            this.bindWorldEvents()
+            return
 
         }
 
+
+        this.root.innerHTML =
+            this.getWorldHTML()
+
+
+        this.bindWorldEvents()
 
     }
 
@@ -692,6 +849,11 @@ export default class WavesWorldUI {
        ========================================================= */
 
     openInterferenceExperiment() {
+
+
+        console.log(
+            '〰️ WavesWorldUI: OPEN INTERFERENCE'
+        )
 
 
         this.closeExperiment()
@@ -723,6 +885,10 @@ export default class WavesWorldUI {
 
             this.root.style.visibility =
                 'hidden'
+
+
+            this.root.style.display =
+                'none'
 
         }
 
@@ -759,7 +925,7 @@ export default class WavesWorldUI {
 
 
         /* =====================================================
-           GET STAGE
+           STAGE
            ===================================================== */
 
         this.interferenceStage =
@@ -768,48 +934,88 @@ export default class WavesWorldUI {
             )
 
 
-        /* =====================================================
-           CREATE LOCAL THREE.JS SCENE
-           ===================================================== */
+        if (
+            !this.interferenceStage
+        ) {
 
-        this.createInterferenceScene()
+            console.error(
+                '❌ Wave interference stage not found'
+            )
+
+
+            this.activeExperiment =
+                null
+
+
+            this.show()
+
+
+            return
+
+        }
 
 
         /* =====================================================
            CREATE EXPERIMENT
            ===================================================== */
 
-        this.waveInterferenceExperiment =
-            new WaveInterferenceExperiment(
-                {
-                    scene:
-                        this.interferenceScene,
+        try {
 
-                    amplitude:
-                        this.amplitude,
+            this.waveInterferenceExperiment =
+                new WaveInterferenceExperiment(
+                    {
+                        container:
+                            this.interferenceStage,
 
-                    wavelength:
-                        this.wavelength,
+                        amplitude:
+                            this.amplitude,
 
-                    frequency:
-                        this.frequency
-                }
-            )
+                        wavelength:
+                            this.wavelength,
 
+                        frequency:
+                            this.frequency,
 
-        if (
-            typeof this.waveInterferenceExperiment.addToScene
-            === 'function'
+                        sourceDistance:
+                            3.4
+                    }
+                )
+
+        }
+
+        catch (
+            error
         ) {
 
-            this.waveInterferenceExperiment.addToScene(
-                this.interferenceScene
+            console.error(
+                '❌ Could not create WaveInterferenceExperiment',
+                error
             )
+
+
+            this.closeExperiment()
+
+            this.show()
+
+            return
 
         }
 
 
+        /* =====================================================
+           CLOCK
+           ===================================================== */
+
+        this.interferenceClock =
+            new THREE.Clock()
+
+
+        /* =====================================================
+           START
+           ===================================================== */
+
         if (
+            this.waveInterferenceExperiment &&
             typeof this.waveInterferenceExperiment.start
             === 'function'
         ) {
@@ -830,232 +1036,34 @@ export default class WavesWorldUI {
 
 
         /* =====================================================
-           RENDER LOOP
+           LOOP
            ===================================================== */
 
         this.startInterferenceRenderLoop()
 
-
     }
 
 
     /* =========================================================
-       CREATE INTERFERENCE SCENE
-       ========================================================= */
-
-    createInterferenceScene() {
-
-
-        if (
-            !this.interferenceStage
-        ) {
-
-            return
-
-        }
-
-
-        const width =
-            this.interferenceStage.clientWidth
-            ||
-            800
-
-
-        const height =
-            this.interferenceStage.clientHeight
-            ||
-            500
-
-
-        /* =====================================================
-           SCENE
-           ===================================================== */
-
-        this.interferenceScene =
-            new THREE.Scene()
-
-
-        this.interferenceScene.background =
-            new THREE.Color(
-                0x05050a
-            )
-
-
-        /* =====================================================
-           CAMERA
-           ===================================================== */
-
-        this.interferenceCamera =
-            new THREE.PerspectiveCamera(
-                45,
-                width / height,
-                0.1,
-                100
-            )
-
-
-        this.interferenceCamera.position.set(
-            0,
-            10,
-            12
-        )
-
-
-        this.interferenceCamera.lookAt(
-            0,
-            0,
-            0
-        )
-
-
-        /* =====================================================
-           RENDERER
-           ===================================================== */
-
-        this.interferenceRenderer =
-            new THREE.WebGLRenderer(
-                {
-                    antialias:
-                        true,
-
-                    alpha:
-                        true
-                }
-            )
-
-
-        this.interferenceRenderer.setPixelRatio(
-            Math.min(
-                window.devicePixelRatio,
-                2
-            )
-        )
-
-
-        this.interferenceRenderer.setSize(
-            width,
-            height
-        )
-
-
-        this.interferenceRenderer.outputColorSpace =
-            THREE.SRGBColorSpace
-
-
-        this.interferenceStage.appendChild(
-            this.interferenceRenderer.domElement
-        )
-
-
-        /* =====================================================
-           CLOCK
-           ===================================================== */
-
-        this.interferenceClock =
-            new THREE.Clock()
-
-
-        /* =====================================================
-           GRID
-           ===================================================== */
-
-        const grid =
-            new THREE.GridHelper(
-                18,
-                18
-            )
-
-
-        grid.position.y =
-            -0.04
-
-
-        this.interferenceScene.add(
-            grid
-        )
-
-
-        /* =====================================================
-           RESIZE
-           ===================================================== */
-
-        this.interferenceResizeHandler =
-            () => {
-
-                this.resizeInterferenceScene()
-
-            }
-
-
-        window.addEventListener(
-            'resize',
-            this.interferenceResizeHandler
-        )
-
-
-    }
-
-
-    /* =========================================================
-       RESIZE INTERFERENCE
-       ========================================================= */
-
-    resizeInterferenceScene() {
-
-
-        if (
-            !this.interferenceStage
-            ||
-            !this.interferenceCamera
-            ||
-            !this.interferenceRenderer
-        ) {
-
-            return
-
-        }
-
-
-        const width =
-            this.interferenceStage.clientWidth
-
-
-        const height =
-            this.interferenceStage.clientHeight
-
-
-        if (
-            width <= 0
-            ||
-            height <= 0
-        ) {
-
-            return
-
-        }
-
-
-        this.interferenceCamera.aspect =
-            width / height
-
-
-        this.interferenceCamera.updateProjectionMatrix()
-
-
-        this.interferenceRenderer.setSize(
-            width,
-            height
-        )
-
-
-    }
-
-
-    /* =========================================================
-       INTERFERENCE RENDER LOOP
+       INTERFERENCE LOOP
        ========================================================= */
 
     startInterferenceRenderLoop() {
+
+
+        if (
+            this.interferenceAnimationFrame
+        ) {
+
+            cancelAnimationFrame(
+                this.interferenceAnimationFrame
+            )
+
+
+            this.interferenceAnimationFrame =
+                null
+
+        }
 
 
         const render =
@@ -1063,8 +1071,8 @@ export default class WavesWorldUI {
 
 
                 if (
-                    this.activeExperiment
-                    !== 'interference'
+                    this.activeExperiment !==
+                    'interference'
                 ) {
 
                     return
@@ -1079,32 +1087,15 @@ export default class WavesWorldUI {
 
 
                 if (
-                    this.waveInterferenceExperiment
-                    &&
-                    this.isInterferenceRunning
-                    &&
+                    this.waveInterferenceExperiment &&
                     typeof this.waveInterferenceExperiment.update
                     === 'function'
                 ) {
 
                     this.waveInterferenceExperiment.update(
-                        delta
-                    )
-
-                }
-
-
-                if (
-                    this.interferenceRenderer
-                    &&
-                    this.interferenceScene
-                    &&
-                    this.interferenceCamera
-                ) {
-
-                    this.interferenceRenderer.render(
-                        this.interferenceScene,
-                        this.interferenceCamera
+                        this.isInterferenceRunning
+                            ? delta
+                            : 0
                     )
 
                 }
@@ -1119,7 +1110,6 @@ export default class WavesWorldUI {
 
 
         render()
-
 
     }
 
@@ -1181,7 +1171,6 @@ export default class WavesWorldUI {
 
             <div class="wave-interference-top">
 
-
                 <button
                     type="button"
                     class="wave-interference-back"
@@ -1195,33 +1184,20 @@ export default class WavesWorldUI {
                     ${title}
                 </h2>
 
-
             </div>
 
 
             <div class="wave-interference-layout">
 
-
-                <!-- =========================================
-                     THREE.JS STAGE
-                     ========================================= -->
-
                 <div
                     class="wave-interference-stage"
                     data-wave-stage
                 >
-
                 </div>
 
 
-                <!-- =========================================
-                     CONTROLS
-                     ========================================= -->
-
                 <div class="wave-interference-controls">
 
-
-                    <!-- AMPLITUDE -->
 
                     <div class="wave-interference-control">
 
@@ -1255,8 +1231,6 @@ export default class WavesWorldUI {
                     </div>
 
 
-                    <!-- WAVELENGTH -->
-
                     <div class="wave-interference-control">
 
                         <div
@@ -1288,8 +1262,6 @@ export default class WavesWorldUI {
 
                     </div>
 
-
-                    <!-- FREQUENCY -->
 
                     <div class="wave-interference-control">
 
@@ -1323,21 +1295,16 @@ export default class WavesWorldUI {
                     </div>
 
 
-                    <!-- ACTIONS -->
-
                     <div
                         class="wave-interference-actions"
                     >
-
 
                         <button
                             type="button"
                             class="wave-interference-action primary"
                             data-action="pause"
                         >
-
                             ${pause}
-
                         </button>
 
 
@@ -1346,28 +1313,22 @@ export default class WavesWorldUI {
                             class="wave-interference-action"
                             data-action="reset"
                         >
-
                             ${reset}
-
                         </button>
-
 
                     </div>
 
-
                 </div>
-
 
             </div>
 
         `
 
-
     }
 
 
     /* =========================================================
-       BIND INTERFERENCE EVENTS
+       INTERFERENCE EVENTS
        ========================================================= */
 
     bindInterferenceEvents() {
@@ -1382,45 +1343,45 @@ export default class WavesWorldUI {
         }
 
 
+        const container =
+            this.interferenceContainer
+
+
         const backButton =
-            this.interferenceContainer.querySelector(
+            container.querySelector(
                 '[data-action="back"]'
             )
 
 
         const amplitudeSlider =
-            this.interferenceContainer.querySelector(
+            container.querySelector(
                 '[data-control="amplitude"]'
             )
 
 
         const wavelengthSlider =
-            this.interferenceContainer.querySelector(
+            container.querySelector(
                 '[data-control="wavelength"]'
             )
 
 
         const frequencySlider =
-            this.interferenceContainer.querySelector(
+            container.querySelector(
                 '[data-control="frequency"]'
             )
 
 
         const pauseButton =
-            this.interferenceContainer.querySelector(
+            container.querySelector(
                 '[data-action="pause"]'
             )
 
 
         const resetButton =
-            this.interferenceContainer.querySelector(
+            container.querySelector(
                 '[data-action="reset"]'
             )
 
-
-        /* =====================================================
-           BACK
-           ===================================================== */
 
         if (
             backButton
@@ -1432,7 +1393,6 @@ export default class WavesWorldUI {
 
                     this.closeExperiment()
 
-
                     this.show()
 
                 }
@@ -1440,10 +1400,6 @@ export default class WavesWorldUI {
 
         }
 
-
-        /* =====================================================
-           AMPLITUDE
-           ===================================================== */
 
         if (
             amplitudeSlider
@@ -1456,13 +1412,11 @@ export default class WavesWorldUI {
                     this.amplitude =
                         Number(
                             event.target.value
-                        )
-                        / 100
+                        ) / 100
 
 
                     if (
-                        this.waveInterferenceExperiment
-                        &&
+                        this.waveInterferenceExperiment &&
                         typeof this.waveInterferenceExperiment
                             .setAmplitude
                         === 'function'
@@ -1484,10 +1438,6 @@ export default class WavesWorldUI {
         }
 
 
-        /* =====================================================
-           WAVELENGTH
-           ===================================================== */
-
         if (
             wavelengthSlider
         ) {
@@ -1499,13 +1449,11 @@ export default class WavesWorldUI {
                     this.wavelength =
                         Number(
                             event.target.value
-                        )
-                        / 10
+                        ) / 10
 
 
                     if (
-                        this.waveInterferenceExperiment
-                        &&
+                        this.waveInterferenceExperiment &&
                         typeof this.waveInterferenceExperiment
                             .setWavelength
                         === 'function'
@@ -1527,10 +1475,6 @@ export default class WavesWorldUI {
         }
 
 
-        /* =====================================================
-           FREQUENCY
-           ===================================================== */
-
         if (
             frequencySlider
         ) {
@@ -1542,13 +1486,11 @@ export default class WavesWorldUI {
                     this.frequency =
                         Number(
                             event.target.value
-                        )
-                        / 10
+                        ) / 10
 
 
                     if (
-                        this.waveInterferenceExperiment
-                        &&
+                        this.waveInterferenceExperiment &&
                         typeof this.waveInterferenceExperiment
                             .setFrequency
                         === 'function'
@@ -1570,10 +1512,6 @@ export default class WavesWorldUI {
         }
 
 
-        /* =====================================================
-           PAUSE
-           ===================================================== */
-
         if (
             pauseButton
         ) {
@@ -1590,10 +1528,6 @@ export default class WavesWorldUI {
         }
 
 
-        /* =====================================================
-           RESET
-           ===================================================== */
-
         if (
             resetButton
         ) {
@@ -1608,7 +1542,6 @@ export default class WavesWorldUI {
             )
 
         }
-
 
     }
 
@@ -1637,8 +1570,8 @@ export default class WavesWorldUI {
             ) {
 
                 if (
-                    typeof experiment.resume
-                    === 'function'
+                    typeof experiment.resume ===
+                    'function'
                 ) {
 
                     experiment.resume()
@@ -1650,8 +1583,8 @@ export default class WavesWorldUI {
             else {
 
                 if (
-                    typeof experiment.pause
-                    === 'function'
+                    typeof experiment.pause ===
+                    'function'
                 ) {
 
                     experiment.pause()
@@ -1675,13 +1608,11 @@ export default class WavesWorldUI {
 
             button.textContent =
                 this.isInterferenceRunning
-
                     ? (
                         this.language === 'ar'
                             ? 'إيقاف التجربة'
                             : 'Pause'
                     )
-
                     : (
                         this.language === 'ar'
                             ? 'تشغيل التجربة'
@@ -1689,7 +1620,6 @@ export default class WavesWorldUI {
                     )
 
         }
-
 
     }
 
@@ -1726,8 +1656,8 @@ export default class WavesWorldUI {
         ) {
 
             if (
-                typeof experiment.reset
-                === 'function'
+                typeof experiment.reset ===
+                'function'
             ) {
 
                 experiment.reset()
@@ -1736,8 +1666,8 @@ export default class WavesWorldUI {
 
 
             if (
-                typeof experiment.setAmplitude
-                === 'function'
+                typeof experiment.setAmplitude ===
+                'function'
             ) {
 
                 experiment.setAmplitude(
@@ -1748,8 +1678,8 @@ export default class WavesWorldUI {
 
 
             if (
-                typeof experiment.setWavelength
-                === 'function'
+                typeof experiment.setWavelength ===
+                'function'
             ) {
 
                 experiment.setWavelength(
@@ -1760,8 +1690,8 @@ export default class WavesWorldUI {
 
 
             if (
-                typeof experiment.setFrequency
-                === 'function'
+                typeof experiment.setFrequency ===
+                'function'
             ) {
 
                 experiment.setFrequency(
@@ -1772,8 +1702,8 @@ export default class WavesWorldUI {
 
 
             if (
-                typeof experiment.start
-                === 'function'
+                typeof experiment.start ===
+                'function'
             ) {
 
                 experiment.start()
@@ -1851,7 +1781,6 @@ export default class WavesWorldUI {
 
         this.updateInterferenceUI()
 
-
     }
 
 
@@ -1924,7 +1853,6 @@ export default class WavesWorldUI {
 
         }
 
-
     }
 
 
@@ -1935,11 +1863,56 @@ export default class WavesWorldUI {
     openDopplerExperiment() {
 
 
-        this.closeExperiment()
+        console.log(
+            '🔵 STEP 8 — openDopplerExperiment() CALLED'
+        )
 
+
+        /* =====================================================
+           CLOSE PREVIOUS EXPERIMENT
+           ===================================================== */
+
+        console.log(
+            '🔵 STEP 8.1 — BEFORE closeExperiment()'
+        )
+
+
+        try {
+
+            this.closeExperiment()
+
+        }
+
+        catch (
+            error
+        ) {
+
+            console.error(
+                '❌ STEP 8.2 — closeExperiment() CRASHED',
+                error
+            )
+
+            return
+
+        }
+
+
+        console.log(
+            '🔵 STEP 8.3 — AFTER closeExperiment()'
+        )
+
+
+        /* =====================================================
+           SET STATE
+           ===================================================== */
 
         this.activeExperiment =
             'doppler'
+
+
+        console.log(
+            '🔵 STEP 9 — activeExperiment = doppler'
+        )
 
 
         /* =====================================================
@@ -1949,6 +1922,11 @@ export default class WavesWorldUI {
         if (
             this.root
         ) {
+
+            console.log(
+                '🔵 STEP 9.1 — HIDING WAVES WORLD'
+            )
+
 
             this.root.style.opacity =
                 '0'
@@ -1961,43 +1939,259 @@ export default class WavesWorldUI {
             this.root.style.visibility =
                 'hidden'
 
+
+            this.root.style.display =
+                'none'
+
         }
 
 
         /* =====================================================
-           CREATE DOPPLER UI
+           CHECK SCENE
            ===================================================== */
 
-        this.dopplerUI =
-            new WaveDopplerUI(
-                this.scene,
-                {
-                    parent:
-                        document.body,
-
-                    onExit:
-                        () => {
-
-                            this.closeExperiment()
-
-
-                            this.show()
-
-                        }
-                }
-            )
+        console.log(
+            '🔵 STEP 9.2 — CHECKING THREE.JS SCENE',
+            this.scene
+        )
 
 
         if (
-            this.dopplerUI
-            &&
-            typeof this.dopplerUI.start
-            === 'function'
+            !this.scene
         ) {
 
-this.dopplerUI.enter()
+            console.error(
+                '❌ STEP 10 FAILED — WavesWorldUI has NO THREE.JS SCENE'
+            )
+
+
+            this.activeExperiment =
+                null
+
+
+            this.show()
+
+
+            return
+
         }
 
+
+        console.log(
+            '🔵 STEP 10 — THREE.JS SCENE EXISTS',
+            this.scene
+        )
+
+
+        /* =====================================================
+           CHECK CLASS
+           ===================================================== */
+
+        console.log(
+            '🔵 STEP 10.1 — CHECKING WaveDopplerUI',
+            WaveDopplerUI
+        )
+
+
+        if (
+            typeof WaveDopplerUI !==
+            'function'
+        ) {
+
+            console.error(
+                '❌ STEP 11 FAILED — WaveDopplerUI is not a constructor',
+                WaveDopplerUI
+            )
+
+
+            this.activeExperiment =
+                null
+
+
+            this.show()
+
+
+            return
+
+        }
+
+
+        console.log(
+            '🔵 STEP 11 — WaveDopplerUI CLASS EXISTS'
+        )
+
+
+        /* =====================================================
+           CREATE UI
+           ===================================================== */
+
+        try {
+
+            console.log(
+                '🔵 STEP 11.1 — CREATING WaveDopplerUI'
+            )
+
+
+            this.dopplerUI =
+                new WaveDopplerUI(
+                    this.scene,
+                    {
+                        parent:
+                            document.body,
+
+                        onExit:
+                            () => {
+
+                                console.log(
+                                    '🔵 Doppler onExit() CALLED'
+                                )
+
+
+                                this.closeExperiment()
+
+
+                                this.show()
+
+                            }
+
+                    }
+                )
+
+
+            console.log(
+                '🔵 STEP 12 — WaveDopplerUI CREATED',
+                this.dopplerUI
+            )
+
+        }
+
+        catch (
+            error
+        ) {
+
+            console.error(
+                '❌ STEP 12 FAILED — Could not create WaveDopplerUI',
+                error
+            )
+
+
+            this.dopplerUI =
+                null
+
+
+            this.activeExperiment =
+                null
+
+
+            this.show()
+
+
+            return
+
+        }
+
+
+        /* =====================================================
+           CHECK EXPERIMENT
+           ===================================================== */
+
+        console.log(
+            '🔵 STEP 12.1 — DOPPLER UI OBJECT CHECK',
+            {
+                dopplerUI:
+                    this.dopplerUI,
+
+                hasExperiment:
+                    !!this.dopplerUI?.experiment,
+
+                experiment:
+                    this.dopplerUI?.experiment
+            }
+        )
+
+
+        /* =====================================================
+           ENTER
+           ===================================================== */
+
+        console.log(
+            '🔵 STEP 12.2 — CHECKING enter()'
+        )
+
+
+        if (
+            typeof this.dopplerUI.enter !==
+            'function'
+        ) {
+
+            console.error(
+                '❌ STEP 13 FAILED — dopplerUI.enter() DOES NOT EXIST',
+                this.dopplerUI
+            )
+
+
+            this.closeExperiment()
+
+
+            this.show()
+
+
+            return
+
+        }
+
+
+        /* =====================================================
+           CALL ENTER
+           ===================================================== */
+
+        try {
+
+            console.log(
+                '🔵 STEP 13 — CALLING dopplerUI.enter()'
+            )
+
+
+            this.dopplerUI.enter()
+
+
+            console.log(
+                '🔵 STEP 14 — dopplerUI.enter() FINISHED'
+            )
+
+
+            console.log(
+                '🔵 STEP 14.1 — DOPPLER AFTER ENTER',
+                {
+                    activeExperiment:
+                        this.activeExperiment,
+
+                    dopplerUI:
+                        this.dopplerUI,
+
+                    experiment:
+                        this.dopplerUI?.experiment
+                }
+            )
+
+        }
+
+        catch (
+            error
+        ) {
+
+            console.error(
+                '❌ STEP 14 FAILED — WaveDopplerUI.enter() ERROR',
+                error
+            )
+
+
+            this.closeExperiment()
+
+
+            this.show()
+
+        }
 
     }
 
@@ -2009,8 +2203,13 @@ this.dopplerUI.enter()
     closeExperiment() {
 
 
+        console.log(
+            '🧹 WavesWorldUI: closeExperiment()'
+        )
+
+
         /* =====================================================
-           STOP INTERFERENCE RENDER LOOP
+           STOP INTERFERENCE LOOP
            ===================================================== */
 
         if (
@@ -2029,39 +2228,36 @@ this.dopplerUI.enter()
 
 
         /* =====================================================
-           REMOVE RESIZE LISTENER
-           ===================================================== */
-
-        if (
-            this.interferenceResizeHandler
-        ) {
-
-            window.removeEventListener(
-                'resize',
-                this.interferenceResizeHandler
-            )
-
-
-            this.interferenceResizeHandler =
-                null
-
-        }
-
-
-        /* =====================================================
-           DESTROY INTERFERENCE EXPERIMENT
+           DESTROY INTERFERENCE
            ===================================================== */
 
         if (
             this.waveInterferenceExperiment
         ) {
 
-            if (
-                typeof this.waveInterferenceExperiment.destroy
-                === 'function'
+            try {
+
+                if (
+                    typeof this.waveInterferenceExperiment
+                        .destroy
+                    === 'function'
+                ) {
+
+                    this.waveInterferenceExperiment
+                        .destroy()
+
+                }
+
+            }
+
+            catch (
+                error
             ) {
 
-                this.waveInterferenceExperiment.destroy()
+                console.error(
+                    '❌ Error destroying interference experiment',
+                    error
+                )
 
             }
 
@@ -2073,27 +2269,7 @@ this.dopplerUI.enter()
 
 
         /* =====================================================
-           DISPOSE INTERFERENCE RENDERER
-           ===================================================== */
-
-        if (
-            this.interferenceRenderer
-        ) {
-
-            this.interferenceRenderer.dispose()
-
-
-            this.interferenceRenderer.forceContextLoss()
-
-
-            this.interferenceRenderer =
-                null
-
-        }
-
-
-        /* =====================================================
-           REMOVE INTERFERENCE CONTAINER
+           REMOVE INTERFERENCE DOM
            ===================================================== */
 
         if (
@@ -2109,18 +2285,6 @@ this.dopplerUI.enter()
         }
 
 
-        /* =====================================================
-           CLEAR THREE REFERENCES
-           ===================================================== */
-
-        this.interferenceScene =
-            null
-
-
-        this.interferenceCamera =
-            null
-
-
         this.interferenceStage =
             null
 
@@ -2130,19 +2294,39 @@ this.dopplerUI.enter()
 
 
         /* =====================================================
-           DESTROY DOPPLER UI
+           DESTROY DOPPLER
            ===================================================== */
 
         if (
             this.dopplerUI
         ) {
 
-            if (
-                typeof this.dopplerUI.destroy
-                === 'function'
+            console.log(
+                '🔵 WavesWorldUI: destroying Doppler UI'
+            )
+
+
+            try {
+
+                if (
+                    typeof this.dopplerUI.destroy ===
+                    'function'
+                ) {
+
+                    this.dopplerUI.destroy()
+
+                }
+
+            }
+
+            catch (
+                error
             ) {
 
-                this.dopplerUI.destroy()
+                console.error(
+                    '❌ Error destroying Doppler UI',
+                    error
+                )
 
             }
 
@@ -2161,6 +2345,14 @@ this.dopplerUI.enter()
             null
 
 
+        this.isInterferenceRunning =
+            false
+
+
+        console.log(
+            '🧹 WavesWorldUI: closeExperiment() FINISHED'
+        )
+
     }
 
 
@@ -2168,17 +2360,160 @@ this.dopplerUI.enter()
        UPDATE
        ========================================================= */
 
-    update() {
+    update(
+        delta = 0.016
+    ) {
 
+
+        /* =====================================================
+           VALIDATE DELTA
+           ===================================================== */
+
+        const numericDelta =
+            Number(
+                delta
+            )
+
+
+        const safeDelta =
+            Number.isFinite(
+                numericDelta
+            )
+
+                ? Math.min(
+                    Math.max(
+                        numericDelta,
+                        0
+                    ),
+                    0.05
+                )
+
+                : 0.016
+
+
+        /* =====================================================
+           DOPPLER
+           ===================================================== */
+
+        if (
+            this.activeExperiment ===
+            'doppler'
+        ) {
+
+            if (
+                this.dopplerUI &&
+                typeof this.dopplerUI.update ===
+                'function'
+            ) {
+
+                this.dopplerUI.update(
+                    safeDelta
+                )
+
+            }
+
+        }
+
+
+        /* =====================================================
+           INTERFERENCE
+           ===================================================== */
 
         /*
-         * Wave Interference uses its own
-         * local Three.js render loop.
+         * Wave Interference has its own
+         * requestAnimationFrame loop:
          *
-         * Wave Doppler UI manages its own
-         * experiment lifecycle.
+         * startInterferenceRenderLoop()
+         *
+         * Therefore we intentionally do NOT call
+         * waveInterferenceExperiment.update()
+         * from this global update().
          */
 
+    }
+
+
+    /* =========================================================
+       SET SCENE
+       ========================================================= */
+
+    setScene(
+        scene
+    ) {
+
+
+        console.log(
+            '🌌 WavesWorldUI: setScene()',
+            scene
+        )
+
+
+        this.scene =
+            scene || null
+
+
+        /* =====================================================
+           DOPPLER UI
+           ===================================================== */
+
+        if (
+            this.dopplerUI &&
+            typeof this.dopplerUI.setScene ===
+            'function'
+        ) {
+
+            this.dopplerUI.setScene(
+                this.scene
+            )
+
+        }
+
+
+        /* =====================================================
+           DOPPLER EXPERIMENT DIRECTLY
+           ===================================================== */
+
+        if (
+            this.dopplerUI?.experiment
+        ) {
+
+            this.dopplerUI.experiment.scene =
+                this.scene
+
+        }
+
+    }
+
+
+    /* =========================================================
+       GET ACTIVE EXPERIMENT
+       ========================================================= */
+
+    getActiveExperiment() {
+
+        return this.activeExperiment
+
+    }
+
+
+    /* =========================================================
+       GET DOPPLER UI
+       ========================================================= */
+
+    getDopplerUI() {
+
+        return this.dopplerUI
+
+    }
+
+
+    /* =========================================================
+       GET ROOT
+       ========================================================= */
+
+    getElement() {
+
+        return this.root
 
     }
 
@@ -2188,6 +2523,11 @@ this.dopplerUI.enter()
        ========================================================= */
 
     destroy() {
+
+
+        console.log(
+            '🗑️ WavesWorldUI: DESTROY'
+        )
 
 
         this.closeExperiment()
@@ -2213,8 +2553,6 @@ this.dopplerUI.enter()
         this.physicsWorldUI =
             null
 
-
     }
-
 
 }

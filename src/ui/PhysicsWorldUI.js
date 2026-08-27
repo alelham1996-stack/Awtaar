@@ -40,6 +40,14 @@ export default class PhysicsWorldUI {
             scene
 
 
+        console.log(
+            '🌌 PhysicsWorldUI: constructor',
+            {
+                scene: this.scene
+            }
+        )
+
+
         /* =====================================================
            STATE
            ===================================================== */
@@ -92,18 +100,24 @@ export default class PhysicsWorldUI {
 
         /* =====================================================
            WAVES
-           
-           IMPORTANT:
-           WavesWorldUI constructor accepts:
-           
-           constructor(scene = null)
            ===================================================== */
 
+        console.log(
+            '🌊 PhysicsWorldUI: creating WavesWorldUI...'
+        )
+
+
         this.wavesWorldUI =
-    new WavesWorldUI(
-        this,
-        this.scene
-    )
+            new WavesWorldUI(
+                this,
+                this.scene
+            )
+
+
+        console.log(
+            '🌊 PhysicsWorldUI: WavesWorldUI created',
+            this.wavesWorldUI
+        )
 
 
         /* =====================================================
@@ -304,9 +318,19 @@ export default class PhysicsWorldUI {
                         event.stopPropagation()
 
 
+                        console.log(
+                            '🌌 Physics World clicked:',
+                            world.key
+                        )
+
+
                         if (
                             this.isTransitioning
                         ) {
+
+                            console.log(
+                                '⏳ PhysicsWorldUI: transition already running'
+                            )
 
                             return
 
@@ -554,6 +578,11 @@ export default class PhysicsWorldUI {
     show() {
 
 
+        console.log(
+            '🌌 PhysicsWorldUI: SHOW'
+        )
+
+
         this.updateLanguage()
 
 
@@ -607,6 +636,11 @@ export default class PhysicsWorldUI {
         }
 
 
+        console.log(
+            '🌌 PhysicsWorldUI: HIDE'
+        )
+
+
         this.container.style.opacity =
             '0'
 
@@ -650,9 +684,19 @@ export default class PhysicsWorldUI {
             this.isTransitioning
         ) {
 
+            console.log(
+                '⏳ PhysicsWorldUI: selectWorld blocked by transition'
+            )
+
             return
 
         }
+
+
+        console.log(
+            '🌌 PhysicsWorldUI: SELECT WORLD:',
+            key
+        )
 
 
         /* =====================================================
@@ -696,6 +740,11 @@ export default class PhysicsWorldUI {
             'waves'
         ) {
 
+            console.log(
+                '🌊 PhysicsWorldUI: WAVES SELECTED'
+            )
+
+
             this.enterWavesWorld()
 
             return
@@ -724,6 +773,10 @@ export default class PhysicsWorldUI {
         if (
             !this.quantumWorldUI
         ) {
+
+            console.error(
+                '❌ PhysicsWorldUI: quantumWorldUI is missing'
+            )
 
             return
 
@@ -765,6 +818,10 @@ export default class PhysicsWorldUI {
             !this.relativeWorldUI
         ) {
 
+            console.error(
+                '❌ PhysicsWorldUI: relativeWorldUI is missing'
+            )
+
             return
 
         }
@@ -801,13 +858,28 @@ export default class PhysicsWorldUI {
     enterWavesWorld() {
 
 
+        console.log(
+            '🌊 STEP 1 — enterWavesWorld() CALLED'
+        )
+
+
         if (
             !this.wavesWorldUI
         ) {
 
+            console.error(
+                '❌ STEP 1 FAILED — wavesWorldUI is NULL'
+            )
+
             return
 
         }
+
+
+        console.log(
+            '🌊 STEP 2 — wavesWorldUI EXISTS',
+            this.wavesWorldUI
+        )
 
 
         this.isTransitioning =
@@ -821,19 +893,86 @@ export default class PhysicsWorldUI {
             () => {
 
 
-                /*
-                 * WavesWorldUI uses open()
-                 * instead of show()
-                 */
+                console.log(
+                    '🌊 STEP 3 — 550ms TRANSITION FINISHED'
+                )
+
+
+                console.log(
+                    '🌊 STEP 4 — wavesWorldUI.open TYPE:',
+                    typeof this.wavesWorldUI.open
+                )
+
 
                 if (
                     typeof this.wavesWorldUI.open ===
                     'function'
                 ) {
 
+                    console.log(
+                        '🌊 STEP 5 — CALLING wavesWorldUI.open()'
+                    )
+
+
                     this.wavesWorldUI.open()
 
                 }
+
+                else {
+
+                    console.error(
+                        '❌ STEP 5 FAILED — wavesWorldUI.open() DOES NOT EXIST'
+                    )
+
+                }
+
+
+                this.isTransitioning =
+                    false
+
+            },
+            550
+        )
+
+    }
+
+
+    /* =========================================================
+       RETURN FROM QUANTUM
+       ========================================================= */
+
+    returnFromQuantum() {
+
+
+        if (
+            this.isTransitioning
+        ) {
+
+            return
+
+        }
+
+
+        this.isTransitioning =
+            true
+
+
+        if (
+            this.quantumWorldUI &&
+            typeof this.quantumWorldUI.hide ===
+            'function'
+        ) {
+
+            this.quantumWorldUI.hide()
+
+        }
+
+
+        setTimeout(
+            () => {
+
+
+                this.show()
 
 
                 this.isTransitioning =
@@ -899,6 +1038,11 @@ export default class PhysicsWorldUI {
     returnFromWaves() {
 
 
+        console.log(
+            '🌊 PhysicsWorldUI: RETURN FROM WAVES'
+        )
+
+
         if (
             this.isTransitioning
         ) {
@@ -917,11 +1061,6 @@ export default class PhysicsWorldUI {
             typeof this.wavesWorldUI.close ===
             'function'
         ) {
-
-            /*
-             * WavesWorldUI uses close()
-             * instead of hide()
-             */
 
             this.wavesWorldUI.close()
 
@@ -1056,10 +1195,75 @@ export default class PhysicsWorldUI {
 
 
     /* =========================================================
+       SET SCENE
+       ========================================================= */
+
+    setScene(
+        scene
+    ) {
+
+
+        console.log(
+            '🌌 PhysicsWorldUI: setScene()',
+            scene
+        )
+
+
+        this.scene =
+            scene || null
+
+
+        if (
+            this.quantumWorldUI &&
+            typeof this.quantumWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.quantumWorldUI.setScene(
+                this.scene
+            )
+
+        }
+
+
+        if (
+            this.relativeWorldUI &&
+            typeof this.relativeWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.relativeWorldUI.setScene(
+                this.scene
+            )
+
+        }
+
+
+        if (
+            this.wavesWorldUI &&
+            typeof this.wavesWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.wavesWorldUI.setScene(
+                this.scene
+            )
+
+        }
+
+    }
+
+
+    /* =========================================================
        DESTROY
        ========================================================= */
 
     destroy() {
+
+
+        console.log(
+            '🗑️ PhysicsWorldUI: DESTROY'
+        )
 
 
         /* =====================================================

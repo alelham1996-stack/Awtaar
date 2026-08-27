@@ -19,7 +19,6 @@ export default class WaveDopplerUI {
         options = {}
     ) {
 
-
         /* =====================================================
            REFERENCES
            ===================================================== */
@@ -60,8 +59,8 @@ export default class WaveDopplerUI {
         this.root =
             null
 
-
-        this.elements = {}
+        this.elements =
+            {}
 
 
         /* =====================================================
@@ -91,7 +90,7 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
-       TRANSLATION HELPER
+       TRANSLATION
        ========================================================= */
 
     translate(
@@ -117,14 +116,8 @@ export default class WaveDopplerUI {
         catch (
             error
         ) {
-
-            /*
-             * Keep UI functional even if
-             * a translation key does not exist.
-             */
-
+            // Keep UI functional.
         }
-
 
         return fallback
 
@@ -137,15 +130,12 @@ export default class WaveDopplerUI {
 
     createUI() {
 
-
-        /*
-         * Main experiment container.
-         */
+        /* =====================================================
+           ROOT
+           ===================================================== */
 
         this.container =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         this.container.className =
             'wave-doppler-container'
@@ -154,14 +144,8 @@ export default class WaveDopplerUI {
             'awtaar-wave-doppler'
 
 
-        /*
-         * Inner root.
-         */
-
         this.root =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         this.root.className =
             'wave-doppler-root'
@@ -173,31 +157,25 @@ export default class WaveDopplerUI {
 
 
         /* =====================================================
-           TOP BAR
+           HEADER
            ===================================================== */
 
-        const top =
-            document.createElement(
-                'div'
-            )
+        const header =
+            document.createElement('header')
 
-        top.className =
+        header.className =
             'wave-doppler-top'
 
 
         const titleArea =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         titleArea.className =
             'wave-doppler-title-area'
 
 
         const eyebrow =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         eyebrow.className =
             'wave-doppler-eyebrow'
@@ -213,9 +191,7 @@ export default class WaveDopplerUI {
 
 
         const title =
-            document.createElement(
-                'h1'
-            )
+            document.createElement('h1')
 
         title.className =
             'wave-doppler-title'
@@ -239,14 +215,8 @@ export default class WaveDopplerUI {
         )
 
 
-        /*
-         * Back button.
-         */
-
         const backButton =
-            document.createElement(
-                'button'
-            )
+            document.createElement('button')
 
         backButton.type =
             'button'
@@ -267,141 +237,209 @@ export default class WaveDopplerUI {
             )
 
 
-        top.appendChild(
+        header.appendChild(
             titleArea
         )
 
-        top.appendChild(
+        header.appendChild(
             backButton
         )
 
 
         /* =====================================================
-           INTRO
+           LEFT HUD
            ===================================================== */
 
-        const intro =
-            document.createElement(
-                'div'
-            )
+        const hud =
+            document.createElement('div')
 
-        intro.className =
-            'wave-doppler-intro'
+        hud.className =
+            'wave-doppler-hud'
 
 
-        const line =
-            document.createElement(
-                'div'
-            )
+        const hudLabel =
+            document.createElement('div')
 
-        line.className =
-            'wave-doppler-line'
+        hudLabel.className =
+            'wave-doppler-hud-label'
 
-        line.dataset.i18n =
-            'waves.doppler.intro'
-
-        line.textContent =
+        hudLabel.textContent =
             this.translate(
-                'waves.doppler.intro',
-                'SOURCE MOTION • FREQUENCY • WAVELENGTH'
+                'waves.doppler.observe',
+                'OBSERVE'
             )
 
 
-        const description =
-            document.createElement(
-                'p'
-            )
+        const hudDescription =
+            document.createElement('div')
 
-        description.className =
-            'wave-doppler-description'
+        hudDescription.className =
+            'wave-doppler-hud-description'
 
-        description.dataset.i18n =
+        hudDescription.dataset.i18n =
             'waves.doppler.description'
 
-        description.textContent =
+        hudDescription.textContent =
             this.translate(
                 'waves.doppler.description',
                 'راقب كيف تتغير المسافة بين الجبهات الموجية عندما يتحرك المصدر.'
             )
 
 
-        intro.appendChild(
-            line
+        const liveIndicator =
+            document.createElement('div')
+
+        liveIndicator.className =
+            'wave-doppler-live'
+
+
+        const liveDot =
+            document.createElement('span')
+
+        liveDot.className =
+            'wave-doppler-live-dot'
+
+
+        const liveText =
+            document.createElement('span')
+
+        liveText.dataset.i18n =
+            'waves.doppler.ready'
+
+        liveText.textContent =
+            this.translate(
+                'waves.doppler.ready',
+                'جاهز'
+            )
+
+
+        liveIndicator.appendChild(
+            liveDot
         )
 
-        intro.appendChild(
-            description
+        liveIndicator.appendChild(
+            liveText
+        )
+
+
+        hud.appendChild(
+            hudLabel
+        )
+
+        hud.appendChild(
+            hudDescription
+        )
+
+        hud.appendChild(
+            liveIndicator
+        )
+
+
+        this.elements.status =
+            liveIndicator
+
+        this.elements.statusText =
+            liveText
+
+
+        /* =====================================================
+           RIGHT CONTROL PANEL
+           ===================================================== */
+
+        const panel =
+            document.createElement('aside')
+
+        panel.className =
+            'wave-doppler-panel'
+
+
+        /* =====================================================
+           PANEL HEADER
+           ===================================================== */
+
+        const panelHeader =
+            document.createElement('div')
+
+        panelHeader.className =
+            'wave-doppler-panel-header'
+
+
+        const panelTitle =
+            document.createElement('div')
+
+        panelTitle.className =
+            'wave-doppler-panel-title'
+
+        panelTitle.dataset.i18n =
+            'waves.doppler.controls'
+
+        panelTitle.textContent =
+            this.translate(
+                'waves.doppler.controls',
+                'التحكم في التجربة'
+            )
+
+
+        const panelSubtitle =
+            document.createElement('div')
+
+        panelSubtitle.className =
+            'wave-doppler-panel-subtitle'
+
+        panelSubtitle.textContent =
+            this.translate(
+                'waves.doppler.parameters',
+                'PARAMETERS'
+            )
+
+
+        panelHeader.appendChild(
+            panelTitle
+        )
+
+        panelHeader.appendChild(
+            panelSubtitle
         )
 
 
         /* =====================================================
-           INFORMATION PANEL
+           BASIC DATA
            ===================================================== */
 
-        const info =
-            document.createElement(
-                'div'
-            )
+        const dataGrid =
+            document.createElement('div')
 
-        info.className =
-            'wave-doppler-info'
+        dataGrid.className =
+            'wave-doppler-data'
 
-
-        this.elements.info =
-            info
-
-
-        /*
-         * Source speed.
-         */
 
         this.elements.sourceSpeed =
             this.createDataBox(
                 'waves.doppler.sourceSpeed',
                 'سرعة المصدر',
-                '0.80'
+                '0.00'
             )
-
-
-        /*
-         * Source frequency.
-         */
 
         this.elements.frequency =
             this.createDataBox(
                 'waves.doppler.frequency',
                 'تردد المصدر',
-                '1.50'
+                '0.00'
             )
-
-
-        /*
-         * Wave speed.
-         */
 
         this.elements.waveSpeed =
             this.createDataBox(
                 'waves.doppler.waveSpeed',
                 'سرعة الموجة',
-                '3.00'
+                '0.00'
             )
-
-
-        /*
-         * Base wavelength.
-         */
 
         this.elements.wavelength =
             this.createDataBox(
                 'waves.doppler.wavelength',
                 'الطول الموجي',
-                '2.00'
+                '0.00'
             )
-
-
-        /*
-         * Active wave count.
-         */
 
         this.elements.waveCount =
             this.createDataBox(
@@ -411,43 +449,50 @@ export default class WaveDopplerUI {
             )
 
 
-        info.appendChild(
+        dataGrid.appendChild(
             this.elements.sourceSpeed.box
         )
 
-        info.appendChild(
+        dataGrid.appendChild(
             this.elements.frequency.box
         )
 
-        info.appendChild(
+        dataGrid.appendChild(
             this.elements.waveSpeed.box
         )
 
-        info.appendChild(
+        dataGrid.appendChild(
             this.elements.wavelength.box
         )
 
-        info.appendChild(
+        dataGrid.appendChild(
             this.elements.waveCount.box
         )
 
 
         /* =====================================================
-           DOPPLER COMPARISON
+           DOPPLER RESULTS
            ===================================================== */
 
-        const comparison =
-            document.createElement(
-                'div'
+        const resultsTitle =
+            document.createElement('div')
+
+        resultsTitle.className =
+            'wave-doppler-section-title'
+
+        resultsTitle.textContent =
+            this.translate(
+                'waves.doppler.results',
+                'النتيجة المرصودة'
             )
+
+
+        const comparison =
+            document.createElement('div')
 
         comparison.className =
             'wave-doppler-comparison'
 
-
-        /*
-         * Approaching.
-         */
 
         this.elements.approaching =
             this.createComparisonBox(
@@ -456,10 +501,6 @@ export default class WaveDopplerUI {
                 'أمام المصدر'
             )
 
-
-        /*
-         * Receding.
-         */
 
         this.elements.receding =
             this.createComparisonBox(
@@ -479,48 +520,28 @@ export default class WaveDopplerUI {
 
 
         /* =====================================================
-           CONTROLS
+           SLIDERS
            ===================================================== */
 
-        const controls =
-            document.createElement(
-                'div'
+        const controlsTitle =
+            document.createElement('div')
+
+        controlsTitle.className =
+            'wave-doppler-section-title'
+
+        controlsTitle.textContent =
+            this.translate(
+                'waves.doppler.adjust',
+                'تعديل المعلمات'
             )
+
+
+        const controls =
+            document.createElement('div')
 
         controls.className =
             'wave-doppler-controls'
 
-
-        /*
-         * Section title.
-         */
-
-        const controlsTitle =
-            document.createElement(
-                'div'
-            )
-
-        controlsTitle.className =
-            'wave-doppler-controls-title'
-
-        controlsTitle.dataset.i18n =
-            'waves.doppler.controls'
-
-        controlsTitle.textContent =
-            this.translate(
-                'waves.doppler.controls',
-                'التحكم في التجربة'
-            )
-
-
-        controls.appendChild(
-            controlsTitle
-        )
-
-
-        /* =====================================================
-           SOURCE SPEED SLIDER
-           ===================================================== */
 
         const sourceSpeedControl =
             this.createSlider(
@@ -546,10 +567,6 @@ export default class WaveDopplerUI {
         )
 
 
-        /* =====================================================
-           FREQUENCY SLIDER
-           ===================================================== */
-
         const frequencyControl =
             this.createSlider(
                 'frequency',
@@ -573,10 +590,6 @@ export default class WaveDopplerUI {
             frequencyControl.row
         )
 
-
-        /* =====================================================
-           WAVE SPEED SLIDER
-           ===================================================== */
 
         const waveSpeedControl =
             this.createSlider(
@@ -607,22 +620,14 @@ export default class WaveDopplerUI {
            ===================================================== */
 
         const actions =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         actions.className =
             'wave-doppler-actions'
 
 
-        /*
-         * Play / pause.
-         */
-
         const playButton =
-            document.createElement(
-                'button'
-            )
+            document.createElement('button')
 
         playButton.type =
             'button'
@@ -633,6 +638,9 @@ export default class WaveDopplerUI {
         playButton.dataset.action =
             'play'
 
+        playButton.dataset.i18n =
+            'waves.doppler.play'
+
         playButton.textContent =
             this.translate(
                 'waves.doppler.play',
@@ -640,18 +648,8 @@ export default class WaveDopplerUI {
             )
 
 
-        this.elements.playButton =
-            playButton
-
-
-        /*
-         * Pause.
-         */
-
         const pauseButton =
-            document.createElement(
-                'button'
-            )
+            document.createElement('button')
 
         pauseButton.type =
             'button'
@@ -662,6 +660,9 @@ export default class WaveDopplerUI {
         pauseButton.dataset.action =
             'pause'
 
+        pauseButton.dataset.i18n =
+            'waves.doppler.pause'
+
         pauseButton.textContent =
             this.translate(
                 'waves.doppler.pause',
@@ -669,18 +670,8 @@ export default class WaveDopplerUI {
             )
 
 
-        this.elements.pauseButton =
-            pauseButton
-
-
-        /*
-         * Reset.
-         */
-
         const resetButton =
-            document.createElement(
-                'button'
-            )
+            document.createElement('button')
 
         resetButton.type =
             'button'
@@ -691,12 +682,21 @@ export default class WaveDopplerUI {
         resetButton.dataset.action =
             'reset'
 
+        resetButton.dataset.i18n =
+            'waves.doppler.reset'
+
         resetButton.textContent =
             this.translate(
                 'waves.doppler.reset',
                 'إعادة'
             )
 
+
+        this.elements.playButton =
+            playButton
+
+        this.elements.pauseButton =
+            pauseButton
 
         this.elements.resetButton =
             resetButton
@@ -716,13 +716,11 @@ export default class WaveDopplerUI {
 
 
         /* =====================================================
-           NOTE
+           EXPLANATION
            ===================================================== */
 
         const note =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         note.className =
             'wave-doppler-note'
@@ -742,120 +740,68 @@ export default class WaveDopplerUI {
 
 
         /* =====================================================
-           STATUS
-           ===================================================== */
-
-        const status =
-            document.createElement(
-                'div'
-            )
-
-        status.className =
-            'wave-doppler-status'
-
-
-        const statusDot =
-            document.createElement(
-                'span'
-            )
-
-        statusDot.className =
-            'wave-doppler-status-dot'
-
-
-        const statusText =
-            document.createElement(
-                'span'
-            )
-
-        statusText.className =
-            'wave-doppler-status-text'
-
-        statusText.dataset.i18n =
-            'waves.doppler.ready'
-
-        statusText.textContent =
-            this.translate(
-                'waves.doppler.ready',
-                'جاهز'
-            )
-
-
-        status.appendChild(
-            statusDot
-        )
-
-        status.appendChild(
-            statusText
-        )
-
-
-        this.elements.status =
-            status
-
-        this.elements.statusText =
-            statusText
-
-
-        /* =====================================================
            ASSEMBLE
            ===================================================== */
 
-        this.root.appendChild(
-            top
+        panel.appendChild(
+            panelHeader
         )
 
-        this.root.appendChild(
-            intro
+        panel.appendChild(
+            dataGrid
         )
 
-        this.root.appendChild(
-            info
+        panel.appendChild(
+            resultsTitle
         )
 
-        this.root.appendChild(
+        panel.appendChild(
             comparison
         )
 
-        this.root.appendChild(
+        panel.appendChild(
+            controlsTitle
+        )
+
+        panel.appendChild(
             controls
         )
 
-        this.root.appendChild(
+        panel.appendChild(
             actions
         )
 
-        this.root.appendChild(
+        panel.appendChild(
             note
         )
 
+
         this.root.appendChild(
-            status
+            header
+        )
+
+        this.root.appendChild(
+            hud
+        )
+
+        this.root.appendChild(
+            panel
         )
 
 
-        /*
-         * Add to DOM.
-         */
+        /* =====================================================
+           ADD TO DOM
+           ===================================================== */
 
         this.parent.appendChild(
             this.container
-        )
-
-
-        /*
-         * Start hidden.
-         */
-
-        this.container.classList.remove(
-            'is-visible'
         )
 
     }
 
 
     /* =========================================================
-       CREATE DATA BOX
+       DATA BOX
        ========================================================= */
 
     createDataBox(
@@ -865,18 +811,14 @@ export default class WaveDopplerUI {
     ) {
 
         const box =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         box.className =
             'wave-doppler-data-box'
 
 
         const label =
-            document.createElement(
-                'span'
-            )
+            document.createElement('span')
 
         label.className =
             'wave-doppler-label'
@@ -892,9 +834,7 @@ export default class WaveDopplerUI {
 
 
         const value =
-            document.createElement(
-                'strong'
-            )
+            document.createElement('strong')
 
         value.className =
             'wave-doppler-value'
@@ -913,23 +853,16 @@ export default class WaveDopplerUI {
 
 
         return {
-
-            box:
-                box,
-
-            label:
-                label,
-
-            value:
-                value
-
+            box,
+            label,
+            value
         }
 
     }
 
 
     /* =========================================================
-       CREATE COMPARISON BOX
+       COMPARISON BOX
        ========================================================= */
 
     createComparisonBox(
@@ -939,27 +872,21 @@ export default class WaveDopplerUI {
     ) {
 
         const box =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         box.className =
             `wave-doppler-comparison-box ${type}`
 
 
         const header =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         header.className =
             'wave-doppler-comparison-header'
 
 
         const title =
-            document.createElement(
-                'span'
-            )
+            document.createElement('span')
 
         title.className =
             'wave-doppler-comparison-title'
@@ -979,142 +906,25 @@ export default class WaveDopplerUI {
         )
 
 
-        /*
-         * Frequency.
-         */
-
         const frequencyRow =
-            document.createElement(
-                'div'
-            )
-
-        frequencyRow.className =
-            'wave-doppler-comparison-row'
-
-
-        const frequencyLabel =
-            document.createElement(
-                'span'
-            )
-
-        frequencyLabel.dataset.i18n =
-            'waves.doppler.observedFrequency'
-
-        frequencyLabel.textContent =
-            this.translate(
+            this.createComparisonRow(
                 'waves.doppler.observedFrequency',
                 'التردد المرصود'
             )
 
 
-        const frequencyValue =
-            document.createElement(
-                'strong'
-            )
-
-        frequencyValue.textContent =
-            '0.00'
-
-
-        frequencyRow.appendChild(
-            frequencyLabel
-        )
-
-        frequencyRow.appendChild(
-            frequencyValue
-        )
-
-
-        /*
-         * Wavelength.
-         */
-
         const wavelengthRow =
-            document.createElement(
-                'div'
-            )
-
-        wavelengthRow.className =
-            'wave-doppler-comparison-row'
-
-
-        const wavelengthLabel =
-            document.createElement(
-                'span'
-            )
-
-        wavelengthLabel.dataset.i18n =
-            'waves.doppler.observedWavelength'
-
-        wavelengthLabel.textContent =
-            this.translate(
+            this.createComparisonRow(
                 'waves.doppler.observedWavelength',
                 'الطول الموجي'
             )
 
 
-        const wavelengthValue =
-            document.createElement(
-                'strong'
-            )
-
-        wavelengthValue.textContent =
-            '0.00'
-
-
-        wavelengthRow.appendChild(
-            wavelengthLabel
-        )
-
-        wavelengthRow.appendChild(
-            wavelengthValue
-        )
-
-
-        /*
-         * Ratio.
-         */
-
         const ratioRow =
-            document.createElement(
-                'div'
-            )
-
-        ratioRow.className =
-            'wave-doppler-comparison-row'
-
-
-        const ratioLabel =
-            document.createElement(
-                'span'
-            )
-
-        ratioLabel.dataset.i18n =
-            'waves.doppler.relativeChange'
-
-        ratioLabel.textContent =
-            this.translate(
+            this.createComparisonRow(
                 'waves.doppler.relativeChange',
                 'التغير النسبي'
             )
-
-
-        const ratioValue =
-            document.createElement(
-                'strong'
-            )
-
-        ratioValue.textContent =
-            '0%'
-
-
-        ratioRow.appendChild(
-            ratioLabel
-        )
-
-        ratioRow.appendChild(
-            ratioValue
-        )
 
 
         box.appendChild(
@@ -1122,34 +932,32 @@ export default class WaveDopplerUI {
         )
 
         box.appendChild(
-            frequencyRow
+            frequencyRow.row
         )
 
         box.appendChild(
-            wavelengthRow
+            wavelengthRow.row
         )
 
         box.appendChild(
-            ratioRow
+            ratioRow.row
         )
 
 
         return {
 
-            box:
-                box,
+            box,
 
-            title:
-                title,
+            title,
 
             frequency:
-                frequencyValue,
+                frequencyRow.value,
 
             wavelength:
-                wavelengthValue,
+                wavelengthRow.value,
 
             ratio:
-                ratioValue
+                ratioRow.value
 
         }
 
@@ -1157,7 +965,61 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
-       CREATE SLIDER
+       COMPARISON ROW
+       ========================================================= */
+
+    createComparisonRow(
+        key,
+        fallback
+    ) {
+
+        const row =
+            document.createElement('div')
+
+        row.className =
+            'wave-doppler-comparison-row'
+
+
+        const label =
+            document.createElement('span')
+
+        label.dataset.i18n =
+            key
+
+        label.textContent =
+            this.translate(
+                key,
+                fallback
+            )
+
+
+        const value =
+            document.createElement('strong')
+
+        value.textContent =
+            '0.00'
+
+
+        row.appendChild(
+            label
+        )
+
+        row.appendChild(
+            value
+        )
+
+
+        return {
+            row,
+            label,
+            value
+        }
+
+    }
+
+
+    /* =========================================================
+       SLIDER
        ========================================================= */
 
     createSlider(
@@ -1171,31 +1033,21 @@ export default class WaveDopplerUI {
     ) {
 
         const row =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         row.className =
             'wave-doppler-control-row'
 
 
-        /*
-         * Header.
-         */
-
         const header =
-            document.createElement(
-                'div'
-            )
+            document.createElement('div')
 
         header.className =
             'wave-doppler-control-header'
 
 
         const label =
-            document.createElement(
-                'span'
-            )
+            document.createElement('span')
 
         label.dataset.i18n =
             key
@@ -1208,9 +1060,7 @@ export default class WaveDopplerUI {
 
 
         const valueDisplay =
-            document.createElement(
-                'strong'
-            )
+            document.createElement('strong')
 
         valueDisplay.textContent =
             this.formatNumber(
@@ -1228,14 +1078,8 @@ export default class WaveDopplerUI {
         )
 
 
-        /*
-         * Slider.
-         */
-
         const input =
-            document.createElement(
-                'input'
-            )
+            document.createElement('input')
 
         input.type =
             'range'
@@ -1269,27 +1113,20 @@ export default class WaveDopplerUI {
 
 
         return {
-
-            row:
-                row,
-
-            input:
-                input,
-
+            row,
+            input,
             value:
                 valueDisplay
-
         }
 
     }
 
 
     /* =========================================================
-       BIND EVENTS
+       EVENTS
        ========================================================= */
 
     bindEvents() {
-
 
         if (
             !this.container
@@ -1297,10 +1134,6 @@ export default class WaveDopplerUI {
             return
         }
 
-
-        /*
-         * Event delegation.
-         */
 
         this.container.addEventListener(
             'click',
@@ -1319,39 +1152,24 @@ export default class WaveDopplerUI {
                 }
 
 
-                const action =
-                    actionElement.dataset.action
-
-
                 switch (
-                    action
+                    actionElement.dataset.action
                 ) {
 
                     case 'play':
-
                         this.play()
-
                         break
-
 
                     case 'pause':
-
                         this.pause()
-
                         break
-
 
                     case 'reset':
-
                         this.reset()
-
                         break
 
-
                     case 'back':
-
                         this.exit()
-
                         break
 
                 }
@@ -1360,102 +1178,47 @@ export default class WaveDopplerUI {
         )
 
 
-        /* =====================================================
-           SOURCE SPEED
-           ===================================================== */
+        this.elements.sourceSpeedSlider?.addEventListener(
+            'input',
+            event => {
 
-        if (
-            this.elements.sourceSpeedSlider
-        ) {
+                this.experiment.setSourceSpeed(
+                    Number(event.target.value)
+                )
 
-            this.elements.sourceSpeedSlider.addEventListener(
-                'input',
-                event => {
+                this.updateValues()
 
-                    const value =
-                        Number(
-                            event.target.value
-                        )
+            }
+        )
 
 
-                    this.experiment.setSourceSpeed(
-                        value
-                    )
+        this.elements.frequencySlider?.addEventListener(
+            'input',
+            event => {
+
+                this.experiment.setFrequency(
+                    Number(event.target.value)
+                )
+
+                this.updateValues()
+
+            }
+        )
 
 
-                    this.updateValues()
+        this.elements.waveSpeedSlider?.addEventListener(
+            'input',
+            event => {
 
-                }
-            )
+                this.experiment.setWaveSpeed(
+                    Number(event.target.value)
+                )
 
-        }
+                this.updateValues()
 
+            }
+        )
 
-        /* =====================================================
-           FREQUENCY
-           ===================================================== */
-
-        if (
-            this.elements.frequencySlider
-        ) {
-
-            this.elements.frequencySlider.addEventListener(
-                'input',
-                event => {
-
-                    const value =
-                        Number(
-                            event.target.value
-                        )
-
-
-                    this.experiment.setFrequency(
-                        value
-                    )
-
-
-                    this.updateValues()
-
-                }
-            )
-
-        }
-
-
-        /* =====================================================
-           WAVE SPEED
-           ===================================================== */
-
-        if (
-            this.elements.waveSpeedSlider
-        ) {
-
-            this.elements.waveSpeedSlider.addEventListener(
-                'input',
-                event => {
-
-                    const value =
-                        Number(
-                            event.target.value
-                        )
-
-
-                    this.experiment.setWaveSpeed(
-                        value
-                    )
-
-
-                    this.updateValues()
-
-                }
-            )
-
-        }
-
-
-        /* =====================================================
-           LANGUAGE
-           ===================================================== */
 
         window.addEventListener(
             'awtaar-language-changed',
@@ -1483,7 +1246,6 @@ export default class WaveDopplerUI {
 
 
         this.experiment.start()
-
 
         this.active =
             true
@@ -1516,7 +1278,6 @@ export default class WaveDopplerUI {
 
         this.experiment.pause()
 
-
         this.paused =
             true
 
@@ -1545,17 +1306,12 @@ export default class WaveDopplerUI {
 
         this.experiment.reset()
 
-
         this.active =
             false
 
         this.paused =
             false
 
-
-        /*
-         * Restore slider values.
-         */
 
         if (
             this.elements.sourceSpeedSlider
@@ -1624,10 +1380,6 @@ export default class WaveDopplerUI {
             false
 
 
-        /*
-         * Add Three.js group to scene.
-         */
-
         if (
             this.scene
         ) {
@@ -1639,27 +1391,12 @@ export default class WaveDopplerUI {
         }
 
 
-        /*
-         * Show UI.
-         */
+        this.container.classList.add(
+            'is-visible'
+        )
 
-        if (
-            this.container
-        ) {
-
-            this.container.classList.add(
-                'is-visible'
-            )
-
-        }
-
-
-        /*
-         * Start experiment.
-         */
 
         this.experiment.start()
-
 
         this.updateStatus(
             'running'
@@ -1672,10 +1409,6 @@ export default class WaveDopplerUI {
     }
 
 
-    /* =========================================================
-       SHOW
-       ========================================================= */
-
     show() {
 
         this.enter()
@@ -1683,21 +1416,11 @@ export default class WaveDopplerUI {
     }
 
 
-    /* =========================================================
-       HIDE
-       ========================================================= */
-
     hide() {
 
-        if (
-            this.container
-        ) {
-
-            this.container.classList.remove(
-                'is-visible'
-            )
-
-        }
+        this.container?.classList.remove(
+            'is-visible'
+        )
 
     }
 
@@ -1708,9 +1431,7 @@ export default class WaveDopplerUI {
 
     exit() {
 
-
         this.experiment.stop()
-
 
         this.active =
             false
@@ -1718,21 +1439,14 @@ export default class WaveDopplerUI {
         this.paused =
             false
 
-
         this.hide()
-
 
         this.updateStatus(
             'ready'
         )
 
-
         this.updateActionState()
 
-
-        /*
-         * Notify parent UI.
-         */
 
         if (
             this.onExit
@@ -1754,13 +1468,7 @@ export default class WaveDopplerUI {
     ) {
 
         if (
-            this.destroyed
-        ) {
-            return
-        }
-
-
-        if (
+            this.destroyed ||
             !this.active
         ) {
             return
@@ -1781,10 +1489,6 @@ export default class WaveDopplerUI {
             safeDelta
         )
 
-
-        /*
-         * Update UI data periodically.
-         */
 
         this.updateValues()
 
@@ -1815,195 +1519,117 @@ export default class WaveDopplerUI {
         }
 
 
-        /* =====================================================
-           BASIC VALUES
-           ===================================================== */
-
-        if (
-            this.elements.sourceSpeed
-        ) {
-
-            this.elements.sourceSpeed.value.textContent =
-                this.formatNumber(
-                    data.sourceSpeed,
-                    2
-                )
-
-        }
+        this.elements.sourceSpeed.value.textContent =
+            this.formatNumber(
+                data.sourceSpeed,
+                2
+            )
 
 
-        if (
-            this.elements.frequency
-        ) {
-
-            this.elements.frequency.value.textContent =
-                this.formatNumber(
-                    data.frequency,
-                    2
-                )
-
-        }
+        this.elements.frequency.value.textContent =
+            this.formatNumber(
+                data.frequency,
+                2
+            )
 
 
-        if (
-            this.elements.waveSpeed
-        ) {
-
-            this.elements.waveSpeed.value.textContent =
-                this.formatNumber(
-                    data.waveSpeed,
-                    2
-                )
-
-        }
+        this.elements.waveSpeed.value.textContent =
+            this.formatNumber(
+                data.waveSpeed,
+                2
+            )
 
 
-        if (
-            this.elements.wavelength
-        ) {
-
-            this.elements.wavelength.value.textContent =
-                this.formatNumber(
-                    data.wavelength,
-                    2
-                )
-
-        }
+        this.elements.wavelength.value.textContent =
+            this.formatNumber(
+                data.wavelength,
+                2
+            )
 
 
-        if (
-            this.elements.waveCount
-        ) {
-
-            this.elements.waveCount.value.textContent =
-                String(
-                    data.waveCount
-                )
-
-        }
+        this.elements.waveCount.value.textContent =
+            String(
+                data.waveCount
+            )
 
 
-        /* =====================================================
-           SLIDER VALUES
-           ===================================================== */
-
-        if (
-            this.elements.sourceSpeedSliderValue
-        ) {
-
-            this.elements.sourceSpeedSliderValue.textContent =
-                this.formatNumber(
-                    data.sourceSpeed,
-                    2
-                )
-
-        }
+        this.elements.sourceSpeedSliderValue.textContent =
+            this.formatNumber(
+                data.sourceSpeed,
+                2
+            )
 
 
-        if (
-            this.elements.frequencySliderValue
-        ) {
-
-            this.elements.frequencySliderValue.textContent =
-                this.formatNumber(
-                    data.frequency,
-                    2
-                )
-
-        }
+        this.elements.frequencySliderValue.textContent =
+            this.formatNumber(
+                data.frequency,
+                2
+            )
 
 
-        if (
-            this.elements.waveSpeedSliderValue
-        ) {
-
-            this.elements.waveSpeedSliderValue.textContent =
-                this.formatNumber(
-                    data.waveSpeed,
-                    2
-                )
-
-        }
+        this.elements.waveSpeedSliderValue.textContent =
+            this.formatNumber(
+                data.waveSpeed,
+                2
+            )
 
 
         /* =====================================================
            APPROACHING
            ===================================================== */
 
-        if (
-            this.elements.approaching
-        ) {
+        this.elements.approaching.frequency.textContent =
+            this.formatNumber(
+                data.approachingFrequency,
+                2
+            )
 
-            this.elements.approaching.frequency.textContent =
-                this.formatNumber(
-                    data.approachingFrequency,
-                    2
-                )
-
-
-            this.elements.approaching.wavelength.textContent =
-                this.formatNumber(
-                    data.approachingWavelength,
-                    2
-                )
+        this.elements.approaching.wavelength.textContent =
+            this.formatNumber(
+                data.approachingWavelength,
+                2
+            )
 
 
-            const approachingChange =
+        this.elements.approaching.ratio.textContent =
+            this.formatPercentage(
                 this.calculatePercentage(
                     data.approachingFrequency,
                     data.frequency
                 )
-
-
-            this.elements.approaching.ratio.textContent =
-                this.formatPercentage(
-                    approachingChange
-                )
-
-        }
+            )
 
 
         /* =====================================================
            RECEDING
            ===================================================== */
 
-        if (
-            this.elements.receding
-        ) {
+        this.elements.receding.frequency.textContent =
+            this.formatNumber(
+                data.recedingFrequency,
+                2
+            )
 
-            this.elements.receding.frequency.textContent =
-                this.formatNumber(
-                    data.recedingFrequency,
-                    2
-                )
-
-
-            this.elements.receding.wavelength.textContent =
-                this.formatNumber(
-                    data.recedingWavelength,
-                    2
-                )
+        this.elements.receding.wavelength.textContent =
+            this.formatNumber(
+                data.recedingWavelength,
+                2
+            )
 
 
-            const recedingChange =
+        this.elements.receding.ratio.textContent =
+            this.formatPercentage(
                 this.calculatePercentage(
                     data.recedingFrequency,
                     data.frequency
                 )
-
-
-            this.elements.receding.ratio.textContent =
-                this.formatPercentage(
-                    recedingChange
-                )
-
-        }
+            )
 
     }
 
 
     /* =========================================================
-       UPDATE STATUS
+       STATUS
        ========================================================= */
 
     updateStatus(
@@ -2024,43 +1650,26 @@ export default class WaveDopplerUI {
             'جاهز'
 
 
-        switch (
-            state
+        if (
+            state === 'running'
         ) {
 
-            case 'running':
+            key =
+                'waves.doppler.running'
 
-                key =
-                    'waves.doppler.running'
+            fallback =
+                'التجربة تعمل'
 
-                fallback =
-                    'التجربة تعمل'
+        }
+        else if (
+            state === 'paused'
+        ) {
 
-                break
+            key =
+                'waves.doppler.paused'
 
-
-            case 'paused':
-
-                key =
-                    'waves.doppler.paused'
-
-                fallback =
-                    'متوقفة مؤقتًا'
-
-                break
-
-
-            case 'ready':
-
-            default:
-
-                key =
-                    'waves.doppler.ready'
-
-                fallback =
-                    'جاهز'
-
-                break
+            fallback =
+                'متوقفة مؤقتًا'
 
         }
 
@@ -2075,20 +1684,14 @@ export default class WaveDopplerUI {
             )
 
 
-        if (
-            this.elements.status
-        ) {
-
-            this.elements.status.dataset.state =
-                state
-
-        }
+        this.elements.status.dataset.state =
+            state
 
     }
 
 
     /* =========================================================
-       UPDATE ACTION STATE
+       ACTION STATE
        ========================================================= */
 
     updateActionState() {
@@ -2118,7 +1721,7 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
-       UPDATE LANGUAGE
+       LANGUAGE
        ========================================================= */
 
     updateLanguage() {
@@ -2129,10 +1732,6 @@ export default class WaveDopplerUI {
             return
         }
 
-
-        /*
-         * Direction.
-         */
 
         const language =
             typeof getLanguage === 'function'
@@ -2145,10 +1744,6 @@ export default class WaveDopplerUI {
                 ? 'rtl'
                 : 'ltr'
 
-
-        /*
-         * Update all translation nodes.
-         */
 
         const nodes =
             this.container.querySelectorAll(
@@ -2170,35 +1765,18 @@ export default class WaveDopplerUI {
                 }
 
 
-                const currentText =
-                    node.textContent
-
-
-                const translated =
+                node.textContent =
                     this.translate(
                         key,
-                        currentText
+                        node.textContent
                     )
-
-
-                node.textContent =
-                    translated
 
             }
         )
 
 
-        /*
-         * Restore dynamic values.
-         */
-
         this.updateValues()
 
-
-        /*
-         * Status is dynamic,
-         * so restore it after translation.
-         */
 
         if (
             this.elements.status?.dataset.state
@@ -2214,7 +1792,7 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
-       FORMAT NUMBER
+       FORMAT
        ========================================================= */
 
     formatNumber(
@@ -2241,10 +1819,6 @@ export default class WaveDopplerUI {
 
     }
 
-
-    /* =========================================================
-       CALCULATE PERCENTAGE
-       ========================================================= */
 
     calculatePercentage(
         value,
@@ -2276,10 +1850,6 @@ export default class WaveDopplerUI {
 
     }
 
-
-    /* =========================================================
-       FORMAT PERCENTAGE
-       ========================================================= */
 
     formatPercentage(
         value
@@ -2314,7 +1884,7 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
-       SET SCENE
+       SCENE
        ========================================================= */
 
     setScene(
@@ -2338,7 +1908,7 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
-       SET PARENT
+       PARENT
        ========================================================= */
 
     setParent(
@@ -2359,8 +1929,7 @@ export default class WaveDopplerUI {
 
         if (
             this.container &&
-            this.container.parentNode !==
-            parent
+            this.container.parentNode !== parent
         ) {
 
             parent.appendChild(
@@ -2373,7 +1942,7 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
-       GET EXPERIMENT
+       GETTERS
        ========================================================= */
 
     getExperiment() {
@@ -2382,10 +1951,6 @@ export default class WaveDopplerUI {
 
     }
 
-
-    /* =========================================================
-       GET ROOT
-       ========================================================= */
 
     getElement() {
 
@@ -2410,17 +1975,12 @@ export default class WaveDopplerUI {
         this.destroyed =
             true
 
-
         this.active =
             false
 
         this.paused =
             false
 
-
-        /*
-         * Stop experiment.
-         */
 
         if (
             this.experiment
@@ -2431,13 +1991,8 @@ export default class WaveDopplerUI {
         }
 
 
-        /*
-         * Remove DOM.
-         */
-
         if (
-            this.container &&
-            this.container.parentNode
+            this.container?.parentNode
         ) {
 
             this.container.parentNode.removeChild(
