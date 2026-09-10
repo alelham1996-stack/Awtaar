@@ -1,0 +1,1165 @@
+/* =========================================================
+   AWTAAR — GENETICS WORLD
+   GENE TO PROTEIN EXPERIMENT
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-gene-protein-experiment {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    background: transparent;
+
+    color: #e9f7ee;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    direction: rtl;
+
+    pointer-events: none;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+
+}
+
+
+/* =========================================================
+   HIDDEN STATE
+   ========================================================= */
+
+.awtaar-gene-protein-experiment.is-hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   ATMOSPHERE
+   ========================================================= */
+
+.awtaar-gene-protein-atmosphere {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 48%,
+            rgba(38, 120, 70, 0.10),
+            transparent 38%
+        ),
+
+        radial-gradient(
+            circle at 18% 75%,
+            rgba(45, 160, 91, 0.06),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 82% 22%,
+            rgba(81, 203, 122, 0.05),
+            transparent 28%
+        );
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.awtaar-gene-protein-header {
+
+    position: absolute;
+
+    top: 34px;
+
+    left: 42px;
+
+    right: 42px;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   TITLE AREA
+   ========================================================= */
+
+.awtaar-gene-protein-title-area {
+
+    max-width: 520px;
+
+    pointer-events: none;
+
+}
+
+
+.awtaar-gene-protein-eyebrow {
+
+    margin-bottom: 7px;
+
+    color:
+        rgba(117, 255, 164, 0.72);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.22em;
+
+    text-transform: uppercase;
+
+}
+
+
+.awtaar-gene-protein-title {
+
+    margin: 0;
+
+    color: #f2fff6;
+
+    font-size: 30px;
+
+    line-height: 1.15;
+
+    font-weight: 600;
+
+    letter-spacing: -0.02em;
+
+    text-shadow:
+        0 0 24px
+        rgba(70, 255, 136, 0.12);
+
+}
+
+
+.awtaar-gene-protein-description {
+
+    margin:
+        10px
+        0
+        0;
+
+    max-width: 470px;
+
+    color:
+        rgba(220, 239, 226, 0.62);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    font-weight: 400;
+
+}
+
+
+/* =========================================================
+   EXIT BUTTON
+   ========================================================= */
+
+.awtaar-gene-protein-exit {
+
+    pointer-events: auto;
+
+    min-width: 92px;
+
+    height: 38px;
+
+    padding:
+        0
+        18px;
+
+    border:
+        1px solid
+        rgba(108, 255, 157, 0.22);
+
+    border-radius: 8px;
+
+    background:
+        rgba(7, 22, 13, 0.68);
+
+    color:
+        rgba(219, 255, 230, 0.82);
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.20);
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.awtaar-gene-protein-exit:hover {
+
+    border-color:
+        rgba(108, 255, 157, 0.55);
+
+    background:
+        rgba(25, 76, 43, 0.60);
+
+    color: #ffffff;
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.awtaar-gene-protein-exit:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   STAGE BAR
+   ========================================================= */
+
+.awtaar-gene-protein-stage-bar {
+
+    position: absolute;
+
+    top: 125px;
+
+    right: 42px;
+
+    left: auto;
+
+    transform: none;
+
+    z-index: 6;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding:
+        7px;
+
+    border:
+        1px solid
+        rgba(103, 255, 151, 0.12);
+
+    border-radius: 12px;
+
+    background:
+        rgba(5, 18, 10, 0.60);
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+
+    box-shadow:
+        0 12px 45px
+        rgba(0, 0, 0, 0.20);
+
+    pointer-events: auto;
+
+    max-width:
+        calc(100% - 60px);
+
+}
+
+
+/* =========================================================
+   STAGE BUTTON
+   ========================================================= */
+
+.awtaar-gene-protein-stage {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    height: 34px;
+
+    padding:
+        0
+        12px;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius: 8px;
+
+    background:
+        transparent;
+
+    color:
+        rgba(211, 235, 219, 0.45);
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.awtaar-gene-protein-stage:hover {
+
+    color:
+        rgba(227, 255, 237, 0.88);
+
+    background:
+        rgba(58, 180, 101, 0.07);
+
+}
+
+
+.awtaar-gene-protein-stage.active {
+
+    color:
+        #dffff0;
+
+    background:
+        rgba(52, 177, 96, 0.13);
+
+    border-color:
+        rgba(96, 245, 139, 0.20);
+
+}
+
+
+.awtaar-gene-protein-stage.completed {
+
+    color:
+        rgba(116, 255, 165, 0.72);
+
+}
+
+
+.awtaar-gene-protein-stage:active {
+
+    transform:
+        scale(0.98);
+
+}
+
+
+/* =========================================================
+   STAGE NUMBER
+   ========================================================= */
+
+.stage-number {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 21px;
+
+    height: 21px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(108, 255, 157, 0.16);
+
+    color:
+        rgba(130, 255, 170, 0.65);
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+
+}
+
+
+.awtaar-gene-protein-stage.active
+.stage-number {
+
+    border-color:
+        rgba(108, 255, 157, 0.42);
+
+    background:
+        rgba(74, 210, 117, 0.08);
+
+    color:
+        #9dffc0;
+
+    box-shadow:
+        0 0 16px
+        rgba(65, 240, 126, 0.10);
+
+}
+
+
+/* =========================================================
+   STAGE LABEL
+   ========================================================= */
+
+.stage-label {
+
+    font-size: 11px;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   INFO PANEL
+   ========================================================= */
+
+.awtaar-gene-protein-info-panel {
+
+    position: absolute;
+
+    right: 42px;
+
+    bottom: 145px;
+
+    z-index: 7;
+
+    width: 270px;
+
+    padding:
+        20px
+        21px;
+
+    border:
+        1px solid
+        rgba(103, 255, 151, 0.13);
+
+    border-radius: 12px;
+
+    background:
+        rgba(5, 18, 10, 0.66);
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+        0 16px 55px
+        rgba(0, 0, 0, 0.24);
+
+    pointer-events: auto;
+
+}
+
+
+.awtaar-gene-protein-stage-title {
+
+    margin: 0;
+
+    color:
+        #cffff0;
+
+    font-size: 17px;
+
+    line-height: 1.45;
+
+    font-weight: 600;
+
+}
+
+
+.awtaar-gene-protein-stage-description {
+
+    margin:
+        8px
+        0
+        0;
+
+    color:
+        rgba(216, 239, 224, 0.60);
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+}
+
+
+.awtaar-gene-protein-info-divider {
+
+    width: 100%;
+
+    height: 1px;
+
+    margin:
+        15px
+        0;
+
+    background:
+        rgba(113, 255, 158, 0.10);
+
+}
+
+
+.awtaar-gene-protein-info-title {
+
+    margin:
+        0
+        0
+        6px;
+
+    color:
+        rgba(139, 255, 177, 0.82);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+.awtaar-gene-protein-info-text {
+
+    margin: 0;
+
+    color:
+        rgba(230, 244, 235, 0.66);
+
+    font-size: 11px;
+
+    line-height: 1.75;
+
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.awtaar-gene-protein-controls {
+
+    position: absolute;
+
+    /*
+       نقل أزرار:
+       استمرار التجربة / إعادة التجربة
+       إلى الجهة اليسرى حتى لا تغطي التجربة.
+       وإنزالها حوالي 1 سم إلى الأسفل.
+    */
+
+    left: 42px;
+
+    bottom: 12px;
+
+    transform: none;
+
+    z-index: 8;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 8px;
+
+    width: max-content;
+
+    max-width:
+        calc(100% - 60px);
+
+    pointer-events: auto;
+
+}
+
+
+/* =========================================================
+   CONTROL BUTTON
+   ========================================================= */
+
+.awtaar-gene-protein-control {
+
+    min-width: 96px;
+
+    height: 38px;
+
+    padding:
+        0
+        17px;
+
+    border:
+        1px solid
+        rgba(103, 255, 151, 0.17);
+
+    border-radius: 8px;
+
+    background:
+        rgba(5, 19, 10, 0.70);
+
+    color:
+        rgba(219, 241, 226, 0.72);
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.awtaar-gene-protein-control:hover {
+
+    border-color:
+        rgba(105, 255, 157, 0.42);
+
+    background:
+        rgba(31, 89, 51, 0.45);
+
+    color:
+        #f0fff5;
+
+}
+
+
+.awtaar-gene-protein-control:active {
+
+    transform:
+        scale(0.98);
+
+}
+
+
+/* =========================================================
+   PRIMARY CONTROL
+   ========================================================= */
+
+.awtaar-gene-protein-control.primary {
+
+    border-color:
+        rgba(108, 255, 157, 0.34);
+
+    background:
+        rgba(45, 143, 77, 0.22);
+
+    color:
+        #baffd0;
+
+    box-shadow:
+        0 0 22px
+        rgba(54, 222, 112, 0.08);
+
+}
+
+
+.awtaar-gene-protein-control.primary:hover {
+
+    border-color:
+        rgba(108, 255, 157, 0.62);
+
+    background:
+        rgba(52, 171, 91, 0.34);
+
+    box-shadow:
+        0 0 28px
+        rgba(54, 222, 112, 0.13);
+
+}
+
+
+/* =========================================================
+   HINT
+   ========================================================= */
+
+.awtaar-gene-protein-hint {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 82px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 7;
+
+    color:
+        rgba(193, 224, 202, 0.40);
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+.awtaar-gene-protein-canvas {
+
+    display: block;
+
+    outline: none;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    touch-action: none;
+
+}
+
+
+/* =========================================================
+   RTL / LTR
+   ========================================================= */
+
+.awtaar-gene-protein-experiment[dir="ltr"] {
+
+    direction: ltr;
+
+}
+
+
+.awtaar-gene-protein-experiment[dir="ltr"]
+.awtaar-gene-protein-info-panel {
+
+    right: auto;
+
+    left: 42px;
+
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.awtaar-gene-protein-exit:focus-visible,
+
+.awtaar-gene-protein-stage:focus-visible,
+
+.awtaar-gene-protein-control:focus-visible {
+
+    outline:
+        1px solid
+        rgba(113, 255, 158, 0.70);
+
+    outline-offset: 3px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .awtaar-gene-protein-header {
+
+        top: 22px;
+
+        left: 20px;
+
+        right: 20px;
+
+    }
+
+
+    .awtaar-gene-protein-title {
+
+        font-size: 24px;
+
+    }
+
+
+    .awtaar-gene-protein-description {
+
+        max-width: 360px;
+
+        font-size: 11px;
+
+    }
+
+
+    /* =========================
+       MOBILE STAGE BAR
+       ========================= */
+
+    .awtaar-gene-protein-stage-bar {
+
+        top: 112px;
+
+        right: 20px;
+
+        left: auto;
+
+        transform: none;
+
+        max-width:
+            calc(100% - 30px);
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
+    }
+
+
+    .awtaar-gene-protein-stage-bar::-webkit-scrollbar {
+
+        display: none;
+
+    }
+
+
+    .awtaar-gene-protein-stage {
+
+        flex-shrink: 0;
+
+    }
+
+
+    /* =========================
+       MOBILE INFO
+       ========================= */
+
+    .awtaar-gene-protein-info-panel {
+
+        right: 20px;
+
+        bottom: 108px;
+
+        width: 235px;
+
+        padding: 16px;
+
+    }
+
+
+    .awtaar-gene-protein-experiment[dir="ltr"]
+    .awtaar-gene-protein-info-panel {
+
+        right: auto;
+
+        left: 20px;
+
+    }
+
+
+    /* =========================
+       MOBILE CONTROLS
+       ========================= */
+
+    .awtaar-gene-protein-controls {
+
+        left: 20px;
+
+        bottom: 18px;
+
+        width: max-content;
+
+        max-width:
+            calc(100% - 30px);
+
+        justify-content: flex-start;
+
+        transform: none;
+
+    }
+
+
+    .awtaar-gene-protein-control {
+
+        min-width: 84px;
+
+        height: 35px;
+
+        padding:
+            0
+            13px;
+
+        font-size: 10px;
+
+    }
+
+
+    /* =========================
+       MOBILE HINT
+       ========================= */
+
+    .awtaar-gene-protein-hint {
+
+        bottom: 76px;
+
+        max-width:
+            calc(100% - 40px);
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .awtaar-gene-protein-header {
+
+        align-items: flex-start;
+
+    }
+
+
+    .awtaar-gene-protein-eyebrow {
+
+        font-size: 8px;
+
+    }
+
+
+    .awtaar-gene-protein-title {
+
+        font-size: 20px;
+
+    }
+
+
+    .awtaar-gene-protein-description {
+
+        display: none;
+
+    }
+
+
+    .awtaar-gene-protein-exit {
+
+        min-width: 74px;
+
+        height: 34px;
+
+        padding:
+            0
+            12px;
+
+        font-size: 10px;
+
+    }
+
+
+    /* =========================
+       SMALL MOBILE STAGE BAR
+       ========================= */
+
+    .awtaar-gene-protein-stage-bar {
+
+        top: 92px;
+
+        right: 12px;
+
+        left: auto;
+
+        transform: none;
+
+        width:
+            calc(100% - 24px);
+
+    }
+
+
+    /* =========================
+       SMALL MOBILE INFO
+       ========================= */
+
+    .awtaar-gene-protein-info-panel {
+
+        right: 12px;
+
+        left: 12px;
+
+        bottom: 82px;
+
+        width: auto;
+
+        max-width: none;
+
+    }
+
+
+    .awtaar-gene-protein-experiment[dir="ltr"]
+    .awtaar-gene-protein-info-panel {
+
+        right: 12px;
+
+        left: 12px;
+
+    }
+
+
+    /* =========================
+       SMALL MOBILE CONTROLS
+       ========================= */
+
+    .awtaar-gene-protein-controls {
+
+        left: 12px;
+
+        bottom: 8px;
+
+        width:
+            calc(100% - 24px);
+
+        max-width: none;
+
+        justify-content: flex-start;
+
+        transform: none;
+
+    }
+
+
+    .awtaar-gene-protein-control {
+
+        flex: 0 1 auto;
+
+        min-width: 0;
+
+        height: 34px;
+
+    }
+
+
+    .awtaar-gene-protein-hint {
+
+        display: block;
+
+        bottom: 52px;
+
+        font-size: 9px;
+
+    }
+
+}

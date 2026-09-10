@@ -230,6 +230,17 @@ export default class Engine {
         this.camera.position.z =
             18
 
+
+        // =========================================
+        // إتاحة الكاميرا للتجارب التفاعلية
+        // =========================================
+
+        this.scene.userData =
+            this.scene.userData || {}
+
+        this.scene.userData.camera =
+            this.camera
+
     }
 
 
@@ -317,6 +328,7 @@ export default class Engine {
 
         this.scene.add(
             ambient
+
         )
 
     }

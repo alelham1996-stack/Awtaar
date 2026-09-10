@@ -1,0 +1,1391 @@
+/* =========================================================
+   AWTAAR — ENERGY CIRCUIT
+   SECRET OF THE CLOSED CIRCUIT
+   =========================================================
+
+   Layout principle:
+   - Three.js experiment owns the center
+   - Guide panel lives on the RIGHT
+   - No bottom obstruction
+   - Compact square / near-square control panel
+   - Minimal visual interference
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-energy-circuit {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 40;
+
+    pointer-events: none;
+
+    font-family:
+        Tajawal,
+        Arial,
+        sans-serif;
+
+    color:
+        rgba(255,255,255,0.94);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 360ms ease,
+        visibility 360ms ease;
+
+}
+
+
+.awtaar-energy-circuit.is-visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.energy-circuit-header {
+
+    position: absolute;
+
+    top: 30px;
+
+    left: 34px;
+
+    right: 34px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   HEADER — HEADING
+   ========================================================= */
+
+.energy-circuit-heading {
+
+    max-width:
+        min(650px, 60vw);
+
+}
+
+
+.energy-circuit-eyebrow {
+
+    margin:
+        0 0 8px;
+
+    font-size:
+        10px;
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.16em;
+
+    text-transform:
+        uppercase;
+
+    color:
+        rgba(244,201,93,0.72);
+
+}
+
+
+.energy-circuit-title {
+
+    margin:
+        0;
+
+    font-size:
+        clamp(28px, 3.1vw, 44px);
+
+    line-height:
+        1.05;
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        -0.025em;
+
+    color:
+        rgba(255,255,255,0.97);
+
+}
+
+
+/*
+   The long descriptive text belongs to the
+   learning panel, not the top header.
+*/
+
+.energy-circuit-description {
+
+    display:
+        none !important;
+
+}
+
+
+/* =========================================================
+   OPTIONAL STATUS
+   =========================================================
+
+   The experiment communicates its state visually,
+   so the old status pill is intentionally removed.
+   ========================================================= */
+
+.energy-circuit-status {
+
+    display:
+        none !important;
+
+}
+
+
+.energy-circuit-status-dot {
+
+    display:
+        none !important;
+
+}
+
+
+/* =========================================================
+   MAIN VISUAL AREA
+   =========================================================
+
+   This gives the Three.js experiment the majority
+   of the screen while reserving a clean column
+   on the right for the guide.
+   ========================================================= */
+
+.energy-circuit-visual {
+
+    position: absolute;
+
+    left: 3%;
+
+    right: 360px;
+
+    top: 10%;
+
+    bottom: 5%;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   GUIDE PANEL
+   ========================================================= */
+
+.energy-circuit-guide {
+
+    position: absolute;
+
+    top: 50%;
+
+    right: 30px;
+
+    left: auto;
+
+    bottom: auto;
+
+    transform:
+        translateY(-50%);
+
+    width:
+        300px;
+
+    min-height:
+        300px;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        22px 21px 19px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    border-radius:
+        22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(14,15,24,0.88),
+            rgba(7,8,15,0.76)
+        );
+
+    box-shadow:
+
+        0 24px 70px
+        rgba(0,0,0,0.30),
+
+        inset 0 1px 0
+        rgba(255,255,255,0.045);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    pointer-events:
+        auto;
+
+    text-align:
+        center;
+
+    overflow:
+        hidden;
+
+}
+
+
+/* =========================================================
+   SUBTLE PANEL ACCENT
+   ========================================================= */
+
+.energy-circuit-guide::before {
+
+    content:
+        '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 28px;
+
+    right: 28px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(244,201,93,0.48),
+            transparent
+        );
+
+    opacity:
+        0.75;
+
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.energy-circuit-progress {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        6px;
+
+    margin:
+        0 0 18px;
+
+}
+
+
+.energy-circuit-progress-dot {
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    flex:
+        0 0 6px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(255,255,255,0.16);
+
+    transition:
+
+        transform 220ms ease,
+
+        background 220ms ease,
+
+        box-shadow 220ms ease;
+
+}
+
+
+.energy-circuit-progress-dot.is-current {
+
+    transform:
+        scale(1.5);
+
+    background:
+        #f4c95d;
+
+    box-shadow:
+        0 0 11px
+        rgba(244,201,93,0.58);
+
+}
+
+
+.energy-circuit-progress-dot.is-done {
+
+    background:
+        rgba(244,201,93,0.62);
+
+}
+
+
+/* =========================================================
+   STEP COUNT
+   ========================================================= */
+
+.energy-circuit-step-count {
+
+    margin:
+        0 0 8px;
+
+    font-size:
+        10px;
+
+    line-height:
+        1.4;
+
+    color:
+        rgba(255,255,255,0.38);
+
+}
+
+
+/* =========================================================
+   STEP TITLE
+   ========================================================= */
+
+.energy-circuit-step-title {
+
+    margin:
+        0;
+
+    font-size:
+        24px;
+
+    line-height:
+        1.25;
+
+    font-weight:
+        500;
+
+    color:
+        rgba(255,255,255,0.96);
+
+}
+
+
+/* =========================================================
+   STEP DESCRIPTION
+   ========================================================= */
+
+.energy-circuit-step-description {
+
+    margin:
+        11px auto 18px;
+
+    max-width:
+        250px;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.75;
+
+    color:
+        rgba(255,255,255,0.60);
+
+}
+
+
+/* =========================================================
+   MAIN ACTION
+   ========================================================= */
+
+.energy-circuit-action {
+
+    width:
+        100%;
+
+    min-height:
+        46px;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        10px 17px;
+
+    border:
+        1px solid
+        rgba(244,201,93,0.42);
+
+    border-radius:
+        12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(244,201,93,0.20),
+            rgba(244,201,93,0.07)
+        );
+
+    color:
+        rgba(255,248,224,0.98);
+
+    font:
+        500 13px Tajawal,
+        Arial,
+        sans-serif;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+
+        0 9px 26px
+        rgba(0,0,0,0.18),
+
+        inset 0 1px 0
+        rgba(255,255,255,0.06);
+
+    transition:
+
+        transform 180ms ease,
+
+        border-color 180ms ease,
+
+        background 180ms ease,
+
+        box-shadow 180ms ease;
+
+}
+
+
+.energy-circuit-action:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(244,201,93,0.72);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(244,201,93,0.28),
+            rgba(244,201,93,0.11)
+        );
+
+    box-shadow:
+
+        0 13px 32px
+        rgba(0,0,0,0.24),
+
+        0 0 22px
+        rgba(244,201,93,0.08);
+
+}
+
+
+.energy-circuit-action:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+.energy-circuit-action:focus-visible {
+
+    outline:
+        2px solid
+        rgba(244,201,93,0.70);
+
+    outline-offset:
+        3px;
+
+}
+
+
+/* =========================================================
+   SECONDARY ACTIONS
+   ========================================================= */
+
+.energy-circuit-secondary {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    margin:
+        11px 0 0;
+
+}
+
+
+.energy-circuit-secondary button {
+
+    min-height:
+        32px;
+
+    padding:
+        6px 11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+    border-radius:
+        9px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color:
+        rgba(255,255,255,0.50);
+
+    font:
+        400 10px Tajawal,
+        Arial,
+        sans-serif;
+
+    cursor:
+        pointer;
+
+    transition:
+
+        border-color 180ms ease,
+
+        background 180ms ease,
+
+        color 180ms ease;
+
+}
+
+
+.energy-circuit-secondary button:hover {
+
+    border-color:
+        rgba(255,255,255,0.20);
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color:
+        rgba(255,255,255,0.86);
+
+}
+
+
+.energy-circuit-secondary .energy-circuit-exit {
+
+    border-color:
+        rgba(210,100,100,0.18);
+
+    color:
+        rgba(255,190,190,0.60);
+
+}
+
+
+.energy-circuit-secondary .energy-circuit-exit:hover {
+
+    border-color:
+        rgba(210,100,100,0.40);
+
+    background:
+        rgba(210,100,100,0.07);
+
+}
+
+
+/* =========================================================
+   STATE — COMPLETE
+   ========================================================= */
+
+.energy-circuit-guide.is-complete {
+
+    border-color:
+        rgba(244,201,93,0.28);
+
+    box-shadow:
+
+        0 24px 70px
+        rgba(0,0,0,0.30),
+
+        0 0 40px
+        rgba(244,201,93,0.035),
+
+        inset 0 1px 0
+        rgba(255,255,255,0.05);
+
+}
+
+
+.energy-circuit-guide.is-complete
+.energy-circuit-action {
+
+    border-color:
+        rgba(244,201,93,0.55);
+
+}
+
+
+/* =========================================================
+   STATE — SERIES
+   ========================================================= */
+
+.energy-circuit-guide.is-series
+.energy-circuit-action {
+
+    border-color:
+        rgba(255,255,255,0.24);
+
+    background:
+        rgba(255,255,255,0.055);
+
+}
+
+
+/* =========================================================
+   STATE — PARALLEL
+   ========================================================= */
+
+.energy-circuit-guide.is-parallel
+.energy-circuit-action {
+
+    border-color:
+        rgba(244,201,93,0.42);
+
+}
+
+
+/* =========================================================
+   HIDDEN / UNUSED ELEMENTS
+   ========================================================= */
+
+.energy-circuit-title-sub {
+
+    display:
+        none !important;
+
+}
+
+
+.energy-circuit-type {
+
+    display:
+        none !important;
+
+}
+
+
+.energy-circuit-guide-footer {
+
+    display:
+        none !important;
+
+}
+
+
+/* =========================================================
+   LARGE SCREENS
+   ========================================================= */
+
+@media (min-width: 1500px) {
+
+    .energy-circuit-guide {
+
+        width:
+            320px;
+
+        min-height:
+            320px;
+
+        right:
+            38px;
+
+        padding:
+            25px 23px 21px;
+
+    }
+
+
+    .energy-circuit-visual {
+
+        right:
+            390px;
+
+    }
+
+
+    .energy-circuit-step-title {
+
+        font-size:
+            26px;
+
+    }
+
+
+    .energy-circuit-step-description {
+
+        max-width:
+            270px;
+
+        font-size:
+            12.5px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MEDIUM DESKTOP
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .energy-circuit-header {
+
+        top:
+            25px;
+
+        left:
+            26px;
+
+        right:
+            26px;
+
+    }
+
+
+    .energy-circuit-heading {
+
+        max-width:
+            52vw;
+
+    }
+
+
+    .energy-circuit-visual {
+
+        left:
+            2%;
+
+        right:
+            330px;
+
+        top:
+            10%;
+
+        bottom:
+            5%;
+
+    }
+
+
+    .energy-circuit-guide {
+
+        width:
+            285px;
+
+        min-height:
+            285px;
+
+        right:
+            22px;
+
+        padding:
+            20px 18px 18px;
+
+    }
+
+
+    .energy-circuit-step-title {
+
+        font-size:
+            22px;
+
+    }
+
+
+    .energy-circuit-step-description {
+
+        max-width:
+            240px;
+
+        font-size:
+            11.5px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / NARROW
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .energy-circuit-header {
+
+        top:
+            20px;
+
+        left:
+            20px;
+
+        right:
+            20px;
+
+    }
+
+
+    .energy-circuit-heading {
+
+        max-width:
+            55vw;
+
+    }
+
+
+    .energy-circuit-title {
+
+        font-size:
+            clamp(27px, 5vw, 38px);
+
+    }
+
+
+    .energy-circuit-visual {
+
+        left:
+            2%;
+
+        right:
+            310px;
+
+        top:
+            10%;
+
+        bottom:
+            4%;
+
+    }
+
+
+    .energy-circuit-guide {
+
+        width:
+            270px;
+
+        min-height:
+            270px;
+
+        right:
+            16px;
+
+        padding:
+            18px 16px 16px;
+
+        border-radius:
+            19px;
+
+    }
+
+
+    .energy-circuit-progress {
+
+        margin-bottom:
+            14px;
+
+    }
+
+
+    .energy-circuit-step-title {
+
+        font-size:
+            21px;
+
+    }
+
+
+    .energy-circuit-step-description {
+
+        margin:
+            9px auto 15px;
+
+        max-width:
+            225px;
+
+        font-size:
+            11px;
+
+        line-height:
+            1.65;
+
+    }
+
+
+    .energy-circuit-action {
+
+        min-height:
+            44px;
+
+        font-size:
+            12.5px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET / PHONE LANDSCAPE
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+    .energy-circuit-header {
+
+        top:
+            16px;
+
+        left:
+            16px;
+
+        right:
+            16px;
+
+    }
+
+
+    .energy-circuit-eyebrow {
+
+        font-size:
+            9px;
+
+    }
+
+
+    .energy-circuit-title {
+
+        font-size:
+            26px;
+
+    }
+
+
+    /*
+       On narrower screens the panel becomes
+       a compact horizontal card again.
+    */
+
+    .energy-circuit-visual {
+
+        left:
+            3%;
+
+        right:
+            3%;
+
+        top:
+            9%;
+
+        bottom:
+            185px;
+
+    }
+
+
+    .energy-circuit-guide {
+
+        top:
+            auto;
+
+        right:
+            50%;
+
+        bottom:
+            14px;
+
+        left:
+            auto;
+
+        transform:
+            translateX(50%);
+
+        width:
+            min(560px, calc(100vw - 28px));
+
+        min-height:
+            auto;
+
+        padding:
+            14px 16px 13px;
+
+        border-radius:
+            17px;
+
+    }
+
+
+    .energy-circuit-progress {
+
+        margin-bottom:
+            10px;
+
+    }
+
+
+    .energy-circuit-step-count {
+
+        margin-bottom:
+            4px;
+
+    }
+
+
+    .energy-circuit-step-title {
+
+        font-size:
+            19px;
+
+    }
+
+
+    .energy-circuit-step-description {
+
+        max-width:
+            480px;
+
+        margin:
+            7px auto 11px;
+
+        font-size:
+            10.5px;
+
+        line-height:
+            1.55;
+
+    }
+
+
+    .energy-circuit-action {
+
+        width:
+            min(100%, 330px);
+
+        min-height:
+            42px;
+
+    }
+
+}
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .energy-circuit-header {
+
+        top:
+            13px;
+
+        left:
+            13px;
+
+        right:
+            13px;
+
+    }
+
+
+    .energy-circuit-title {
+
+        font-size:
+            24px;
+
+    }
+
+
+    .energy-circuit-visual {
+
+        top:
+            8%;
+
+        bottom:
+            195px;
+
+    }
+
+
+    .energy-circuit-guide {
+
+        bottom:
+            10px;
+
+        width:
+            calc(100vw - 20px);
+
+        padding:
+            13px 12px 12px;
+
+        border-radius:
+            16px;
+
+    }
+
+
+    .energy-circuit-progress {
+
+        gap:
+            5px;
+
+        margin-bottom:
+            9px;
+
+    }
+
+
+    .energy-circuit-progress-dot {
+
+        width:
+            5px;
+
+        height:
+            5px;
+
+        flex-basis:
+            5px;
+
+    }
+
+
+    .energy-circuit-step-title {
+
+        font-size:
+            18px;
+
+    }
+
+
+    .energy-circuit-step-description {
+
+        font-size:
+            10px;
+
+        line-height:
+            1.5;
+
+        margin:
+            6px auto 10px;
+
+    }
+
+
+    .energy-circuit-action {
+
+        min-height:
+            40px;
+
+        padding:
+            9px 14px;
+
+        font-size:
+            12px;
+
+    }
+
+
+    .energy-circuit-secondary {
+
+        margin-top:
+            8px;
+
+    }
+
+
+    .energy-circuit-secondary button {
+
+        min-height:
+            29px;
+
+        padding:
+            5px 9px;
+
+        font-size:
+            9px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SHORT SCREENS
+   ========================================================= */
+
+@media (max-height: 650px) and (min-width: 721px) {
+
+    .energy-circuit-header {
+
+        top:
+            15px;
+
+    }
+
+
+    .energy-circuit-title {
+
+        font-size:
+            28px;
+
+    }
+
+
+    .energy-circuit-guide {
+
+        width:
+            260px;
+
+        min-height:
+            260px;
+
+        padding:
+            16px 15px;
+
+    }
+
+
+    .energy-circuit-progress {
+
+        margin-bottom:
+            10px;
+
+    }
+
+
+    .energy-circuit-step-title {
+
+        font-size:
+            20px;
+
+    }
+
+
+    .energy-circuit-step-description {
+
+        margin:
+            7px auto 11px;
+
+        font-size:
+            10px;
+
+        line-height:
+            1.5;
+
+    }
+
+
+    .energy-circuit-action {
+
+        min-height:
+            40px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .awtaar-energy-circuit,
+    .energy-circuit-action,
+    .energy-circuit-progress-dot {
+
+        transition:
+            none !important;
+
+    }
+
+}

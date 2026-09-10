@@ -2,23 +2,42 @@
    AWTAAR — DOPPLER EXPERIMENT
    =========================================================
 
-   Real-time visual Doppler wave experiment.
+   SHARED THREE.JS SCENE
+   ---------------------------------------------------------
+   This experiment does NOT create:
 
-   RESPONSIBILITY
-   --------------
-   Three.js experiment only.
+   - a renderer
+   - a canvas
+   - a background
 
-   NO HTML.
-   NO CSS.
-   NO UI.
+   It renders as a THREE.Group inside the existing
+   Awtaar Engine / Universe scene.
 
-   The source moves horizontally.
+   The Awtaar universe remains completely untouched.
 
-   Every wavefront is emitted from the exact source
-   position at the exact emission time.
+   ---------------------------------------------------------
+   CLASSICAL DOPPLER EFFECT
+   ---------------------------------------------------------
 
-   The experiment is rendered as a foreground
-   visualization layer above the main world.
+              approaching
+                  →
+
+          ))  ))  )))   ))))
+        ))  ))  )))   ))))
+             ● SOURCE ─────────── ● LISTENER
+
+        (((((  (((((  (((((
+
+   Waves are emitted from the source's CURRENT position.
+
+   The source moves.
+
+   Previously emitted waves remain where they were born.
+
+   This creates:
+
+   - compressed fronts ahead of the source
+   - expanded fronts behind the source
 
    ========================================================= */
 
@@ -28,14 +47,17 @@ import * as THREE from 'three'
 export default class DopplerExperiment {
 
 
+    /* =====================================================
+       CONSTRUCTOR
+       ===================================================== */
+
     constructor(
         options = {}
     ) {
 
-
-        /* =====================================================
+        /* =================================================
            REFERENCES
-           ===================================================== */
+           ================================================= */
 
         this.scene =
             options.scene || null
@@ -44,9 +66,9 @@ export default class DopplerExperiment {
             options.parent || null
 
 
-        /* =====================================================
+        /* =================================================
            STATE
-           ===================================================== */
+           ================================================= */
 
         this.active =
             false
@@ -57,393 +79,216 @@ export default class DopplerExperiment {
         this.destroyed =
             false
 
+
+        /* =================================================
+           SIMULATION TIME
+           ================================================= */
+
         this.time =
             0
 
 
-        /* =====================================================
-           PHYSICS
-           ===================================================== */
+        /* =================================================
+           SOURCE POSITION
+           =================================================
 
-        this.frequency =
-            1.5
+           IMPORTANT:
 
-        this.sourceSpeed =
-            0.8
+           The previous version used:
 
-        this.waveSpeed =
-            3.0
+               -4.8 → +5.0
 
+           which made the experiment occupy too much
+           horizontal space and caused the wavefronts
+           to disappear behind the right control panel.
 
-        this.defaultFrequency =
-            1.5
+           The new composition keeps the entire experiment
+           around the central visual area.
+        */
 
-        this.defaultSourceSpeed =
-            0.8
-
-        this.defaultWaveSpeed =
-            3.0
-
-
-        /* =====================================================
-           SOURCE
-           ===================================================== */
-
-        this.defaultSourcePosition =
-            -5
-
-        this.sourcePosition =
-            this.defaultSourcePosition
-
-        this.sourceMinX =
-            -6
-
-        this.sourceMaxX =
-            6
+        this.sourceX =
+            -2.8
 
         this.sourceDirection =
             1
 
 
-        /* =====================================================
-           LISTENER
-           ===================================================== */
+        /* =================================================
+           PHYSICAL PARAMETERS
+           ================================================= */
 
-        this.listenerPosition =
-            5
+        this.sourceSpeed =
+            0.80
+
+        this.frequency =
+            2.00
+
+        this.waveSpeed =
+            5.00
 
 
-        /* =====================================================
-           WAVES
-           ===================================================== */
+        /* =================================================
+           WAVE PARAMETERS
+           ================================================= */
 
-        this.waveInterval =
-            1 / this.frequency
+        this.maxWaveCount =
+            28
 
-        this.waveSpawnTimer =
+        this.waveLifetime =
+            4.8
+
+        this.emissionAccumulator =
             0
 
-        this.waveCount =
-            0
 
-        this.maxWaves =
-            80
-
-        this.maxWaveRadius =
-            16
-
-        this.waves =
-            []
-
-
-        /* =====================================================
-           VISUAL SCALE
-           ===================================================== */
-
-        this.waveSegments =
-            96
-
-        this.sourceRadius =
-            0.38
-
-        this.listenerRadius =
-            0.32
-
-
-        /* =====================================================
-           FOREGROUND LAYER
-           ===================================================== */
+        /* =================================================
+           VISUAL WORLD
+           ================================================= */
 
         /*
-         * The main Awtaar scene contains the universe and
-         * other visual systems.
+         * These are visualization coordinates only.
          *
-         * We place the Doppler experiment slightly in front
-         * of the world and disable depth testing on its
-         * visual materials so the experiment remains visible.
+         * They are deliberately smaller than the previous
+         * version so the experiment remains visible in the
+         * central safe area of the UI.
          */
 
-        this.foregroundZ =
-            2.5
+        this.worldMinX =
+            -5.2
+
+        this.worldMaxX =
+            5.2
+
+        this.worldY =
+            0
+
+        this.worldZ =
+            0
 
 
-        /* =====================================================
-           THREE ROOT
-           ===================================================== */
+        /*
+         * The whole experiment receives a tiny visual
+         * offset toward the left.
+         *
+         * This is intentional:
+         *
+         * the UI panel occupies the right side of the screen.
+         */
 
-        this.group =
-            null
-
-
-        /* =====================================================
-           OBJECTS
-           ===================================================== */
-
-        this.source =
-            null
-
-        this.sourceGlow =
-            null
-
-        this.listener =
-            null
-
-        this.listenerGlow =
-            null
-
-        this.path =
-            null
-
-        this.centerLine =
-            null
-
-        this.directionArrow =
-            null
+        this.visualOffsetX =
+            -0.55
 
 
-        /* =====================================================
-           MATERIALS
-           ===================================================== */
+        /*
+         * Physical radius remains based on waveSpeed.
+         *
+         * This multiplier only controls the visual scale.
+         */
 
-        this.waveMaterial =
-            null
-
-        this.sourceMaterial =
-            null
-
-        this.sourceGlowMaterial =
-            null
-
-        this.listenerMaterial =
-            null
-
-        this.listenerGlowMaterial =
-            null
-
-        this.pathMaterial =
-            null
+        this.waveVisualScale =
+            0.72
 
 
-        /* =====================================================
-           CREATE
-           ===================================================== */
-
-        this.createExperiment()
-
-    }
-
-
-    /* =========================================================
-       CREATE EXPERIMENT
-       ========================================================= */
-
-    createExperiment() {
-
-
-        if (
-            this.group
-        ) {
-
-            return this.group
-
-        }
-
-
-        /* =====================================================
-           ROOT GROUP
-           ===================================================== */
+        /* =================================================
+           THREE MAIN GROUP
+           ================================================= */
 
         this.group =
             new THREE.Group()
 
-
         this.group.name =
-            'AwtaarDopplerExperiment'
+            'Awtaar_Doppler_Experiment'
 
-
-        /*
-         * Keep the experiment in a predictable foreground
-         * plane relative to the main world.
-         */
-
-        this.group.position.set(
-            0,
-            0,
-            this.foregroundZ
-        )
-
+        this.group.position.x =
+            this.visualOffsetX
 
         this.group.renderOrder =
             1000
 
 
-        this.group.frustumCulled =
-            false
+        /* =================================================
+           SOURCE GROUP
+           ================================================= */
+
+        this.sourceGroup =
+            new THREE.Group()
+
+        this.sourceGroup.name =
+            'Doppler_Source'
+
+        this.sourceGroup.renderOrder =
+            1000
+
+        this.group.add(
+            this.sourceGroup
+        )
 
 
-        /* =====================================================
-           WAVE MATERIAL
-           ===================================================== */
+        /* =================================================
+           LISTENER GROUP
+           ================================================= */
 
-        this.waveMaterial =
-            new THREE.LineBasicMaterial({
+        this.listenerGroup =
+            new THREE.Group()
 
-                color:
-                    0x55ddff,
+        this.listenerGroup.name =
+            'Doppler_Listener'
 
-                transparent:
-                    true,
+        this.listenerGroup.renderOrder =
+            1000
 
-                opacity:
-                    0.9,
-
-                depthWrite:
-                    false,
-
-                depthTest:
-                    false,
-
-                toneMapped:
-                    false
-
-            })
+        this.group.add(
+            this.listenerGroup
+        )
 
 
-        /* =====================================================
-           SOURCE MATERIAL
-           ===================================================== */
+        /* =================================================
+           WAVE GROUP
+           ================================================= */
 
-        this.sourceMaterial =
-            new THREE.MeshBasicMaterial({
+        this.waveGroup =
+            new THREE.Group()
 
-                color:
-                    0xffd45c,
+        this.waveGroup.name =
+            'Doppler_Wavefronts'
 
-                depthWrite:
-                    false,
+        this.waveGroup.renderOrder =
+            1000
 
-                depthTest:
-                    false,
-
-                toneMapped:
-                    false
-
-            })
+        this.group.add(
+            this.waveGroup
+        )
 
 
-        /* =====================================================
-           SOURCE GLOW MATERIAL
-           ===================================================== */
+        /* =================================================
+           GUIDE GROUP
+           ================================================= */
 
-        this.sourceGlowMaterial =
-            new THREE.MeshBasicMaterial({
+        this.guideGroup =
+            new THREE.Group()
 
-                color:
-                    0xff9f1c,
+        this.guideGroup.name =
+            'Doppler_Guides'
 
-                transparent:
-                    true,
+        this.guideGroup.renderOrder =
+            1000
 
-                opacity:
-                    0.22,
-
-                depthWrite:
-                    false,
-
-                depthTest:
-                    false,
-
-                toneMapped:
-                    false
-
-            })
+        this.group.add(
+            this.guideGroup
+        )
 
 
-        /* =====================================================
-           LISTENER MATERIAL
-           ===================================================== */
+        /* =================================================
+           WAVE ARRAY
+           ================================================= */
 
-        this.listenerMaterial =
-            new THREE.MeshBasicMaterial({
-
-                color:
-                    0xffffff,
-
-                depthWrite:
-                    false,
-
-                depthTest:
-                    false,
-
-                toneMapped:
-                    false
-
-            })
+        this.wavefronts =
+            []
 
 
-        /* =====================================================
-           LISTENER GLOW
-           ===================================================== */
-
-        this.listenerGlowMaterial =
-            new THREE.MeshBasicMaterial({
-
-                color:
-                    0x55ccff,
-
-                transparent:
-                    true,
-
-                opacity:
-                    0.22,
-
-                depthWrite:
-                    false,
-
-                depthTest:
-                    false,
-
-                toneMapped:
-                    false
-
-            })
-
-
-        /* =====================================================
-           PATH MATERIAL
-           ===================================================== */
-
-        this.pathMaterial =
-            new THREE.LineBasicMaterial({
-
-                color:
-                    0x8da8bd,
-
-                transparent:
-                    true,
-
-                opacity:
-                    0.5,
-
-                depthWrite:
-                    false,
-
-                depthTest:
-                    false,
-
-                toneMapped:
-                    false
-
-            })
-
-
-        /* =====================================================
-           CREATE OBJECTS
-           ===================================================== */
-
-        this.createPath()
-
-        this.createCenterLine()
+        /* =================================================
+           CREATE VISUAL ELEMENTS
+           ================================================= */
 
         this.createSource()
 
@@ -451,305 +296,192 @@ export default class DopplerExperiment {
 
         this.createDirectionArrow()
 
+        this.createAxis()
 
-        /* =====================================================
-           INITIAL VISUAL STATE
-           ===================================================== */
-
-        this.updateSourceVisual()
-
-        this.updateListenerVisual()
+        this.createDistanceMarkers()
 
 
-        /* =====================================================
-           ADD TO SCENE
-           ===================================================== */
+        /* =================================================
+           INITIAL STATE
+           ================================================= */
 
-        if (
-            this.scene
-        ) {
+        this.updateSourcePosition()
 
-            this.addToScene(
-                this.scene
-            )
-
-        }
-
-
-        return this.group
+        this.updateDirectionArrow()
 
     }
 
 
     /* =========================================================
-       PATH
-       ========================================================= */
-
-    createPath() {
-
-
-        const geometry =
-            new THREE.BufferGeometry()
-
-
-        geometry.setFromPoints([
-
-            new THREE.Vector3(
-                -7,
-                0,
-                0
-            ),
-
-            new THREE.Vector3(
-                7,
-                0,
-                0
-            )
-
-        ])
-
-
-        this.path =
-            new THREE.Line(
-                geometry,
-                this.pathMaterial
-            )
-
-
-        this.path.name =
-            'DopplerPath'
-
-
-        this.path.renderOrder =
-            1001
-
-
-        this.path.frustumCulled =
-            false
-
-
-        this.group.add(
-            this.path
-        )
-
-    }
-
-
-    /* =========================================================
-       CENTER LINE
-       ========================================================= */
-
-    createCenterLine() {
-
-
-        const points =
-            []
-
-        const segments =
-            80
-
-
-        for (
-            let i = 0;
-            i <= segments;
-            i++
-        ) {
-
-
-            const x =
-                -7 +
-                (
-                    14 *
-                    i /
-                    segments
-                )
-
-
-            points.push(
-
-                new THREE.Vector3(
-                    x,
-                    0,
-                    -0.02
-                )
-
-            )
-
-        }
-
-
-        const geometry =
-            new THREE.BufferGeometry()
-
-
-        geometry.setFromPoints(
-            points
-        )
-
-
-        this.centerLine =
-            new THREE.Line(
-                geometry,
-                this.pathMaterial
-            )
-
-
-        this.centerLine.name =
-            'DopplerCenterLine'
-
-
-        this.centerLine.renderOrder =
-            1002
-
-
-        this.centerLine.frustumCulled =
-            false
-
-
-        this.group.add(
-            this.centerLine
-        )
-
-    }
-
-
-    /* =========================================================
-       SOURCE
+       CREATE SOURCE
        ========================================================= */
 
     createSource() {
 
-
-        const geometry =
-            new THREE.SphereGeometry(
-                this.sourceRadius,
-                32,
-                32
-            )
-
-
-        this.source =
-            new THREE.Mesh(
-                geometry,
-                this.sourceMaterial
-            )
-
-
-        this.source.name =
-            'DopplerSource'
-
-
-        this.source.position.set(
-
-            this.sourcePosition,
-            0,
-            0.25
-
-        )
-
-
-        this.source.renderOrder =
-            1010
-
-
-        this.source.frustumCulled =
-            false
-
-
-        this.group.add(
-            this.source
-        )
-
-
         /* =====================================================
-           SOURCE GLOW
+           OUTER GLOW
            ===================================================== */
 
         const glowGeometry =
             new THREE.SphereGeometry(
-                this.sourceRadius * 2.8,
+                0.42,
                 32,
                 32
             )
+
+
+        const glowMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0x65d9ff,
+                transparent: true,
+                opacity: 0.13,
+                depthWrite: false,
+                depthTest: false
+            })
 
 
         this.sourceGlow =
             new THREE.Mesh(
                 glowGeometry,
-                this.sourceGlowMaterial
+                glowMaterial
             )
 
+        this.sourceGlow.renderOrder =
+            1002
 
-        this.sourceGlow.name =
-            'DopplerSourceGlow'
 
-
-        this.sourceGlow.position.copy(
-            this.source.position
+        this.sourceGroup.add(
+            this.sourceGlow
         )
 
 
-        this.sourceGlow.renderOrder =
-            1005
+        /* =====================================================
+           SOURCE BODY
+           ===================================================== */
+
+        const sourceGeometry =
+            new THREE.SphereGeometry(
+                0.23,
+                32,
+                32
+            )
 
 
-        this.sourceGlow.frustumCulled =
-            false
+        const sourceMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0x65d9ff,
+                transparent: true,
+                opacity: 1,
+                depthWrite: false,
+                depthTest: false
+            })
 
 
-        this.group.add(
-            this.sourceGlow
+        this.sourceMesh =
+            new THREE.Mesh(
+                sourceGeometry,
+                sourceMaterial
+            )
+
+        this.sourceMesh.renderOrder =
+            1003
+
+
+        this.sourceGroup.add(
+            this.sourceMesh
+        )
+
+
+        /* =====================================================
+           INNER CORE
+           ===================================================== */
+
+        const coreGeometry =
+            new THREE.SphereGeometry(
+                0.085,
+                20,
+                20
+            )
+
+
+        const coreMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.98,
+                depthWrite: false,
+                depthTest: false
+            })
+
+
+        this.sourceCore =
+            new THREE.Mesh(
+                coreGeometry,
+                coreMaterial
+            )
+
+        this.sourceCore.renderOrder =
+            1004
+
+
+        this.sourceGroup.add(
+            this.sourceCore
+        )
+
+
+        /* =====================================================
+           SOURCE RING
+           ===================================================== */
+
+        const ringGeometry =
+            new THREE.RingGeometry(
+                0.31,
+                0.345,
+                64
+            )
+
+
+        const ringMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0x65d9ff,
+                transparent: true,
+                opacity: 0.50,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+                depthTest: false
+            })
+
+
+        this.sourceRing =
+            new THREE.Mesh(
+                ringGeometry,
+                ringMaterial
+            )
+
+        this.sourceRing.renderOrder =
+            1003
+
+
+        this.sourceGroup.add(
+            this.sourceRing
         )
 
     }
 
 
     /* =========================================================
-       LISTENER
+       CREATE LISTENER
        ========================================================= */
 
     createListener() {
 
+        /*
+         * Listener stays close enough to the source to make
+         * the Doppler compression easy to see.
+         */
 
-        const geometry =
-            new THREE.SphereGeometry(
-                this.listenerRadius,
-                24,
-                24
-            )
-
-
-        this.listener =
-            new THREE.Mesh(
-                geometry,
-                this.listenerMaterial
-            )
-
-
-        this.listener.name =
-            'DopplerListener'
-
-
-        this.listener.position.set(
-
-            this.listenerPosition,
-            0,
-            0.25
-
-        )
-
-
-        this.listener.renderOrder =
-            1010
-
-
-        this.listener.frustumCulled =
-            false
-
-
-        this.group.add(
-            this.listener
-        )
+        this.listenerX =
+            3.15
 
 
         /* =====================================================
@@ -758,38 +490,157 @@ export default class DopplerExperiment {
 
         const glowGeometry =
             new THREE.SphereGeometry(
-                this.listenerRadius * 2.6,
-                24,
-                24
+                0.40,
+                32,
+                32
             )
+
+
+        const glowMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0xd8c28f,
+                transparent: true,
+                opacity: 0.11,
+                depthWrite: false,
+                depthTest: false
+            })
 
 
         this.listenerGlow =
             new THREE.Mesh(
                 glowGeometry,
-                this.listenerGlowMaterial
+                glowMaterial
             )
 
+        this.listenerGlow.renderOrder =
+            1001
 
-        this.listenerGlow.name =
-            'DopplerListenerGlow'
 
-
-        this.listenerGlow.position.copy(
-            this.listener.position
+        this.listenerGroup.add(
+            this.listenerGlow
         )
 
 
-        this.listenerGlow.renderOrder =
-            1005
+        /* =====================================================
+           LISTENER BODY
+           ===================================================== */
+
+        const bodyGeometry =
+            new THREE.SphereGeometry(
+                0.20,
+                32,
+                32
+            )
 
 
-        this.listenerGlow.frustumCulled =
-            false
+        const bodyMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0xd8c28f,
+                transparent: true,
+                opacity: 0.96,
+                depthWrite: false,
+                depthTest: false
+            })
 
 
-        this.group.add(
-            this.listenerGlow
+        this.listenerMesh =
+            new THREE.Mesh(
+                bodyGeometry,
+                bodyMaterial
+            )
+
+        this.listenerMesh.renderOrder =
+            1003
+
+
+        this.listenerGroup.add(
+            this.listenerMesh
+        )
+
+
+        /* =====================================================
+           INNER CORE
+           ===================================================== */
+
+        const coreGeometry =
+            new THREE.SphereGeometry(
+                0.065,
+                20,
+                20
+            )
+
+
+        const coreMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.95,
+                depthWrite: false,
+                depthTest: false
+            })
+
+
+        this.listenerCore =
+            new THREE.Mesh(
+                coreGeometry,
+                coreMaterial
+            )
+
+        this.listenerCore.renderOrder =
+            1004
+
+
+        this.listenerGroup.add(
+            this.listenerCore
+        )
+
+
+        /* =====================================================
+           LISTENER RING
+           ===================================================== */
+
+        const ringGeometry =
+            new THREE.RingGeometry(
+                0.28,
+                0.315,
+                64
+            )
+
+
+        const ringMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0xd8c28f,
+                transparent: true,
+                opacity: 0.42,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+                depthTest: false
+            })
+
+
+        this.listenerRing =
+            new THREE.Mesh(
+                ringGeometry,
+                ringMaterial
+            )
+
+        this.listenerRing.renderOrder =
+            1002
+
+
+        this.listenerGroup.add(
+            this.listenerRing
+        )
+
+
+        /* =====================================================
+           POSITION
+           ===================================================== */
+
+        this.listenerGroup.position.set(
+            this.listenerX,
+            this.worldY,
+            this.worldZ
         )
 
     }
@@ -801,75 +652,31 @@ export default class DopplerExperiment {
 
     createDirectionArrow() {
 
+        const arrowOrigin =
+            new THREE.Vector3(
+                this.sourceX,
+                -0.72,
+                0
+            )
+
 
         this.directionArrow =
             new THREE.ArrowHelper(
-
                 new THREE.Vector3(
                     1,
                     0,
                     0
                 ),
-
-                new THREE.Vector3(
-                    this.sourcePosition,
-                    0,
-                    0.75
-                ),
-
-                1.2,
-
-                0xffd45c,
-
-                0.3,
-
-                0.18
-
+                arrowOrigin,
+                1.05,
+                0x65d9ff,
+                0.18,
+                0.10
             )
 
 
-        this.directionArrow.name =
-            'DopplerDirectionArrow'
-
-
         this.directionArrow.renderOrder =
-            1015
-
-
-        this.directionArrow.frustumCulled =
-            false
-
-
-        /*
-         * ArrowHelper contains line + cone.
-         *
-         * Ensure both parts are rendered in the foreground.
-         */
-
-        if (
-            this.directionArrow.line
-        ) {
-
-            this.directionArrow.line.renderOrder =
-                1015
-
-            this.directionArrow.line.frustumCulled =
-                false
-
-        }
-
-
-        if (
-            this.directionArrow.cone
-        ) {
-
-            this.directionArrow.cone.renderOrder =
-                1016
-
-            this.directionArrow.cone.frustumCulled =
-                false
-
-        }
+            1005
 
 
         this.group.add(
@@ -880,12 +687,157 @@ export default class DopplerExperiment {
 
 
     /* =========================================================
+       AXIS
+       ========================================================= */
+
+    createAxis() {
+
+        const points = [
+
+            new THREE.Vector3(
+                this.worldMinX,
+                0,
+                0
+            ),
+
+            new THREE.Vector3(
+                this.worldMaxX,
+                0,
+                0
+            )
+
+        ]
+
+
+        const geometry =
+            new THREE.BufferGeometry()
+                .setFromPoints(
+                    points
+                )
+
+
+        const material =
+            new THREE.LineBasicMaterial({
+                color: 0xd8c28f,
+                transparent: true,
+                opacity: 0.075,
+                depthWrite: false,
+                depthTest: false
+            })
+
+
+        this.axisLine =
+            new THREE.Line(
+                geometry,
+                material
+            )
+
+        this.axisLine.renderOrder =
+            999
+
+
+        this.guideGroup.add(
+            this.axisLine
+        )
+
+    }
+
+
+    /* =========================================================
+       DISTANCE MARKERS
+       ========================================================= */
+
+    createDistanceMarkers() {
+
+        this.distanceMarkers =
+            []
+
+
+        const markerPositions = [
+            -4,
+            -2,
+            0,
+            2,
+            4
+        ]
+
+
+        markerPositions.forEach(
+            x => {
+
+                const points = [
+
+                    new THREE.Vector3(
+                        x,
+                        -0.065,
+                        0
+                    ),
+
+                    new THREE.Vector3(
+                        x,
+                        0.065,
+                        0
+                    )
+
+                ]
+
+
+                const geometry =
+                    new THREE.BufferGeometry()
+                        .setFromPoints(
+                            points
+                        )
+
+
+                const material =
+                    new THREE.LineBasicMaterial({
+                        color: 0xd8c28f,
+                        transparent: true,
+                        opacity: 0.10,
+                        depthWrite: false,
+                        depthTest: false
+                    })
+
+
+                const line =
+                    new THREE.Line(
+                        geometry,
+                        material
+                    )
+
+
+                line.renderOrder =
+                    999
+
+
+                this.guideGroup.add(
+                    line
+                )
+
+
+                this.distanceMarkers.push(
+                    line
+                )
+
+            }
+        )
+
+    }
+
+
+    /* =========================================================
        ADD TO SCENE
        ========================================================= */
 
     addToScene(
-        scene = null
+        scene
     ) {
+
+        if (
+            this.destroyed
+        ) {
+            return
+        }
 
 
         if (
@@ -901,32 +853,12 @@ export default class DopplerExperiment {
         if (
             !this.scene
         ) {
-
-            console.error(
-                '❌ DopplerExperiment: no THREE.js scene'
-            )
-
             return
-
         }
 
 
         if (
-            !this.group
-        ) {
-
-            console.error(
-                '❌ DopplerExperiment: group does not exist'
-            )
-
-            return
-
-        }
-
-
-        if (
-            this.group.parent !==
-            this.scene
+            this.group.parent !== this.scene
         ) {
 
             this.scene.add(
@@ -936,53 +868,9 @@ export default class DopplerExperiment {
         }
 
 
-        /*
-         * Force foreground visibility.
-         */
+        this.updateSourcePosition()
 
-        this.group.visible =
-            true
-
-        this.group.renderOrder =
-            1000
-
-        this.group.frustumCulled =
-            false
-
-
-        /*
-         * Make sure every current child is visible.
-         */
-
-        this.group.traverse(
-            object => {
-
-                object.visible =
-                    true
-
-                object.frustumCulled =
-                    false
-
-            }
-        )
-
-
-        console.log(
-            '🔵 DopplerExperiment: ADDED TO SCENE',
-            {
-                scene:
-                    this.scene,
-
-                group:
-                    this.group,
-
-                children:
-                    this.group.children.length,
-
-                position:
-                    this.group.position
-            }
-        )
+        this.updateDirectionArrow()
 
     }
 
@@ -993,30 +881,17 @@ export default class DopplerExperiment {
 
     start() {
 
-
         if (
             this.destroyed
         ) {
-
             return
-
         }
 
 
-        /*
-         * Ensure the experiment is attached before running.
-         */
-
         if (
-            this.scene &&
-            this.group &&
-            this.group.parent !== this.scene
+            !this.scene
         ) {
-
-            this.addToScene(
-                this.scene
-            )
-
+            return
         }
 
 
@@ -1027,7 +902,15 @@ export default class DopplerExperiment {
             false
 
 
-        this.show()
+        if (
+            this.group.parent !== this.scene
+        ) {
+
+            this.scene.add(
+                this.group
+            )
+
+        }
 
     }
 
@@ -1038,14 +921,10 @@ export default class DopplerExperiment {
 
     pause() {
 
-
         if (
-            this.destroyed ||
-            !this.active
+            this.destroyed
         ) {
-
             return
-
         }
 
 
@@ -1061,24 +940,22 @@ export default class DopplerExperiment {
 
     resume() {
 
-
         if (
             this.destroyed
         ) {
-
             return
-
         }
 
 
-        this.active =
-            true
+        if (
+            !this.active
+        ) {
+            return
+        }
+
 
         this.paused =
             false
-
-
-        this.show()
 
     }
 
@@ -1089,6 +966,12 @@ export default class DopplerExperiment {
 
     stop() {
 
+        if (
+            this.destroyed
+        ) {
+            return
+        }
+
 
         this.active =
             false
@@ -1100,173 +983,29 @@ export default class DopplerExperiment {
 
 
     /* =========================================================
-       RESET
-       ========================================================= */
-
-    reset() {
-
-
-        if (
-            this.destroyed
-        ) {
-
-            return
-
-        }
-
-
-        this.time =
-            0
-
-
-        this.frequency =
-            this.defaultFrequency
-
-        this.sourceSpeed =
-            this.defaultSourceSpeed
-
-        this.waveSpeed =
-            this.defaultWaveSpeed
-
-
-        this.sourcePosition =
-            this.defaultSourcePosition
-
-        this.sourceDirection =
-            1
-
-
-        this.waveInterval =
-            1 /
-            this.frequency
-
-
-        this.waveSpawnTimer =
-            0
-
-
-        this.removeAllWaves()
-
-
-        this.updateSourceVisual()
-
-        this.updateListenerVisual()
-
-
-        this.stop()
-
-        this.show()
-
-    }
-
-
-    /* =========================================================
-       SOURCE SPEED
-       ========================================================= */
-
-    setSourceSpeed(
-        value
-    ) {
-
-
-        const number =
-            Number(value)
-
-
-        this.sourceSpeed =
-            Number.isFinite(number)
-                ? Math.max(
-                    0,
-                    number
-                )
-                : 0
-
-    }
-
-
-    /* =========================================================
-       FREQUENCY
-       ========================================================= */
-
-    setFrequency(
-        value
-    ) {
-
-
-        const number =
-            Number(value)
-
-
-        this.frequency =
-            Number.isFinite(number)
-                ? Math.max(
-                    0.1,
-                    number
-                )
-                : 0.1
-
-
-        this.waveInterval =
-            1 /
-            this.frequency
-
-    }
-
-
-    /* =========================================================
-       WAVE SPEED
-       ========================================================= */
-
-    setWaveSpeed(
-        value
-    ) {
-
-
-        const number =
-            Number(value)
-
-
-        this.waveSpeed =
-            Number.isFinite(number)
-                ? Math.max(
-                    0.1,
-                    number
-                )
-                : 0.1
-
-    }
-
-
-    /* =========================================================
        UPDATE
        ========================================================= */
 
     update(
-        delta = 0.016
+        delta
     ) {
-
 
         if (
             this.destroyed ||
             !this.active ||
             this.paused
         ) {
-
             return
-
         }
 
 
         const safeDelta =
             Math.min(
-
                 Math.max(
                     Number(delta) || 0,
                     0
                 ),
-
                 0.05
-
             )
 
 
@@ -1278,88 +1017,32 @@ export default class DopplerExperiment {
            MOVE SOURCE
            ===================================================== */
 
-        this.updateSourceMotion(
-            safeDelta
-        )
-
-
-        /* =====================================================
-           EMIT WAVE
-           ===================================================== */
-
-        this.waveSpawnTimer +=
-            safeDelta
-
-
-        while (
-            this.waveSpawnTimer >=
-            this.waveInterval
-        ) {
-
-
-            this.waveSpawnTimer -=
-                this.waveInterval
-
-
-            this.spawnWave()
-
-        }
-
-
-        /* =====================================================
-           UPDATE WAVES
-           ===================================================== */
-
-        this.updateWaves(
-            safeDelta
-        )
-
-
-        /* =====================================================
-           VISUALS
-           ===================================================== */
-
-        this.updateSourceVisual()
-
-        this.updateListenerVisual()
-
-    }
-
-
-    /* =========================================================
-       SOURCE MOTION
-       ========================================================= */
-
-    updateSourceMotion(
-        delta
-    ) {
-
-
-        if (
-            this.sourceSpeed <= 0
-        ) {
-
-            return
-
-        }
-
-
-        this.sourcePosition +=
-
+        this.sourceX +=
             this.sourceSpeed *
             this.sourceDirection *
-            delta
+            safeDelta
+
+
+        /*
+         * Keep the source inside the visual composition.
+         *
+         * It never moves underneath the right control panel.
+         */
+
+        const leftLimit =
+            -3.75
+
+        const rightLimit =
+            1.65
 
 
         if (
-            this.sourcePosition >=
-            this.sourceMaxX
+            this.sourceX >=
+            rightLimit
         ) {
 
-
-            this.sourcePosition =
-                this.sourceMaxX
-
+            this.sourceX =
+                rightLimit
 
             this.sourceDirection =
                 -1
@@ -1368,290 +1051,190 @@ export default class DopplerExperiment {
 
 
         if (
-            this.sourcePosition <=
-            this.sourceMinX
+            this.sourceX <=
+            leftLimit
         ) {
 
-
-            this.sourcePosition =
-                this.sourceMinX
-
+            this.sourceX =
+                leftLimit
 
             this.sourceDirection =
                 1
 
         }
 
-    }
 
+        this.updateSourcePosition()
 
-    /* =========================================================
-       SOURCE VISUAL
-       ========================================================= */
+        this.updateDirectionArrow()
 
-    updateSourceVisual() {
+        this.updateWaveEmission(
+            safeDelta
+        )
 
+        this.updateWavefronts(
+            safeDelta
+        )
 
-        if (
-            !this.source
-        ) {
-
-            return
-
-        }
-
-
-        this.source.position.x =
-            this.sourcePosition
-
-
-        if (
-            this.sourceGlow
-        ) {
-
-            this.sourceGlow.position.x =
-                this.sourcePosition
-
-        }
-
-
-        if (
-            this.directionArrow
-        ) {
-
-
-            this.directionArrow.position.x =
-                this.sourcePosition
-
-
-            this.directionArrow.setDirection(
-
-                new THREE.Vector3(
-
-                    this.sourceDirection,
-                    0,
-                    0
-
-                )
-
-            )
-
-        }
+        this.updateVisualPulse()
 
     }
 
 
     /* =========================================================
-       LISTENER VISUAL
+       SOURCE POSITION
        ========================================================= */
 
-    updateListenerVisual() {
-
+    updateSourcePosition() {
 
         if (
-            !this.listener
+            !this.sourceGroup
         ) {
-
             return
-
         }
 
 
-        this.listener.position.x =
-            this.listenerPosition
-
-
-        if (
-            this.listenerGlow
-        ) {
-
-            this.listenerGlow.position.x =
-                this.listenerPosition
-
-        }
+        this.sourceGroup.position.set(
+            this.sourceX,
+            this.worldY,
+            this.worldZ
+        )
 
     }
 
 
     /* =========================================================
-       SPAWN WAVE
+       DIRECTION ARROW
        ========================================================= */
 
-    spawnWave() {
-
+    updateDirectionArrow() {
 
         if (
-            this.destroyed ||
-            !this.group
+            !this.directionArrow
         ) {
-
             return
-
         }
 
 
-        /* =====================================================
-           REMOVE OLDEST WAVE
-           ===================================================== */
-
-        if (
-            this.waves.length >=
-            this.maxWaves
-        ) {
-
-            this.removeWave(
-                this.waves[0]
-            )
-
-        }
+        const direction =
+            this.sourceDirection >= 0
+                ? 1
+                : -1
 
 
-        /* =====================================================
-           EXACT EMISSION ORIGIN
-           ===================================================== */
-
-        const origin =
+        this.directionArrow.setDirection(
             new THREE.Vector3(
-
-                this.sourcePosition,
+                direction,
                 0,
                 0
-
             )
-
-
-        /* =====================================================
-           GEOMETRY
-           ===================================================== */
-
-        const geometry =
-            this.createWaveGeometry(
-                0.01
-            )
-
-
-        /* =====================================================
-           MATERIAL
-           ===================================================== */
-
-        const material =
-            this.waveMaterial.clone()
-
-
-        material.opacity =
-            0.9
-
-        material.depthWrite =
-            false
-
-        material.depthTest =
-            false
-
-        material.toneMapped =
-            false
-
-
-        /* =====================================================
-           WAVE OBJECT
-           ===================================================== */
-
-        const object =
-            new THREE.LineLoop(
-                geometry,
-                material
-            )
-
-
-        object.name =
-            'DopplerWavefront'
-
-
-        object.position.copy(
-            origin
         )
 
 
-        object.renderOrder =
-            1008
-
-
-        object.frustumCulled =
-            false
-
-
-        /* =====================================================
-           WAVE DATA
-           ===================================================== */
-
-        const wave = {
-
-            object,
-
-            origin:
-                origin.clone(),
-
-            radius:
-                0.01,
-
-            age:
-                0,
-
-            opacity:
-                0.9
-
-        }
-
-
-        object.userData =
-            wave
-
-
-        this.group.add(
-            object
+        this.directionArrow.position.set(
+            this.sourceX,
+            -0.72,
+            0
         )
-
-
-        this.waves.push(
-            wave
-        )
-
-
-        this.waveCount =
-            this.waves.length
 
     }
 
 
     /* =========================================================
-       CREATE WAVE GEOMETRY
+       WAVE EMISSION
        ========================================================= */
 
-    createWaveGeometry(
-        radius
+    updateWaveEmission(
+        delta
     ) {
+
+        const interval =
+            1 /
+            Math.max(
+                this.frequency,
+                0.0001
+            )
+
+
+        this.emissionAccumulator +=
+            delta
+
+
+        /*
+         * Prevent a huge burst after a temporary lag.
+         */
+
+        let safety =
+            0
+
+
+        while (
+            this.emissionAccumulator >= interval &&
+            safety < 4
+        ) {
+
+            this.emissionAccumulator -=
+                interval
+
+
+            this.emitWavefront()
+
+
+            safety++
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CREATE WAVEFRONT
+       ========================================================= */
+
+    emitWavefront() {
+
+        if (
+            this.wavefronts.length >=
+            this.maxWaveCount
+        ) {
+
+            this.removeOldestWavefront()
+
+        }
+
+
+        /*
+         * CRITICAL:
+         *
+         * The wave is born at the CURRENT source position.
+         *
+         * It never follows the source.
+         */
+
+        const originX =
+            this.sourceX
+
+
+        const segments =
+            128
 
 
         const positions =
             new Float32Array(
-
-                this.waveSegments *
-                3
-
+                (segments + 1) * 3
             )
 
 
         for (
             let i = 0;
-            i < this.waveSegments;
+            i <= segments;
             i++
         ) {
 
-
             const angle =
-
                 (
                     i /
-                    this.waveSegments
+                    segments
                 ) *
                 Math.PI *
                 2
@@ -1660,17 +1243,13 @@ export default class DopplerExperiment {
             positions[
                 i * 3
             ] =
-
-                Math.cos(angle) *
-                radius
+                Math.cos(angle)
 
 
             positions[
                 i * 3 + 1
             ] =
-
-                Math.sin(angle) *
-                radius
+                Math.sin(angle)
 
 
             positions[
@@ -1686,52 +1265,115 @@ export default class DopplerExperiment {
 
 
         geometry.setAttribute(
-
             'position',
-
             new THREE.BufferAttribute(
                 positions,
                 3
             )
-
         )
 
 
-        return geometry
+        const material =
+            new THREE.LineBasicMaterial({
+                color: 0x65d9ff,
+                transparent: true,
+                opacity: 0.48,
+                depthWrite: false,
+                depthTest: false
+            })
+
+
+        const line =
+            new THREE.LineLoop(
+                geometry,
+                material
+            )
+
+
+        line.position.set(
+            originX,
+            this.worldY,
+            this.worldZ
+        )
+
+
+        /*
+         * Start from an almost invisible radius.
+         */
+
+        line.scale.set(
+            0.001,
+            0.001,
+            0.001
+        )
+
+
+        line.renderOrder =
+            1001
+
+
+        /*
+         * Prevent Three.js frustum optimization from
+         * accidentally hiding a large expanding ring.
+         */
+
+        line.frustumCulled =
+            false
+
+
+        this.waveGroup.add(
+            line
+        )
+
+
+        this.wavefronts.push({
+
+            object:
+                line,
+
+            originX:
+                originX,
+
+            age:
+                0,
+
+            radius:
+                0,
+
+            maxAge:
+                this.waveLifetime
+
+        })
 
     }
 
 
     /* =========================================================
-       UPDATE WAVES
+       UPDATE WAVEFRONTS
        ========================================================= */
 
-    updateWaves(
+    updateWavefronts(
         delta
     ) {
 
-
         for (
             let i =
-                this.waves.length - 1;
+                this.wavefronts.length - 1;
 
             i >= 0;
 
             i--
         ) {
 
-
             const wave =
-                this.waves[i]
+                this.wavefronts[i]
 
 
             if (
                 !wave ||
                 !wave.object
             ) {
-
                 continue
-
             }
 
 
@@ -1739,14 +1381,23 @@ export default class DopplerExperiment {
                 delta
 
 
-            wave.radius +=
-
+            wave.radius =
                 this.waveSpeed *
-                delta
+                wave.age
 
 
-            this.updateWaveGeometry(
-                wave
+            const radius =
+                Math.max(
+                    wave.radius *
+                    this.waveVisualScale,
+                    0.001
+                )
+
+
+            wave.object.scale.set(
+                radius,
+                radius,
+                radius
             )
 
 
@@ -1754,44 +1405,30 @@ export default class DopplerExperiment {
                FADE
                ================================================= */
 
-            const fadeStart =
-                this.maxWaveRadius *
-                0.65
+            const life =
+                THREE.MathUtils.clamp(
+                    wave.age /
+                    wave.maxAge,
+                    0,
+                    1
+                )
 
 
-            if (
-                wave.radius >
-                fadeStart
-            ) {
+            /*
+             * New waves are clearer.
+             *
+             * Old waves slowly disappear.
+             */
+
+            const fade =
+                1 -
+                life
 
 
-                const range =
-                    this.maxWaveRadius -
-                    fadeStart
-
-
-                const fade =
-
-                    1 -
-                    (
-
-                        (
-                            wave.radius -
-                            fadeStart
-                        ) /
-                        range
-
-                    )
-
-
-                wave.object.material.opacity =
-
-                    Math.max(
-                        0,
-                        wave.opacity * fade
-                    )
-
-            }
+            wave.object.material.opacity =
+                0.045 +
+                fade *
+                0.44
 
 
             /* =================================================
@@ -1799,99 +1436,37 @@ export default class DopplerExperiment {
                ================================================= */
 
             if (
-                wave.radius >=
-                this.maxWaveRadius
+                wave.age >=
+                wave.maxAge
             ) {
 
-                this.removeWave(
-                    wave
+                this.removeWavefront(
+                    i
                 )
 
             }
 
         }
 
-
-        this.waveCount =
-            this.waves.length
-
     }
 
 
     /* =========================================================
-       UPDATE WAVE GEOMETRY
+       REMOVE OLDEST WAVE
        ========================================================= */
 
-    updateWaveGeometry(
-        wave
-    ) {
-
+    removeOldestWavefront() {
 
         if (
-            !wave ||
-            !wave.object
+            this.wavefronts.length === 0
         ) {
-
             return
-
         }
 
 
-        const geometry =
-            wave.object.geometry
-
-
-        const attribute =
-            geometry?.getAttribute(
-                'position'
-            )
-
-
-        if (
-            !attribute
-        ) {
-
-            return
-
-        }
-
-
-        for (
-            let i = 0;
-            i < this.waveSegments;
-            i++
-        ) {
-
-
-            const angle =
-
-                (
-                    i /
-                    this.waveSegments
-                ) *
-                Math.PI *
-                2
-
-
-            attribute.setXYZ(
-
-                i,
-
-                Math.cos(angle) *
-                wave.radius,
-
-                Math.sin(angle) *
-                wave.radius,
-
-                0
-
-            )
-
-        }
-
-
-        attribute.needsUpdate =
-            true
+        this.removeWavefront(
+            0
+        )
 
     }
 
@@ -1900,382 +1475,659 @@ export default class DopplerExperiment {
        REMOVE WAVE
        ========================================================= */
 
-    removeWave(
-        wave
+    removeWavefront(
+        index
     ) {
+
+        const wave =
+            this.wavefronts[index]
 
 
         if (
             !wave
         ) {
-
             return
+        }
+
+
+        if (
+            wave.object &&
+            wave.object.parent
+        ) {
+
+            wave.object.parent.remove(
+                wave.object
+            )
 
         }
 
 
-        const object =
-            wave.object
-
-
         if (
-            object
+            wave.object
         ) {
 
-
             if (
-                object.parent
+                wave.object.geometry
             ) {
 
-                object.parent.remove(
-                    object
-                )
+                wave.object.geometry.dispose()
 
             }
 
 
-            object.geometry?.dispose()
+            if (
+                wave.object.material
+            ) {
 
-            object.material?.dispose()
+                wave.object.material.dispose()
 
-        }
-
-
-        const index =
-            this.waves.indexOf(
-                wave
-            )
-
-
-        if (
-            index !== -1
-        ) {
-
-            this.waves.splice(
-                index,
-                1
-            )
+            }
 
         }
 
 
-        this.waveCount =
-            this.waves.length
+        this.wavefronts.splice(
+            index,
+            1
+        )
 
     }
 
 
     /* =========================================================
-       REMOVE ALL WAVES
+       VISUAL PULSE
        ========================================================= */
 
-    removeAllWaves() {
+    updateVisualPulse() {
 
+        if (
+            !this.sourceGlow
+        ) {
+            return
+        }
+
+
+        const sourcePulse =
+            (
+                Math.sin(
+                    this.time *
+                    Math.PI *
+                    2 *
+                    Math.max(
+                        this.frequency,
+                        0.1
+                    )
+                ) +
+                1
+            ) *
+            0.5
+
+
+        this.sourceGlow.scale.setScalar(
+            1 +
+            sourcePulse *
+            0.22
+        )
+
+
+        this.sourceGlow.material.opacity =
+            0.10 +
+            sourcePulse *
+            0.10
+
+
+        /* =====================================================
+           LISTENER PULSE
+           ===================================================== */
+
+        if (
+            this.listenerGlow
+        ) {
+
+            const observed =
+                this.getObservedFrequency()
+
+
+            const listenerPulse =
+                (
+                    Math.sin(
+                        this.time *
+                        Math.PI *
+                        2 *
+                        Math.max(
+                            observed,
+                            0.1
+                        )
+                    ) +
+                    1
+                ) *
+                0.5
+
+
+            this.listenerGlow.scale.setScalar(
+                1 +
+                listenerPulse *
+                0.24
+            )
+
+
+            this.listenerGlow.material.opacity =
+                0.07 +
+                listenerPulse *
+                0.11
+
+        }
+
+
+        /* =====================================================
+           SOURCE RING
+           ===================================================== */
+
+        if (
+            this.sourceRing
+        ) {
+
+            this.sourceRing.material.opacity =
+                0.30 +
+                sourcePulse *
+                0.28
+
+        }
+
+
+        /* =====================================================
+           LISTENER RING
+           ===================================================== */
+
+        if (
+            this.listenerRing
+        ) {
+
+            this.listenerRing.material.opacity =
+                0.26 +
+                sourcePulse *
+                0.18
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SOURCE SPEED
+       ========================================================= */
+
+    setSourceSpeed(
+        value
+    ) {
+
+        if (
+            this.destroyed
+        ) {
+            return
+        }
+
+
+        const number =
+            Number(value)
+
+
+        if (
+            !Number.isFinite(number)
+        ) {
+            return
+        }
+
+
+        this.sourceSpeed =
+            THREE.MathUtils.clamp(
+                number,
+                0,
+                2.5
+            )
+
+    }
+
+
+    /* =========================================================
+       FREQUENCY
+       ========================================================= */
+
+    setFrequency(
+        value
+    ) {
+
+        if (
+            this.destroyed
+        ) {
+            return
+        }
+
+
+        const number =
+            Number(value)
+
+
+        if (
+            !Number.isFinite(number)
+        ) {
+            return
+        }
+
+
+        this.frequency =
+            THREE.MathUtils.clamp(
+                number,
+                0.1,
+                8
+            )
+
+
+        /*
+         * Keep emission timing stable when the slider
+         * is moved suddenly.
+         */
+
+        this.emissionAccumulator =
+            Math.min(
+                this.emissionAccumulator,
+                1 /
+                this.frequency
+            )
+
+    }
+
+
+    /* =========================================================
+       WAVE SPEED
+       ========================================================= */
+
+    setWaveSpeed(
+        value
+    ) {
+
+        if (
+            this.destroyed
+        ) {
+            return
+        }
+
+
+        const number =
+            Number(value)
+
+
+        if (
+            !Number.isFinite(number)
+        ) {
+            return
+        }
+
+
+        this.waveSpeed =
+            THREE.MathUtils.clamp(
+                number,
+                0.5,
+                10
+            )
+
+    }
+
+
+    /* =========================================================
+       APPROACHING FREQUENCY
+       ========================================================= */
+
+    getApproachingFrequency() {
+
+        const c =
+            Math.max(
+                this.waveSpeed,
+                0.0001
+            )
+
+
+        const vs =
+            Math.min(
+                Math.abs(
+                    this.sourceSpeed
+                ),
+                c * 0.95
+            )
+
+
+        return (
+            this.frequency *
+            c /
+            (
+                c -
+                vs
+            )
+        )
+
+    }
+
+
+    /* =========================================================
+       RECEDING FREQUENCY
+       ========================================================= */
+
+    getRecedingFrequency() {
+
+        const c =
+            Math.max(
+                this.waveSpeed,
+                0.0001
+            )
+
+
+        const vs =
+            Math.min(
+                Math.abs(
+                    this.sourceSpeed
+                ),
+                c * 0.95
+            )
+
+
+        return (
+            this.frequency *
+            c /
+            (
+                c +
+                vs
+            )
+        )
+
+    }
+
+
+    /* =========================================================
+       APPROACHING WAVELENGTH
+       ========================================================= */
+
+    getApproachingWavelength() {
+
+        const c =
+            Math.max(
+                this.waveSpeed,
+                0.0001
+            )
+
+
+        const vs =
+            Math.min(
+                Math.abs(
+                    this.sourceSpeed
+                ),
+                c * 0.95
+            )
+
+
+        return (
+            (
+                c -
+                vs
+            ) /
+            Math.max(
+                this.frequency,
+                0.0001
+            )
+        )
+
+    }
+
+
+    /* =========================================================
+       RECEDING WAVELENGTH
+       ========================================================= */
+
+    getRecedingWavelength() {
+
+        const c =
+            Math.max(
+                this.waveSpeed,
+                0.0001
+            )
+
+
+        const vs =
+            Math.min(
+                Math.abs(
+                    this.sourceSpeed
+                ),
+                c * 0.95
+            )
+
+
+        return (
+            (
+                c +
+                vs
+            ) /
+            Math.max(
+                this.frequency,
+                0.0001
+            )
+        )
+
+    }
+
+
+    /* =========================================================
+       OBSERVED FREQUENCY
+       ========================================================= */
+
+    getObservedFrequency() {
+
+        /*
+         * Listener is always on the RIGHT.
+         *
+         * Source moving right:
+         * approaching.
+         *
+         * Source moving left:
+         * receding.
+         */
+
+        if (
+            this.sourceDirection > 0
+        ) {
+
+            return this.getApproachingFrequency()
+
+        }
+
+
+        return this.getRecedingFrequency()
+
+    }
+
+
+    /* =========================================================
+       GET WAVE DATA
+       ========================================================= */
+
+    getWaveData() {
+
+        const wavelength =
+            this.waveSpeed /
+            Math.max(
+                this.frequency,
+                0.0001
+            )
+
+
+        const approachingFrequency =
+            this.getApproachingFrequency()
+
+
+        const recedingFrequency =
+            this.getRecedingFrequency()
+
+
+        const approachingWavelength =
+            this.getApproachingWavelength()
+
+
+        const recedingWavelength =
+            this.getRecedingWavelength()
+
+
+        return {
+
+            sourceSpeed:
+                this.sourceSpeed,
+
+            frequency:
+                this.frequency,
+
+            waveSpeed:
+                this.waveSpeed,
+
+            wavelength:
+                wavelength,
+
+            waveCount:
+                this.wavefronts.length,
+
+            approachingFrequency:
+                approachingFrequency,
+
+            recedingFrequency:
+                recedingFrequency,
+
+            approachingWavelength:
+                approachingWavelength,
+
+            recedingWavelength:
+                recedingWavelength,
+
+            observedFrequency:
+                this.getObservedFrequency(),
+
+            sourceDirection:
+                this.sourceDirection,
+
+            sourceX:
+                this.sourceX,
+
+            listenerX:
+                this.listenerX,
+
+            approaching:
+                this.sourceDirection > 0
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RESET
+       ========================================================= */
+
+    reset() {
+
+        if (
+            this.destroyed
+        ) {
+            return
+        }
+
+
+        this.active =
+            false
+
+        this.paused =
+            false
+
+
+        this.time =
+            0
+
+
+        this.sourceX =
+            -2.8
+
+
+        this.sourceDirection =
+            1
+
+
+        this.emissionAccumulator =
+            0
+
+
+        /* =====================================================
+           DEFAULT PARAMETERS
+           ===================================================== */
+
+        this.sourceSpeed =
+            0.80
+
+        this.frequency =
+            2.00
+
+        this.waveSpeed =
+            5.00
+
+
+        /* =====================================================
+           REMOVE WAVES
+           ===================================================== */
 
         for (
             let i =
-                this.waves.length - 1;
+                this.wavefronts.length - 1;
 
             i >= 0;
 
             i--
         ) {
 
-
-            this.removeWave(
-                this.waves[i]
+            this.removeWavefront(
+                i
             )
 
         }
 
 
-        this.waves =
-            []
+        /* =====================================================
+           RESTORE VISUAL STATE
+           ===================================================== */
 
-        this.waveCount =
-            0
+        this.updateSourcePosition()
 
-    }
-
-
-    /* =========================================================
-       WAVE DATA
-       ========================================================= */
-
-    getWaveData() {
-
-
-        const frequency =
-            Math.max(
-
-                0.1,
-
-                Number(
-                    this.frequency
-                ) || 0.1
-
-            )
-
-
-        const waveSpeed =
-            Math.max(
-
-                0.1,
-
-                Number(
-                    this.waveSpeed
-                ) || 0.1
-
-            )
-
-
-        const sourceSpeed =
-            Math.max(
-
-                0,
-
-                Number(
-                    this.sourceSpeed
-                ) || 0
-
-            )
-
-
-        const wavelength =
-            waveSpeed /
-            frequency
-
-
-        const effectiveSourceSpeed =
-            Math.min(
-
-                sourceSpeed,
-
-                waveSpeed * 0.95
-
-            )
-
-
-        const approachingWavelength =
-
-            (
-                waveSpeed -
-                effectiveSourceSpeed
-            ) /
-            frequency
-
-
-        const approachingFrequency =
-
-            waveSpeed /
-            approachingWavelength
-
-
-        const recedingWavelength =
-
-            (
-                waveSpeed +
-                effectiveSourceSpeed
-            ) /
-            frequency
-
-
-        const recedingFrequency =
-
-            waveSpeed /
-            recedingWavelength
-
-
-        return {
-
-            disabled:
-                false,
-
-            sourceSpeed,
-
-            frequency,
-
-            waveSpeed,
-
-            wavelength,
-
-            waveCount:
-                this.waveCount,
-
-            sourcePosition:
-                this.sourcePosition,
-
-            listenerPosition:
-                this.listenerPosition,
-
-            approachingFrequency,
-
-            approachingWavelength,
-
-            recedingFrequency,
-
-            recedingWavelength
-
-        }
-
-    }
-
-
-    /* =========================================================
-       SHOW
-       ========================================================= */
-
-    show() {
+        this.updateDirectionArrow()
 
 
         if (
-            this.group
+            this.sourceGlow
         ) {
 
-            this.group.visible =
-                true
-
-        }
-
-    }
-
-
-    /* =========================================================
-       HIDE
-       ========================================================= */
-
-    hide() {
-
-
-        if (
-            this.group
-        ) {
-
-            this.group.visible =
-                false
-
-        }
-
-    }
-
-
-    /* =========================================================
-       DISPOSE
-       ========================================================= */
-
-    dispose() {
-
-
-        this.removeAllWaves()
-
-
-        if (
-            this.group?.parent
-        ) {
-
-            this.group.parent.remove(
-                this.group
+            this.sourceGlow.scale.setScalar(
+                1
             )
 
+            this.sourceGlow.material.opacity =
+                0.13
+
         }
-
-
-        this.source?.geometry?.dispose()
-
-        this.sourceGlow?.geometry?.dispose()
-
-        this.listener?.geometry?.dispose()
-
-        this.listenerGlow?.geometry?.dispose()
-
-        this.path?.geometry?.dispose()
-
-        this.centerLine?.geometry?.dispose()
 
 
         if (
-            this.directionArrow
+            this.listenerGlow
         ) {
 
+            this.listenerGlow.scale.setScalar(
+                1
+            )
 
-            this.directionArrow.line
-                ?.geometry
-                ?.dispose()
-
-
-            this.directionArrow.line
-                ?.material
-                ?.dispose()
-
-
-            this.directionArrow.cone
-                ?.geometry
-                ?.dispose()
-
-
-            this.directionArrow.cone
-                ?.material
-                ?.dispose()
+            this.listenerGlow.material.opacity =
+                0.11
 
         }
-
-
-        this.waveMaterial?.dispose()
-
-        this.sourceMaterial?.dispose()
-
-        this.sourceGlowMaterial?.dispose()
-
-        this.listenerMaterial?.dispose()
-
-        this.listenerGlowMaterial?.dispose()
-
-        this.pathMaterial?.dispose()
-
-
-        this.group =
-            null
-
-
-        this.source =
-            null
-
-        this.sourceGlow =
-            null
-
-        this.listener =
-            null
-
-        this.listenerGlow =
-            null
-
-        this.path =
-            null
-
-        this.centerLine =
-            null
-
-        this.directionArrow =
-            null
-
-
-        this.waveMaterial =
-            null
-
-        this.sourceMaterial =
-            null
-
-        this.sourceGlowMaterial =
-            null
-
-        this.listenerMaterial =
-            null
-
-        this.listenerGlowMaterial =
-            null
-
-        this.pathMaterial =
-            null
 
     }
 
@@ -2286,20 +2138,123 @@ export default class DopplerExperiment {
 
     destroy() {
 
-
         if (
             this.destroyed
         ) {
-
             return
+        }
+
+
+        this.destroyed =
+            true
+
+        this.active =
+            false
+
+        this.paused =
+            false
+
+
+        /* =====================================================
+           REMOVE ALL WAVES
+           ===================================================== */
+
+        for (
+            let i =
+                this.wavefronts.length - 1;
+
+            i >= 0;
+
+            i--
+        ) {
+
+            this.removeWavefront(
+                i
+            )
 
         }
 
 
-        this.stop()
+        this.wavefronts =
+            []
 
-        this.dispose()
 
+        /* =====================================================
+           REMOVE MAIN GROUP
+           ===================================================== */
+
+        if (
+            this.group &&
+            this.group.parent
+        ) {
+
+            this.group.parent.remove(
+                this.group
+            )
+
+        }
+
+
+        /* =====================================================
+           DISPOSE
+           ===================================================== */
+
+        this.disposeObject(
+            this.group
+        )
+
+
+        /* =====================================================
+           RELEASE REFERENCES
+           ===================================================== */
+
+        this.group =
+            null
+
+        this.sourceGroup =
+            null
+
+        this.listenerGroup =
+            null
+
+        this.waveGroup =
+            null
+
+        this.guideGroup =
+            null
+
+        this.directionArrow =
+            null
+
+        this.sourceGlow =
+            null
+
+        this.sourceMesh =
+            null
+
+        this.sourceCore =
+            null
+
+        this.sourceRing =
+            null
+
+        this.listenerGlow =
+            null
+
+        this.listenerMesh =
+            null
+
+        this.listenerCore =
+            null
+
+        this.listenerRing =
+            null
+
+        this.axisLine =
+            null
+
+        this.distanceMarkers =
+            []
 
         this.scene =
             null
@@ -2307,8 +2262,71 @@ export default class DopplerExperiment {
         this.parent =
             null
 
-        this.destroyed =
-            true
+    }
+
+
+    /* =========================================================
+       DISPOSE OBJECT
+       ========================================================= */
+
+    disposeObject(
+        object
+    ) {
+
+        if (
+            !object
+        ) {
+            return
+        }
+
+
+        object.traverse(
+            child => {
+
+                if (
+                    child.geometry
+                ) {
+
+                    child.geometry.dispose()
+
+                }
+
+
+                if (
+                    child.material
+                ) {
+
+                    if (
+                        Array.isArray(
+                            child.material
+                        )
+                    ) {
+
+                        child.material.forEach(
+                            material => {
+
+                                if (
+                                    material
+                                ) {
+
+                                    material.dispose()
+
+                                }
+
+                            }
+                        )
+
+                    }
+                    else {
+
+                        child.material.dispose()
+
+                    }
+
+                }
+
+            }
+        )
 
     }
 

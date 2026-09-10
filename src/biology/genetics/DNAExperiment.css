@@ -1,0 +1,788 @@
+/* =========================================================
+   AWTAAR — DNA EXPERIMENT
+   شفرة الحياة
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-dna-experiment {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    /*
+       مهم جدًا:
+       الـDNA موجود داخل Three.js Canvas الرئيسي،
+       لذلك يجب ألا تكون هذه الطبقة بخلفية معتمة.
+    */
+    background: transparent;
+
+    color: #e8f3ed;
+
+    font-family: "Tajawal", sans-serif;
+
+    direction: rtl;
+
+    pointer-events: none;
+
+    opacity: 1;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+}
+
+
+/* =========================================================
+   ATMOSPHERE
+   ========================================================= */
+
+.awtaar-dna-experiment::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 48%,
+            rgba(42, 112, 78, 0.18),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 18% 20%,
+            rgba(70, 145, 105, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 82% 78%,
+            rgba(36, 105, 73, 0.07),
+            transparent 32%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(3, 15, 11, 0.20),
+            rgba(3, 12, 9, 0.32)
+        );
+}
+
+
+/* =========================================================
+   HIDDEN STATE
+   ========================================================= */
+
+.awtaar-dna-experiment.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.dna-experiment-header {
+    position: absolute;
+
+    top: 34px;
+    left: 42px;
+    right: 42px;
+
+    z-index: 5;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   TITLE AREA
+   ========================================================= */
+
+.dna-experiment-title-area {
+    max-width: 560px;
+
+    pointer-events: auto;
+}
+
+
+.dna-experiment-eyebrow {
+    margin-bottom: 8px;
+
+    color: rgba(126, 204, 160, 0.82);
+
+    font-size: 11px;
+    font-weight: 500;
+
+    letter-spacing: 0.28em;
+
+    text-transform: uppercase;
+}
+
+
+.dna-experiment-title {
+    margin: 0;
+
+    color: #f0f7f3;
+
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 500;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.02em;
+
+    text-shadow:
+        0 0 25px rgba(92, 184, 133, 0.16);
+}
+
+
+.dna-experiment-description {
+    margin: 13px 0 0;
+
+    max-width: 500px;
+
+    color: rgba(220, 235, 227, 0.68);
+
+    font-size: 14px;
+    font-weight: 400;
+
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   EXIT BUTTON
+   ========================================================= */
+
+.dna-exit-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-width: 150px;
+
+    padding: 11px 17px;
+
+    border: 1px solid rgba(126, 204, 160, 0.25);
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 35, 26, 0.88),
+            rgba(5, 18, 12, 0.82)
+        );
+
+    color: rgba(231, 244, 237, 0.86);
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(12px);
+
+    pointer-events: auto;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.dna-exit-button:hover {
+    border-color: rgba(126, 204, 160, 0.58);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(21, 52, 37, 0.94),
+            rgba(7, 24, 16, 0.92)
+        );
+
+    color: #f2faf5;
+
+    transform: translateY(-1px);
+}
+
+
+.dna-exit-arrow {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.dna-exit-button:hover .dna-exit-arrow {
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   INFORMATION PANEL
+   ========================================================= */
+
+.dna-experiment-info {
+    position: absolute;
+
+    top: 50%;
+    right: 42px;
+
+    width: min(310px, calc(100vw - 84px));
+
+    padding: 22px 22px 20px;
+
+    z-index: 5;
+
+    transform: translateY(-50%);
+
+    border: 1px solid rgba(126, 204, 160, 0.18);
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8, 25, 17, 0.88),
+            rgba(4, 15, 10, 0.82)
+        );
+
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(18px);
+
+    pointer-events: auto;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.dna-experiment-info.is-selected {
+    border-color: rgba(126, 204, 160, 0.35);
+
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.30),
+        0 0 35px rgba(62, 145, 98, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+
+/* =========================================================
+   INFO TITLE
+   ========================================================= */
+
+.dna-info-title {
+    margin-bottom: 17px;
+
+    color: #edf7f1;
+
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   BASE LEGEND
+   ========================================================= */
+
+.dna-base-legend {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 9px;
+
+    margin-bottom: 19px;
+}
+
+
+.dna-base-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-height: 40px;
+
+    padding: 7px 9px;
+
+    border: 1px solid rgba(126, 204, 160, 0.10);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+
+.dna-base-symbol {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+
+.dna-base-a {
+    background: rgba(143, 214, 174, 0.16);
+
+    color: #a8e4c0;
+
+    border: 1px solid rgba(143, 214, 174, 0.25);
+}
+
+
+.dna-base-t {
+    background: rgba(216, 229, 220, 0.10);
+
+    color: #d8e5dc;
+
+    border: 1px solid rgba(216, 229, 220, 0.18);
+}
+
+
+.dna-base-c {
+    background: rgba(88, 184, 135, 0.16);
+
+    color: #76d29d;
+
+    border: 1px solid rgba(88, 184, 135, 0.25);
+}
+
+
+.dna-base-g {
+    background: rgba(183, 205, 189, 0.10);
+
+    color: #c3d5c9;
+
+    border: 1px solid rgba(183, 205, 189, 0.18);
+}
+
+
+.dna-base-name {
+    color: rgba(225, 239, 230, 0.70);
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   SELECTED PAIR
+   ========================================================= */
+
+.dna-selected-pair {
+    margin-top: 3px;
+
+    color: #9fe0b8;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    letter-spacing: 0.03em;
+
+    min-height: 30px;
+}
+
+
+.dna-selected-description {
+    margin: 8px 0 0;
+
+    color: rgba(215, 233, 222, 0.60);
+
+    font-size: 12px;
+
+    line-height: 1.8;
+
+    min-height: 43px;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.dna-experiment-status {
+    margin-top: 16px;
+
+    padding-top: 13px;
+
+    border-top:
+        1px solid rgba(126, 204, 160, 0.10);
+
+    color: rgba(151, 215, 174, 0.72);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.dna-experiment-controls {
+    position: absolute;
+
+    bottom: 34px;
+    left: 42px;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    pointer-events: auto;
+}
+
+
+.dna-control-button {
+    min-width: 128px;
+
+    padding: 10px 16px;
+
+    border: 1px solid rgba(126, 204, 160, 0.18);
+
+    border-radius: 10px;
+
+    background:
+        rgba(7, 23, 15, 0.78);
+
+    color: rgba(228, 241, 232, 0.76);
+
+    font-family: inherit;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.18);
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.dna-control-button:hover {
+    border-color: rgba(126, 204, 160, 0.42);
+
+    background:
+        rgba(14, 42, 27, 0.88);
+
+    color: #edf8f1;
+
+    transform: translateY(-1px);
+}
+
+
+.dna-control-button.is-active {
+    border-color: rgba(126, 204, 160, 0.48);
+
+    background:
+        rgba(24, 63, 41, 0.90);
+
+    color: #b9ebca;
+}
+
+
+/* =========================================================
+   THREE.JS CANVAS
+   ========================================================= */
+
+/*
+   لا نضع z-index أو position هنا.
+   الـCanvas تابع للـEngine الرئيسي وليس داخل
+   awtaar-dna-experiment.
+*/
+
+.awtaar-dna-experiment canvas {
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .dna-experiment-header {
+        top: 24px;
+
+        left: 24px;
+        right: 24px;
+    }
+
+    .dna-experiment-title {
+        font-size: 30px;
+    }
+
+    .dna-experiment-description {
+        max-width: 400px;
+
+        font-size: 12px;
+    }
+
+    .dna-experiment-info {
+        right: 24px;
+
+        width: 270px;
+    }
+
+    .dna-experiment-controls {
+        left: 24px;
+
+        bottom: 24px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .dna-experiment-header {
+        top: 18px;
+
+        left: 18px;
+        right: 18px;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+
+    .dna-experiment-title-area {
+        max-width: calc(100% - 125px);
+    }
+
+
+    .dna-experiment-eyebrow {
+        font-size: 8px;
+
+        letter-spacing: 0.18em;
+    }
+
+
+    .dna-experiment-title {
+        font-size: 25px;
+    }
+
+
+    .dna-experiment-description {
+        display: none;
+    }
+
+
+    .dna-exit-button {
+        min-width: auto;
+
+        padding: 9px 11px;
+
+        font-size: 10px;
+    }
+
+
+    .dna-experiment-info {
+        top: auto;
+        bottom: 82px;
+
+        right: 18px;
+        left: 18px;
+
+        width: auto;
+
+        transform: none;
+
+        padding: 15px;
+    }
+
+
+    .dna-info-title {
+        margin-bottom: 11px;
+
+        font-size: 13px;
+    }
+
+
+    .dna-base-legend {
+        gap: 6px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .dna-base-item {
+        min-height: 34px;
+
+        padding: 5px 7px;
+    }
+
+
+    .dna-base-symbol {
+        width: 23px;
+        height: 23px;
+
+        border-radius: 6px;
+
+        font-size: 10px;
+    }
+
+
+    .dna-base-name {
+        font-size: 9px;
+    }
+
+
+    .dna-selected-pair {
+        font-size: 17px;
+    }
+
+
+    .dna-selected-description {
+        font-size: 10px;
+
+        line-height: 1.6;
+
+        min-height: 32px;
+    }
+
+
+    .dna-experiment-status {
+        margin-top: 10px;
+
+        padding-top: 9px;
+
+        font-size: 9px;
+    }
+
+
+    .dna-experiment-controls {
+        right: 18px;
+        left: 18px;
+
+        bottom: 18px;
+
+        justify-content: center;
+
+        gap: 7px;
+    }
+
+
+    .dna-control-button {
+        flex: 1;
+
+        min-width: 0;
+
+        padding: 9px 8px;
+
+        font-size: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .dna-experiment-info {
+        bottom: 74px;
+
+        padding: 12px;
+    }
+
+
+    .dna-base-legend {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+
+    .dna-base-item {
+        justify-content: center;
+    }
+
+
+    .dna-base-name {
+        display: none;
+    }
+
+
+    .dna-selected-description {
+        display: none;
+    }
+
+}

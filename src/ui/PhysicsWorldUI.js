@@ -1,18 +1,31 @@
 import './physics-world.css'
 
+
 import QuantumWorldUI
     from './QuantumWorldUI.js'
+
 
 import RelativeWorldUI
     from './RelativeWorldUI.js'
 
+
 import WavesWorldUI
     from '../waves/WavesWorldUI.js'
+
+
+import EnergyWorldUI
+    from '../energy/EnergyWorldUI.js'
+
+
+import MechanicsWorldUI
+    from '../mechanics/MechanicsWorldUI.js'
+
 
 import {
     t,
     getLanguage
 } from '../locales/i18n.js'
+
 
 
 /* =========================================================
@@ -48,6 +61,7 @@ export default class PhysicsWorldUI {
         )
 
 
+
         /* =====================================================
            STATE
            ===================================================== */
@@ -76,8 +90,9 @@ export default class PhysicsWorldUI {
             null
 
 
+
         /* =====================================================
-           QUANTUM
+           QUANTUM WORLD
            ===================================================== */
 
         this.quantumWorldUI =
@@ -87,8 +102,9 @@ export default class PhysicsWorldUI {
             )
 
 
+
         /* =====================================================
-           RELATIVITY
+           RELATIVITY WORLD
            ===================================================== */
 
         this.relativeWorldUI =
@@ -98,8 +114,9 @@ export default class PhysicsWorldUI {
             )
 
 
+
         /* =====================================================
-           WAVES
+           WAVES WORLD
            ===================================================== */
 
         console.log(
@@ -120,13 +137,61 @@ export default class PhysicsWorldUI {
         )
 
 
+
         /* =====================================================
-           CREATE
+           ENERGY WORLD
+           ===================================================== */
+
+        console.log(
+            '⚡ PhysicsWorldUI: creating EnergyWorldUI...'
+        )
+
+
+        this.energyWorldUI =
+            new EnergyWorldUI(
+                this,
+                this.scene
+            )
+
+
+        console.log(
+            '⚡ PhysicsWorldUI: EnergyWorldUI created',
+            this.energyWorldUI
+        )
+
+
+
+        /* =====================================================
+           MECHANICS WORLD
+           ===================================================== */
+
+        console.log(
+            '⚙️ PhysicsWorldUI: creating MechanicsWorldUI...'
+        )
+
+
+        this.mechanicsWorldUI =
+            new MechanicsWorldUI(
+                this,
+                this.scene
+            )
+
+
+        console.log(
+            '⚙️ PhysicsWorldUI: MechanicsWorldUI created',
+            this.mechanicsWorldUI
+        )
+
+
+
+        /* =====================================================
+           CREATE UI
            ===================================================== */
 
         this.createUI()
 
     }
+
 
 
     /* =========================================================
@@ -162,6 +227,7 @@ export default class PhysicsWorldUI {
             'none'
 
 
+
         /* =====================================================
            TITLE
            ===================================================== */
@@ -178,6 +244,7 @@ export default class PhysicsWorldUI {
             )
 
 
+
         /* =====================================================
            WORLDS
            ===================================================== */
@@ -192,6 +259,11 @@ export default class PhysicsWorldUI {
             'awtaar-physics-worlds'
 
 
+
+        /* =====================================================
+           WORLD DATA
+           ===================================================== */
+
         this.worldData = [
 
             {
@@ -205,6 +277,7 @@ export default class PhysicsWorldUI {
                     'Ψ'
             },
 
+
             {
                 key:
                     'relativity',
@@ -215,6 +288,7 @@ export default class PhysicsWorldUI {
                 symbol:
                     'c²'
             },
+
 
             {
                 key:
@@ -227,6 +301,7 @@ export default class PhysicsWorldUI {
                     '〰'
             },
 
+
             {
                 key:
                     'energy',
@@ -237,6 +312,7 @@ export default class PhysicsWorldUI {
                 symbol:
                     'E'
             },
+
 
             {
                 key:
@@ -251,6 +327,11 @@ export default class PhysicsWorldUI {
 
         ]
 
+
+
+        /* =====================================================
+           CREATE WORLD BUTTONS
+           ===================================================== */
 
         this.worldData.forEach(
             world => {
@@ -274,6 +355,11 @@ export default class PhysicsWorldUI {
                     world.key
 
 
+
+                /* =================================================
+                   CORE
+                   ================================================= */
+
                 const core =
                     document.createElement(
                         'span'
@@ -288,6 +374,11 @@ export default class PhysicsWorldUI {
                     world.symbol
 
 
+
+                /* =================================================
+                   NAME
+                   ================================================= */
+
                 const name =
                     document.createElement(
                         'span'
@@ -297,6 +388,11 @@ export default class PhysicsWorldUI {
                 name.className =
                     'physics-world-name'
 
+
+
+                /* =================================================
+                   BUILD ITEM
+                   ================================================= */
 
                 item.appendChild(
                     core
@@ -308,6 +404,11 @@ export default class PhysicsWorldUI {
                 )
 
 
+
+                /* =================================================
+                   CLICK
+                   ================================================= */
+
                 item.addEventListener(
                     'click',
                     event => {
@@ -318,10 +419,12 @@ export default class PhysicsWorldUI {
                         event.stopPropagation()
 
 
+
                         console.log(
                             '🌌 Physics World clicked:',
                             world.key
                         )
+
 
 
                         if (
@@ -337,12 +440,14 @@ export default class PhysicsWorldUI {
                         }
 
 
+
                         this.selectWorld(
                             world.key
                         )
 
                     }
                 )
+
 
 
                 this.worlds.appendChild(
@@ -353,8 +458,9 @@ export default class PhysicsWorldUI {
         )
 
 
+
         /* =====================================================
-           BACK
+           BACK BUTTON
            ===================================================== */
 
         this.backButton =
@@ -371,6 +477,7 @@ export default class PhysicsWorldUI {
             'awtaar-physics-world-back'
 
 
+
         this.backButton.addEventListener(
             'click',
             event => {
@@ -381,14 +488,16 @@ export default class PhysicsWorldUI {
                 event.stopPropagation()
 
 
+
                 this.returnToGalaxy()
 
             }
         )
 
 
+
         /* =====================================================
-           BUILD
+           BUILD CONTAINER
            ===================================================== */
 
         this.container.appendChild(
@@ -411,9 +520,11 @@ export default class PhysicsWorldUI {
         )
 
 
+
         document.body.appendChild(
             this.container
         )
+
 
 
         /* =====================================================
@@ -432,6 +543,7 @@ export default class PhysicsWorldUI {
             'none'
 
 
+
         /* =====================================================
            LANGUAGE
            ===================================================== */
@@ -439,6 +551,7 @@ export default class PhysicsWorldUI {
         this.updateLanguage()
 
     }
+
 
 
     /* =========================================================
@@ -452,6 +565,7 @@ export default class PhysicsWorldUI {
             getLanguage()
 
 
+
         if (
             !this.container
         ) {
@@ -461,11 +575,17 @@ export default class PhysicsWorldUI {
         }
 
 
+
         this.container.dir =
             language === 'ar'
                 ? 'rtl'
                 : 'ltr'
 
+
+
+        /* =====================================================
+           TITLE
+           ===================================================== */
 
         this.title.textContent =
             t(
@@ -473,16 +593,27 @@ export default class PhysicsWorldUI {
             )
 
 
+
+        /* =====================================================
+           DESCRIPTION
+           ===================================================== */
+
         this.subtitle.textContent =
             t(
                 'physicsWorld.description'
             )
 
 
+
+        /* =====================================================
+           WORLD NAMES
+           ===================================================== */
+
         const items =
             this.worlds.querySelectorAll(
                 '.awtaar-physics-world-item'
             )
+
 
 
         items.forEach(
@@ -503,6 +634,7 @@ export default class PhysicsWorldUI {
                     return
 
                 }
+
 
 
                 const name =
@@ -526,14 +658,20 @@ export default class PhysicsWorldUI {
         )
 
 
+
+        /* =====================================================
+           BACK
+           ===================================================== */
+
         this.backButton.textContent =
             t(
                 'physicsWorld.back'
             )
 
 
+
         /* =====================================================
-           CHILD UI LANGUAGE
+           QUANTUM LANGUAGE
            ===================================================== */
 
         if (
@@ -547,6 +685,11 @@ export default class PhysicsWorldUI {
         }
 
 
+
+        /* =====================================================
+           RELATIVITY LANGUAGE
+           ===================================================== */
+
         if (
             this.relativeWorldUI &&
             typeof this.relativeWorldUI.updateLanguage ===
@@ -558,6 +701,11 @@ export default class PhysicsWorldUI {
         }
 
 
+
+        /* =====================================================
+           WAVES LANGUAGE
+           ===================================================== */
+
         if (
             this.wavesWorldUI &&
             typeof this.wavesWorldUI.updateLanguage ===
@@ -568,7 +716,40 @@ export default class PhysicsWorldUI {
 
         }
 
+
+
+        /* =====================================================
+           ENERGY LANGUAGE
+           ===================================================== */
+
+        if (
+            this.energyWorldUI &&
+            typeof this.energyWorldUI.updateLanguage ===
+            'function'
+        ) {
+
+            this.energyWorldUI.updateLanguage()
+
+        }
+
+
+
+        /* =====================================================
+           MECHANICS LANGUAGE
+           ===================================================== */
+
+        if (
+            this.mechanicsWorldUI &&
+            typeof this.mechanicsWorldUI.updateLanguage ===
+            'function'
+        ) {
+
+            this.mechanicsWorldUI.updateLanguage()
+
+        }
+
     }
+
 
 
     /* =========================================================
@@ -583,11 +764,13 @@ export default class PhysicsWorldUI {
         )
 
 
+
         this.updateLanguage()
 
 
         this.isTransitioning =
             false
+
 
 
         this.container.style.display =
@@ -602,8 +785,10 @@ export default class PhysicsWorldUI {
             'auto'
 
 
+
         requestAnimationFrame(
             () => {
+
 
                 if (
                     this.container
@@ -618,6 +803,7 @@ export default class PhysicsWorldUI {
         )
 
     }
+
 
 
     /* =========================================================
@@ -636,9 +822,11 @@ export default class PhysicsWorldUI {
         }
 
 
+
         console.log(
             '🌌 PhysicsWorldUI: HIDE'
         )
+
 
 
         this.container.style.opacity =
@@ -647,6 +835,7 @@ export default class PhysicsWorldUI {
 
         this.container.style.pointerEvents =
             'none'
+
 
 
         setTimeout(
@@ -671,6 +860,7 @@ export default class PhysicsWorldUI {
     }
 
 
+
     /* =========================================================
        SELECT WORLD
        ========================================================= */
@@ -685,7 +875,7 @@ export default class PhysicsWorldUI {
         ) {
 
             console.log(
-                '⏳ PhysicsWorldUI: selectWorld blocked by transition'
+                '⏳ PhysicsWorldUI: selectWorld blocked'
             )
 
             return
@@ -693,10 +883,12 @@ export default class PhysicsWorldUI {
         }
 
 
+
         console.log(
             '🌌 PhysicsWorldUI: SELECT WORLD:',
             key
         )
+
 
 
         /* =====================================================
@@ -715,6 +907,7 @@ export default class PhysicsWorldUI {
         }
 
 
+
         /* =====================================================
            RELATIVITY
            ===================================================== */
@@ -731,6 +924,7 @@ export default class PhysicsWorldUI {
         }
 
 
+
         /* =====================================================
            WAVES
            ===================================================== */
@@ -740,11 +934,6 @@ export default class PhysicsWorldUI {
             'waves'
         ) {
 
-            console.log(
-                '🌊 PhysicsWorldUI: WAVES SELECTED'
-            )
-
-
             this.enterWavesWorld()
 
             return
@@ -752,8 +941,43 @@ export default class PhysicsWorldUI {
         }
 
 
+
         /* =====================================================
-           FUTURE WORLDS
+           ENERGY
+           ===================================================== */
+
+        if (
+            key ===
+            'energy'
+        ) {
+
+            this.enterEnergyWorld()
+
+            return
+
+        }
+
+
+
+        /* =====================================================
+           MECHANICS
+           ===================================================== */
+
+        if (
+            key ===
+            'mechanics'
+        ) {
+
+            this.enterMechanicsWorld()
+
+            return
+
+        }
+
+
+
+        /* =====================================================
+           UNKNOWN
            ===================================================== */
 
         console.log(
@@ -763,8 +987,9 @@ export default class PhysicsWorldUI {
     }
 
 
+
     /* =========================================================
-       ENTER QUANTUM
+       ENTER QUANTUM WORLD
        ========================================================= */
 
     enterQuantumWorld() {
@@ -783,11 +1008,14 @@ export default class PhysicsWorldUI {
         }
 
 
+
         this.isTransitioning =
             true
 
 
+
         this.hide()
+
 
 
         setTimeout(
@@ -795,6 +1023,7 @@ export default class PhysicsWorldUI {
 
 
                 this.quantumWorldUI.show()
+
 
 
                 this.isTransitioning =
@@ -807,8 +1036,9 @@ export default class PhysicsWorldUI {
     }
 
 
+
     /* =========================================================
-       ENTER RELATIVITY
+       ENTER RELATIVITY WORLD
        ========================================================= */
 
     enterRelativityWorld() {
@@ -827,11 +1057,14 @@ export default class PhysicsWorldUI {
         }
 
 
+
         this.isTransitioning =
             true
 
 
+
         this.hide()
+
 
 
         setTimeout(
@@ -841,6 +1074,7 @@ export default class PhysicsWorldUI {
                 this.relativeWorldUI.show()
 
 
+
                 this.isTransitioning =
                     false
 
@@ -851,16 +1085,12 @@ export default class PhysicsWorldUI {
     }
 
 
+
     /* =========================================================
-       ENTER WAVES
+       ENTER WAVES WORLD
        ========================================================= */
 
     enterWavesWorld() {
-
-
-        console.log(
-            '🌊 STEP 1 — enterWavesWorld() CALLED'
-        )
 
 
         if (
@@ -868,7 +1098,7 @@ export default class PhysicsWorldUI {
         ) {
 
             console.error(
-                '❌ STEP 1 FAILED — wavesWorldUI is NULL'
+                '❌ PhysicsWorldUI: wavesWorldUI is missing'
             )
 
             return
@@ -876,32 +1106,18 @@ export default class PhysicsWorldUI {
         }
 
 
-        console.log(
-            '🌊 STEP 2 — wavesWorldUI EXISTS',
-            this.wavesWorldUI
-        )
-
 
         this.isTransitioning =
             true
 
 
+
         this.hide()
+
 
 
         setTimeout(
             () => {
-
-
-                console.log(
-                    '🌊 STEP 3 — 550ms TRANSITION FINISHED'
-                )
-
-
-                console.log(
-                    '🌊 STEP 4 — wavesWorldUI.open TYPE:',
-                    typeof this.wavesWorldUI.open
-                )
 
 
                 if (
@@ -909,22 +1125,18 @@ export default class PhysicsWorldUI {
                     'function'
                 ) {
 
-                    console.log(
-                        '🌊 STEP 5 — CALLING wavesWorldUI.open()'
-                    )
-
-
                     this.wavesWorldUI.open()
 
                 }
+                else if (
+                    typeof this.wavesWorldUI.show ===
+                    'function'
+                ) {
 
-                else {
-
-                    console.error(
-                        '❌ STEP 5 FAILED — wavesWorldUI.open() DOES NOT EXIST'
-                    )
+                    this.wavesWorldUI.show()
 
                 }
+
 
 
                 this.isTransitioning =
@@ -935,6 +1147,159 @@ export default class PhysicsWorldUI {
         )
 
     }
+
+
+
+    /* =========================================================
+       ENTER ENERGY WORLD
+       ========================================================= */
+
+    enterEnergyWorld() {
+
+
+        console.log(
+            '⚡ PhysicsWorldUI: ENTER ENERGY WORLD'
+        )
+
+
+
+        if (
+            !this.energyWorldUI
+        ) {
+
+            console.error(
+                '❌ PhysicsWorldUI: energyWorldUI is missing'
+            )
+
+            return
+
+        }
+
+
+
+        this.isTransitioning =
+            true
+
+
+
+        this.hide()
+
+
+
+        setTimeout(
+            () => {
+
+
+                console.log(
+                    '⚡ PhysicsWorldUI: opening Energy World'
+                )
+
+
+
+                if (
+                    typeof this.energyWorldUI.open ===
+                    'function'
+                ) {
+
+                    this.energyWorldUI.open()
+
+                }
+                else if (
+                    typeof this.energyWorldUI.show ===
+                    'function'
+                ) {
+
+                    this.energyWorldUI.show()
+
+                }
+
+
+
+                this.isTransitioning =
+                    false
+
+            },
+            550
+        )
+
+    }
+
+
+
+    /* =========================================================
+       ENTER MECHANICS WORLD
+       ========================================================= */
+
+    enterMechanicsWorld() {
+
+
+        console.log(
+            '⚙️ PhysicsWorldUI: ENTER MECHANICS WORLD'
+        )
+
+
+
+        if (
+            !this.mechanicsWorldUI
+        ) {
+
+            console.error(
+                '❌ PhysicsWorldUI: mechanicsWorldUI is missing'
+            )
+
+            return
+
+        }
+
+
+
+        this.isTransitioning =
+            true
+
+
+
+        this.hide()
+
+
+
+        setTimeout(
+            () => {
+
+
+                console.log(
+                    '⚙️ PhysicsWorldUI: opening Mechanics World'
+                )
+
+
+
+                if (
+                    typeof this.mechanicsWorldUI.open ===
+                    'function'
+                ) {
+
+                    this.mechanicsWorldUI.open()
+
+                }
+                else if (
+                    typeof this.mechanicsWorldUI.show ===
+                    'function'
+                ) {
+
+                    this.mechanicsWorldUI.show()
+
+                }
+
+
+
+                this.isTransitioning =
+                    false
+
+            },
+            550
+        )
+
+    }
+
 
 
     /* =========================================================
@@ -953,8 +1318,10 @@ export default class PhysicsWorldUI {
         }
 
 
+
         this.isTransitioning =
             true
+
 
 
         if (
@@ -968,11 +1335,13 @@ export default class PhysicsWorldUI {
         }
 
 
+
         setTimeout(
             () => {
 
 
                 this.show()
+
 
 
                 this.isTransitioning =
@@ -983,6 +1352,7 @@ export default class PhysicsWorldUI {
         )
 
     }
+
 
 
     /* =========================================================
@@ -1001,12 +1371,16 @@ export default class PhysicsWorldUI {
         }
 
 
+
         this.isTransitioning =
             true
 
 
+
         if (
-            this.relativeWorldUI
+            this.relativeWorldUI &&
+            typeof this.relativeWorldUI.hide ===
+            'function'
         ) {
 
             this.relativeWorldUI.hide()
@@ -1014,11 +1388,13 @@ export default class PhysicsWorldUI {
         }
 
 
+
         setTimeout(
             () => {
 
 
                 this.show()
+
 
 
                 this.isTransitioning =
@@ -1029,6 +1405,7 @@ export default class PhysicsWorldUI {
         )
 
     }
+
 
 
     /* =========================================================
@@ -1043,6 +1420,7 @@ export default class PhysicsWorldUI {
         )
 
 
+
         if (
             this.isTransitioning
         ) {
@@ -1052,19 +1430,35 @@ export default class PhysicsWorldUI {
         }
 
 
+
         this.isTransitioning =
             true
 
 
+
         if (
-            this.wavesWorldUI &&
-            typeof this.wavesWorldUI.close ===
-            'function'
+            this.wavesWorldUI
         ) {
 
-            this.wavesWorldUI.close()
+            if (
+                typeof this.wavesWorldUI.close ===
+                'function'
+            ) {
+
+                this.wavesWorldUI.close()
+
+            }
+            else if (
+                typeof this.wavesWorldUI.hide ===
+                'function'
+            ) {
+
+                this.wavesWorldUI.hide()
+
+            }
 
         }
+
 
 
         setTimeout(
@@ -1072,6 +1466,7 @@ export default class PhysicsWorldUI {
 
 
                 this.show()
+
 
 
                 this.isTransitioning =
@@ -1082,6 +1477,139 @@ export default class PhysicsWorldUI {
         )
 
     }
+
+
+
+    /* =========================================================
+       RETURN FROM ENERGY
+       ========================================================= */
+
+    returnFromEnergy() {
+
+
+        console.log(
+            '⚡ PhysicsWorldUI: RETURN FROM ENERGY'
+        )
+
+
+
+        if (
+            this.isTransitioning
+        ) {
+
+            return
+
+        }
+
+
+
+        this.isTransitioning =
+            true
+
+
+
+        if (
+            this.energyWorldUI &&
+            typeof this.energyWorldUI.hide ===
+            'function'
+        ) {
+
+            this.energyWorldUI.hide()
+
+        }
+
+
+
+        setTimeout(
+            () => {
+
+
+                this.show()
+
+
+
+                this.isTransitioning =
+                    false
+
+            },
+            550
+        )
+
+    }
+
+
+
+    /* =========================================================
+       RETURN FROM MECHANICS
+       ========================================================= */
+
+    returnFromMechanics() {
+
+
+        console.log(
+            '⚙️ PhysicsWorldUI: RETURN FROM MECHANICS'
+        )
+
+
+
+        if (
+            this.isTransitioning
+        ) {
+
+            return
+
+        }
+
+
+
+        this.isTransitioning =
+            true
+
+
+
+        if (
+            this.mechanicsWorldUI
+        ) {
+
+            if (
+                typeof this.mechanicsWorldUI.closeExperiment ===
+                'function' &&
+                this.mechanicsWorldUI.isExperimentOpen
+            ) {
+
+                this.mechanicsWorldUI.closeExperiment()
+
+            }
+            else if (
+                typeof this.mechanicsWorldUI.hide ===
+                'function'
+            ) {
+
+                this.mechanicsWorldUI.hide()
+
+            }
+
+        }
+
+
+
+        setTimeout(
+            () => {
+
+
+                this.show()
+
+
+
+                this.isTransitioning =
+                    false
+
+            },
+            550
+        )
+
+    }
+
 
 
     /* =========================================================
@@ -1100,11 +1628,31 @@ export default class PhysicsWorldUI {
         }
 
 
+
         this.isTransitioning =
             true
 
 
+
+        /* =====================================================
+           CLOSE MECHANICS IF NECESSARY
+           ===================================================== */
+
+        if (
+            this.mechanicsWorldUI &&
+            this.mechanicsWorldUI.isExperimentOpen &&
+            typeof this.mechanicsWorldUI.closeExperiment ===
+            'function'
+        ) {
+
+            this.mechanicsWorldUI.closeExperiment()
+
+        }
+
+
+
         this.hide()
+
 
 
         setTimeout(
@@ -1122,6 +1670,7 @@ export default class PhysicsWorldUI {
                 }
 
 
+
                 this.isTransitioning =
                     false
 
@@ -1130,6 +1679,7 @@ export default class PhysicsWorldUI {
         )
 
     }
+
 
 
     /* =========================================================
@@ -1158,6 +1708,7 @@ export default class PhysicsWorldUI {
         }
 
 
+
         /* =====================================================
            RELATIVITY WORLD
            ===================================================== */
@@ -1173,6 +1724,7 @@ export default class PhysicsWorldUI {
             )
 
         }
+
 
 
         /* =====================================================
@@ -1191,7 +1743,44 @@ export default class PhysicsWorldUI {
 
         }
 
+
+
+        /* =====================================================
+           ENERGY WORLD
+           ===================================================== */
+
+        if (
+            this.energyWorldUI &&
+            typeof this.energyWorldUI.update ===
+            'function'
+        ) {
+
+            this.energyWorldUI.update(
+                delta
+            )
+
+        }
+
+
+
+        /* =====================================================
+           MECHANICS WORLD
+           ===================================================== */
+
+        if (
+            this.mechanicsWorldUI &&
+            typeof this.mechanicsWorldUI.update ===
+            'function'
+        ) {
+
+            this.mechanicsWorldUI.update(
+                delta
+            )
+
+        }
+
     }
+
 
 
     /* =========================================================
@@ -1209,9 +1798,15 @@ export default class PhysicsWorldUI {
         )
 
 
+
         this.scene =
             scene || null
 
+
+
+        /* =====================================================
+           QUANTUM
+           ===================================================== */
 
         if (
             this.quantumWorldUI &&
@@ -1226,6 +1821,11 @@ export default class PhysicsWorldUI {
         }
 
 
+
+        /* =====================================================
+           RELATIVITY
+           ===================================================== */
+
         if (
             this.relativeWorldUI &&
             typeof this.relativeWorldUI.setScene ===
@@ -1239,6 +1839,11 @@ export default class PhysicsWorldUI {
         }
 
 
+
+        /* =====================================================
+           WAVES
+           ===================================================== */
+
         if (
             this.wavesWorldUI &&
             typeof this.wavesWorldUI.setScene ===
@@ -1251,7 +1856,44 @@ export default class PhysicsWorldUI {
 
         }
 
+
+
+        /* =====================================================
+           ENERGY
+           ===================================================== */
+
+        if (
+            this.energyWorldUI &&
+            typeof this.energyWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.energyWorldUI.setScene(
+                this.scene
+            )
+
+        }
+
+
+
+        /* =====================================================
+           MECHANICS
+           ===================================================== */
+
+        if (
+            this.mechanicsWorldUI &&
+            typeof this.mechanicsWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.mechanicsWorldUI.setScene(
+                this.scene
+            )
+
+        }
+
     }
+
 
 
     /* =========================================================
@@ -1266,6 +1908,59 @@ export default class PhysicsWorldUI {
         )
 
 
+
+        /* =====================================================
+           MECHANICS
+           ===================================================== */
+
+        if (
+            this.mechanicsWorldUI
+        ) {
+
+
+            if (
+                typeof this.mechanicsWorldUI.destroy ===
+                'function'
+            ) {
+
+                this.mechanicsWorldUI.destroy()
+
+            }
+
+
+            this.mechanicsWorldUI =
+                null
+
+        }
+
+
+
+        /* =====================================================
+           ENERGY
+           ===================================================== */
+
+        if (
+            this.energyWorldUI
+        ) {
+
+
+            if (
+                typeof this.energyWorldUI.destroy ===
+                'function'
+            ) {
+
+                this.energyWorldUI.destroy()
+
+            }
+
+
+            this.energyWorldUI =
+                null
+
+        }
+
+
+
         /* =====================================================
            WAVES
            ===================================================== */
@@ -1273,6 +1968,7 @@ export default class PhysicsWorldUI {
         if (
             this.wavesWorldUI
         ) {
+
 
             if (
                 typeof this.wavesWorldUI.destroy ===
@@ -1283,10 +1979,12 @@ export default class PhysicsWorldUI {
 
             }
 
+
             this.wavesWorldUI =
                 null
 
         }
+
 
 
         /* =====================================================
@@ -1297,6 +1995,7 @@ export default class PhysicsWorldUI {
             this.relativeWorldUI
         ) {
 
+
             if (
                 typeof this.relativeWorldUI.destroy ===
                 'function'
@@ -1306,10 +2005,12 @@ export default class PhysicsWorldUI {
 
             }
 
+
             this.relativeWorldUI =
                 null
 
         }
+
 
 
         /* =====================================================
@@ -1320,6 +2021,7 @@ export default class PhysicsWorldUI {
             this.quantumWorldUI
         ) {
 
+
             if (
                 typeof this.quantumWorldUI.destroy ===
                 'function'
@@ -1329,10 +2031,12 @@ export default class PhysicsWorldUI {
 
             }
 
+
             this.quantumWorldUI =
                 null
 
         }
+
 
 
         /* =====================================================
@@ -1350,6 +2054,11 @@ export default class PhysicsWorldUI {
 
         }
 
+
+
+        /* =====================================================
+           REFERENCES
+           ===================================================== */
 
         this.scene =
             null

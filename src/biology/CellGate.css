@@ -1,0 +1,1173 @@
+/* =========================================================
+   AWTAAR — BIOLOGY GALAXY
+   CELL WORLD
+   CELL GATEWAY
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-cell-gate-ui {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2202;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    color: #effff8;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    direction: rtl;
+
+    user-select: none;
+
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.cell-gate-topbar {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    min-height: 92px;
+
+    padding:
+        22px 30px;
+
+    display: flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.cell-gate-title-group {
+
+    text-align: right;
+
+}
+
+
+.cell-gate-eyebrow {
+
+    margin-bottom: 5px;
+
+    color:
+        rgba(102, 230, 186, 0.62);
+
+    font-size: 9px;
+
+    font-weight: 400;
+
+    letter-spacing:
+        2.2px;
+
+    line-height: 1;
+
+}
+
+
+.cell-gate-title {
+
+    margin: 0;
+
+    color:
+        #effff8;
+
+    font-size: 25px;
+
+    font-weight: 500;
+
+    line-height: 1.2;
+
+    letter-spacing:
+        0.2px;
+
+    text-shadow:
+        0 2px 25px
+        rgba(0, 0, 0, 0.35);
+
+}
+
+
+.cell-gate-subtitle {
+
+    margin:
+        5px 0 0;
+
+    color:
+        rgba(220, 255, 242, 0.46);
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.cell-gate-close {
+
+    pointer-events: auto;
+
+    min-width: 88px;
+
+    height: 38px;
+
+    padding:
+        0 13px;
+
+    border:
+        1px solid
+        rgba(119, 235, 198, 0.18);
+
+    border-radius: 11px;
+
+    background:
+        rgba(3, 17, 15, 0.50);
+
+    color:
+        rgba(230, 255, 247, 0.75);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 400;
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease;
+
+}
+
+
+.cell-gate-close:hover {
+
+    background:
+        rgba(8, 35, 29, 0.75);
+
+    border-color:
+        rgba(119, 235, 198, 0.38);
+
+    color:
+        rgba(240, 255, 250, 0.95);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.cell-gate-close:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+.cell-gate-close-icon {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 17px;
+    height: 17px;
+
+    color:
+        rgba(215, 255, 241, 0.65);
+
+    font-size: 19px;
+
+    font-weight: 300;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.cell-gate-intro {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    width: max-content;
+
+    max-width: 80vw;
+
+    text-align: center;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    opacity: 1;
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+
+}
+
+
+.cell-gate-intro.hidden {
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.96);
+
+}
+
+
+.cell-gate-intro-small {
+
+    margin-bottom: 8px;
+
+    color:
+        rgba(115, 235, 195, 0.60);
+
+    font-size: 12px;
+
+    font-weight: 300;
+
+    letter-spacing:
+        1.5px;
+
+}
+
+
+.cell-gate-intro-main {
+
+    color:
+        #effff8;
+
+    font-size: 30px;
+
+    font-weight: 400;
+
+    line-height: 1.25;
+
+    text-shadow:
+        0 0 35px
+        rgba(75, 235, 188, 0.22);
+
+}
+
+
+/* =========================================================
+   LEFT INFORMATION PANEL
+   ========================================================= */
+
+.cell-gate-left-panel {
+
+    position: absolute;
+
+    left: 28px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 250px;
+
+    padding:
+        19px 19px 18px;
+
+    border-left:
+        1px solid
+        rgba(105, 230, 185, 0.20);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(3, 16, 14, 0.58),
+            rgba(3, 16, 14, 0.08)
+        );
+
+    pointer-events: auto;
+
+    text-align: left;
+
+    direction: ltr;
+
+    backdrop-filter:
+        blur(7px);
+
+    -webkit-backdrop-filter:
+        blur(7px);
+
+}
+
+
+/* =========================================================
+   PANEL TEXT
+   ========================================================= */
+
+.cell-gate-panel-kicker {
+
+    margin-bottom: 7px;
+
+    color:
+        #64ddb0;
+
+    font-size: 8px;
+
+    font-weight: 400;
+
+    letter-spacing:
+        2px;
+
+    line-height: 1;
+
+}
+
+
+.cell-gate-panel-title {
+
+    margin-bottom: 6px;
+
+    color:
+        #effff8;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    line-height: 1.35;
+
+}
+
+
+.cell-gate-panel-description {
+
+    margin-bottom: 15px;
+
+    color:
+        rgba(223, 255, 244, 0.55);
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+    line-height: 1.75;
+
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.cell-gate-status-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    direction: rtl;
+
+    margin-bottom: 8px;
+
+    color:
+        rgba(220, 255, 242, 0.50);
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+}
+
+
+.cell-gate-status {
+
+    color:
+        #69e2b6;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.cell-gate-progress {
+
+    width: 100%;
+
+    margin-bottom: 14px;
+
+}
+
+
+.cell-gate-progress-track {
+
+    width: 100%;
+
+    height: 3px;
+
+    overflow: hidden;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(111, 230, 192, 0.10);
+
+}
+
+
+.cell-gate-progress-value {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius:
+        inherit;
+
+    background:
+        #55ddb0;
+
+    box-shadow:
+        0 0 12px
+        rgba(85, 221, 176, 0.50);
+
+    transition:
+        width 0.12s linear;
+
+}
+
+
+.cell-gate-progress-label {
+
+    margin-top: 4px;
+
+    color:
+        rgba(214, 255, 241, 0.35);
+
+    font-size: 8px;
+
+    font-weight: 300;
+
+    line-height: 1;
+
+    text-align: right;
+
+    direction: rtl;
+
+}
+
+
+/* =========================================================
+   OPEN / CLOSE BUTTON
+   ========================================================= */
+
+.cell-gate-toggle {
+
+    width: 100%;
+
+    height: 39px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        rgba(98, 226, 180, 0.24);
+
+    border-radius: 10px;
+
+    background:
+        rgba(6, 38, 30, 0.55);
+
+    color:
+        #dfffee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    cursor: pointer;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 400;
+
+    transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+
+}
+
+
+.cell-gate-toggle:hover {
+
+    border-color:
+        rgba(98, 226, 180, 0.48);
+
+    background:
+        rgba(9, 52, 41, 0.75);
+
+    box-shadow:
+        0 0 18px
+        rgba(70, 220, 170, 0.08);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.cell-gate-toggle:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+.cell-gate-toggle-icon {
+
+    color:
+        #69e2b6;
+
+    font-size: 14px;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================================
+   RESET BUTTON
+   ========================================================= */
+
+.cell-gate-reset {
+
+    width: 100%;
+
+    height: 34px;
+
+    margin-top: 7px;
+
+    padding:
+        0 10px;
+
+    border:
+        1px solid
+        rgba(120, 230, 200, 0.10);
+
+    border-radius: 9px;
+
+    background:
+        rgba(3, 17, 15, 0.35);
+
+    color:
+        rgba(222, 255, 244, 0.45);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 300;
+
+    transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease;
+
+}
+
+
+.cell-gate-reset:hover {
+
+    color:
+        rgba(235, 255, 248, 0.80);
+
+    border-color:
+        rgba(120, 230, 200, 0.25);
+
+    background:
+        rgba(5, 25, 21, 0.48);
+
+}
+
+
+.cell-gate-reset span:first-child {
+
+    font-size: 14px;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================================
+   SELECTED GATE INFORMATION
+   ========================================================= */
+
+.cell-gate-selected {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 86px;
+
+    transform:
+        translateX(-50%)
+        translateY(10px);
+
+    width: 280px;
+
+    text-align: center;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+
+}
+
+
+.cell-gate-selected.visible {
+
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+
+}
+
+
+.cell-gate-selected-kicker {
+
+    margin-bottom: 5px;
+
+    color:
+        #64ddb0;
+
+    font-size: 8px;
+
+    font-weight: 400;
+
+    letter-spacing:
+        2px;
+
+    line-height: 1;
+
+}
+
+
+.cell-gate-selected-title {
+
+    margin-bottom: 5px;
+
+    color:
+        #effff8;
+
+    font-size: 18px;
+
+    font-weight: 500;
+
+    line-height: 1.3;
+
+}
+
+
+.cell-gate-selected-description {
+
+    color:
+        rgba(222, 255, 244, 0.52);
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   BOTTOM HINT
+   ========================================================= */
+
+.cell-gate-bottom-hint {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 18px;
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    white-space: nowrap;
+
+    color:
+        rgba(200, 245, 228, 0.30);
+
+    font-size: 8px;
+
+    font-weight: 300;
+
+    pointer-events: none;
+
+}
+
+
+.cell-gate-bottom-hint span {
+
+    margin:
+        0 7px;
+
+}
+
+
+.cell-gate-bottom-hint span:nth-child(even) {
+
+    color:
+        rgba(105, 226, 182, 0.45);
+
+}
+
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+.awtaar-cell-gate-canvas {
+
+    display: block;
+
+    outline: none;
+
+    touch-action: none;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (
+    max-width: 900px
+) {
+
+    .cell-gate-topbar {
+
+        padding:
+            18px;
+
+    }
+
+
+    .cell-gate-title {
+
+        font-size: 21px;
+
+    }
+
+
+    .cell-gate-left-panel {
+
+        width: 220px;
+
+        left: 16px;
+
+    }
+
+
+    .cell-gate-selected {
+
+        bottom: 76px;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 650px
+) {
+
+    .cell-gate-topbar {
+
+        padding:
+            15px 12px;
+
+    }
+
+
+    .cell-gate-eyebrow {
+
+        font-size: 7px;
+
+        letter-spacing:
+            1.5px;
+
+    }
+
+
+    .cell-gate-title {
+
+        font-size: 19px;
+
+    }
+
+
+    .cell-gate-subtitle {
+
+        max-width: 180px;
+
+        margin-top: 4px;
+
+        font-size: 8px;
+
+        line-height: 1.5;
+
+    }
+
+
+    .cell-gate-close {
+
+        min-width: 72px;
+
+        height: 34px;
+
+        padding:
+            0 9px;
+
+        font-size: 9px;
+
+    }
+
+
+    .cell-gate-left-panel {
+
+        width: 190px;
+
+        left: 12px;
+
+        top: auto;
+
+        bottom: 60px;
+
+        transform: none;
+
+        padding:
+            13px;
+
+    }
+
+
+    .cell-gate-panel-kicker {
+
+        font-size: 7px;
+
+    }
+
+
+    .cell-gate-panel-title {
+
+        font-size: 14px;
+
+    }
+
+
+    .cell-gate-panel-description {
+
+        margin-bottom: 10px;
+
+        font-size: 9px;
+
+        line-height: 1.55;
+
+    }
+
+
+    .cell-gate-status-row {
+
+        font-size: 9px;
+
+    }
+
+
+    .cell-gate-toggle {
+
+        height: 36px;
+
+        font-size: 9px;
+
+    }
+
+
+    .cell-gate-reset {
+
+        height: 31px;
+
+        font-size: 8px;
+
+    }
+
+
+    .cell-gate-selected {
+
+        width: 210px;
+
+        bottom: 18px;
+
+    }
+
+
+    .cell-gate-selected-title {
+
+        font-size: 15px;
+
+    }
+
+
+    .cell-gate-selected-description {
+
+        font-size: 9px;
+
+    }
+
+
+    .cell-gate-bottom-hint {
+
+        display: none;
+
+    }
+
+
+    .cell-gate-intro-small {
+
+        font-size: 9px;
+
+    }
+
+
+    .cell-gate-intro-main {
+
+        font-size: 23px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (
+    max-width: 420px
+) {
+
+    .cell-gate-left-panel {
+
+        width: 175px;
+
+        left: 8px;
+
+        bottom: 52px;
+
+        padding:
+            11px;
+
+    }
+
+
+    .cell-gate-panel-description {
+
+        display: none;
+
+    }
+
+
+    .cell-gate-selected {
+
+        width: 180px;
+
+    }
+
+
+    .cell-gate-close {
+
+        min-width: 65px;
+
+        font-size: 8px;
+
+    }
+
+
+    .cell-gate-title {
+
+        font-size: 17px;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.cell-gate-toggle:focus-visible,
+.cell-gate-reset:focus-visible,
+.cell-gate-close:focus-visible {
+
+    outline:
+        1px solid
+        rgba(105, 226, 182, 0.65);
+
+    outline-offset:
+        3px;
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    .cell-gate-close,
+    .cell-gate-toggle,
+    .cell-gate-reset,
+    .cell-gate-selected,
+    .cell-gate-intro,
+    .cell-gate-progress-value {
+
+        transition:
+            none !important;
+
+    }
+
+}

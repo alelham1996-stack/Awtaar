@@ -1,0 +1,1123 @@
+/* =========================================================
+   AWTAAR — COLLISION EXPERIMENT
+   ========================================================= */
+
+.collision-experiment {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    font-family: 'Tajawal', sans-serif;
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(201, 168, 93, 0.045),
+            transparent 42%
+        ),
+        linear-gradient(
+            135deg,
+            #08090b 0%,
+            #0b0d10 50%,
+            #08090b 100%
+        );
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.collision-experiment.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.collision-experiment-header {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 70px;
+
+    padding: 10px 24px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.025),
+            rgba(255, 255, 255, 0)
+        );
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.collision-experiment-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    text-align: center;
+
+    max-width: 650px;
+
+    margin: 0 auto;
+}
+
+.collision-experiment-eyebrow {
+    font-size: 8px;
+    line-height: 1.2;
+
+    font-weight: 600;
+
+    letter-spacing: 0.18em;
+
+    color: #c9a85d;
+
+    text-transform: uppercase;
+}
+
+.collision-experiment-title {
+    margin: 0;
+
+    font-size: 18px;
+    line-height: 1.25;
+
+    font-weight: 700;
+
+    color: #ffffff;
+
+    letter-spacing: -0.2px;
+}
+
+.collision-experiment-subtitle {
+    margin: 0;
+
+    max-width: 560px;
+
+    font-size: 9px;
+    line-height: 1.5;
+
+    color:
+        rgba(255, 255, 255, 0.48);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.collision-experiment-back {
+    position: absolute;
+
+    left: 24px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 32px;
+
+    padding: 7px 12px;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.24);
+
+    border-radius: 9px;
+
+    background:
+        rgba(201, 168, 93, 0.035);
+
+    color:
+        rgba(255, 255, 255, 0.68);
+
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.collision-experiment-back:hover {
+    border-color:
+        rgba(201, 168, 93, 0.52);
+
+    color:
+        #c9a85d;
+
+    background:
+        rgba(201, 168, 93, 0.07);
+
+    transform:
+        translateY(-50%)
+        translateY(-1px);
+}
+
+.collision-back-icon {
+    font-size: 13px;
+    line-height: 1;
+}
+
+.collision-experiment-back [data-role="back-text"] {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.collision-experiment-main {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(205px, 0.72fr)
+        minmax(420px, 2fr)
+        minmax(300px, 1.02fr);
+
+    gap: 18px;
+
+    padding:
+        18px 24px 20px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PANELS
+   ========================================================= */
+
+.collision-panel {
+    min-width: 0;
+    min-height: 0;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+
+/* =========================================================
+   GUIDE
+   ========================================================= */
+
+.collision-info-panel {
+    overflow: hidden;
+}
+
+.collision-guide {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 15px;
+}
+
+.collision-guide-kicker {
+    font-size: 8px;
+    line-height: 1.3;
+
+    font-weight: 700;
+
+    color: #c9a85d;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+.collision-guide-title {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.45;
+
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+.collision-guide-message {
+    margin: 0;
+
+    font-size: 9px;
+    line-height: 1.7;
+
+    color:
+        rgba(255, 255, 255, 0.56);
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.collision-status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    width: fit-content;
+
+    margin-top: 3px;
+
+    padding: 6px 9px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 999px;
+
+    background:
+        rgba(5, 7, 10, 0.62);
+
+    font-size: 8px;
+
+    color:
+        rgba(255, 255, 255, 0.58);
+}
+
+.collision-status-dot {
+    width: 6px;
+    height: 6px;
+
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+
+    background: #c9a85d;
+
+    box-shadow:
+        0 0 9px rgba(201, 168, 93, 0.45);
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.collision-status-dot.is-running {
+    background: #7db4ff;
+
+    box-shadow:
+        0 0 10px rgba(79, 140, 255, 0.65);
+}
+
+.collision-status-dot.is-impact {
+    background: #ffe0a1;
+
+    box-shadow:
+        0 0 12px rgba(255, 224, 161, 0.85);
+}
+
+.collision-status-dot.is-complete {
+    background: #c9a85d;
+}
+
+.collision-status-dot.is-paused {
+    background: #ffffff;
+
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+
+/* =========================================================
+   FORMULA
+   ========================================================= */
+
+.collision-formula {
+    margin-top: auto;
+
+    padding:
+        12px 13px;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.14);
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(201, 168, 93, 0.045),
+            rgba(255, 255, 255, 0.018)
+        );
+}
+
+.collision-formula-label {
+    margin-bottom: 7px;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    color: #c9a85d;
+}
+
+.collision-formula-value {
+    padding: 6px 0;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.055);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+.collision-formula-value:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   SCENE
+   ========================================================= */
+
+.collision-scene {
+    position: relative;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.18);
+
+    border-radius: 20px;
+
+    background:
+        radial-gradient(
+            circle at 50% 48%,
+            rgba(201, 168, 93, 0.035),
+            transparent 48%
+        ),
+        rgba(4, 6, 9, 0.78);
+
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.collision-scene canvas,
+.collision-three-canvas {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+}
+
+.collision-scene-caption {
+    position: absolute;
+
+    left: 50%;
+    bottom: 13px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 5;
+
+    width: max-content;
+
+    max-width:
+        calc(100% - 30px);
+
+    padding: 6px 11px;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.15);
+
+    border-radius: 999px;
+
+    background:
+        rgba(5, 7, 10, 0.68);
+
+    backdrop-filter: blur(8px);
+
+    color:
+        rgba(255, 255, 255, 0.54);
+
+    font-size: 8px;
+
+    line-height: 1.3;
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.collision-controls {
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 12px;
+}
+
+.collision-data {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+.collision-data-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 7px;
+}
+
+.collision-data-card {
+    min-width: 0;
+
+    min-height: 55px;
+
+    padding: 9px 10px;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.20);
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.045);
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.collision-data-card:hover {
+    border-color:
+        rgba(201, 168, 93, 0.38);
+
+    transform:
+        translateY(-1px);
+}
+
+.collision-data-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 8.5px;
+    line-height: 1.25;
+
+    font-weight: 500;
+
+    color:
+        rgba(255, 255, 255, 0.58);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.collision-data-value {
+    display: inline-block;
+
+    font-size: 13.5px;
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RANGE CONTROLS
+   ========================================================= */
+
+.collision-control {
+    margin-bottom: 9px;
+}
+
+.collision-control:last-of-type {
+    margin-bottom: 12px;
+}
+
+.collision-control-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    margin-bottom: 5px;
+}
+
+.collision-control-label {
+    font-size: 9px;
+
+    color:
+        rgba(255, 255, 255, 0.72);
+}
+
+.collision-control-value {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    color: #c9a85d;
+
+    white-space: nowrap;
+}
+
+.collision-controls input[type="range"] {
+    width: 100%;
+    height: 3px;
+
+    margin: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(201, 168, 93, 0.72),
+            rgba(255, 255, 255, 0.16)
+        );
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.collision-controls input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 12px;
+    height: 12px;
+
+    border:
+        2px solid #c9a85d;
+
+    border-radius: 50%;
+
+    background: #101010;
+
+    box-shadow:
+        0 0 0 3px rgba(201, 168, 93, 0.10),
+        0 0 10px rgba(201, 168, 93, 0.18);
+
+    cursor: pointer;
+}
+
+.collision-controls input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+
+    border:
+        2px solid #c9a85d;
+
+    border-radius: 50%;
+
+    background: #101010;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.collision-actions {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 4px;
+}
+
+.collision-button {
+    width: 100%;
+
+    min-height: 39px;
+
+    padding: 8px 12px;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.48);
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(201, 168, 93, 0.18),
+            rgba(201, 168, 93, 0.055)
+        );
+
+    color: #c9a85d;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.collision-button:hover:not(:disabled) {
+    border-color:
+        rgba(201, 168, 93, 0.78);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(201, 168, 93, 0.27),
+            rgba(201, 168, 93, 0.09)
+        );
+
+    box-shadow:
+        0 7px 20px rgba(201, 168, 93, 0.10);
+
+    transform:
+        translateY(-1px);
+}
+
+.collision-button:active:not(:disabled) {
+    transform:
+        translateY(0);
+}
+
+.collision-button:disabled {
+    opacity: 0.42;
+
+    cursor: default;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.collision-button[data-role="reset"] {
+    min-height: 35px;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.22);
+
+    background:
+        rgba(201, 168, 93, 0.035);
+
+    color: #c9a85d;
+}
+
+.collision-button[data-role="reset"]:hover {
+    border-color:
+        rgba(201, 168, 93, 0.52);
+
+    background:
+        rgba(201, 168, 93, 0.07);
+
+    color: #dfc477;
+}
+
+
+/* =========================================================
+   NOTE
+   ========================================================= */
+
+.collision-note {
+    margin-top: 10px;
+
+    padding: 9px 11px;
+
+    border:
+        1px solid rgba(201, 168, 93, 0.12);
+
+    border-radius: 12px;
+
+    background:
+        rgba(201, 168, 93, 0.035);
+
+    color:
+        rgba(255, 255, 255, 0.55);
+
+    font-size: 9px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   SCROLLBARS
+   ========================================================= */
+
+.collision-controls::-webkit-scrollbar,
+.collision-guide::-webkit-scrollbar {
+    width: 3px;
+}
+
+.collision-controls::-webkit-scrollbar-track,
+.collision-guide::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.collision-controls::-webkit-scrollbar-thumb,
+.collision-guide::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background:
+        rgba(201, 168, 93, 0.30);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .collision-experiment-main {
+        grid-template-columns:
+            minmax(190px, 0.72fr)
+            minmax(390px, 1.9fr)
+            minmax(280px, 1fr);
+
+        gap: 14px;
+
+        padding:
+            14px 18px 16px;
+    }
+
+    .collision-data-card {
+        padding: 7px 8px;
+
+        min-height: 52px;
+
+        border-radius: 11px;
+    }
+
+    .collision-data-label {
+        font-size: 8px;
+    }
+
+    .collision-data-value {
+        font-size: 13px;
+    }
+
+    .collision-controls {
+        padding: 11px;
+    }
+
+    .collision-button {
+        min-height: 37px;
+    }
+}
+
+
+@media (max-height: 760px) {
+
+    .collision-experiment-header {
+        min-height: 56px;
+
+        padding-top: 9px;
+        padding-bottom: 9px;
+    }
+
+    .collision-experiment-title {
+        font-size: 16px;
+    }
+
+    .collision-experiment-main {
+        padding-top: 12px;
+        padding-bottom: 14px;
+    }
+
+    .collision-data-grid {
+        gap: 5px;
+    }
+
+    .collision-data-card {
+        min-height: 50px;
+
+        padding: 7px 8px;
+
+        border-radius: 10px;
+    }
+
+    .collision-controls {
+        padding: 9px 10px;
+    }
+
+    .collision-button {
+        min-height: 35px;
+    }
+
+    .collision-button[data-role="reset"] {
+        min-height: 33px;
+
+        font-size: 9px;
+    }
+
+    .collision-note {
+        padding: 8px 9px;
+
+        font-size: 8.5px;
+    }
+}
+
+
+@media (max-height: 650px) {
+
+    .collision-experiment-header {
+        min-height: 50px;
+    }
+
+    .collision-experiment-subtitle {
+        display: none;
+    }
+
+    .collision-experiment-main {
+        padding:
+            9px 14px 10px;
+
+        gap: 12px;
+    }
+
+    .collision-data-grid {
+        gap: 4px;
+    }
+
+    .collision-data-card {
+        min-height: 46px;
+
+        padding: 6px 7px;
+
+        border-radius: 9px;
+    }
+
+    .collision-data-label {
+        font-size: 7px;
+    }
+
+    .collision-data-value {
+        font-size: 11.5px;
+    }
+
+    .collision-controls {
+        padding: 7px 9px;
+    }
+
+    .collision-control {
+        margin-bottom: 5px;
+    }
+
+    .collision-control-label {
+        font-size: 8px;
+    }
+
+    .collision-control-value {
+        font-size: 9px;
+    }
+
+    .collision-button {
+        min-height: 32px;
+
+        padding: 6px 10px;
+
+        font-size: 9px;
+    }
+
+    .collision-button[data-role="reset"] {
+        min-height: 30px;
+
+        padding: 5px 9px;
+
+        font-size: 8.5px;
+    }
+
+    .collision-note {
+        padding: 6px 8px;
+
+        font-size: 7.5px;
+    }
+}
+
+
+@media (max-width: 850px) {
+
+    .collision-experiment-header {
+        min-height: 76px;
+
+        padding:
+            10px 16px 10px 16px;
+    }
+
+    .collision-experiment-heading {
+        padding-left: 115px;
+        padding-right: 10px;
+    }
+
+    .collision-experiment-back {
+        left: 14px;
+    }
+
+    .collision-experiment-main {
+        grid-template-columns: 1fr;
+
+        overflow-y: auto;
+
+        padding: 12px;
+    }
+
+    .collision-info-panel {
+        min-height: 180px;
+    }
+
+    .collision-scene {
+        min-height: 360px;
+    }
+
+    .collision-controls {
+        min-height: 300px;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .collision-experiment-heading {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .collision-experiment-back {
+        position: absolute;
+
+        left: 12px;
+        top: 10px;
+
+        transform: none;
+    }
+
+    .collision-experiment-back:hover {
+        transform:
+            translateY(-1px);
+    }
+
+    .collision-experiment-subtitle {
+        display: none;
+    }
+
+    .collision-experiment-main {
+        padding: 9px;
+    }
+
+    .collision-scene {
+        min-height: 300px;
+    }
+
+    .collision-data-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}

@@ -1,0 +1,1708 @@
+/* =========================================================
+   AWTAAR — MECHANICS WORLD
+   NEWTON'S LAWS EXPERIMENT
+   PREMIUM INTERFACE
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.newton-laws-container {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    color: #f4efe5;
+
+}
+
+
+/* =========================================================
+   THREE.JS VISUAL AREA
+   ========================================================= */
+
+.newton-laws-visual {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+}
+
+
+.newton-laws-visual canvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   SUBTLE ATMOSPHERIC VIGNETTE
+   ========================================================= */
+
+.newton-laws-container::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 46% 48%,
+            transparent 30%,
+            rgba(0, 0, 0, 0.10) 65%,
+            rgba(0, 0, 0, 0.34) 100%
+        );
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.newton-laws-header {
+
+    position: absolute;
+
+    top: 27px;
+    left: 31px;
+
+    z-index: 10;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 4px;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.newton-laws-header::before {
+
+    content: "NEWTON'S LAWS";
+
+    margin-bottom: 4px;
+
+    font-size: 8px;
+
+    font-weight: 500;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(210, 173, 84, 0.62);
+
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.newton-laws-title {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 400;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.3px;
+
+    color:
+        #f5f0e7;
+
+    text-shadow:
+        0 0 24px
+        rgba(255, 255, 255, 0.08);
+
+}
+
+
+/* =========================================================
+   SUBTITLE
+   ========================================================= */
+
+.newton-laws-title-sub {
+
+    margin: 1px 0 0;
+
+    font-size: 11px;
+
+    font-weight: 300;
+
+    line-height: 1.6;
+
+    color:
+        rgba(235, 229, 217, 0.46);
+
+}
+
+
+/* =========================================================
+   HEADER DECORATIVE LINE
+   ========================================================= */
+
+.newton-laws-header::after {
+
+    content: "";
+
+    width: 46px;
+
+    height: 1px;
+
+    margin-top: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(210, 173, 84, 0.65),
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.newton-laws-back {
+
+    position: absolute;
+
+    top: 25px;
+    right: 27px;
+
+    z-index: 30;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.20);
+
+    border-radius: 50%;
+
+    background:
+        rgba(9, 9, 8, 0.42);
+
+    color:
+        rgba(239, 233, 220, 0.72);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(255, 255, 255, 0.018);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+
+}
+
+
+.newton-laws-back:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(205, 166, 82, 0.07);
+
+    border-color:
+        rgba(205, 166, 82, 0.48);
+
+    color:
+        #e0bd69;
+
+}
+
+
+.newton-laws-back:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   MAIN GUIDE PANEL
+   =========================================================
+
+   Small floating panel.
+   Positioned at bottom-right so the center
+   of the experiment remains completely visible.
+   ========================================================= */
+
+.newton-laws-guide {
+
+    position: absolute;
+
+    right: 28px;
+
+    bottom: 28px;
+
+    z-index: 20;
+
+    width: 270px;
+
+    box-sizing: border-box;
+
+    padding: 18px 18px 16px;
+
+    border-radius: 18px;
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.22);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 17, 14, 0.78),
+            rgba(7, 7, 6, 0.72)
+        );
+
+    box-shadow:
+        0 18px 45px
+        rgba(0, 0, 0, 0.34),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.035);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    pointer-events: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+/* =========================================================
+   GUIDE TOP ACCENT
+   ========================================================= */
+
+.newton-laws-guide::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    right: 18px;
+    left: 18px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(205, 166, 82, 0.48),
+            transparent
+        );
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   GUIDE HEADER
+   ========================================================= */
+
+.newton-laws-guide-header {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+
+/* =========================================================
+   GUIDE KICKER
+   ========================================================= */
+
+.newton-laws-guide-kicker {
+
+    font-size: 8px;
+
+    font-weight: 500;
+
+    letter-spacing: 2px;
+
+    color:
+        rgba(211, 176, 91, 0.64);
+
+}
+
+
+/* =========================================================
+   GUIDE TITLE
+   ========================================================= */
+
+.newton-laws-guide-title {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    color:
+        #f3eee4;
+
+}
+
+
+/* =========================================================
+   GUIDE MESSAGE
+   ========================================================= */
+
+.newton-laws-guide-message {
+
+    margin: 0;
+
+    font-size: 11px;
+
+    font-weight: 300;
+
+    line-height: 1.7;
+
+    color:
+        rgba(235, 229, 217, 0.48);
+
+}
+
+
+/* =========================================================
+   PHYSICS VALUES
+   ========================================================= */
+
+.newton-laws-values {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 6px;
+
+}
+
+
+/* =========================================================
+   VALUE CARD
+   ========================================================= */
+
+.newton-laws-value {
+
+    min-height: 57px;
+
+    padding: 8px 7px;
+
+    box-sizing: border-box;
+
+    border-radius: 11px;
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.12);
+
+    background:
+        rgba(255, 255, 255, 0.018);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 4px;
+
+}
+
+
+/* =========================================================
+   VALUE LABEL
+   ========================================================= */
+
+.newton-laws-value-label {
+
+    font-size: 8px;
+
+    font-weight: 400;
+
+    color:
+        rgba(235, 229, 217, 0.40);
+
+}
+
+
+/* =========================================================
+   VALUE NUMBER
+   ========================================================= */
+
+.newton-laws-value-number {
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    color:
+        #eee7d8;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* =========================================================
+   VALUE UNIT
+   ========================================================= */
+
+.newton-laws-value-unit {
+
+    margin-left: 2px;
+
+    font-size: 7px;
+
+    font-weight: 400;
+
+    color:
+        rgba(220, 190, 120, 0.40);
+
+}
+
+
+/* =========================================================
+   FORMULA
+   ========================================================= */
+
+.newton-laws-formula {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 43px;
+
+    padding: 8px 12px;
+
+    box-sizing: border-box;
+
+    border-radius: 11px;
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.14);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(205, 166, 82, 0.045),
+            rgba(205, 166, 82, 0.012)
+        );
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   FORMULA ACCENT
+   ========================================================= */
+
+.newton-laws-formula::before {
+
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+
+    top: 0;
+    bottom: 0;
+
+    width: 2px;
+
+    background:
+        rgba(205, 166, 82, 0.52);
+
+    box-shadow:
+        0 0 12px
+        rgba(205, 166, 82, 0.22);
+
+}
+
+
+/* =========================================================
+   FORMULA TEXT
+   ========================================================= */
+
+.newton-laws-formula-text {
+
+    font-size: 17px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.4px;
+
+    color:
+        #eee7d8;
+
+    direction: ltr;
+
+}
+
+
+/* =========================================================
+   FORMULA COLORS
+   ========================================================= */
+
+.newton-laws-formula-text .formula-force {
+
+    color:
+        #dcb762;
+
+}
+
+
+.newton-laws-formula-text .formula-mass {
+
+    color:
+        #eee7d8;
+
+}
+
+
+.newton-laws-formula-text .formula-acceleration {
+
+    color:
+        #f1d78e;
+
+}
+
+
+/* =========================================================
+   CONTROL GROUP
+   ========================================================= */
+
+.newton-laws-control-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+
+/* =========================================================
+   CONTROL LABEL
+   ========================================================= */
+
+.newton-laws-control-label {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    font-size: 9px;
+
+    font-weight: 400;
+
+    color:
+        rgba(235, 229, 217, 0.44);
+
+}
+
+
+/* =========================================================
+   CONTROL VALUE
+   ========================================================= */
+
+.newton-laws-control-value {
+
+    color:
+        rgba(235, 229, 217, 0.80);
+
+    font-weight: 500;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* =========================================================
+   RANGE
+   ========================================================= */
+
+.newton-laws-range {
+
+    width: 100%;
+
+    height: 3px;
+
+    margin: 0;
+
+    padding: 0;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(205, 166, 82, 0.38),
+            rgba(255, 255, 255, 0.08)
+        );
+
+    outline: none;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+}
+
+
+/* =========================================================
+   RANGE — WEBKIT
+   ========================================================= */
+
+.newton-laws-range::-webkit-slider-thumb {
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    width: 13px;
+    height: 13px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(244, 239, 229, 0.92);
+
+    background:
+        #d5ad55;
+
+    box-shadow:
+        0 0 9px
+        rgba(205, 166, 82, 0.42);
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   RANGE — MOZILLA
+   ========================================================= */
+
+.newton-laws-range::-moz-range-thumb {
+
+    width: 13px;
+    height: 13px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(244, 239, 229, 0.92);
+
+    background:
+        #d5ad55;
+
+    box-shadow:
+        0 0 9px
+        rgba(205, 166, 82, 0.42);
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   RANGE FOCUS
+   ========================================================= */
+
+.newton-laws-range:focus-visible {
+
+    outline:
+        1px solid
+        rgba(205, 166, 82, 0.45);
+
+    outline-offset: 5px;
+
+}
+
+
+/* =========================================================
+   MAIN ACTION
+   ========================================================= */
+
+.newton-laws-action {
+
+    width: 100%;
+
+    min-height: 40px;
+
+    border:
+        1px solid
+        rgba(220, 183, 98, 0.45);
+
+    border-radius: 11px;
+
+    padding: 0 15px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(205, 166, 82, 0.92),
+            rgba(165, 126, 48, 0.92)
+        );
+
+    color:
+        #15130f;
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    box-shadow:
+        0 8px 20px
+        rgba(205, 166, 82, 0.10),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.25);
+
+    transition:
+        transform 0.20s ease,
+        box-shadow 0.20s ease,
+        filter 0.20s ease;
+
+}
+
+
+.newton-laws-action:hover {
+
+    transform:
+        translateY(-1px);
+
+    filter:
+        brightness(1.06);
+
+    box-shadow:
+        0 11px 25px
+        rgba(205, 166, 82, 0.17),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.28);
+
+}
+
+
+.newton-laws-action:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+.newton-laws-action:disabled {
+
+    opacity: 0.38;
+
+    cursor: default;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+/* =========================================================
+   SECONDARY ACTIONS
+   ========================================================= */
+
+.newton-laws-secondary-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 6px;
+
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.newton-laws-secondary {
+
+    min-height: 34px;
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.13);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255, 255, 255, 0.022);
+
+    color:
+        rgba(235, 229, 217, 0.58);
+
+    font-family:
+        "Tajawal",
+        sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 400;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+
+}
+
+
+.newton-laws-secondary:hover {
+
+    transform:
+        translateY(-1px);
+
+    background:
+        rgba(205, 166, 82, 0.055);
+
+    border-color:
+        rgba(205, 166, 82, 0.30);
+
+    color:
+        #e6d8b8;
+
+}
+
+
+/* =========================================================
+   EXPERIMENT STATUS
+   ========================================================= */
+
+.newton-laws-status {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 17px;
+
+    color:
+        rgba(235, 229, 217, 0.36);
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================================
+   STATUS DOT
+   ========================================================= */
+
+.newton-laws-status-dot {
+
+    width: 5px;
+    height: 5px;
+
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+
+    background:
+        #cfae5b;
+
+    box-shadow:
+        0 0 9px
+        rgba(205, 166, 82, 0.42);
+
+}
+
+
+.newton-laws-status.active
+.newton-laws-status-dot {
+
+    background:
+        #e2bd62;
+
+    box-shadow:
+        0 0 11px
+        rgba(226, 189, 98, 0.58);
+
+}
+
+
+/* =========================================================
+   HINT
+   ========================================================= */
+
+.newton-laws-hint {
+
+    margin-top: 0;
+
+    padding-top: 9px;
+
+    border-top:
+        1px solid
+        rgba(205, 166, 82, 0.08);
+
+    font-size: 8px;
+
+    font-weight: 300;
+
+    line-height: 1.6;
+
+    color:
+        rgba(235, 229, 217, 0.28);
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   LEFT INFORMATION CHIP
+   ========================================================= */
+
+.newton-laws-info {
+
+    position: absolute;
+
+    left: 30px;
+
+    bottom: 29px;
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 11px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.12);
+
+    background:
+        rgba(8, 8, 7, 0.34);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    color:
+        rgba(235, 229, 217, 0.34);
+
+    font-size: 8px;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   INFO ICON
+   ========================================================= */
+
+.newton-laws-info-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 17px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.18);
+
+    background:
+        rgba(205, 166, 82, 0.045);
+
+    color:
+        rgba(211, 176, 91, 0.66);
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================================
+   FORCE INDICATOR
+   ========================================================= */
+
+.newton-laws-force-indicator {
+
+    position: absolute;
+
+    left: 48%;
+
+    top: 22%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 8;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 11px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(205, 166, 82, 0.06);
+
+    border:
+        1px solid
+        rgba(205, 166, 82, 0.15);
+
+    color:
+        rgba(224, 191, 105, 0.70);
+
+    font-size: 9px;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.25s ease;
+
+}
+
+
+.newton-laws-force-indicator.visible {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   FORCE INDICATOR ARROW
+   ========================================================= */
+
+.newton-laws-force-indicator-arrow {
+
+    font-size: 14px;
+
+    color:
+        #dcb762;
+
+}
+
+
+/* =========================================================
+   HIDDEN STATE
+   ========================================================= */
+
+.newton-laws-container.is-hidden {
+
+    display: none;
+
+}
+
+
+/* =========================================================
+   GUIDE HIDDEN
+   ========================================================= */
+
+.newton-laws-guide.is-hidden {
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform:
+        translateY(12px);
+
+}
+
+
+/* =========================================================
+   FADE-IN
+   ========================================================= */
+
+.newton-laws-container.is-entering
+.newton-laws-guide {
+
+    animation:
+        newtonGuideEnter
+        0.45s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+
+}
+
+
+@keyframes newtonGuideEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(14px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .newton-laws-header {
+
+        left: 22px;
+
+    }
+
+
+    .newton-laws-back {
+
+        right: 21px;
+
+    }
+
+
+    .newton-laws-guide {
+
+        right: 20px;
+
+        bottom: 20px;
+
+        width: 255px;
+
+        padding:
+            16px;
+
+    }
+
+
+    .newton-laws-info {
+
+        left: 22px;
+
+        bottom: 21px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL SCREEN
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .newton-laws-header {
+
+        top: 17px;
+
+        left: 18px;
+
+    }
+
+
+    .newton-laws-header::before {
+
+        font-size: 7px;
+
+        letter-spacing: 2.4px;
+
+    }
+
+
+    .newton-laws-title {
+
+        font-size: 20px;
+
+    }
+
+
+    .newton-laws-title-sub {
+
+        font-size: 9px;
+
+    }
+
+
+    .newton-laws-header::after {
+
+        margin-top: 6px;
+
+    }
+
+
+    .newton-laws-back {
+
+        top: 16px;
+
+        right: 17px;
+
+        width: 37px;
+        height: 37px;
+
+        font-size: 15px;
+
+    }
+
+
+    /* ---------------------------------------------
+       MOBILE GUIDE
+       --------------------------------------------- */
+
+    .newton-laws-guide {
+
+        right: 13px;
+
+        bottom: 13px;
+
+        left: 13px;
+
+        width: auto;
+
+        max-height: 43vh;
+
+        overflow-y: auto;
+
+        padding:
+            15px;
+
+        border-radius: 16px;
+
+        gap: 11px;
+
+    }
+
+
+    .newton-laws-guide-title {
+
+        font-size: 16px;
+
+    }
+
+
+    .newton-laws-guide-message {
+
+        font-size: 10px;
+
+        line-height: 1.6;
+
+    }
+
+
+    .newton-laws-values {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+    }
+
+
+    .newton-laws-value {
+
+        min-height: 51px;
+
+        padding: 7px 5px;
+
+    }
+
+
+    .newton-laws-value-label {
+
+        font-size: 7px;
+
+    }
+
+
+    .newton-laws-value-number {
+
+        font-size: 14px;
+
+    }
+
+
+    .newton-laws-value-unit {
+
+        display: none;
+
+    }
+
+
+    .newton-laws-formula {
+
+        min-height: 40px;
+
+    }
+
+
+    .newton-laws-formula-text {
+
+        font-size: 15px;
+
+    }
+
+
+    .newton-laws-info {
+
+        display: none;
+
+    }
+
+
+    .newton-laws-force-indicator {
+
+        left: 46%;
+
+        top: 15%;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .newton-laws-header {
+
+        top: 14px;
+
+        left: 15px;
+
+    }
+
+
+    .newton-laws-title {
+
+        font-size: 18px;
+
+    }
+
+
+    .newton-laws-title-sub {
+
+        font-size: 8px;
+
+    }
+
+
+    .newton-laws-back {
+
+        top: 13px;
+
+        right: 14px;
+
+        width: 35px;
+        height: 35px;
+
+    }
+
+
+    .newton-laws-guide {
+
+        right: 10px;
+
+        bottom: 10px;
+
+        left: 10px;
+
+        padding: 12px;
+
+        gap: 9px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .newton-laws-guide-kicker {
+
+        font-size: 7px;
+
+    }
+
+
+    .newton-laws-guide-title {
+
+        font-size: 15px;
+
+    }
+
+
+    .newton-laws-guide-message {
+
+        font-size: 9px;
+
+    }
+
+
+    .newton-laws-value {
+
+        min-height: 45px;
+
+        border-radius: 8px;
+
+    }
+
+
+    .newton-laws-value-number {
+
+        font-size: 12px;
+
+    }
+
+
+    .newton-laws-formula {
+
+        min-height: 37px;
+
+        border-radius: 9px;
+
+    }
+
+
+    .newton-laws-formula-text {
+
+        font-size: 14px;
+
+    }
+
+
+    .newton-laws-action {
+
+        min-height: 37px;
+
+        border-radius: 9px;
+
+        font-size: 10px;
+
+    }
+
+
+    .newton-laws-secondary {
+
+        min-height: 31px;
+
+        border-radius: 8px;
+
+        font-size: 8px;
+
+    }
+
+
+    .newton-laws-status {
+
+        font-size: 7px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .newton-laws-guide,
+    .newton-laws-action,
+    .newton-laws-secondary,
+    .newton-laws-back {
+
+        transition: none;
+
+    }
+
+
+    .newton-laws-container.is-entering
+    .newton-laws-guide {
+
+        animation: none;
+
+    }
+
+}

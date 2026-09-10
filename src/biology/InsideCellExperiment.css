@@ -1,0 +1,897 @@
+/* =========================================================
+   AWTAAR — INSIDE CELL EXPERIMENT
+   Cellular Biology Experience
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   ROOT EXPERIENCE
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience {
+    position: fixed !important;
+    inset: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    overflow: hidden !important;
+
+    display: none;
+
+    z-index: 2200 !important;
+
+    pointer-events: none;
+
+    isolation: isolate;
+
+    background:
+        radial-gradient(
+            circle at 50% 48%,
+            rgba(12, 76, 58, 0.22) 0%,
+            rgba(3, 24, 22, 0.72) 35%,
+            rgba(1, 8, 10, 0.96) 72%,
+            #010506 100%
+        );
+
+    font-family:
+        "Tajawal",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+/* ---------------------------------------------------------
+   THREE.JS CANVAS
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-inside-cell-canvas {
+
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    display: none;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    min-width: 100% !important;
+    min-height: 100% !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    z-index: 0 !important;
+
+    pointer-events: auto;
+
+    outline: none;
+
+    touch-action: none;
+
+    background: transparent !important;
+}
+
+
+/* ---------------------------------------------------------
+   UI LAYER
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-inside-cell-ui {
+
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    display: none;
+
+    z-index: 10 !important;
+
+    pointer-events: none;
+
+    direction: rtl;
+
+    color: rgba(245, 252, 248, 0.96);
+
+    font-family:
+        "Tajawal",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   GLOBAL BOX SIZING
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience *,
+.awtaar-inside-cell-experience *::before,
+.awtaar-inside-cell-experience *::after {
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   TOP BAR
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-topbar {
+
+    position: absolute;
+
+    top: 24px;
+    left: 30px;
+    right: 30px;
+
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    z-index: 30;
+
+    pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   TITLE
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 18px;
+
+    border: 1px solid rgba(151, 229, 195, 0.14);
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8, 36, 31, 0.78),
+            rgba(3, 18, 19, 0.56)
+        );
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(16px);
+
+    -webkit-backdrop-filter: blur(16px);
+
+    color: rgba(242, 255, 249, 0.96);
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   CLOSE BUTTON
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-close {
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(177, 235, 208, 0.18);
+
+    background:
+        rgba(5, 27, 25, 0.76);
+
+    color: rgba(239, 255, 247, 0.9);
+
+    font-size: 22px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.awtaar-inside-cell-experience
+.awtaar-cell-close:hover {
+
+    transform: scale(1.07);
+
+    background:
+        rgba(12, 61, 50, 0.9);
+
+    border-color:
+        rgba(157, 239, 204, 0.4);
+
+    box-shadow:
+        0 0 24px rgba(80, 221, 167, 0.14);
+}
+
+
+/* ---------------------------------------------------------
+   INTRO
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-intro {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: min(680px, calc(100vw - 50px));
+
+    text-align: center;
+
+    z-index: 40;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    padding: 28px 32px;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(150, 235, 200, 0.13);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(3, 26, 23, 0.58),
+            rgba(1, 12, 14, 0.38)
+        );
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.38);
+}
+
+
+.awtaar-inside-cell-experience
+.awtaar-cell-intro h1 {
+
+    margin: 0 0 10px;
+
+    color:
+        rgba(234, 255, 246, 0.98);
+
+    font-size: clamp(25px, 3vw, 38px);
+
+    font-weight: 600;
+}
+
+
+.awtaar-inside-cell-experience
+.awtaar-cell-intro p {
+
+    margin: 0;
+
+    color:
+        rgba(196, 226, 214, 0.72);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* ---------------------------------------------------------
+   CONTROL PANEL
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-controls {
+
+    position: absolute;
+
+    left: 30px;
+    bottom: 30px;
+
+    width: min(270px, calc(100vw - 60px));
+
+    z-index: 35;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+
+    padding: 15px;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(146, 229, 194, 0.14);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(5, 31, 27, 0.84),
+            rgba(2, 16, 18, 0.76)
+        );
+
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    pointer-events: auto;
+}
+
+
+/* ---------------------------------------------------------
+   CONTROL BUTTONS
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-control-button {
+
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 9px 13px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(160, 231, 203, 0.12);
+
+    background:
+        rgba(12, 50, 43, 0.56);
+
+    color:
+        rgba(233, 250, 242, 0.88);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        transform 0.22s ease;
+}
+
+
+.awtaar-inside-cell-experience
+.awtaar-cell-control-button:hover {
+
+    background:
+        rgba(19, 76, 61, 0.72);
+
+    border-color:
+        rgba(151, 237, 201, 0.28);
+
+    transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------------
+   INFO PANEL
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-info {
+
+    position: absolute;
+
+    top: 50%;
+    right: 30px;
+
+    transform: translateY(-50%);
+
+    width: min(300px, calc(100vw - 60px));
+
+    z-index: 35;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(152, 232, 198, 0.13);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(4, 29, 26, 0.76),
+            rgba(2, 15, 17, 0.7)
+        );
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.34);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    pointer-events: none;
+}
+
+
+.awtaar-inside-cell-experience
+.awtaar-cell-info h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    color:
+        rgba(237, 255, 247, 0.96);
+}
+
+
+.awtaar-inside-cell-experience
+.awtaar-cell-info p {
+
+    margin: 0;
+
+    color:
+        rgba(193, 224, 211, 0.7);
+
+    font-size: 13px;
+
+    line-height: 1.75;
+}
+
+
+/* ---------------------------------------------------------
+   SELECTED ORGANELLE PANEL
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-selected {
+
+    position: absolute;
+
+    left: 50%;
+    bottom: 28px;
+
+    transform: translateX(-50%);
+
+    width: min(430px, calc(100vw - 40px));
+
+    z-index: 36;
+
+    padding: 15px 20px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    border: 1px solid rgba(164, 235, 204, 0.15);
+
+    background:
+        rgba(3, 24, 22, 0.72);
+
+    backdrop-filter: blur(16px);
+
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.32);
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.awtaar-inside-cell-experience
+.awtaar-cell-selected.is-visible {
+
+    opacity: 1;
+
+    transform: translateX(-50%) translateY(-3px);
+}
+
+
+/* ---------------------------------------------------------
+   HINT
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-hint {
+
+    position: absolute;
+
+    right: 30px;
+    bottom: 28px;
+
+    z-index: 35;
+
+    padding: 9px 14px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(2, 19, 18, 0.56);
+
+    border: 1px solid rgba(152, 230, 198, 0.1);
+
+    color:
+        rgba(194, 225, 212, 0.55);
+
+    font-size: 12px;
+
+    pointer-events: none;
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* ---------------------------------------------------------
+   ORGANELLE LABELS
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-label {
+
+    position: absolute !important;
+
+    z-index: 20 !important;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%);
+
+    white-space: nowrap;
+
+    padding: 6px 10px;
+
+    border-radius: 9px;
+
+    border: 1px solid rgba(165, 239, 206, 0.18);
+
+    background:
+        rgba(3, 24, 22, 0.78);
+
+    color:
+        rgba(232, 251, 242, 0.9);
+
+    font-family:
+        "Tajawal",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.28);
+
+    backdrop-filter: blur(9px);
+
+    -webkit-backdrop-filter: blur(9px);
+
+    transition:
+        opacity 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   LABEL LINE / POINTER
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience
+.awtaar-cell-label::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -7px;
+
+    transform: translateX(-50%);
+
+    width: 1px;
+
+    height: 7px;
+
+    background:
+        rgba(150, 231, 198, 0.35);
+}
+
+
+/* ---------------------------------------------------------
+   CANVAS SAFETY
+   --------------------------------------------------------- */
+
+.awtaar-inside-cell-experience canvas {
+
+    image-rendering: auto;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    -webkit-touch-callout: none;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE — TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-info {
+
+        right: 20px;
+
+        width: 250px;
+    }
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-controls {
+
+        left: 20px;
+    }
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-topbar {
+
+        left: 20px;
+        right: 20px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE — MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 800px) {
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-topbar {
+
+        top: 14px;
+
+        left: 14px;
+        right: 14px;
+
+        min-height: 48px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-title {
+
+        padding: 8px 13px;
+
+        border-radius: 13px;
+
+        font-size: 14px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-close {
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 19px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-info {
+
+        top: auto;
+
+        right: 14px;
+        left: 14px;
+
+        bottom: 90px;
+
+        transform: none;
+
+        width: auto;
+
+        padding: 14px 16px;
+
+        border-radius: 16px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-info h2 {
+
+        font-size: 15px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-info p {
+
+        font-size: 12px;
+
+        line-height: 1.65;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-controls {
+
+        left: 14px;
+
+        bottom: 14px;
+
+        width: auto;
+
+        right: 14px;
+
+        padding: 10px;
+
+        flex-direction: row;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-control-button {
+
+        min-height: 38px;
+
+        padding: 7px 9px;
+
+        font-size: 11px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-hint {
+
+        display: none;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-selected {
+
+        bottom: 76px;
+
+        width: calc(100vw - 28px);
+
+        padding: 11px 14px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   VERY SMALL SCREENS
+   --------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-title {
+
+        max-width: calc(100vw - 80px);
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-info {
+
+        bottom: 82px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-controls {
+
+        gap: 6px;
+    }
+
+
+    .awtaar-inside-cell-experience
+    .awtaar-cell-control-button {
+
+        font-size: 10px;
+
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .awtaar-inside-cell-experience *,
+    .awtaar-inside-cell-experience *::before,
+    .awtaar-inside-cell-experience *::after {
+
+        transition-duration: 0.01ms !important;
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+    }
+}

@@ -17,8 +17,34 @@ export default class Universe {
         this.scene =
             scene
 
+
+        // =========================================
+        // REGISTER UNIVERSE ON SHARED SCENE
+        // =========================================
+
+        if (
+            this.scene
+        ) {
+
+            this.scene.userData =
+                this.scene.userData || {}
+
+            this.scene.userData.awtaarUniverse =
+                this
+
+        }
+
+
         this.time =
             0
+
+
+        // =========================================
+        // EXPERIMENT MODE
+        // =========================================
+
+        this.experimentMode =
+            false
 
 
         // =========================================
@@ -116,16 +142,348 @@ export default class Universe {
 
 
     // =========================================
+    // HIDE AWTAAR BACKGROUND
+    // =========================================
+
+    hideAwtaarBackground() {
+
+        // =======================================
+        // النجوم
+        // =======================================
+
+        if (
+            this.starField
+        ) {
+
+            /*
+             * StarField is created directly in
+             * the shared scene, therefore we hide
+             * its actual object rather than touching
+             * the experiment.
+             */
+
+            if (
+                this.starField.points
+            ) {
+
+                this.starField.points.visible =
+                    false
+
+            }
+
+            if (
+                this.starField.group
+            ) {
+
+                this.starField.group.visible =
+                    false
+
+            }
+
+            if (
+                this.starField.mesh
+            ) {
+
+                this.starField.mesh.visible =
+                    false
+
+            }
+
+        }
+
+
+        // =======================================
+        // السديم
+        // =======================================
+
+        if (
+            this.nebula
+        ) {
+
+            if (
+                this.nebula.points
+            ) {
+
+                this.nebula.points.visible =
+                    false
+
+            }
+
+            if (
+                this.nebula.group
+            ) {
+
+                this.nebula.group.visible =
+                    false
+
+            }
+
+            if (
+                this.nebula.mesh
+            ) {
+
+                this.nebula.mesh.visible =
+                    false
+
+            }
+
+        }
+
+
+        // =======================================
+        // مجموعة الكون الرئيسية
+        // =======================================
+
+        /*
+         * We DO NOT hide the entire group here.
+         *
+         * The experiment may be attached
+         * to the same scene and must remain visible.
+         *
+         * Instead, hide only Awtaar's visual objects.
+         */
+
+
+        // =======================================
+        // الغبار الكوني
+        // =======================================
+
+        if (
+            this.cosmicDust?.points
+        ) {
+
+            this.cosmicDust.points.visible =
+                false
+
+        }
+
+
+        // =======================================
+        // خيوط الطاقة
+        // =======================================
+
+        if (
+            this.energyThreads?.points
+        ) {
+
+            this.energyThreads.points.visible =
+                false
+
+        }
+
+
+        // =======================================
+        // قلب أوتار
+        // =======================================
+
+        if (
+            this.awtaarCore?.mesh
+        ) {
+
+            this.awtaarCore.mesh.visible =
+                false
+
+        }
+
+
+        // =======================================
+        // المجرات
+        // =======================================
+
+        if (
+            this.galaxySystem?.group
+        ) {
+
+            this.galaxySystem.group.visible =
+                false
+
+        }
+
+    }
+
+
+    // =========================================
+    // SHOW AWTAAR BACKGROUND
+    // =========================================
+
+    showAwtaarBackground() {
+
+        // =======================================
+        // النجوم
+        // =======================================
+
+        if (
+            this.starField
+        ) {
+
+            if (
+                this.starField.points
+            ) {
+
+                this.starField.points.visible =
+                    true
+
+            }
+
+            if (
+                this.starField.group
+            ) {
+
+                this.starField.group.visible =
+                    true
+
+            }
+
+            if (
+                this.starField.mesh
+            ) {
+
+                this.starField.mesh.visible =
+                    true
+
+            }
+
+        }
+
+
+        // =======================================
+        // السديم
+        // =======================================
+
+        if (
+            this.nebula
+        ) {
+
+            if (
+                this.nebula.points
+            ) {
+
+                this.nebula.points.visible =
+                    true
+
+            }
+
+            if (
+                this.nebula.group
+            ) {
+
+                this.nebula.group.visible =
+                    true
+
+            }
+
+            if (
+                this.nebula.mesh
+            ) {
+
+                this.nebula.mesh.visible =
+                    true
+
+            }
+
+        }
+
+
+        // =======================================
+        // الغبار الكوني
+        // =======================================
+
+        if (
+            this.cosmicDust?.points
+        ) {
+
+            this.cosmicDust.points.visible =
+                true
+
+        }
+
+
+        // =======================================
+        // خيوط الطاقة
+        // =======================================
+
+        if (
+            this.energyThreads?.points
+        ) {
+
+            this.energyThreads.points.visible =
+                true
+
+        }
+
+
+        // =======================================
+        // قلب أوتار
+        // =======================================
+
+        if (
+            this.awtaarCore?.mesh
+        ) {
+
+            this.awtaarCore.mesh.visible =
+                true
+
+        }
+
+
+        // =======================================
+        // المجرات
+        // =======================================
+
+        if (
+            this.galaxySystem?.group
+        ) {
+
+            this.galaxySystem.group.visible =
+                true
+
+        }
+
+    }
+
+
+    // =========================================
+    // EXPERIMENT MODE
+    // =========================================
+
+    setExperimentMode(
+        enabled
+    ) {
+
+        this.experimentMode =
+            Boolean(enabled)
+
+
+        if (
+            this.experimentMode
+        ) {
+
+            this.hideAwtaarBackground()
+
+        }
+        else {
+
+            this.showAwtaarBackground()
+
+        }
+
+    }
+
+
+    // =========================================
     // UPDATE
     // =========================================
 
-    update(delta = 0) {
+    update(
+        delta = 0
+    ) {
 
         // =======================================
         // الزمن الحقيقي
         // =======================================
 
-        this.time += delta
+        this.time +=
+            delta
 
 
         // =======================================

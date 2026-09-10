@@ -50,6 +50,28 @@ export default class WaveDopplerUI {
 
 
         /* =====================================================
+           SCENE ISOLATION STATE
+           ===================================================== */
+
+        /*
+         * We temporarily hide the existing universe
+         * while the Doppler experiment is active.
+         *
+         * Nothing is destroyed.
+         *
+         * Everything is restored exactly as it was
+         * when the experiment exits.
+         */
+
+        this.sceneVisibilityBackup =
+            []
+
+
+        this.sceneIsolated =
+            false
+
+
+        /* =====================================================
            DOM
            ===================================================== */
 
@@ -1233,6 +1255,137 @@ export default class WaveDopplerUI {
 
 
     /* =========================================================
+       SCENE ISOLATION
+       ========================================================= */
+
+    isolateScene() {
+
+        if (
+            this.sceneIsolated
+        ) {
+            return
+        }
+
+
+        if (
+            !this.scene
+        ) {
+            return
+        }
+
+
+        /*
+         * Save visibility of every direct scene child.
+         *
+         * We do NOT remove anything.
+         * We do NOT destroy anything.
+         * We simply hide the universe temporarily.
+         */
+
+        this.sceneVisibilityBackup =
+            []
+
+
+        this.scene.children.forEach(
+            object => {
+
+                /*
+                 * The Doppler experiment must remain visible.
+                 */
+
+                if (
+                    object === this.experiment?.group
+                ) {
+
+                    return
+
+                }
+
+
+                this.sceneVisibilityBackup.push({
+
+                    object:
+                        object,
+
+                    visible:
+                        object.visible
+
+                })
+
+
+                object.visible =
+                    false
+
+            }
+        )
+
+
+        /*
+         * Make absolutely sure the experiment itself
+         * remains visible.
+         */
+
+        if (
+            this.experiment?.group
+        ) {
+
+            this.experiment.group.visible =
+                true
+
+        }
+
+
+        this.sceneIsolated =
+            true
+
+    }
+
+
+    /* =========================================================
+       RESTORE SCENE
+       ========================================================= */
+
+    restoreScene() {
+
+        if (
+            !this.sceneIsolated
+        ) {
+            return
+        }
+
+
+        /*
+         * Restore every object to exactly the visibility
+         * state it had before entering Doppler.
+         */
+
+        this.sceneVisibilityBackup.forEach(
+            entry => {
+
+                if (
+                    entry.object
+                ) {
+
+                    entry.object.visible =
+                        entry.visible
+
+                }
+
+            }
+        )
+
+
+        this.sceneVisibilityBackup =
+            []
+
+
+        this.sceneIsolated =
+            false
+
+    }
+
+
+    /* =========================================================
        PLAY
        ========================================================= */
 
@@ -1380,6 +1533,32 @@ export default class WaveDopplerUI {
             false
 
 
+        /* =====================================================
+           ISOLATE UNIVERSE
+           ===================================================== */
+
+        /*
+         * This is the important part.
+         *
+         * Stars
+         * Awtaar sphere
+         * Nebula
+         * Cosmic dust
+         * Energy threads
+         * Galaxies
+         *
+         * are temporarily hidden.
+         *
+         * Nothing is destroyed.
+         */
+
+        this.isolateScene()
+
+
+        /* =====================================================
+           ATTACH EXPERIMENT
+           ===================================================== */
+
         if (
             this.scene
         ) {
@@ -1391,12 +1570,21 @@ export default class WaveDopplerUI {
         }
 
 
+        /* =====================================================
+           SHOW UI
+           ===================================================== */
+
         this.container.classList.add(
             'is-visible'
         )
 
 
+        /* =====================================================
+           START EXPERIMENT
+           ===================================================== */
+
         this.experiment.start()
+
 
         this.updateStatus(
             'running'
@@ -1409,12 +1597,20 @@ export default class WaveDopplerUI {
     }
 
 
+    /* =========================================================
+       SHOW
+       ========================================================= */
+
     show() {
 
         this.enter()
 
     }
 
+
+    /* =========================================================
+       HIDE
+       ========================================================= */
 
     hide() {
 
@@ -1431,7 +1627,18 @@ export default class WaveDopplerUI {
 
     exit() {
 
-        this.experiment.stop()
+        /*
+         * Stop the experiment first.
+         */
+
+        if (
+            this.experiment
+        ) {
+
+            this.experiment.stop()
+
+        }
+
 
         this.active =
             false
@@ -1439,7 +1646,22 @@ export default class WaveDopplerUI {
         this.paused =
             false
 
+
+        /*
+         * Remove UI visibility.
+         */
+
         this.hide()
+
+
+        /*
+         * IMPORTANT:
+         *
+         * Restore the Awtaar universe exactly as it was.
+         */
+
+        this.restoreScene()
+
 
         this.updateStatus(
             'ready'
@@ -1584,6 +1806,7 @@ export default class WaveDopplerUI {
                 2
             )
 
+
         this.elements.approaching.wavelength.textContent =
             this.formatNumber(
                 data.approachingWavelength,
@@ -1609,6 +1832,7 @@ export default class WaveDopplerUI {
                 data.recedingFrequency,
                 2
             )
+
 
         this.elements.receding.wavelength.textContent =
             this.formatNumber(
@@ -1891,6 +2115,22 @@ export default class WaveDopplerUI {
         scene
     ) {
 
+        /*
+         * If the scene changes while the experiment is
+         * isolated, restore the old scene first.
+         */
+
+        if (
+            this.sceneIsolated &&
+            this.scene &&
+            this.scene !== scene
+        ) {
+
+            this.restoreScene()
+
+        }
+
+
         this.scene =
             scene || null
 
@@ -1901,6 +2141,21 @@ export default class WaveDopplerUI {
 
             this.experiment.scene =
                 this.scene
+
+        }
+
+
+        /*
+         * If the experiment is currently active,
+         * isolate the new scene as well.
+         */
+
+        if (
+            this.active &&
+            this.scene
+        ) {
+
+            this.isolateScene()
 
         }
 
@@ -1972,6 +2227,13 @@ export default class WaveDopplerUI {
         }
 
 
+        /*
+         * Restore universe before destroying the UI.
+         */
+
+        this.restoreScene()
+
+
         this.destroyed =
             true
 
@@ -2022,6 +2284,12 @@ export default class WaveDopplerUI {
 
         this.onExit =
             null
+
+        this.sceneVisibilityBackup =
+            []
+
+        this.sceneIsolated =
+            false
 
     }
 
