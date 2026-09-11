@@ -1,0 +1,974 @@
+/* =========================================================
+   AWTAAR — ROCK CYCLE EXPERIMENT
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+#awtaar-rock-cycle-experiment {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    font-family: 'Tajawal', sans-serif;
+
+    color: #eee4d2;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 48%,
+            rgba(105, 72, 38, 0.20),
+            transparent 42%
+        ),
+
+        radial-gradient(
+            circle at 18% 82%,
+            rgba(72, 48, 30, 0.16),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            135deg,
+            #080706 0%,
+            #100d09 48%,
+            #070605 100%
+        );
+
+    opacity: 1;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   THREE.JS CANVAS
+   ========================================================= */
+
+#awtaar-rock-cycle-experiment canvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    display: block;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+   ATMOSPHERIC VIGNETTE
+   ========================================================= */
+
+#awtaar-rock-cycle-experiment::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            transparent 42%,
+            rgba(0, 0, 0, 0.18) 72%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.rock-cycle-header {
+
+    position: absolute;
+
+    top: 30px;
+
+    left: 42px;
+
+    right: 42px;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    max-width: 520px;
+
+    font-family: 'Tajawal', sans-serif;
+}
+
+
+.rock-cycle-title {
+
+    margin: 0;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: clamp(
+        24px,
+        2.1vw,
+        34px
+    );
+
+    font-weight: 600;
+
+    letter-spacing: 0.02em;
+
+    line-height: 1.25;
+
+    color: #ead8b5;
+
+    text-shadow:
+        0 0 18px rgba(214, 170, 91, 0.12);
+}
+
+
+.rock-cycle-description {
+
+    margin: 9px 0 0;
+
+    max-width: 500px;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.8;
+
+    color: rgba(
+        226,
+        213,
+        190,
+        0.72
+    );
+}
+
+
+/* =========================================================
+   CURRENT STAGE PANEL
+   ========================================================= */
+
+.rock-cycle-stage-panel {
+
+    position: absolute;
+
+    /*
+       تم إنزال لوحة المرحلة حتى لا تتداخل
+       مع اسم التجربة والوصف.
+    */
+
+    top: 108px;
+
+    right: 42px;
+
+    width: 250px;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    padding: 17px 19px;
+
+    box-sizing: border-box;
+
+    border: 1px solid
+        rgba(196, 151, 77, 0.22);
+
+    border-radius: 15px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(27, 21, 15, 0.82),
+            rgba(9, 8, 7, 0.78)
+        );
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+
+        0 14px 40px
+        rgba(0, 0, 0, 0.30),
+
+        inset 0 1px 0
+        rgba(255, 231, 190, 0.035);
+
+    font-family: 'Tajawal', sans-serif;
+}
+
+
+.rock-cycle-stage-label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+
+    color:
+        rgba(203, 164, 96, 0.68);
+}
+
+
+.rock-cycle-stage-name {
+
+    display: block;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    color: #e7d0a4;
+}
+
+
+.rock-cycle-stage-description {
+
+    margin-top: 7px;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    color:
+        rgba(228, 216, 195, 0.68);
+}
+
+
+/* =========================================================
+   CYCLE LABELS
+   ========================================================= */
+
+.rock-cycle-node-label {
+
+    position: absolute;
+
+    z-index: 8;
+
+    pointer-events: none;
+
+    transform: translate(-50%, -50%);
+
+    min-width: 110px;
+
+    padding: 7px 12px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    border: 1px solid
+        rgba(194, 150, 77, 0.18);
+
+    border-radius: 10px;
+
+    background:
+        rgba(10, 8, 6, 0.72);
+
+    backdrop-filter: blur(7px);
+
+    box-shadow:
+
+        0 8px 24px
+        rgba(0, 0, 0, 0.20);
+
+    font-family: 'Tajawal', sans-serif;
+}
+
+
+.rock-cycle-node-label-title {
+
+    display: block;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    color: #e4cfaa;
+}
+
+
+.rock-cycle-node-label-subtitle {
+
+    display: block;
+
+    margin-top: 2px;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 9px;
+
+    line-height: 1.3;
+
+    color:
+        rgba(218, 198, 164, 0.48);
+}
+
+
+/* =========================================================
+   CONTROL BAR
+   ========================================================= */
+
+.rock-cycle-controls {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 27px;
+
+    transform: translateX(-50%);
+
+    z-index: 12;
+
+    pointer-events: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 8px;
+
+    border: 1px solid
+        rgba(194, 150, 77, 0.22);
+
+    border-radius: 15px;
+
+    background:
+        rgba(12, 10, 8, 0.82);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+
+        0 15px 42px
+        rgba(0, 0, 0, 0.38),
+
+        inset 0 1px 0
+        rgba(255, 231, 190, 0.04);
+
+    font-family: 'Tajawal', sans-serif;
+}
+
+
+/* =========================================================
+   BUTTON BASE
+   ========================================================= */
+
+.rock-cycle-button {
+
+    min-width: 42px;
+
+    height: 38px;
+
+    padding: 0 15px;
+
+    border: 1px solid
+        rgba(198, 158, 89, 0.22);
+
+    border-radius: 10px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(38, 29, 20, 0.90),
+            rgba(16, 13, 10, 0.95)
+        );
+
+    color:
+        rgba(232, 216, 187, 0.82);
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+
+        background 180ms ease,
+
+        border-color 180ms ease,
+
+        color 180ms ease,
+
+        transform 180ms ease,
+
+        box-shadow 180ms ease;
+}
+
+
+.rock-cycle-button:hover {
+
+    border-color:
+        rgba(210, 171, 101, 0.48);
+
+    color: #f0d9aa;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(57, 43, 28, 0.94),
+            rgba(19, 15, 11, 0.96)
+        );
+
+    box-shadow:
+
+        0 0 18px
+        rgba(198, 151, 75, 0.08);
+}
+
+
+.rock-cycle-button:active {
+
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.rock-cycle-button.primary {
+
+    border-color:
+        rgba(211, 169, 91, 0.42);
+
+    color:
+        #e8c987;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(71, 51, 27, 0.92),
+            rgba(29, 21, 13, 0.96)
+        );
+}
+
+
+.rock-cycle-button.primary:hover {
+
+    border-color:
+        rgba(226, 185, 105, 0.68);
+
+    color: #f2d69e;
+
+    box-shadow:
+
+        0 0 20px
+        rgba(212, 166, 85, 0.11);
+}
+
+
+/* =========================================================
+   EXIT BUTTON
+   ========================================================= */
+
+.rock-cycle-exit {
+
+    position: absolute;
+
+    bottom: 29px;
+
+    right: 42px;
+
+    z-index: 12;
+
+    pointer-events: auto;
+
+    height: 38px;
+
+    padding: 0 17px;
+
+    border: 1px solid
+        rgba(188, 147, 82, 0.18);
+
+    border-radius: 10px;
+
+    background:
+        rgba(14, 11, 8, 0.82);
+
+    color:
+        rgba(221, 205, 177, 0.65);
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(10px);
+
+    transition:
+
+        color 180ms ease,
+
+        border-color 180ms ease,
+
+        background 180ms ease;
+}
+
+
+.rock-cycle-exit:hover {
+
+    color: #e7c987;
+
+    border-color:
+        rgba(207, 165, 91, 0.42);
+
+    background:
+        rgba(35, 26, 17, 0.92);
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.rock-cycle-progress {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 82px;
+
+    transform: translateX(-50%);
+
+    width: min(
+        320px,
+        30vw
+    );
+
+    height: 2px;
+
+    z-index: 9;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background:
+        rgba(204, 165, 96, 0.10);
+}
+
+
+.rock-cycle-progress-fill {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(145, 103, 52, 0.55),
+            rgba(224, 184, 104, 0.90)
+        );
+
+    box-shadow:
+
+        0 0 10px
+        rgba(213, 166, 84, 0.18);
+
+    transition:
+        width 100ms linear;
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+#awtaar-rock-cycle-experiment[dir="rtl"]
+.rock-cycle-header {
+
+    left: auto;
+
+    right: 42px;
+
+    align-items: flex-start;
+
+    text-align: right;
+}
+
+
+#awtaar-rock-cycle-experiment[dir="rtl"]
+.rock-cycle-stage-panel {
+
+    right: auto;
+
+    left: 42px;
+
+    text-align: right;
+}
+
+
+#awtaar-rock-cycle-experiment[dir="rtl"]
+.rock-cycle-exit {
+
+    right: auto;
+
+    left: 42px;
+}
+
+
+/* =========================================================
+   LTR
+   ========================================================= */
+
+#awtaar-rock-cycle-experiment[dir="ltr"]
+.rock-cycle-header {
+
+    text-align: left;
+}
+
+
+#awtaar-rock-cycle-experiment[dir="ltr"]
+.rock-cycle-stage-panel {
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .rock-cycle-header {
+
+        top: 22px;
+
+        left: 25px;
+
+        right: 25px;
+
+        max-width: 420px;
+    }
+
+
+    .rock-cycle-title {
+
+        font-size: 25px;
+    }
+
+
+    .rock-cycle-description {
+
+        font-size: 12px;
+
+        max-width: 390px;
+    }
+
+
+    .rock-cycle-stage-panel {
+
+        top: 86px;
+
+        right: 25px;
+
+        width: 215px;
+
+        padding: 14px 15px;
+    }
+
+
+    .rock-cycle-stage-name {
+
+        font-size: 16px;
+    }
+
+
+    .rock-cycle-stage-description {
+
+        font-size: 11px;
+    }
+
+
+    .rock-cycle-exit {
+
+        right: 25px;
+
+        bottom: 22px;
+    }
+
+
+    #awtaar-rock-cycle-experiment[dir="rtl"]
+    .rock-cycle-header {
+
+        right: 25px;
+    }
+
+
+    #awtaar-rock-cycle-experiment[dir="rtl"]
+    .rock-cycle-stage-panel {
+
+        left: 25px;
+    }
+
+
+    #awtaar-rock-cycle-experiment[dir="rtl"]
+    .rock-cycle-exit {
+
+        left: 25px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    .rock-cycle-header {
+
+        top: 16px;
+
+        left: 18px;
+
+        right: 18px;
+
+        max-width: none;
+
+        align-items: center;
+
+        text-align: center;
+    }
+
+
+    .rock-cycle-title {
+
+        font-size: 21px;
+    }
+
+
+    .rock-cycle-description {
+
+        max-width: 330px;
+
+        margin-top: 6px;
+
+        font-size: 11px;
+
+        line-height: 1.6;
+    }
+
+
+    .rock-cycle-stage-panel {
+
+        top: auto;
+
+        left: 50% !important;
+
+        right: auto !important;
+
+        bottom: 88px;
+
+        transform: translateX(-50%);
+
+        width: min(
+            310px,
+            calc(100vw - 36px)
+        );
+
+        padding: 11px 14px;
+
+        text-align: center;
+    }
+
+
+    .rock-cycle-stage-label {
+
+        margin-bottom: 3px;
+
+        font-size: 9px;
+    }
+
+
+    .rock-cycle-stage-name {
+
+        font-size: 14px;
+    }
+
+
+    .rock-cycle-stage-description {
+
+        margin-top: 4px;
+
+        font-size: 10px;
+
+        line-height: 1.5;
+    }
+
+
+    .rock-cycle-controls {
+
+        bottom: 18px;
+
+        gap: 5px;
+
+        padding: 6px;
+
+        border-radius: 12px;
+    }
+
+
+    .rock-cycle-button {
+
+        min-width: 36px;
+
+        height: 34px;
+
+        padding: 0 9px;
+
+        font-size: 10px;
+    }
+
+
+    .rock-cycle-exit {
+
+        top: 17px;
+
+        bottom: auto;
+
+        right: 18px;
+
+        height: 32px;
+
+        padding: 0 11px;
+
+        font-size: 10px;
+    }
+
+
+    #awtaar-rock-cycle-experiment[dir="rtl"]
+    .rock-cycle-header {
+
+        right: 18px;
+
+        left: 18px;
+    }
+
+
+    #awtaar-rock-cycle-experiment[dir="rtl"]
+    .rock-cycle-exit {
+
+        left: 18px;
+
+        right: auto;
+    }
+
+
+    .rock-cycle-progress {
+
+        bottom: 69px;
+
+        width: 180px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .rock-cycle-description {
+
+        display: none;
+    }
+
+
+    .rock-cycle-stage-panel {
+
+        bottom: 82px;
+
+        width: calc(
+            100vw - 30px
+        );
+    }
+
+
+    .rock-cycle-button {
+
+        padding: 0 7px;
+
+        font-size: 9px;
+    }
+}

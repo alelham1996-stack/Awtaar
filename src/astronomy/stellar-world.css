@@ -1,0 +1,1358 @@
+/* =========================================================
+   AWTAAR — STELLAR WORLD
+   ========================================================= */
+
+#awtaar-stellar-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9000;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding:
+        7vh
+        5vw
+        5vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 18%,
+            rgba(117, 77, 190, 0.16),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 15% 78%,
+            rgba(75, 51, 145, 0.11),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 88% 70%,
+            rgba(103, 67, 171, 0.08),
+            transparent 32%
+        ),
+        linear-gradient(
+            145deg,
+            #04040b 0%,
+            #080714 48%,
+            #0b0820 100%
+        );
+
+    color:
+        #f1eef8;
+
+    opacity:
+        0;
+
+    visibility:
+        hidden;
+
+    pointer-events:
+        none;
+
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease;
+
+    isolation:
+        isolate;
+}
+
+
+/* =========================================================
+   ATMOSPHERE
+   ========================================================= */
+
+#awtaar-stellar-world::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -15%;
+
+    z-index: -2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 45%,
+            rgba(139, 94, 207, 0.08),
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 28% 30%,
+            rgba(91, 61, 160, 0.07),
+            transparent 30%
+        );
+
+    filter:
+        blur(18px);
+
+    transform:
+        translateX(
+            var(--stellar-drift, 0px)
+        );
+
+    transition:
+        transform 4s ease-out;
+}
+
+
+#awtaar-stellar-world::after {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.018),
+            transparent 30%,
+            transparent 70%,
+            rgba(0,0,0,0.18)
+        );
+
+    box-shadow:
+        inset 0 0 140px rgba(0,0,0,0.58);
+}
+
+
+/* =========================================================
+   STAR FIELD
+   ========================================================= */
+
+.stellar-star-field {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -1;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+.stellar-stars {
+
+    position: absolute;
+
+    inset: -8%;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+.stellar-stars-back {
+
+    opacity:
+        0.55;
+
+    animation:
+        stellar-drift-back
+        34s
+        linear
+        infinite;
+}
+
+
+.stellar-stars-mid {
+
+    opacity:
+        0.68;
+
+    animation:
+        stellar-drift-mid
+        24s
+        linear
+        infinite;
+}
+
+
+.stellar-stars-front {
+
+    opacity:
+        0.8;
+
+    animation:
+        stellar-drift-front
+        17s
+        linear
+        infinite;
+}
+
+
+/* =========================================================
+   INDIVIDUAL STARS
+   ========================================================= */
+
+.stellar-star {
+
+    position: absolute;
+
+    display: block;
+
+    border-radius: 50%;
+
+    background:
+        rgba(232, 225, 255, 0.9);
+
+    box-shadow:
+        0 0 5px
+        rgba(180, 150, 235, 0.55);
+
+    animation:
+        stellar-twinkle
+        7s
+        ease-in-out
+        infinite;
+}
+
+
+.stellar-stars-front .stellar-star {
+
+    background:
+        rgba(246, 241, 255, 0.95);
+
+    box-shadow:
+        0 0 7px
+        rgba(185, 151, 238, 0.65);
+}
+
+
+/* =========================================================
+   DISTANT STARS
+   ========================================================= */
+
+.stellar-distant-stars {
+
+    position: absolute;
+
+    inset: 0;
+}
+
+
+.stellar-distant-star {
+
+    position: absolute;
+
+    width: 3px;
+
+    height: 3px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(224, 211, 255, 0.75);
+
+    box-shadow:
+        0 0 12px
+        rgba(153, 115, 221, 0.6);
+
+    animation:
+        stellar-pulse
+        5s
+        ease-in-out
+        infinite;
+}
+
+
+/* =========================================================
+   STAR ANIMATIONS
+   ========================================================= */
+
+@keyframes stellar-twinkle {
+
+    0%,
+    100% {
+        opacity: 0.35;
+        transform: scale(0.85);
+    }
+
+    50% {
+        opacity: 0.95;
+        transform: scale(1.15);
+    }
+}
+
+
+@keyframes stellar-pulse {
+
+    0%,
+    100% {
+        opacity: 0.28;
+        transform: scale(0.75);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.35);
+    }
+}
+
+
+@keyframes stellar-drift-back {
+
+    from {
+        transform:
+            translate3d(0, 0, 0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate3d(-1.5%, 1%, 0)
+            scale(1.02);
+    }
+}
+
+
+@keyframes stellar-drift-mid {
+
+    from {
+        transform:
+            translate3d(0, 0, 0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate3d(1.8%, -1.2%, 0)
+            scale(1.035);
+    }
+}
+
+
+@keyframes stellar-drift-front {
+
+    from {
+        transform:
+            translate3d(0, 0, 0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate3d(-2.5%, 1.8%, 0)
+            scale(1.05);
+    }
+}
+
+
+/* =========================================================
+   ATMOSPHERE LAYER
+   ========================================================= */
+
+.stellar-atmosphere {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(156, 112, 225, 0.09),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 75% 65%,
+            rgba(104, 72, 171, 0.055),
+            transparent 35%
+        );
+
+    animation:
+        stellar-breathe
+        9s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes stellar-breathe {
+
+    0%,
+    100% {
+        opacity: 0.72;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.stellar-content {
+
+    position: relative;
+
+    z-index: 5;
+
+    width:
+        min(980px, 100%);
+
+    margin:
+        0 auto;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.stellar-header {
+
+    width:
+        min(820px, 100%);
+
+    text-align:
+        center;
+
+    animation:
+        stellar-header-in
+        0.8s
+        ease
+        both;
+}
+
+
+@keyframes stellar-header-in {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.awtaar-stellar-world-title {
+
+    position: relative;
+
+    margin: 0;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(2.1rem, 4.4vw, 3.5rem);
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.035em;
+
+    line-height:
+        1.25;
+
+    text-align:
+        center;
+
+    color:
+        #eeeaf7;
+
+    text-shadow:
+        0 0 25px
+        rgba(143, 104, 211, 0.3);
+}
+
+
+/* =========================================================
+   TITLE ORNAMENT
+   ========================================================= */
+
+.awtaar-stellar-world-title::after {
+
+    content: '✦';
+
+    display: block;
+
+    margin-top:
+        0.65rem;
+
+    font-size:
+        0.65rem;
+
+    color:
+        rgba(185, 153, 230, 0.72);
+
+    text-shadow:
+        0 0 12px
+        rgba(166, 125, 220, 0.7);
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.awtaar-stellar-world-description {
+
+    position: relative;
+
+    max-width:
+        720px;
+
+    margin:
+        1rem auto 0;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(0.94rem, 1.45vw, 1.08rem);
+
+    font-weight:
+        300;
+
+    line-height:
+        1.9;
+
+    text-align:
+        center;
+
+    color:
+        rgba(225, 221, 237, 0.68);
+}
+
+
+/* =========================================================
+   EXPERIMENTS
+   ========================================================= */
+
+.awtaar-stellar-experiments {
+
+    position: relative;
+
+    width:
+        min(900px, 100%);
+
+    margin-top:
+        clamp(3rem, 7vh, 5rem);
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        1.35rem;
+
+    animation:
+        stellar-cards-in
+        0.9s
+        0.12s
+        ease
+        both;
+}
+
+
+@keyframes stellar-cards-in {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(22px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   EXPERIMENT CARD
+   ========================================================= */
+
+.awtaar-stellar-experiment {
+
+    position: relative;
+
+    min-height:
+        155px;
+
+    padding:
+        1.45rem 1.5rem;
+
+    box-sizing:
+        border-box;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        1.15rem;
+
+    border:
+        1px solid
+        rgba(151, 119, 212, 0.23);
+
+    border-radius:
+        18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19, 16, 37, 0.9),
+            rgba(8, 8, 18, 0.94)
+        );
+
+    box-shadow:
+        0 18px 48px
+        rgba(0, 0, 0, 0.34),
+
+        inset 0 0 0 1px
+        rgba(255, 255, 255, 0.018);
+
+    color:
+        #f2eff8;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    text-align:
+        start;
+
+    cursor:
+        pointer;
+
+    overflow:
+        hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+}
+
+
+/* =========================================================
+   CARD LIGHT
+   ========================================================= */
+
+.awtaar-stellar-experiment::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius:
+        inherit;
+
+    pointer-events:
+        none;
+
+    background:
+        radial-gradient(
+            circle at 25% 50%,
+            rgba(128, 91, 201, 0.15),
+            transparent 58%
+        );
+
+    opacity:
+        0;
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+/* =========================================================
+   CARD EDGE
+   ========================================================= */
+
+.awtaar-stellar-experiment::after {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 12%;
+
+    width: 76%;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(177, 145, 230, 0.42),
+            transparent
+        );
+
+    opacity:
+        0.5;
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.awtaar-stellar-experiment:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(164, 132, 224, 0.5);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 20, 48, 0.96),
+            rgba(9, 8, 21, 0.98)
+        );
+
+    box-shadow:
+        0 25px 62px
+        rgba(0, 0, 0, 0.44),
+
+        0 0 34px
+        rgba(113, 79, 188, 0.12),
+
+        inset 0 0 0 1px
+        rgba(177, 145, 231, 0.045);
+}
+
+
+.awtaar-stellar-experiment:hover::before {
+
+    opacity:
+        1;
+}
+
+
+.awtaar-stellar-experiment:hover::after {
+
+    opacity:
+        0.9;
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.stellar-experiment-icon {
+
+    position: relative;
+
+    flex:
+        0 0 auto;
+
+    width:
+        66px;
+
+    height:
+        66px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(159, 126, 219, 0.32);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(111, 79, 179, 0.22),
+            rgba(9, 8, 20, 0.95)
+        );
+
+    color:
+        #c5b1e9;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        1.8rem;
+
+    font-weight:
+        300;
+
+    box-shadow:
+        0 0 26px
+        rgba(113, 82, 185, 0.11),
+
+        inset 0 0 18px
+        rgba(139, 108, 207, 0.08);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        color 0.35s ease;
+}
+
+
+.awtaar-stellar-experiment:hover
+.stellar-experiment-icon {
+
+    transform:
+        scale(1.07)
+        rotate(3deg);
+
+    color:
+        #ddcef4;
+
+    box-shadow:
+        0 0 36px
+        rgba(139, 105, 211, 0.23),
+
+        inset 0 0 22px
+        rgba(139, 108, 207, 0.12);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.stellar-experiment-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        flex-start;
+
+    gap:
+        0.45rem;
+}
+
+
+/* =========================================================
+   EXPERIMENT NAME
+   ========================================================= */
+
+.stellar-experiment-name {
+
+    position: relative;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(1.05rem, 1.7vw, 1.28rem);
+
+    font-weight:
+        400;
+
+    line-height:
+        1.5;
+
+    color:
+        rgba(244, 241, 249, 0.94);
+}
+
+
+/* =========================================================
+   SMALL LINE
+   ========================================================= */
+
+.stellar-experiment-line {
+
+    display:
+        block;
+
+    width:
+        34px;
+
+    height:
+        1px;
+
+    background:
+        rgba(159, 126, 219, 0.48);
+
+    transition:
+        width 0.35s ease;
+}
+
+
+.awtaar-stellar-experiment:hover
+.stellar-experiment-line {
+
+    width:
+        52px;
+}
+
+
+/* =========================================================
+   ARROW
+   ========================================================= */
+
+.stellar-experiment-arrow {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    flex:
+        0 0 auto;
+
+    width:
+        30px;
+
+    height:
+        30px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(157, 125, 217, 0.18);
+
+    border-radius:
+        50%;
+
+    color:
+        rgba(194, 174, 226, 0.65);
+
+    font-family:
+        sans-serif;
+
+    font-size:
+        0.85rem;
+
+    transition:
+        transform 0.35s ease,
+        color 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+.awtaar-stellar-experiment:hover
+.stellar-experiment-arrow {
+
+    transform:
+        translate(2px, -2px);
+
+    color:
+        #d8c7f0;
+
+    border-color:
+        rgba(164, 132, 224, 0.42);
+}
+
+
+/* =========================================================
+   RTL CARD ALIGNMENT
+   ========================================================= */
+
+#awtaar-stellar-world[dir='rtl']
+.stellar-experiment-content {
+
+    align-items:
+        flex-start;
+}
+
+
+#awtaar-stellar-world[dir='rtl']
+.stellar-experiment-arrow {
+
+    transform:
+        rotate(180deg);
+}
+
+
+#awtaar-stellar-world[dir='rtl']
+.awtaar-stellar-experiment:hover
+.stellar-experiment-arrow {
+
+    transform:
+        rotate(180deg)
+        translate(2px, -2px);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-stellar-world-back {
+
+    position:
+        relative;
+
+    margin-top:
+        3.5rem;
+
+    min-width:
+        170px;
+
+    padding:
+        0.72rem 1.7rem;
+
+    border:
+        1px solid
+        rgba(156, 125, 219, 0.28);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(8, 7, 17, 0.62);
+
+    color:
+        rgba(225, 220, 237, 0.72);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        0.92rem;
+
+    font-weight:
+        300;
+
+    cursor:
+        pointer;
+
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.awtaar-stellar-world-back:hover {
+
+    transform:
+        translateY(-2px);
+
+    color:
+        #eee9f8;
+
+    border-color:
+        rgba(166, 136, 226, 0.56);
+
+    background:
+        rgba(28, 22, 50, 0.76);
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.25),
+
+        0 0 22px
+        rgba(113, 79, 188, 0.09);
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+#awtaar-stellar-world[dir='rtl'] {
+
+    direction:
+        rtl;
+}
+
+
+/* =========================================================
+   LTR
+   ========================================================= */
+
+#awtaar-stellar-world[dir='ltr'] {
+
+    direction:
+        ltr;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #awtaar-stellar-world {
+
+        padding:
+            6vh
+            1.2rem
+            3rem;
+    }
+
+
+    .stellar-content {
+
+        width:
+            100%;
+    }
+
+
+    .awtaar-stellar-world-title {
+
+        font-size:
+            2rem;
+    }
+
+
+    .awtaar-stellar-world-description {
+
+        font-size:
+            0.91rem;
+
+        line-height:
+            1.8;
+    }
+
+
+    .awtaar-stellar-experiments {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            1rem;
+
+        margin-top:
+            3rem;
+    }
+
+
+    .awtaar-stellar-experiment {
+
+        min-height:
+            135px;
+
+        padding:
+            1.15rem 1.1rem;
+
+        gap:
+            0.9rem;
+    }
+
+
+    .stellar-experiment-icon {
+
+        width:
+            56px;
+
+        height:
+            56px;
+
+        font-size:
+            1.55rem;
+    }
+
+
+    .stellar-experiment-name {
+
+        font-size:
+            1rem;
+    }
+
+
+    .stellar-experiment-arrow {
+
+        width:
+            27px;
+
+        height:
+            27px;
+    }
+
+
+    .awtaar-stellar-world-back {
+
+        margin-top:
+            2.8rem;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    #awtaar-stellar-world {
+
+        padding:
+            5vh
+            0.9rem
+            2.5rem;
+    }
+
+
+    .awtaar-stellar-world-title {
+
+        font-size:
+            1.8rem;
+    }
+
+
+    .awtaar-stellar-experiment {
+
+        min-height:
+            125px;
+
+        padding:
+            1rem;
+    }
+
+
+    .stellar-experiment-icon {
+
+        width:
+            50px;
+
+        height:
+            50px;
+
+        font-size:
+            1.4rem;
+    }
+
+
+    .stellar-experiment-name {
+
+        font-size:
+            0.96rem;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #awtaar-stellar-world,
+    .awtaar-stellar-experiment,
+    .stellar-experiment-icon,
+    .stellar-experiment-arrow,
+    .awtaar-stellar-world-back,
+    .stellar-atmosphere,
+    .stellar-stars,
+    .stellar-star,
+    .stellar-distant-star {
+
+        animation:
+            none !important;
+
+        transition:
+            none !important;
+    }
+}

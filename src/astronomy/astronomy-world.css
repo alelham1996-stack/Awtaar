@@ -1,0 +1,1111 @@
+/* =========================================================
+   AWTAAR — ASTRONOMY WORLD
+   ========================================================= */
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+#awtaar-astronomy-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: 40px;
+
+    overflow: hidden;
+
+    color: #eeeaff;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    text-align: center;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 42%,
+            rgba(
+                91,
+                62,
+                145,
+                0.055
+            ),
+            transparent 42%
+        );
+}
+
+
+/* =========================================================
+   ALL TEXT
+   ========================================================= */
+
+#awtaar-astronomy-world,
+#awtaar-astronomy-world button,
+#awtaar-astronomy-world h2,
+#awtaar-astronomy-world p,
+#awtaar-astronomy-world span {
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+#awtaar-astronomy-world h2 {
+
+    margin:
+        0 0 12px;
+
+    color:
+        #e8ddf5;
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            46px
+        );
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.3px;
+
+    line-height:
+        1.4;
+
+    text-shadow:
+
+        0 0 30px
+        rgba(
+            157,
+            117,
+            211,
+            0.12
+        ),
+
+        0 0 60px
+        rgba(
+            104,
+            73,
+            154,
+            0.05
+        );
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+#awtaar-astronomy-world > p {
+
+    margin:
+        0 0 42px;
+
+    max-width:
+        650px;
+
+    color:
+        rgba(
+            232,
+            225,
+            244,
+            0.62
+        );
+
+    font-size:
+        15px;
+
+    font-weight:
+        400;
+
+    line-height:
+        2;
+}
+
+
+/* =========================================================
+   ASTRONOMY WORLDS
+   ========================================================= */
+
+.awtaar-astronomy-worlds {
+
+    width:
+        min(
+            1100px,
+            92vw
+        );
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(
+                150px,
+                1fr
+            )
+        );
+
+    gap:
+        18px;
+
+    align-items:
+        stretch;
+}
+
+
+/* =========================================================
+   WORLD ITEM
+   ========================================================= */
+
+.awtaar-astronomy-world-item {
+
+    position:
+        relative;
+
+    min-height:
+        190px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        17px;
+
+    padding:
+        24px 18px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(
+            157,
+            117,
+            211,
+            0.22
+        );
+
+    border-radius:
+        22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                28,
+                23,
+                43,
+                0.80
+            ),
+            rgba(
+                7,
+                7,
+                14,
+                0.68
+            )
+        );
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+
+    color:
+        #eeeaff;
+
+    cursor:
+        pointer;
+
+    font-size:
+        15px;
+
+    transition:
+
+        transform 0.35s ease,
+
+        border-color 0.35s ease,
+
+        background 0.35s ease,
+
+        box-shadow 0.35s ease,
+
+        opacity 0.35s ease;
+}
+
+
+/* =========================================================
+   WORLD ITEM — HOVER
+   ========================================================= */
+
+.awtaar-astronomy-world-item:hover {
+
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(
+            178,
+            139,
+            229,
+            0.58
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                45,
+                34,
+                66,
+                0.92
+            ),
+            rgba(
+                10,
+                8,
+                18,
+                0.80
+            )
+        );
+
+    box-shadow:
+
+        0 14px 40px
+        rgba(
+            0,
+            0,
+            0,
+            0.34
+        ),
+
+        0 0 32px
+        rgba(
+            133,
+            91,
+            190,
+            0.10
+        );
+}
+
+
+/* =========================================================
+   WORLD CORE
+   ========================================================= */
+
+.astronomy-world-core {
+
+    width:
+        68px;
+
+    height:
+        68px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        50%;
+
+    border:
+        1px solid
+        rgba(
+            178,
+            139,
+            229,
+            0.42
+        );
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                157,
+                117,
+                211,
+                0.16
+            ),
+            rgba(
+                12,
+                10,
+                21,
+                0.24
+            )
+        );
+
+    color:
+        #d9c3f3;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        30px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1;
+
+    box-shadow:
+
+        0 0 28px
+        rgba(
+            135,
+            94,
+            191,
+            0.09
+        );
+
+    transition:
+
+        transform 0.35s ease,
+
+        box-shadow 0.35s ease,
+
+        border-color 0.35s ease,
+
+        color 0.35s ease;
+}
+
+
+/* =========================================================
+   CORE HOVER
+   ========================================================= */
+
+.awtaar-astronomy-world-item:hover
+.astronomy-world-core {
+
+    transform:
+        scale(1.08);
+
+    border-color:
+        rgba(
+            204,
+            169,
+            244,
+            0.72
+        );
+
+    color:
+        #eadcf8;
+
+    box-shadow:
+
+        0 0 35px
+        rgba(
+            157,
+            117,
+            211,
+            0.16
+        );
+}
+
+
+/* =========================================================
+   WORLD NAME
+   ========================================================= */
+
+.astronomy-world-name {
+
+    display:
+        block;
+
+    color:
+        #e7dcf4;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        16px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1.6;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   COMING SOON
+   ========================================================= */
+
+.astronomy-world-status {
+
+    display:
+        inline-flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    min-height:
+        22px;
+
+    padding:
+        3px 11px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(
+            183,
+            168,
+            205,
+            0.16
+        );
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.025
+        );
+
+    color:
+        rgba(
+            218,
+            207,
+            231,
+            0.46
+        );
+
+    font-size:
+        10px;
+
+    font-weight:
+        400;
+
+    letter-spacing:
+        0.4px;
+
+    line-height:
+        1.3;
+
+    text-transform:
+        uppercase;
+}
+
+
+/* =========================================================
+   COMING SOON CARD
+   ========================================================= */
+
+.awtaar-astronomy-world-item.is-coming-soon {
+
+    cursor:
+        default;
+
+    opacity:
+        0.62;
+
+    border-color:
+        rgba(
+            142,
+            126,
+            166,
+            0.13
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                22,
+                19,
+                32,
+                0.66
+            ),
+            rgba(
+                7,
+                7,
+                13,
+                0.56
+            )
+        );
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   COMING SOON — CORE
+   ========================================================= */
+
+.awtaar-astronomy-world-item.is-coming-soon
+.astronomy-world-core {
+
+    border-color:
+        rgba(
+            151,
+            135,
+            172,
+            0.22
+        );
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(
+                127,
+                107,
+                150,
+                0.07
+            ),
+            rgba(
+                0,
+                0,
+                0,
+                0.16
+            )
+        );
+
+    color:
+        rgba(
+            201,
+            190,
+            214,
+            0.52
+        );
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   COMING SOON — NO HOVER LIFT
+   ========================================================= */
+
+.awtaar-astronomy-world-item.is-coming-soon:hover {
+
+    transform:
+        none;
+
+    border-color:
+        rgba(
+            142,
+            126,
+            166,
+            0.18
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                25,
+                21,
+                36,
+                0.70
+            ),
+            rgba(
+                7,
+                7,
+                13,
+                0.58
+            )
+        );
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   COMING SOON — CORE NO SCALE
+   ========================================================= */
+
+.awtaar-astronomy-world-item.is-coming-soon:hover
+.astronomy-world-core {
+
+    transform:
+        none;
+
+    border-color:
+        rgba(
+            151,
+            135,
+            172,
+            0.25
+        );
+
+    box-shadow:
+        none;
+
+    color:
+        rgba(
+            201,
+            190,
+            214,
+            0.55
+        );
+}
+
+
+/* =========================================================
+   COMING SOON — NAME
+   ========================================================= */
+
+.awtaar-astronomy-world-item.is-coming-soon
+.astronomy-world-name {
+
+    color:
+        rgba(
+            220,
+            211,
+            230,
+            0.58
+        );
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-astronomy-world-back {
+
+    margin-top:
+        34px;
+
+    padding:
+        12px 28px;
+
+    border:
+        1px solid
+        rgba(
+            157,
+            117,
+            211,
+            0.22
+        );
+
+    border-radius:
+        30px;
+
+    background:
+        rgba(
+            8,
+            7,
+            15,
+            0.66
+        );
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    color:
+        rgba(
+            229,
+            220,
+            241,
+            0.76
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        14px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    transition:
+
+        transform 0.3s ease,
+
+        border-color 0.3s ease,
+
+        color 0.3s ease,
+
+        background 0.3s ease,
+
+        box-shadow 0.3s ease;
+}
+
+
+/* =========================================================
+   BACK BUTTON — HOVER
+   ========================================================= */
+
+.awtaar-astronomy-world-back:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(
+            180,
+            139,
+            228,
+            0.58
+        );
+
+    background:
+        rgba(
+            24,
+            18,
+            36,
+            0.84
+        );
+
+    color:
+        #eadcf8;
+
+    box-shadow:
+        0 0 24px
+        rgba(
+            135,
+            94,
+            191,
+            0.08
+        );
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.awtaar-astronomy-world-item:focus-visible,
+.awtaar-astronomy-world-back:focus-visible {
+
+    outline:
+        1px solid
+        rgba(
+            191,
+            155,
+            233,
+            0.68
+        );
+
+    outline-offset:
+        4px;
+}
+
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
+
+.awtaar-astronomy-world-item:disabled {
+
+    cursor:
+        default;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (
+    max-width: 1100px
+) {
+
+    .awtaar-astronomy-worlds {
+
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(
+                    150px,
+                    1fr
+                )
+            );
+
+        max-width:
+            900px;
+    }
+}
+
+
+/* =========================================================
+   TABLET — SMALL
+   ========================================================= */
+
+@media (
+    max-width: 850px
+) {
+
+    .awtaar-astronomy-worlds {
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(
+                    150px,
+                    1fr
+                )
+            );
+
+        max-width:
+            700px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 650px
+) {
+
+    #awtaar-astronomy-world {
+
+        padding:
+            25px 18px;
+
+        overflow-y:
+            auto;
+    }
+
+
+    #awtaar-astronomy-world h2 {
+
+        font-size:
+            30px;
+    }
+
+
+    #awtaar-astronomy-world > p {
+
+        margin-bottom:
+            28px;
+
+        font-size:
+            13px;
+    }
+
+
+    .awtaar-astronomy-worlds {
+
+        width:
+            94vw;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    130px,
+                    1fr
+                )
+            );
+
+        gap:
+            12px;
+    }
+
+
+    .awtaar-astronomy-world-item {
+
+        min-height:
+            155px;
+
+        padding:
+            18px 12px;
+
+        border-radius:
+            18px;
+
+        gap:
+            13px;
+    }
+
+
+    .astronomy-world-core {
+
+        width:
+            55px;
+
+        height:
+            55px;
+
+        font-size:
+            25px;
+    }
+
+
+    .astronomy-world-name {
+
+        font-size:
+            14px;
+    }
+
+
+    .astronomy-world-status {
+
+        font-size:
+            9px;
+
+        padding:
+            3px 9px;
+    }
+
+
+    .awtaar-astronomy-world-back {
+
+        margin-top:
+            24px;
+
+        padding:
+            10px 22px;
+
+        font-size:
+            13px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (
+    max-width: 400px
+) {
+
+    .awtaar-astronomy-worlds {
+
+        grid-template-columns:
+            1fr;
+
+        width:
+            88vw;
+    }
+
+
+    .awtaar-astronomy-world-item {
+
+        min-height:
+            125px;
+
+        flex-direction:
+            row;
+
+        justify-content:
+            flex-start;
+
+        text-align:
+            right;
+
+        padding:
+            16px 20px;
+    }
+
+
+    .astronomy-world-name {
+
+        white-space:
+            normal;
+    }
+
+
+    .astronomy-world-status {
+
+        margin-inline-start:
+            auto;
+    }
+}
+
+
+/* =========================================================
+   RTL — VERY SMALL SCREENS
+   ========================================================= */
+
+#awtaar-astronomy-world[dir="rtl"]
+.awtaar-astronomy-world-item {
+
+    text-align:
+        center;
+}
+
+
+@media (
+    max-width: 400px
+) {
+
+    #awtaar-astronomy-world[dir="rtl"]
+    .awtaar-astronomy-world-item {
+
+        flex-direction:
+            row;
+
+        text-align:
+            right;
+    }
+}

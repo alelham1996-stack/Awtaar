@@ -1,0 +1,1282 @@
+/* =========================================================
+   AWTAAR — GRAVITATIONAL LENSING
+   ========================================================= */
+
+#awtaar-gravitational-lensing {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 3000;
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+
+    padding: 34px 42px 28px;
+
+    color: #f1eadc;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% 46%,
+            rgba(71, 53, 96, 0.16),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 22% 24%,
+            rgba(105, 78, 137, 0.08),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 80% 72%,
+            rgba(151, 113, 55, 0.055),
+            transparent 26%
+        ),
+
+        #030308;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform: scale(1.015);
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.7s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+
+}
+
+
+/* =========================================================
+   VISIBLE STATE
+   ========================================================= */
+
+#awtaar-gravitational-lensing.is-visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform: scale(1);
+
+}
+
+
+/* =========================================================
+   AMBIENT SPACE
+   ========================================================= */
+
+#awtaar-gravitational-lensing::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.38;
+
+    background-image:
+
+        radial-gradient(
+            circle at 12% 18%,
+            rgba(220, 199, 156, 0.38) 0 1px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 31% 72%,
+            rgba(213, 192, 153, 0.3) 0 1px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 67% 17%,
+            rgba(200, 183, 149, 0.32) 0 1px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 89% 42%,
+            rgba(218, 197, 158, 0.3) 0 1px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 77% 84%,
+            rgba(212, 190, 151, 0.24) 0 1px,
+            transparent 1.5px
+        );
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.gravitational-lensing-header {
+
+    position: relative;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    width: 100%;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.gravitational-lensing-heading {
+
+    max-width: 620px;
+
+}
+
+
+.gravitational-lensing-kicker {
+
+    margin-bottom: 7px;
+
+    color: #e2bd72;
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    letter-spacing: 0.01em;
+
+    text-shadow:
+        0 0 20px rgba(212, 169, 88, 0.15);
+
+}
+
+
+.gravitational-lensing-description {
+
+    max-width: 580px;
+
+    color: rgba(
+        226,
+        218,
+        201,
+        0.62
+    );
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   EXIT BUTTON
+   ========================================================= */
+
+.gravitational-lensing-exit {
+
+    position: relative;
+
+    min-width: 116px;
+
+    height: 38px;
+
+    padding: 0 18px;
+
+    border: 1px solid rgba(
+        207,
+        170,
+        100,
+        0.28
+    );
+
+    border-radius: 20px;
+
+    outline: none;
+
+    color: rgba(
+        234,
+        224,
+        204,
+        0.78
+    );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.025
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.gravitational-lensing-exit:hover {
+
+    color: #f0d59a;
+
+    border-color: rgba(
+        219,
+        177,
+        99,
+        0.58
+    );
+
+    background:
+        rgba(
+            208,
+            165,
+            86,
+            0.06
+        );
+
+    box-shadow:
+        0 0 24px
+        rgba(
+            194,
+            151,
+            73,
+            0.08
+        );
+
+}
+
+
+.gravitational-lensing-exit:active {
+
+    transform: translateY(1px);
+
+}
+
+
+/* =========================================================
+   MAIN STAGE
+   ========================================================= */
+
+.gravitational-lensing-stage {
+
+    position: relative;
+
+    flex: 1;
+
+    min-height: 0;
+
+    width: 100%;
+
+    margin-top: 14px;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(
+        204,
+        169,
+        99,
+        0.10
+    );
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(
+                103,
+                79,
+                126,
+                0.075
+            ),
+            transparent 33%
+        ),
+
+        rgba(
+            0,
+            0,
+            0,
+            0.16
+        );
+
+}
+
+
+/* =========================================================
+   INNER STAGE LIGHT
+   ========================================================= */
+
+.gravitational-lensing-stage::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    border-radius: inherit;
+
+    box-shadow:
+        inset 0 0 80px
+        rgba(
+            0,
+            0,
+            0,
+            0.45
+        );
+
+}
+
+
+/* =========================================================
+   THREE CANVAS
+   ========================================================= */
+
+.gravitational-lensing-canvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+}
+
+
+.gravitational-lensing-canvas canvas {
+
+    display: block;
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    outline: none;
+
+}
+
+
+/* =========================================================
+   INFORMATION PANEL
+   ========================================================= */
+
+.gravitational-lensing-information {
+
+    position: absolute;
+
+    z-index: 4;
+
+    top: 28px;
+
+    inset-inline-start: 28px;
+
+    width: min(
+        270px,
+        24%
+    );
+
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+
+    border-radius: 16px;
+
+    border: 1px solid rgba(
+        207,
+        170,
+        100,
+        0.13
+    );
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(
+                18,
+                16,
+                22,
+                0.76
+            ),
+            rgba(
+                7,
+                7,
+                12,
+                0.58
+            )
+        );
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    box-shadow:
+        0 18px 45px
+        rgba(
+            0,
+            0,
+            0,
+            0.26
+        );
+
+}
+
+
+/* =========================================================
+   INFORMATION LABEL
+   ========================================================= */
+
+.gravitational-lensing-status-label {
+
+    margin-bottom: 8px;
+
+    color: rgba(
+        207,
+        176,
+        116,
+        0.68
+    );
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+}
+
+
+/* =========================================================
+   INFORMATION TITLE
+   ========================================================= */
+
+.gravitational-lensing-status-title {
+
+    margin-bottom: 6px;
+
+    color: #ead39e;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    line-height: 1.45;
+
+}
+
+
+/* =========================================================
+   INFORMATION DESCRIPTION
+   ========================================================= */
+
+.gravitational-lensing-status-description {
+
+    color: rgba(
+        226,
+        218,
+        202,
+        0.62
+    );
+
+    font-size: 11px;
+
+    font-weight: 400;
+
+    line-height: 1.75;
+
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.gravitational-lensing-controls {
+
+    position: relative;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    width: 100%;
+
+    min-height: 58px;
+
+    margin-top: 14px;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =========================================================
+   CONTROL GROUP
+   ========================================================= */
+
+.gravitational-lensing-control-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    flex: 1;
+
+    min-width: 0;
+
+    max-width: 560px;
+
+    padding: 9px 17px 8px;
+
+    border: 1px solid rgba(
+        207,
+        170,
+        100,
+        0.13
+    );
+
+    border-radius: 15px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.025
+        );
+
+}
+
+
+/* =========================================================
+   CONTROL HEADING
+   ========================================================= */
+
+.gravitational-lensing-control-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 5px;
+
+    color: rgba(
+        225,
+        215,
+        197,
+        0.68
+    );
+
+    font-size: 11px;
+
+    line-height: 1.4;
+
+}
+
+
+#gravitational-lensing-beta-value {
+
+    min-width: 38px;
+
+    color: #d9b66c;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-align: end;
+
+    font-variant-numeric:
+        tabular-nums;
+
+}
+
+
+/* =========================================================
+   RANGE SLIDER
+   ========================================================= */
+
+.gravitational-lensing-slider {
+
+    width: 100%;
+
+    height: 4px;
+
+    margin: 0;
+
+    padding: 0;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    border-radius: 4px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            to right,
+            rgba(
+                215,
+                176,
+                99,
+                0.62
+            ),
+            rgba(
+                215,
+                176,
+                99,
+                0.16
+            )
+        );
+
+}
+
+
+/* ---------------------------------------------------------
+   WEBKIT THUMB
+--------------------------------------------------------- */
+
+.gravitational-lensing-slider::-webkit-slider-thumb {
+
+    width: 13px;
+
+    height: 13px;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    border: 1px solid rgba(
+        246,
+        220,
+        164,
+        0.8
+    );
+
+    border-radius: 50%;
+
+    background: #d8b56b;
+
+    box-shadow:
+        0 0 12px
+        rgba(
+            220,
+            178,
+            92,
+            0.25
+        );
+
+}
+
+
+/* ---------------------------------------------------------
+   FIREFOX THUMB
+--------------------------------------------------------- */
+
+.gravitational-lensing-slider::-moz-range-thumb {
+
+    width: 13px;
+
+    height: 13px;
+
+    border: 1px solid rgba(
+        246,
+        220,
+        164,
+        0.8
+    );
+
+    border-radius: 50%;
+
+    background: #d8b56b;
+
+    box-shadow:
+        0 0 12px
+        rgba(
+            220,
+            178,
+            92,
+            0.25
+        );
+
+}
+
+
+/* =========================================================
+   RESET BUTTON
+   ========================================================= */
+
+.gravitational-lensing-reset,
+.gravitational-lensing-continue {
+
+    height: 42px;
+
+    padding: 0 19px;
+
+    border-radius: 14px;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    outline: none;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.gravitational-lensing-reset {
+
+    color: rgba(
+        227,
+        216,
+        194,
+        0.72
+    );
+
+    border: 1px solid rgba(
+        207,
+        170,
+        100,
+        0.19
+    );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.025
+        );
+
+}
+
+
+.gravitational-lensing-reset:hover {
+
+    color: #e5c47f;
+
+    border-color: rgba(
+        216,
+        176,
+        99,
+        0.46
+    );
+
+    background:
+        rgba(
+            213,
+            171,
+            91,
+            0.05
+        );
+
+}
+
+
+.gravitational-lensing-reset:active,
+.gravitational-lensing-continue:active {
+
+    transform:
+        translateY(1px);
+
+}
+
+
+/* =========================================================
+   CONTINUE / DEMO
+   ========================================================= */
+
+.gravitational-lensing-continue {
+
+    color: #0b0907;
+
+    border: 1px solid rgba(
+        235,
+        203,
+        138,
+        0.7
+    );
+
+    background:
+        linear-gradient(
+            135deg,
+            #d7b36b,
+            #b98b42
+        );
+
+    box-shadow:
+        0 7px 25px
+        rgba(
+            184,
+            138,
+            61,
+            0.12
+        );
+
+}
+
+
+.gravitational-lensing-continue:hover {
+
+    border-color:
+        rgba(
+            247,
+            222,
+            171,
+            0.9
+        );
+
+    background:
+        linear-gradient(
+            135deg,
+            #e2c17e,
+            #c49a51
+        );
+
+    box-shadow:
+        0 9px 30px
+        rgba(
+            195,
+            151,
+            73,
+            0.18
+        );
+
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+#awtaar-gravitational-lensing[dir="rtl"] {
+
+    text-align: right;
+
+}
+
+
+#awtaar-gravitational-lensing[dir="rtl"]
+.gravitational-lensing-status-label {
+
+    letter-spacing: 0;
+
+}
+
+
+#awtaar-gravitational-lensing[dir="rtl"]
+.gravitational-lensing-control-heading {
+
+    direction: rtl;
+
+}
+
+
+/* =========================================================
+   LTR
+   ========================================================= */
+
+#awtaar-gravitational-lensing[dir="ltr"] {
+
+    text-align: left;
+
+}
+
+
+#awtaar-gravitational-lensing[dir="ltr"]
+.gravitational-lensing-status-label {
+
+    letter-spacing: 0.08em;
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    #awtaar-gravitational-lensing {
+
+        padding:
+            25px 25px 22px;
+
+    }
+
+
+    .gravitational-lensing-kicker {
+
+        font-size: 22px;
+
+    }
+
+
+    .gravitational-lensing-information {
+
+        width: 240px;
+
+        top: 20px;
+
+        inset-inline-start: 20px;
+
+        padding: 15px 16px;
+
+    }
+
+
+    .gravitational-lensing-status-title {
+
+        font-size: 15px;
+
+    }
+
+
+    .gravitational-lensing-status-description {
+
+        font-size: 10px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    #awtaar-gravitational-lensing {
+
+        padding:
+            18px 15px 15px;
+
+    }
+
+
+    .gravitational-lensing-header {
+
+        align-items: center;
+
+        gap: 12px;
+
+    }
+
+
+    .gravitational-lensing-kicker {
+
+        font-size: 19px;
+
+    }
+
+
+    .gravitational-lensing-description {
+
+        max-width: 320px;
+
+        font-size: 10px;
+
+        line-height: 1.6;
+
+    }
+
+
+    .gravitational-lensing-exit {
+
+        min-width: 88px;
+
+        height: 34px;
+
+        padding: 0 12px;
+
+        font-size: 10px;
+
+    }
+
+
+    .gravitational-lensing-stage {
+
+        margin-top: 10px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .gravitational-lensing-information {
+
+        top: auto;
+
+        bottom: 15px;
+
+        inset-inline-start: 15px;
+
+        inset-inline-end: 15px;
+
+        width: auto;
+
+        padding: 12px 14px;
+
+        border-radius: 13px;
+
+    }
+
+
+    .gravitational-lensing-status-label {
+
+        margin-bottom: 4px;
+
+        font-size: 9px;
+
+    }
+
+
+    .gravitational-lensing-status-title {
+
+        margin-bottom: 3px;
+
+        font-size: 14px;
+
+    }
+
+
+    .gravitational-lensing-status-description {
+
+        font-size: 9px;
+
+        line-height: 1.55;
+
+    }
+
+
+    .gravitational-lensing-controls {
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        min-height: auto;
+
+        margin-top: 10px;
+
+    }
+
+
+    .gravitational-lensing-control-group {
+
+        order: 1;
+
+        flex-basis: 100%;
+
+        max-width: none;
+
+    }
+
+
+    .gravitational-lensing-reset {
+
+        order: 2;
+
+        flex: 1;
+
+    }
+
+
+    .gravitational-lensing-continue {
+
+        order: 3;
+
+        flex: 1;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+    #awtaar-gravitational-lensing {
+
+        padding:
+            14px 11px 11px;
+
+    }
+
+
+    .gravitational-lensing-kicker {
+
+        font-size: 17px;
+
+    }
+
+
+    .gravitational-lensing-description {
+
+        display: none;
+
+    }
+
+
+    .gravitational-lensing-information {
+
+        bottom: 10px;
+
+        inset-inline-start: 10px;
+
+        inset-inline-end: 10px;
+
+        padding: 10px 12px;
+
+    }
+
+
+    .gravitational-lensing-status-title {
+
+        font-size: 13px;
+
+    }
+
+
+    .gravitational-lensing-status-description {
+
+        font-size: 8.5px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #awtaar-gravitational-lensing {
+
+        transition:
+            opacity 0.2s ease;
+
+        transform: none;
+
+    }
+
+
+    #awtaar-gravitational-lensing.is-visible {
+
+        transform: none;
+
+    }
+
+
+    .gravitational-lensing-exit,
+    .gravitational-lensing-reset,
+    .gravitational-lensing-continue {
+
+        transition: none;
+
+    }
+
+}

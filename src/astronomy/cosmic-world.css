@@ -1,0 +1,1024 @@
+/* =========================================================
+   AWTAAR — COSMIC WORLD
+   ========================================================= */
+
+#awtaar-cosmic-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9000;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: 8vh 5vw 5vh;
+
+    overflow-y: auto;
+
+    background:
+
+        /* مجرة بنفسجية بعيدة — أعلى اليمين */
+        radial-gradient(
+            ellipse 55% 35% at 82% 18%,
+            rgba(112, 76, 190, 0.16),
+            rgba(68, 48, 125, 0.08) 28%,
+            transparent 68%
+        ),
+
+        /* مجرة زرقاء خافتة — أسفل اليسار */
+        radial-gradient(
+            ellipse 60% 38% at 12% 78%,
+            rgba(61, 78, 155, 0.13),
+            rgba(46, 50, 112, 0.06) 30%,
+            transparent 70%
+        ),
+
+        /* سحابة كونية في المنتصف */
+        radial-gradient(
+            ellipse 70% 42% at 50% 42%,
+            rgba(91, 67, 158, 0.075),
+            transparent 65%
+        ),
+
+        /* وهج بعيد */
+        radial-gradient(
+            circle at 48% 85%,
+            rgba(130, 91, 190, 0.07),
+            transparent 35%
+        ),
+
+        /* اللون الأساسي */
+        linear-gradient(
+            145deg,
+            #03030a 0%,
+            #070711 42%,
+            #090817 72%,
+            #05050d 100%
+        );
+
+    color: #f1eef8;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease;
+
+    isolation: isolate;
+}
+
+
+/* =========================================================
+   DEEP GALAXY CLOUD
+   ========================================================= */
+
+#awtaar-cosmic-world::before {
+
+    content: '';
+
+    position: absolute;
+
+    width: 145%;
+
+    height: 145%;
+
+    left: -22.5%;
+
+    top: -22.5%;
+
+    pointer-events: none;
+
+    z-index: -2;
+
+    background:
+
+        /* مجرة رئيسية */
+        radial-gradient(
+            ellipse 24% 9% at 73% 30%,
+            rgba(163, 123, 224, 0.14),
+            rgba(116, 82, 183, 0.07) 28%,
+            transparent 72%
+        ),
+
+        /* امتداد المجرة */
+        radial-gradient(
+            ellipse 42% 13% at 70% 32%,
+            rgba(103, 77, 169, 0.075),
+            transparent 72%
+        ),
+
+        /* سحابة بنفسجية */
+        radial-gradient(
+            ellipse 34% 22% at 20% 62%,
+            rgba(86, 64, 154, 0.075),
+            transparent 72%
+        ),
+
+        /* سحابة زرقاء */
+        radial-gradient(
+            ellipse 28% 18% at 84% 78%,
+            rgba(63, 79, 157, 0.055),
+            transparent 70%
+        ),
+
+        /* غبار كوني */
+        radial-gradient(
+            ellipse 50% 18% at 46% 50%,
+            rgba(152, 117, 204, 0.035),
+            transparent 75%
+        );
+
+    filter:
+        blur(14px);
+
+    opacity: 0.9;
+
+    animation:
+        cosmicUniverseDrift 32s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   STARS + DISTANT LIGHT
+   ========================================================= */
+
+#awtaar-cosmic-world::after {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -5%;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    opacity: 0.9;
+
+    background:
+
+        /* نجوم صغيرة */
+        radial-gradient(
+            circle at 8% 14%,
+            rgba(255, 255, 255, 0.65) 0 0.8px,
+            transparent 1.6px
+        ),
+
+        radial-gradient(
+            circle at 18% 34%,
+            rgba(218, 205, 255, 0.52) 0 0.7px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 27% 12%,
+            rgba(255, 255, 255, 0.48) 0 0.6px,
+            transparent 1.4px
+        ),
+
+        radial-gradient(
+            circle at 36% 25%,
+            rgba(211, 198, 255, 0.42) 0 0.7px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 47% 10%,
+            rgba(255, 255, 255, 0.58) 0 0.8px,
+            transparent 1.7px
+        ),
+
+        radial-gradient(
+            circle at 58% 23%,
+            rgba(229, 220, 255, 0.44) 0 0.6px,
+            transparent 1.4px
+        ),
+
+        radial-gradient(
+            circle at 67% 12%,
+            rgba(255, 255, 255, 0.55) 0 0.8px,
+            transparent 1.6px
+        ),
+
+        radial-gradient(
+            circle at 79% 20%,
+            rgba(215, 201, 255, 0.46) 0 0.7px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 91% 11%,
+            rgba(255, 255, 255, 0.62) 0 0.8px,
+            transparent 1.7px
+        ),
+
+        radial-gradient(
+            circle at 12% 55%,
+            rgba(255, 255, 255, 0.45) 0 0.7px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 25% 78%,
+            rgba(226, 216, 255, 0.48) 0 0.7px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 40% 67%,
+            rgba(255, 255, 255, 0.55) 0 0.8px,
+            transparent 1.6px
+        ),
+
+        radial-gradient(
+            circle at 53% 84%,
+            rgba(210, 198, 255, 0.42) 0 0.6px,
+            transparent 1.4px
+        ),
+
+        radial-gradient(
+            circle at 65% 62%,
+            rgba(255, 255, 255, 0.58) 0 0.8px,
+            transparent 1.7px
+        ),
+
+        radial-gradient(
+            circle at 76% 88%,
+            rgba(221, 210, 255, 0.45) 0 0.7px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle at 88% 63%,
+            rgba(255, 255, 255, 0.52) 0 0.7px,
+            transparent 1.6px
+        ),
+
+        /* نجوم أكثر نعومة */
+        radial-gradient(
+            circle at 31% 47%,
+            rgba(183, 154, 235, 0.25) 0 1.2px,
+            transparent 2.5px
+        ),
+
+        radial-gradient(
+            circle at 72% 45%,
+            rgba(191, 166, 239, 0.22) 0 1.2px,
+            transparent 2.6px
+        ),
+
+        radial-gradient(
+            circle at 57% 53%,
+            rgba(255, 255, 255, 0.18) 0 1px,
+            transparent 2.5px
+        );
+
+    background-size:
+
+        100% 100%;
+
+    animation:
+        cosmicStarField 45s linear infinite;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.awtaar-cosmic-world-title {
+
+    position: relative;
+
+    margin: 0;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(2rem, 4vw, 3.4rem);
+
+    font-weight: 500;
+
+    letter-spacing: 0.04em;
+
+    text-align: center;
+
+    color: #eeeaf7;
+
+    text-shadow:
+        0 0 24px rgba(137, 105, 211, 0.28);
+
+    animation:
+        cosmicTitleFloat 7s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.awtaar-cosmic-world-description {
+
+    position: relative;
+
+    max-width: 760px;
+
+    margin:
+        1.2rem auto
+        0;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(0.95rem, 1.5vw, 1.15rem);
+
+    font-weight: 300;
+
+    line-height: 1.9;
+
+    text-align: center;
+
+    color:
+        rgba(225, 221, 237, 0.72);
+
+    animation:
+        cosmicDescriptionFloat 9s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   EXPERIMENTS CONTAINER
+   ========================================================= */
+
+.awtaar-cosmic-world-experiments {
+
+    position: relative;
+
+    width:
+        min(900px, 100%);
+
+    margin-top: 5vh;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 2rem;
+
+    perspective: 1400px;
+
+    transform-style: preserve-3d;
+}
+
+
+/* =========================================================
+   EXPERIMENT CARD
+   ========================================================= */
+
+.awtaar-cosmic-world-experiment {
+
+    position: relative;
+
+    min-height: 220px;
+
+    padding:
+        2.2rem 1.8rem;
+
+    border:
+        1px solid
+        rgba(142, 113, 209, 0.25);
+
+    border-radius: 20px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(16, 14, 31, 0.94),
+            rgba(8, 8, 18, 0.96)
+        );
+
+    box-shadow:
+
+        0 18px 50px
+        rgba(0, 0, 0, 0.35),
+
+        inset 0 0 0 1px
+        rgba(255, 255, 255, 0.025);
+
+    color: #f2eff8;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 1.4rem;
+
+    overflow: hidden;
+
+    transform-style: preserve-3d;
+
+    transition:
+
+        border-color 0.35s ease,
+
+        box-shadow 0.35s ease,
+
+        background 0.35s ease;
+}
+
+
+/* =========================================================
+   CARD COSMIC GLOW
+   ========================================================= */
+
+.awtaar-cosmic-world-experiment::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -35%;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(124, 91, 201, 0.14),
+            transparent 58%
+        );
+
+    opacity: 0.35;
+
+    transform:
+        scale(0.85);
+
+    animation:
+        cardAuraPulse 8s ease-in-out infinite alternate;
+
+    transition:
+
+        opacity 0.4s ease,
+
+        transform 0.6s ease;
+}
+
+
+/* =========================================================
+   CARD INNER LIGHT
+   ========================================================= */
+
+.awtaar-cosmic-world-experiment::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 150%;
+
+    height: 150%;
+
+    left: -25%;
+
+    top: -25%;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(182, 154, 237, 0.065),
+            transparent 42%
+        );
+
+    opacity: 0.75;
+
+    animation:
+        cardLightDrift 9s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.awtaar-cosmic-world-experiment:hover {
+
+    border-color:
+        rgba(158, 126, 227, 0.55);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(21, 17, 43, 0.96),
+            rgba(9, 8, 20, 0.98)
+        );
+
+    box-shadow:
+
+        0 28px 70px
+        rgba(0, 0, 0, 0.46),
+
+        0 0 45px
+        rgba(112, 81, 190, 0.16),
+
+        inset 0 0 0 1px
+        rgba(172, 143, 232, 0.08);
+}
+
+
+.awtaar-cosmic-world-experiment:hover::before {
+
+    opacity: 1;
+
+    transform:
+        scale(1.05);
+}
+
+
+/* =========================================================
+   SYMBOL
+   ========================================================= */
+
+.cosmic-experiment-symbol {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 74px;
+
+    height: 74px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(154, 123, 219, 0.38);
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(105, 76, 170, 0.22),
+            rgba(12, 11, 27, 0.92)
+        );
+
+    color:
+        #bca6e8;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 2rem;
+
+    font-weight: 300;
+
+    box-shadow:
+
+        0 0 30px
+        rgba(113, 82, 185, 0.12),
+
+        inset 0 0 18px
+        rgba(139, 108, 207, 0.08);
+
+    transition:
+
+        transform 0.35s ease,
+
+        box-shadow 0.35s ease,
+
+        color 0.35s ease;
+}
+
+
+/* =========================================================
+   SYMBOL HOVER
+   ========================================================= */
+
+.awtaar-cosmic-world-experiment:hover
+.cosmic-experiment-symbol {
+
+    transform:
+        scale(1.06);
+
+    color:
+        #d1c1ef;
+
+    box-shadow:
+
+        0 0 36px
+        rgba(133, 101, 208, 0.25),
+
+        inset 0 0 22px
+        rgba(139, 108, 207, 0.12);
+}
+
+
+/* =========================================================
+   EXPERIMENT NAME
+   ========================================================= */
+
+.cosmic-experiment-name {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(1.05rem, 1.8vw, 1.35rem);
+
+    font-weight: 400;
+
+    line-height: 1.6;
+
+    text-align: center;
+
+    color:
+        rgba(242, 239, 248, 0.92);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-cosmic-world-back {
+
+    position: relative;
+
+    margin-top: 5vh;
+
+    min-width: 170px;
+
+    padding:
+        0.75rem
+        1.8rem;
+
+    border:
+        1px solid
+        rgba(156, 125, 219, 0.32);
+
+    border-radius: 999px;
+
+    background:
+        rgba(10, 9, 21, 0.72);
+
+    color:
+        rgba(225, 220, 237, 0.78);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        0.95rem;
+
+    font-weight: 300;
+
+    cursor: pointer;
+
+    transition:
+
+        color 0.3s ease,
+
+        border-color 0.3s ease,
+
+        background 0.3s ease,
+
+        transform 0.3s ease;
+}
+
+
+.awtaar-cosmic-world-back:hover {
+
+    transform:
+        translateY(-2px);
+
+    color:
+        #eee9f8;
+
+    border-color:
+        rgba(166, 136, 226, 0.6);
+
+    background:
+        rgba(30, 24, 54, 0.78);
+}
+
+
+/* =========================================================
+   COSMIC BACKGROUND MOVEMENT
+   ========================================================= */
+
+@keyframes cosmicUniverseDrift {
+
+    0% {
+
+        transform:
+            translate3d(-2%, -1%, 0)
+            scale(1);
+    }
+
+    50% {
+
+        transform:
+            translate3d(2%, 1.5%, 0)
+            scale(1.04);
+    }
+
+    100% {
+
+        transform:
+            translate3d(-1%, 2%, 0)
+            scale(1.07);
+    }
+}
+
+
+/* =========================================================
+   STAR FIELD MOVEMENT
+   ========================================================= */
+
+@keyframes cosmicStarField {
+
+    0% {
+
+        transform:
+            translate3d(-10px, -8px, 0);
+    }
+
+    50% {
+
+        transform:
+            translate3d(12px, 10px, 0);
+    }
+
+    100% {
+
+        transform:
+            translate3d(-6px, 14px, 0);
+    }
+}
+
+
+/* =========================================================
+   TITLE FLOAT
+   ========================================================= */
+
+@keyframes cosmicTitleFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
+    }
+
+    50% {
+
+        transform:
+            translateY(-4px);
+    }
+}
+
+
+/* =========================================================
+   DESCRIPTION FLOAT
+   ========================================================= */
+
+@keyframes cosmicDescriptionFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
+    }
+
+    50% {
+
+        transform:
+            translateY(-2px);
+    }
+}
+
+
+/* =========================================================
+   CARD AURA
+   ========================================================= */
+
+@keyframes cardAuraPulse {
+
+    0% {
+
+        transform:
+            scale(0.85)
+            translate3d(-2%, -1%, 0);
+
+        opacity:
+            0.25;
+    }
+
+    100% {
+
+        transform:
+            scale(1.05)
+            translate3d(2%, 2%, 0);
+
+        opacity:
+            0.5;
+    }
+}
+
+
+/* =========================================================
+   CARD LIGHT DRIFT
+   ========================================================= */
+
+@keyframes cardLightDrift {
+
+    0% {
+
+        transform:
+            translate3d(-4%, -3%, 0);
+    }
+
+    50% {
+
+        transform:
+            translate3d(3%, 2%, 0);
+    }
+
+    100% {
+
+        transform:
+            translate3d(5%, -1%, 0);
+    }
+}
+
+
+/* =========================================================
+   RTL / LTR
+   ========================================================= */
+
+#awtaar-cosmic-world[dir='rtl'] {
+
+    direction: rtl;
+}
+
+
+#awtaar-cosmic-world[dir='ltr'] {
+
+    direction: ltr;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #awtaar-cosmic-world {
+
+        padding:
+            7vh
+            1.4rem
+            3rem;
+    }
+
+
+    .awtaar-cosmic-world-title {
+
+        font-size:
+            2rem;
+    }
+
+
+    .awtaar-cosmic-world-description {
+
+        font-size:
+            0.92rem;
+
+        line-height:
+            1.8;
+    }
+
+
+    .awtaar-cosmic-world-experiments {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            1rem;
+
+        margin-top:
+            3.5vh;
+    }
+
+
+    .awtaar-cosmic-world-experiment {
+
+        min-height:
+            180px;
+
+        padding:
+            1.6rem 1.2rem;
+    }
+
+
+    .cosmic-experiment-symbol {
+
+        width:
+            64px;
+
+        height:
+            64px;
+
+        font-size:
+            1.7rem;
+    }
+
+
+    .awtaar-cosmic-world-back {
+
+        margin-top:
+            3.5vh;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #awtaar-cosmic-world::before,
+
+    #awtaar-cosmic-world::after,
+
+    .awtaar-cosmic-world-title,
+
+    .awtaar-cosmic-world-description,
+
+    .awtaar-cosmic-world-experiment::before,
+
+    .awtaar-cosmic-world-experiment::after,
+
+    .cosmic-experiment-symbol,
+
+    .awtaar-cosmic-world-back {
+
+        animation: none;
+
+        transition: none;
+    }
+}

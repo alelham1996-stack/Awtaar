@@ -11,7 +11,6 @@
 #awtaar-galaxies {
 
     position: fixed;
-
     inset: 0;
 
     z-index: 100;
@@ -19,11 +18,8 @@
     isolation: isolate;
 
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 40px;
@@ -31,7 +27,6 @@
     box-sizing: border-box;
 
     direction: rtl;
-
     text-align: center;
 
     font-family:
@@ -47,7 +42,6 @@
         );
 
     opacity: 0;
-
     visibility: hidden;
 
     pointer-events: none;
@@ -55,7 +49,40 @@
     transition:
         opacity 0.6s ease,
         visibility 0s linear 0.6s;
+}
 
+
+/* =========================================================
+   VISIBLE STATE
+   ========================================================= */
+
+#awtaar-galaxies.visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transition:
+        opacity 0.6s ease,
+        visibility 0s linear 0s;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.awtaar-galaxies-header {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 45px;
 }
 
 
@@ -63,7 +90,7 @@
    TITLE
    ========================================================= */
 
-#awtaar-galaxies h2 {
+.awtaar-galaxies-title {
 
     margin: 0;
 
@@ -80,7 +107,6 @@
     text-shadow:
         0 4px 30px
         rgba(0, 0, 0, 0.65);
-
 }
 
 
@@ -88,10 +114,12 @@
    SUBTITLE
    ========================================================= */
 
-#awtaar-galaxies > p {
+.awtaar-galaxies-subtitle {
 
     margin:
-        12px 0 45px;
+        12px 0 0;
+
+    max-width: 720px;
 
     font-size: 16px;
 
@@ -101,20 +129,18 @@
 
     color:
         rgba(245, 236, 223, 0.52);
-
 }
 
 
 /* =========================================================
-   GALAXIES CONTAINER
+   GALAXIES GRID
    ========================================================= */
 
-.awtaar-galaxies-list {
+.awtaar-galaxies-grid {
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     flex-wrap: wrap;
@@ -125,22 +151,20 @@
         1000px,
         90vw
     );
-
 }
 
 
 /* =========================================================
-   GALAXY ITEM
+   GALAXY CARD
    ========================================================= */
 
-.awtaar-galaxy {
+.awtaar-galaxy-card {
 
     position: relative;
 
     z-index: 1;
 
     width: 150px;
-
     height: 180px;
 
     padding: 0;
@@ -154,7 +178,6 @@
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 22px;
@@ -170,29 +193,30 @@
 
     pointer-events: auto;
 
+    appearance: none;
+
+    -webkit-appearance: none;
+
     transition:
         transform 0.5s ease,
         color 0.4s ease;
-
 }
 
 
 /* =========================================================
-   GALAXY CORE
+   GALAXY ICON
    ========================================================= */
 
-.awtaar-galaxy-core {
+.awtaar-galaxy-icon {
 
     position: relative;
 
     width: 88px;
-
     height: 88px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     border:
@@ -231,7 +255,6 @@
         border-color 0.5s ease,
         box-shadow 0.5s ease,
         background 0.5s ease;
-
 }
 
 
@@ -239,14 +262,13 @@
    OUTER ORBIT
    ========================================================= */
 
-.awtaar-galaxy-core::before {
+.awtaar-galaxy-icon::before {
 
     content: '';
 
     position: absolute;
 
     width: 108px;
-
     height: 44px;
 
     border:
@@ -261,7 +283,6 @@
     transition:
         transform 0.6s ease,
         border-color 0.5s ease;
-
 }
 
 
@@ -269,14 +290,13 @@
    INNER GLOW
    ========================================================= */
 
-.awtaar-galaxy-core::after {
+.awtaar-galaxy-icon::after {
 
     content: '';
 
     position: absolute;
 
     width: 5px;
-
     height: 5px;
 
     border-radius: 50%;
@@ -289,7 +309,6 @@
         rgba(241, 210, 139, 0.65);
 
     opacity: 0.65;
-
 }
 
 
@@ -308,27 +327,29 @@
     transition:
         color 0.4s ease,
         transform 0.4s ease;
-
 }
 
 
 /* =========================================================
-   HOVER
+   HOVER — CARD
    ========================================================= */
 
-.awtaar-galaxy:hover {
+.awtaar-galaxy-card:hover {
 
     transform:
         translateY(-8px);
 
     color:
         #f1d28b;
-
 }
 
 
-.awtaar-galaxy:hover
-.awtaar-galaxy-core {
+/* =========================================================
+   HOVER — ICON
+   ========================================================= */
+
+.awtaar-galaxy-card:hover
+.awtaar-galaxy-icon {
 
     transform:
         scale(1.10);
@@ -347,12 +368,15 @@
     box-shadow:
         0 0 38px
         rgba(241, 210, 139, 0.13);
-
 }
 
 
-.awtaar-galaxy:hover
-.awtaar-galaxy-core::before {
+/* =========================================================
+   HOVER — OUTER ORBIT
+   ========================================================= */
+
+.awtaar-galaxy-card:hover
+.awtaar-galaxy-icon::before {
 
     transform:
         rotate(18deg)
@@ -360,16 +384,42 @@
 
     border-color:
         rgba(241, 210, 139, 0.30);
-
 }
 
 
-.awtaar-galaxy:hover
+/* =========================================================
+   HOVER — NAME
+   ========================================================= */
+
+.awtaar-galaxy-card:hover
 .awtaar-galaxy-name {
 
     transform:
         translateY(-2px);
+}
 
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.awtaar-galaxy-card:focus-visible {
+
+    outline: none;
+}
+
+
+.awtaar-galaxy-card:focus-visible
+.awtaar-galaxy-icon {
+
+    border-color:
+        rgba(241, 210, 139, 0.65);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(241, 210, 139, 0.08),
+        0 0 32px
+        rgba(241, 210, 139, 0.12);
 }
 
 
@@ -412,6 +462,10 @@
 
     pointer-events: auto;
 
+    appearance: none;
+
+    -webkit-appearance: none;
+
     backdrop-filter:
         blur(10px);
 
@@ -422,9 +476,12 @@
         color 0.35s ease,
         border-color 0.35s ease,
         background 0.35s ease;
-
 }
 
+
+/* =========================================================
+   BACK BUTTON — HOVER
+   ========================================================= */
 
 .awtaar-galaxies-back:hover {
 
@@ -436,7 +493,41 @@
 
     background:
         rgba(241, 210, 139, 0.06);
+}
 
+
+/* =========================================================
+   BACK BUTTON — FOCUS
+   ========================================================= */
+
+.awtaar-galaxies-back:focus-visible {
+
+    outline: none;
+
+    color:
+        #f1d28b;
+
+    border-color:
+        rgba(241, 210, 139, 0.55);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(241, 210, 139, 0.07);
+}
+
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
+
+.awtaar-galaxy-card:disabled,
+.awtaar-galaxies-back:disabled {
+
+    cursor: default;
+
+    pointer-events: none;
+
+    opacity: 0.45;
 }
 
 
@@ -450,76 +541,114 @@
 
         padding:
             30px 20px;
-
     }
 
 
-    #awtaar-galaxies h2 {
-
-        font-size: 34px;
-
-    }
-
-
-    #awtaar-galaxies > p {
+    .awtaar-galaxies-header {
 
         margin-bottom: 28px;
-
-        font-size: 14px;
-
     }
 
 
-    .awtaar-galaxies-list {
+    .awtaar-galaxies-title {
+
+        font-size: 34px;
+    }
+
+
+    .awtaar-galaxies-subtitle {
+
+        max-width: 90vw;
+
+        font-size: 14px;
+    }
+
+
+    .awtaar-galaxies-grid {
 
         gap:
             12px;
-
     }
 
 
-    .awtaar-galaxy {
+    .awtaar-galaxy-card {
 
         width: 125px;
-
         height: 150px;
 
         gap: 17px;
-
     }
 
 
-    .awtaar-galaxy-core {
+    .awtaar-galaxy-icon {
 
         width: 70px;
-
         height: 70px;
 
         font-size: 17px;
-
     }
 
 
-    .awtaar-galaxy-core::before {
+    .awtaar-galaxy-icon::before {
 
         width: 88px;
-
         height: 36px;
-
     }
 
 
     .awtaar-galaxy-name {
 
         font-size: 13px;
-
     }
 
 
     .awtaar-galaxies-back {
 
         margin-top: 25px;
+    }
+}
 
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #awtaar-galaxies {
+
+        padding:
+            24px 14px;
     }
 
+
+    .awtaar-galaxies-grid {
+
+        width: 100%;
+
+        gap: 8px;
+    }
+
+
+    .awtaar-galaxy-card {
+
+        width: 110px;
+        height: 135px;
+
+        gap: 14px;
+    }
+
+
+    .awtaar-galaxy-icon {
+
+        width: 62px;
+        height: 62px;
+    }
+
+
+    .awtaar-galaxy-icon::before {
+
+        width: 78px;
+        height: 32px;
+    }
 }

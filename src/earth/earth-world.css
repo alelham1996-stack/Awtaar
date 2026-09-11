@@ -1,0 +1,566 @@
+/* =========================================================
+   AWTAAR — EARTH WORLD
+   Earth / Soil / Stone / Sandstone Identity
+   ========================================================= */
+
+#awtaar-earth-world {
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 120;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 52px 42px 34px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 18%,
+            rgba(139, 106, 74, 0.12),
+            transparent 42%
+        ),
+        radial-gradient(
+            circle at 50% 80%,
+            rgba(92, 63, 38, 0.10),
+            transparent 48%
+        ),
+        #080706;
+
+    color: #e4d2b5;
+
+    font-family: 'Tajawal', sans-serif;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+#awtaar-earth-world > .awtaar-earth-world-title {
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: clamp(28px, 3vw, 42px);
+
+    font-weight: 500;
+
+    letter-spacing: 0.04em;
+
+    color: #eadbc4;
+
+    text-shadow:
+        0 0 22px rgba(196, 158, 108, 0.12);
+}
+
+
+#awtaar-earth-world > .awtaar-earth-world-description {
+
+    max-width: 760px;
+
+    margin: 12px auto 0;
+
+    text-align: center;
+
+    font-size: clamp(13px, 1.2vw, 16px);
+
+    line-height: 1.9;
+
+    font-weight: 300;
+
+    color: rgba(228, 210, 181, 0.58);
+}
+
+
+/* =========================================================
+   WORLDS GRID
+   ========================================================= */
+
+.awtaar-earth-worlds {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(145px, 1fr));
+
+    justify-content: center;
+
+    gap: 28px;
+
+    width: min(980px, 100%);
+
+    margin-top: 48px;
+
+    padding: 4px;
+
+    overflow-y: auto;
+
+    scrollbar-width: none;
+}
+
+
+.awtaar-earth-worlds::-webkit-scrollbar {
+
+    display: none;
+}
+
+
+/* =========================================================
+   WORLD CARD
+   ========================================================= */
+
+.awtaar-earth-world-item {
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 170px;
+
+    padding: 18px 12px;
+
+    border: 1px solid transparent;
+
+    background: transparent;
+
+    color: #c9a878;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.35s ease,
+        color 0.35s ease,
+        opacity 0.35s ease;
+}
+
+
+.awtaar-earth-world-item:not(.is-coming-soon):hover {
+
+    transform: translateY(-5px);
+
+    color: #eadbc4;
+}
+
+
+/* =========================================================
+   EARTH WORLD CORE
+   ========================================================= */
+
+.earth-world-core {
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 88px;
+    height: 88px;
+
+    border: 1px solid rgba(174, 133, 88, 0.34);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 38% 32%,
+            rgba(224, 194, 151, 0.12),
+            rgba(92, 63, 38, 0.10) 48%,
+            rgba(8, 7, 6, 0.92) 76%
+        );
+
+    color: #c9a878;
+
+    font-size: 30px;
+    font-weight: 300;
+
+    box-shadow:
+        0 0 0 1px rgba(196, 158, 108, 0.025),
+        0 0 30px rgba(121, 86, 52, 0.08);
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease,
+        color 0.4s ease;
+}
+
+
+.earth-world-core::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -8px;
+
+    border: 1px solid rgba(174, 133, 88, 0.10);
+
+    border-radius: 50%;
+
+    transform: rotate(18deg);
+
+    transition:
+        transform 0.5s ease,
+        border-color 0.4s ease;
+}
+
+
+.earth-world-core::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(213, 176, 126, 0.08),
+            transparent 70%
+        );
+
+    filter: blur(5px);
+
+    pointer-events: none;
+}
+
+
+.awtaar-earth-world-item:not(.is-coming-soon):hover
+.earth-world-core {
+
+    transform: scale(1.07);
+
+    color: #eadbc4;
+
+    border-color: rgba(202, 165, 111, 0.60);
+
+    box-shadow:
+        0 0 32px rgba(139, 106, 74, 0.16),
+        inset 0 0 22px rgba(174, 133, 88, 0.06);
+}
+
+
+.awtaar-earth-world-item:not(.is-coming-soon):hover
+.earth-world-core::before {
+
+    transform: rotate(32deg) scale(1.05);
+
+    border-color: rgba(202, 165, 111, 0.18);
+}
+
+
+/* =========================================================
+   WORLD NAME
+   ========================================================= */
+
+.earth-world-name {
+
+    display: block;
+
+    margin-top: 18px;
+
+    min-height: 24px;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 1.6;
+
+    color: inherit;
+
+    transition: color 0.35s ease;
+}
+
+
+/* =========================================================
+   COMING SOON
+   ========================================================= */
+
+.awtaar-earth-world-item.is-coming-soon {
+
+    opacity: 0.40;
+
+    cursor: default;
+}
+
+
+.awtaar-earth-world-item.is-coming-soon
+.earth-world-core {
+
+    border-color: rgba(174, 133, 88, 0.17);
+
+    color: rgba(201, 168, 120, 0.55);
+
+    box-shadow: none;
+}
+
+
+.awtaar-earth-world-item.is-coming-soon
+.earth-world-core::before {
+
+    border-color: rgba(174, 133, 88, 0.05);
+}
+
+
+.earth-world-status {
+
+    display: block;
+
+    margin-top: 5px;
+
+    min-height: 18px;
+
+    text-align: center;
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+    letter-spacing: 0.04em;
+
+    color: rgba(228, 210, 181, 0.35);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-earth-world-back {
+
+    flex-shrink: 0;
+
+    margin-top: auto;
+
+    padding: 10px 25px;
+
+    border: 1px solid rgba(196, 158, 108, 0.34);
+
+    border-radius: 30px;
+
+    background:
+        rgba(121, 86, 52, 0.05);
+
+    color: #c9a878;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.awtaar-earth-world-back:hover {
+
+    transform: translateY(-2px);
+
+    border-color: rgba(202, 165, 111, 0.62);
+
+    background:
+        rgba(139, 106, 74, 0.10);
+
+    color: #eadbc4;
+
+    box-shadow:
+        0 0 24px rgba(139, 106, 74, 0.10);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    #awtaar-earth-world {
+
+        padding: 40px 28px 28px;
+    }
+
+
+    .awtaar-earth-worlds {
+
+        grid-template-columns:
+            repeat(2, minmax(145px, 1fr));
+
+        gap: 20px;
+
+        margin-top: 36px;
+    }
+
+
+    .awtaar-earth-world-item {
+
+        min-height: 150px;
+    }
+
+
+    .earth-world-core {
+
+        width: 78px;
+        height: 78px;
+
+        font-size: 27px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    #awtaar-earth-world {
+
+        padding: 30px 18px 22px;
+    }
+
+
+    #awtaar-earth-world > .awtaar-earth-world-title {
+
+        font-size: 27px;
+    }
+
+
+    #awtaar-earth-world > .awtaar-earth-world-description {
+
+        max-width: 340px;
+
+        margin-top: 9px;
+
+        font-size: 12px;
+
+        line-height: 1.8;
+    }
+
+
+    .awtaar-earth-worlds {
+
+        grid-template-columns:
+            repeat(2, minmax(120px, 1fr));
+
+        gap: 12px;
+
+        width: 100%;
+
+        margin-top: 26px;
+    }
+
+
+    .awtaar-earth-world-item {
+
+        min-height: 135px;
+
+        padding: 12px 8px;
+    }
+
+
+    .earth-world-core {
+
+        width: 68px;
+        height: 68px;
+
+        font-size: 24px;
+    }
+
+
+    .earth-world-name {
+
+        margin-top: 13px;
+
+        font-size: 13px;
+    }
+
+
+    .earth-world-status {
+
+        font-size: 9px;
+    }
+
+
+    .awtaar-earth-world-back {
+
+        margin-top: 18px;
+
+        padding: 9px 21px;
+
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .awtaar-earth-worlds {
+
+        gap: 8px;
+    }
+
+
+    .awtaar-earth-world-item {
+
+        min-height: 125px;
+    }
+
+
+    .earth-world-core {
+
+        width: 60px;
+        height: 60px;
+
+        font-size: 21px;
+    }
+
+
+    .earth-world-name {
+
+        font-size: 12px;
+    }
+}

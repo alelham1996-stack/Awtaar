@@ -1,0 +1,622 @@
+/* =========================================================
+   AWTAAR — GEOLOGY WORLD
+   ========================================================= */
+
+#awtaar-geology-world {
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 130;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 52px 42px 34px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(139, 106, 74, 0.13),
+            transparent 42%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(105, 72, 43, 0.08),
+            transparent 40%
+        ),
+        #080706;
+
+    color: #e4d2b5;
+
+    font-family: 'Tajawal', sans-serif;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.awtaar-earth-child-title {
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: clamp(28px, 3vw, 42px);
+
+    font-weight: 500;
+
+    letter-spacing: 0.03em;
+
+    color: #eadbc4;
+
+    text-shadow:
+        0 0 24px rgba(196, 158, 108, 0.12);
+}
+
+
+.awtaar-earth-child-description {
+
+    max-width: 760px;
+
+    margin: 12px auto 0;
+
+    text-align: center;
+
+    font-size: clamp(13px, 1.2vw, 16px);
+
+    line-height: 1.9;
+
+    font-weight: 300;
+
+    color: rgba(228, 210, 181, 0.55);
+}
+
+
+/* =========================================================
+   EXPERIMENTS
+   ========================================================= */
+
+.awtaar-earth-child-experiments {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(260px, 1fr));
+
+    gap: 24px 30px;
+
+    width: min(900px, 100%);
+
+    margin-top: 52px;
+
+    padding: 4px;
+
+    overflow-y: auto;
+
+    scrollbar-width: none;
+}
+
+
+.awtaar-earth-child-experiments::-webkit-scrollbar {
+
+    display: none;
+}
+
+
+/* =========================================================
+   EXPERIMENT CARD
+   ========================================================= */
+
+.awtaar-earth-child-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    min-height: 138px;
+
+    padding: 20px 24px;
+
+    border: 1px solid rgba(174, 133, 88, 0.20);
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139, 106, 74, 0.075),
+            rgba(8, 7, 6, 0.30)
+        );
+
+    color: #d5bd98;
+
+    font-family: inherit;
+
+    text-align: start;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.awtaar-earth-child-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 20%,
+            rgba(228, 210, 181, 0.045) 50%,
+            transparent 80%
+        );
+
+    opacity: 0;
+
+    transform: translateX(-30%);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.6s ease;
+
+    pointer-events: none;
+}
+
+
+.awtaar-earth-child-card:not(.is-coming-soon):hover {
+
+    transform: translateY(-4px);
+
+    border-color: rgba(202, 165, 111, 0.48);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139, 106, 74, 0.13),
+            rgba(8, 7, 6, 0.34)
+        );
+
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.25),
+        0 0 28px rgba(139, 106, 74, 0.08);
+}
+
+
+.awtaar-earth-child-card:not(.is-coming-soon):hover::before {
+
+    opacity: 1;
+
+    transform: translateX(30%);
+}
+
+
+/* =========================================================
+   CARD CORE
+   ========================================================= */
+
+.earth-child-card-core {
+
+    position: relative;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 68px;
+    height: 68px;
+
+    border: 1px solid rgba(190, 149, 99, 0.34);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(220, 186, 139, 0.13),
+            rgba(91, 61, 37, 0.10) 48%,
+            rgba(5, 5, 4, 0.88) 76%
+        );
+
+    color: #c9a878;
+
+    font-size: 25px;
+
+    font-weight: 300;
+
+    box-shadow:
+        inset 0 0 18px rgba(174, 133, 88, 0.035),
+        0 0 22px rgba(121, 86, 52, 0.06);
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.earth-child-card-core::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -6px;
+
+    border: 1px solid rgba(174, 133, 88, 0.09);
+
+    border-radius: 50%;
+
+    transform: rotate(15deg);
+
+    transition:
+        transform 0.5s ease,
+        border-color 0.4s ease;
+}
+
+
+.awtaar-earth-child-card:not(.is-coming-soon):hover
+.earth-child-card-core {
+
+    transform: scale(1.06);
+
+    border-color: rgba(202, 165, 111, 0.62);
+
+    color: #eadbc4;
+
+    box-shadow:
+        inset 0 0 22px rgba(174, 133, 88, 0.07),
+        0 0 28px rgba(139, 106, 74, 0.12);
+}
+
+
+.awtaar-earth-child-card:not(.is-coming-soon):hover
+.earth-child-card-core::before {
+
+    transform: rotate(32deg) scale(1.04);
+
+    border-color: rgba(202, 165, 111, 0.18);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.earth-child-card-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.earth-child-card-title {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #e1cba7;
+
+    font-size: 17px;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+
+    transition: color 0.3s ease;
+}
+
+
+.earth-child-card-description {
+
+    display: block;
+
+    color: rgba(228, 210, 181, 0.47);
+
+    font-size: 12px;
+
+    font-weight: 300;
+
+    line-height: 1.75;
+
+    transition: color 0.3s ease;
+}
+
+
+.awtaar-earth-child-card:not(.is-coming-soon):hover
+.earth-child-card-title {
+
+    color: #f0e2cc;
+}
+
+
+.awtaar-earth-child-card:not(.is-coming-soon):hover
+.earth-child-card-description {
+
+    color: rgba(228, 210, 181, 0.62);
+}
+
+
+/* =========================================================
+   COMING SOON
+   ========================================================= */
+
+.awtaar-earth-child-card.is-coming-soon {
+
+    opacity: 0.38;
+
+    cursor: default;
+
+    border-color: rgba(174, 133, 88, 0.11);
+
+    box-shadow: none;
+}
+
+
+.awtaar-earth-child-card.is-coming-soon
+.earth-child-card-core {
+
+    border-color: rgba(174, 133, 88, 0.15);
+
+    color: rgba(201, 168, 120, 0.50);
+
+    box-shadow: none;
+}
+
+
+.awtaar-earth-child-card.is-coming-soon
+.earth-child-card-title {
+
+    color: rgba(225, 203, 167, 0.65);
+}
+
+
+.awtaar-earth-child-card.is-coming-soon
+.earth-child-card-description {
+
+    color: rgba(228, 210, 181, 0.30);
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.earth-child-card-status {
+
+    flex-shrink: 0;
+
+    align-self: flex-start;
+
+    margin-top: 4px;
+
+    padding: 4px 9px;
+
+    border: 1px solid rgba(174, 133, 88, 0.12);
+
+    border-radius: 20px;
+
+    color: rgba(228, 210, 181, 0.32);
+
+    font-size: 9px;
+
+    font-weight: 300;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-earth-child-back {
+
+    flex-shrink: 0;
+
+    margin-top: auto;
+
+    padding: 10px 25px;
+
+    border: 1px solid rgba(196, 158, 108, 0.34);
+
+    border-radius: 30px;
+
+    background:
+        rgba(121, 86, 52, 0.05);
+
+    color: #c9a878;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.awtaar-earth-child-back:hover {
+
+    transform: translateY(-2px);
+
+    border-color: rgba(202, 165, 111, 0.62);
+
+    background:
+        rgba(139, 106, 74, 0.10);
+
+    color: #eadbc4;
+
+    box-shadow:
+        0 0 24px rgba(139, 106, 74, 0.10);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    #awtaar-geology-world {
+
+        padding: 40px 28px 28px;
+    }
+
+
+    .awtaar-earth-child-experiments {
+
+        grid-template-columns: 1fr;
+
+        width: min(620px, 100%);
+
+        gap: 16px;
+
+        margin-top: 38px;
+    }
+
+
+    .awtaar-earth-child-card {
+
+        min-height: 120px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    #awtaar-geology-world {
+
+        padding: 30px 18px 22px;
+    }
+
+
+    .awtaar-earth-child-title {
+
+        font-size: 27px;
+    }
+
+
+    .awtaar-earth-child-description {
+
+        max-width: 340px;
+
+        margin-top: 9px;
+
+        font-size: 12px;
+    }
+
+
+    .awtaar-earth-child-experiments {
+
+        margin-top: 28px;
+
+        gap: 12px;
+    }
+
+
+    .awtaar-earth-child-card {
+
+        gap: 15px;
+
+        min-height: 108px;
+
+        padding: 15px;
+    }
+
+
+    .earth-child-card-core {
+
+        width: 56px;
+        height: 56px;
+
+        font-size: 21px;
+    }
+
+
+    .earth-child-card-title {
+
+        font-size: 14px;
+
+        margin-bottom: 4px;
+    }
+
+
+    .earth-child-card-description {
+
+        font-size: 10px;
+
+        line-height: 1.65;
+    }
+
+
+    .earth-child-card-status {
+
+        display: none;
+    }
+
+
+    .awtaar-earth-child-back {
+
+        margin-top: 18px;
+
+        padding: 9px 21px;
+
+        font-size: 12px;
+    }
+}

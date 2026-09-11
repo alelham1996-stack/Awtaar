@@ -1,51 +1,25 @@
 import './galaxies.css'
 
+import PhysicsGalaxyUI from './PhysicsGalaxyUI.js'
+import BiologyWorldUI from '../biology/BiologyWorldUI.js'
+import AstronomyWorldUI from '../astronomy/AstronomyWorldUI.js'
+import EarthWorldUI from '../earth/EarthWorldUI.js'
 
-import PhysicsGalaxyUI
-    from './PhysicsGalaxyUI.js'
-
-
-import BiologyWorldUI
-    from '../biology/BiologyWorldUI.js'
-
-
-import {
-    t,
-    getLanguage
-} from '../locales/i18n.js'
+import { t, getLanguage } from '../locales/i18n.js'
 
 
 export default class GalaxiesUI {
 
+    constructor(scene = null, explorationUI = null) {
 
-    constructor(
-        scene = null,
-        explorationUI = null
-    ) {
+        this.scene = scene
+        this.explorationUI = explorationUI
 
+        this.isTransitioning = false
 
-        /* =====================================================
-           REFERENCES
-           ===================================================== */
-
-        this.scene =
-            scene
-
-        this.explorationUI =
-            explorationUI
-
-
-        /* =====================================================
-           STATE
-           ===================================================== */
-
-        this.isTransitioning =
-            false
-
-
-        /* =====================================================
-           PHYSICS GALAXY
-           ===================================================== */
+        // =========================================================
+        // CHILD WORLDS
+        // =========================================================
 
         this.physicsGalaxyUI =
             new PhysicsGalaxyUI(
@@ -53,1212 +27,992 @@ export default class GalaxiesUI {
                 this
             )
 
-
-        /* =====================================================
-           BIOLOGY GALAXY
-           =====================================================
-
-           BiologyWorldUI is currently the first
-           real world-level interface inside the
-           Biology Galaxy.
-
-           Later we can extend this with:
-               CellWorldUI
-               GeneticsWorldUI
-               etc.
-
-           ===================================================== */
-
         this.biologyWorldUI =
             new BiologyWorldUI(
                 this,
                 this.scene
             )
 
+        this.astronomyWorldUI =
+            new AstronomyWorldUI(
+                this,
+                this.scene
+            )
 
-        /* =====================================================
-           CREATE
-           ===================================================== */
+        this.earthWorldUI =
+            new EarthWorldUI(
+                this,
+                this.scene
+            )
+
+        // =========================================================
+        // CREATE UI
+        // =========================================================
 
         this.createUI()
-
     }
 
 
-    /* =========================================================
-       CREATE UI
-       ========================================================= */
+    // =============================================================
+    // CREATE UI
+    // =============================================================
 
     createUI() {
 
+        // Remove old UI if it somehow exists
+        const old = document.getElementById('awtaar-galaxies')
 
-        /* =====================================================
-           MAIN CONTAINER
-           ===================================================== */
+        if (old) {
+            old.remove()
+        }
+
 
         this.container =
-            document.createElement(
-                'section'
-            )
+            document.createElement('section')
 
         this.container.id =
             'awtaar-galaxies'
 
+        this.container.className =
+            'awtaar-galaxies'
 
-        /* =====================================================
-           TITLE
-           ===================================================== */
+        this.container.style.display =
+            'none'
+
+
+        // =========================================================
+        // HEADER
+        // =========================================================
+
+        const header =
+            document.createElement('div')
+
+        header.className =
+            'awtaar-galaxies-header'
+
 
         this.title =
-            document.createElement(
-                'h2'
-            )
+            document.createElement('h1')
+
+        this.title.className =
+            'awtaar-galaxies-title'
 
         this.title.textContent =
-            t(
-                'galaxies.title'
-            )
+            t('galaxies.title')
 
-
-        /* =====================================================
-           SUBTITLE
-           ===================================================== */
 
         this.subtitle =
-            document.createElement(
-                'p'
-            )
+            document.createElement('p')
+
+        this.subtitle.className =
+            'awtaar-galaxies-subtitle'
 
         this.subtitle.textContent =
-            t(
-                'galaxies.subtitle'
-            )
+            t('galaxies.subtitle')
 
 
-        /* =====================================================
-           GALAXIES LIST
-           ===================================================== */
-
-        this.galaxies =
-            document.createElement(
-                'div'
-            )
-
-        this.galaxies.className =
-            'awtaar-galaxies-list'
+        header.appendChild(this.title)
+        header.appendChild(this.subtitle)
 
 
-        /* =====================================================
-           GALAXY DATA
-           ===================================================== */
+        // =========================================================
+        // GALAXIES GRID
+        // =========================================================
 
-        this.galaxyData = [
+        this.galaxiesGrid =
+            document.createElement('div')
 
+        this.galaxiesGrid.className =
+            'awtaar-galaxies-grid'
+
+
+        const galaxyData = [
 
             {
-                key:
-                    'physics',
-
-                translationKey:
-                    'galaxies.physics',
-
-                symbol:
-                    '∞'
+                key: 'physics',
+                icon: '∞',
+                name: t('galaxies.physics')
             },
 
-
             {
-                key:
-                    'biology',
-
-                translationKey:
-                    'galaxies.biology',
-
-                symbol:
-                    'DNA'
+                key: 'biology',
+                icon: 'DNA',
+                name: t('galaxies.biology')
             },
 
-
             {
-                key:
-                    'astronomy',
-
-                translationKey:
-                    'galaxies.astronomy',
-
-                symbol:
-                    '✦'
+                key: 'astronomy',
+                icon: '✦',
+                name: t('galaxies.astronomy')
             },
 
-
             {
-                key:
-                    'earth',
-
-                translationKey:
-                    'galaxies.earth',
-
-                symbol:
-                    '◉'
+                key: 'earth',
+                icon: '◉',
+                name: t('galaxies.earth')
             },
 
-
             {
-                key:
-                    'chemistry',
-
-                translationKey:
-                    'galaxies.chemistry',
-
-                symbol:
-                    '⚗'
+                key: 'chemistry',
+                icon: '⚗',
+                name: t('galaxies.chemistry')
             }
 
         ]
 
 
-        /* =====================================================
-           CREATE GALAXY BUTTONS
-           ===================================================== */
-
-        this.galaxyData.forEach(
-            galaxy => {
+        this.galaxyButtons = {}
 
 
-                const item =
-                    document.createElement(
-                        'button'
-                    )
+        galaxyData.forEach(data => {
+
+            const button =
+                document.createElement('button')
+
+            button.type = 'button'
+
+            button.className =
+                'awtaar-galaxy-card'
+
+            button.dataset.galaxy =
+                data.key
 
 
-                item.type =
-                    'button'
+            const icon =
+                document.createElement('div')
+
+            icon.className =
+                'awtaar-galaxy-icon'
+
+            icon.textContent =
+                data.icon
 
 
-                item.className =
-                    'awtaar-galaxy'
+            const name =
+                document.createElement('div')
+
+            name.className =
+                'awtaar-galaxy-name'
+
+            name.textContent =
+                data.name
 
 
-                item.dataset.galaxy =
-                    galaxy.key
+            button.appendChild(icon)
+            button.appendChild(name)
 
 
-                /* =================================================
-                   CORE
-                   ================================================= */
+            button.addEventListener(
+                'click',
+                () => {
 
-                const core =
-                    document.createElement(
-                        'span'
-                    )
-
-                core.className =
-                    'awtaar-galaxy-core'
-
-                core.textContent =
-                    galaxy.symbol
-
-
-                /* =================================================
-                   NAME
-                   ================================================= */
-
-                const name =
-                    document.createElement(
-                        'span'
-                    )
-
-                name.className =
-                    'awtaar-galaxy-name'
-
-                name.textContent =
-                    t(
-                        galaxy.translationKey
-                    )
-
-
-                /* =================================================
-                   BUILD BUTTON
-                   ================================================= */
-
-                item.appendChild(
-                    core
-                )
-
-                item.appendChild(
-                    name
-                )
-
-
-                /* =================================================
-                   CLICK
-                   ================================================= */
-
-                item.addEventListener(
-                    'click',
-                    event => {
-
-
-                        event.preventDefault()
-
-                        event.stopPropagation()
-
-
-                        if (
-                            this.isTransitioning
-                        ) {
-
-                            return
-
-                        }
-
-
-                        console.log(
-                            `🌌 Galaxy clicked: ${galaxy.key}`
-                        )
-
-
-                        this.selectGalaxy(
-                            galaxy.key,
-                            t(
-                                galaxy.translationKey
-                            )
-                        )
-
+                    if (this.isTransitioning) {
+                        return
                     }
-                )
 
-
-                this.galaxies.appendChild(
-                    item
-                )
-
-            }
-        )
-
-
-        /* =====================================================
-           BACK BUTTON
-           ===================================================== */
-
-        this.backButton =
-            document.createElement(
-                'button'
+                    this.selectGalaxy(
+                        data.key,
+                        name.textContent
+                    )
+                }
             )
 
+
+            this.galaxiesGrid.appendChild(button)
+
+            this.galaxyButtons[data.key] =
+                button
+        })
+
+
+        // =========================================================
+        // BACK BUTTON
+        // =========================================================
+
+        this.backButton =
+            document.createElement('button')
 
         this.backButton.type =
             'button'
 
-
         this.backButton.className =
             'awtaar-galaxies-back'
 
-
         this.backButton.textContent =
-            t(
-                'common.back'
-            )
+            t('common.back')
 
 
         this.backButton.addEventListener(
             'click',
-            event => {
+            () => {
 
-
-                event.preventDefault()
-
-                event.stopPropagation()
-
-
-                if (
-                    this.isTransitioning
-                ) {
-
+                if (this.isTransitioning) {
                     return
-
                 }
 
-
                 this.returnToExploration()
-
             }
         )
 
 
-        /* =====================================================
-           BUILD
-           ===================================================== */
+        // =========================================================
+        // ASSEMBLE
+        // =========================================================
+
+        this.container.appendChild(header)
 
         this.container.appendChild(
-            this.title
+            this.galaxiesGrid
         )
-
-
-        this.container.appendChild(
-            this.subtitle
-        )
-
-
-        this.container.appendChild(
-            this.galaxies
-        )
-
 
         this.container.appendChild(
             this.backButton
         )
 
-
-        /* =====================================================
-           DOM
-           ===================================================== */
 
         document.body.appendChild(
             this.container
         )
 
 
-        /* =====================================================
-           INITIAL STATE
-           ===================================================== */
-
-        this.container.style.opacity =
-            '0'
-
-        this.container.style.visibility =
-            'hidden'
-
-        this.container.style.pointerEvents =
-            'none'
-
-
-        /* =====================================================
-           LANGUAGE
-           ===================================================== */
+        // =========================================================
+        // INITIAL LANGUAGE
+        // =========================================================
 
         this.updateLanguage()
-
     }
 
 
-    /* =========================================================
-       UPDATE LANGUAGE
-       ========================================================= */
+    // =============================================================
+    // UPDATE LANGUAGE
+    // =============================================================
 
     updateLanguage() {
 
+        const language =
+            getLanguage()
 
-        /* =====================================================
-           DIRECTION
-           ===================================================== */
+        const isArabic =
+            language === 'ar'
+
+
+        if (!this.container) {
+            return
+        }
+
 
         this.container.dir =
-            getLanguage() === 'ar'
+            isArabic
                 ? 'rtl'
                 : 'ltr'
 
 
-        /* =====================================================
-           GALAXY TITLE
-           ===================================================== */
-
-        if (
-            this.title
-        ) {
+        if (this.title) {
 
             this.title.textContent =
-                t(
-                    'galaxies.title'
-                )
-
+                t('galaxies.title')
         }
 
 
-        /* =====================================================
-           GALAXY DESCRIPTION
-           ===================================================== */
-
-        if (
-            this.subtitle
-        ) {
+        if (this.subtitle) {
 
             this.subtitle.textContent =
-                t(
-                    'galaxies.subtitle'
-                )
-
+                t('galaxies.subtitle')
         }
 
 
-        /* =====================================================
-           GALAXY NAMES
-           ===================================================== */
+        // ---------------------------------------------------------
+        // Galaxy names
+        // ---------------------------------------------------------
 
-        const galaxyItems =
-            this.galaxies.querySelectorAll(
-                '.awtaar-galaxy'
-            )
+        const galaxyNames = {
+
+            physics:
+                t('galaxies.physics'),
+
+            biology:
+                t('galaxies.biology'),
+
+            astronomy:
+                t('galaxies.astronomy'),
+
+            earth:
+                t('galaxies.earth'),
+
+            chemistry:
+                t('galaxies.chemistry')
+        }
 
 
-        galaxyItems.forEach(
-            (
-                item,
-                index
-            ) => {
-
-
-                const galaxy =
-                    this.galaxyData[index]
-
-
-                if (
-                    !galaxy
-                ) {
-
-                    return
-
-                }
-
+        Object.entries(
+            this.galaxyButtons
+        ).forEach(
+            ([key, button]) => {
 
                 const name =
-                    item.querySelector(
+                    button.querySelector(
                         '.awtaar-galaxy-name'
                     )
 
-
-                if (
-                    name
-                ) {
+                if (name) {
 
                     name.textContent =
-                        t(
-                            galaxy.translationKey
-                        )
-
+                        galaxyNames[key]
                 }
-
             }
         )
 
 
-        /* =====================================================
-           BACK
-           ===================================================== */
-
-        if (
-            this.backButton
-        ) {
+        if (this.backButton) {
 
             this.backButton.textContent =
-                t(
-                    'common.back'
-                )
-
+                t('common.back')
         }
 
 
-        /* =====================================================
-           PHYSICS GALAXY
-           ===================================================== */
+        // ---------------------------------------------------------
+        // Child worlds
+        // ---------------------------------------------------------
 
         if (
             this.physicsGalaxyUI &&
-            typeof this.physicsGalaxyUI.updateLanguage ===
-            'function'
+            typeof this.physicsGalaxyUI.updateLanguage === 'function'
         ) {
 
             this.physicsGalaxyUI.updateLanguage()
-
         }
 
-
-        /* =====================================================
-           BIOLOGY GALAXY
-           ===================================================== */
 
         if (
             this.biologyWorldUI &&
-            typeof this.biologyWorldUI.updateLanguage ===
-            'function'
+            typeof this.biologyWorldUI.updateLanguage === 'function'
         ) {
 
             this.biologyWorldUI.updateLanguage()
-
         }
 
+
+        if (
+            this.astronomyWorldUI &&
+            typeof this.astronomyWorldUI.updateLanguage === 'function'
+        ) {
+
+            this.astronomyWorldUI.updateLanguage()
+        }
+
+
+        if (
+            this.earthWorldUI &&
+            typeof this.earthWorldUI.updateLanguage === 'function'
+        ) {
+
+            this.earthWorldUI.updateLanguage()
+        }
     }
 
 
-    /* =========================================================
-       SHOW GALAXIES
-       ========================================================= */
+    // =============================================================
+    // SHOW
+    // =============================================================
 
     show() {
 
-
-        console.log(
-            '🌌 Showing Awtaar Galaxies'
-        )
-
-
-        this.isTransitioning =
-            false
+        if (!this.container) {
+            return
+        }
 
 
-        this.updateLanguage()
+        this.isTransitioning = false
 
-
-        /* =====================================================
-           SHOW
-           ===================================================== */
 
         this.container.style.display =
             'flex'
 
 
-        this.container.style.visibility =
-            'visible'
+        requestAnimationFrame(() => {
 
-
-        this.container.style.pointerEvents =
-            'auto'
-
-
-        /* =====================================================
-           ENABLE BUTTONS
-           ===================================================== */
-
-        const buttons =
-            this.galaxies.querySelectorAll(
-                '.awtaar-galaxy'
+            this.container.classList.add(
+                'visible'
             )
+        })
 
 
-        buttons.forEach(
-            button => {
+        Object.values(
+            this.galaxyButtons
+        ).forEach(button => {
 
-                button.disabled =
-                    false
-
-                button.style.pointerEvents =
-                    'auto'
-
-            }
-        )
+            button.disabled = false
+        })
 
 
-        if (
-            this.backButton
-        ) {
+        if (this.backButton) {
 
-            this.backButton.disabled =
-                false
-
+            this.backButton.disabled = false
         }
 
 
-        /* =====================================================
-           FADE IN
-           ===================================================== */
-
-        requestAnimationFrame(
-            () => {
-
-                this.container.style.opacity =
-                    '1'
-
-            }
-        )
-
+        this.updateLanguage()
     }
 
 
-    /* =========================================================
-       HIDE GALAXIES
-       ========================================================= */
+    // =============================================================
+    // HIDE
+    // =============================================================
 
     hide() {
 
-
-        this.container.style.opacity =
-            '0'
-
-
-        this.container.style.pointerEvents =
-            'none'
+        if (!this.container) {
+            return
+        }
 
 
-        /* =====================================================
-           DISABLE GALAXY BUTTONS
-           ===================================================== */
-
-        const buttons =
-            this.galaxies.querySelectorAll(
-                '.awtaar-galaxy'
-            )
+        this.container.classList.remove(
+            'visible'
+        )
 
 
-        buttons.forEach(
-            button => {
+        setTimeout(() => {
 
-                button.style.pointerEvents =
-                    'none'
-
+            if (!this.container) {
+                return
             }
-        )
 
+            this.container.style.display =
+                'none'
 
-        /* =====================================================
-           HIDE AFTER TRANSITION
-           ===================================================== */
-
-        setTimeout(
-            () => {
-
-
-                if (
-                    this.container.style.opacity ===
-                    '0'
-                ) {
-
-                    this.container.style.visibility =
-                        'hidden'
-
-                }
-
-            },
-            700
-        )
-
+        }, 600)
     }
 
 
-    /* =========================================================
-       SELECT GALAXY
-       ========================================================= */
+    // =============================================================
+    // SELECT GALAXY
+    // =============================================================
 
-    selectGalaxy(
-        key,
-        name
-    ) {
+    selectGalaxy(key, name) {
 
-
-        console.log(
-            `🌌 Awtaar Galaxy Selected: ${name}`
-        )
-
-
-        if (
-            this.isTransitioning
-        ) {
-
+        if (this.isTransitioning) {
             return
-
         }
 
 
-        /* =====================================================
-           PHYSICS
-           ===================================================== */
+        switch (key) {
 
-        if (
-            key ===
-            'physics'
-        ) {
+            // =====================================================
+            // PHYSICS
+            // =====================================================
 
-            console.log(
-                '∞ Opening Awtaar Physics Galaxy'
-            )
+            case 'physics':
+
+                this.openPhysicsGalaxy()
+                break
 
 
-            this.openPhysicsGalaxy()
+            // =====================================================
+            // BIOLOGY
+            // =====================================================
+
+            case 'biology':
+
+                this.openBiologyGalaxy()
+                break
 
 
-            return
+            // =====================================================
+            // ASTRONOMY
+            // =====================================================
 
+            case 'astronomy':
+
+                this.openAstronomyWorld()
+                break
+
+
+            // =====================================================
+            // EARTH
+            // =====================================================
+
+            case 'earth':
+
+                this.openEarthWorld()
+                break
+
+
+            // =====================================================
+            // CHEMISTRY — COMING SOON
+            // =====================================================
+
+            case 'chemistry':
+
+                console.log(
+                    `Awtaar Galaxy "${name}" is coming soon.`
+                )
+
+                break
+
+
+            default:
+
+                console.warn(
+                    'Unknown galaxy:',
+                    key
+                )
+
+                break
         }
-
-
-        /* =====================================================
-           BIOLOGY
-           ===================================================== */
-
-        if (
-            key ===
-            'biology'
-        ) {
-
-            console.log(
-                '🧬 Opening Awtaar Biology Galaxy'
-            )
-
-
-            this.openBiologyGalaxy()
-
-
-            return
-
-        }
-
-
-        /* =====================================================
-           FUTURE GALAXIES
-           ===================================================== */
-
-        console.log(
-            `🌌 Galaxy "${name}" is coming soon.`
-        )
-
     }
 
 
-    /* =========================================================
-       OPEN PHYSICS GALAXY
-       ========================================================= */
+    // =============================================================
+    // OPEN PHYSICS
+    // =============================================================
 
     openPhysicsGalaxy() {
 
-
         if (
+            !this.physicsGalaxyUI ||
             this.isTransitioning
         ) {
 
             return
-
         }
 
 
-        if (
-            !this.physicsGalaxyUI
-        ) {
+        this.isTransitioning = true
 
-            console.error(
-                '❌ PhysicsGalaxyUI is not available'
-            )
 
-            return
+        Object.values(
+            this.galaxyButtons
+        ).forEach(button => {
 
+            button.disabled = true
+        })
+
+
+        if (this.backButton) {
+            this.backButton.disabled = true
         }
 
 
-        console.log(
-            '🌀 Preparing Physics Galaxy...'
-        )
+        this.hide()
 
 
-        this.isTransitioning =
-            true
+        setTimeout(() => {
 
+            if (!this.physicsGalaxyUI) {
 
-        /* =====================================================
-           DISABLE GALAXY BUTTONS
-           ===================================================== */
-
-        const galaxyButtons =
-            this.galaxies.querySelectorAll(
-                '.awtaar-galaxy'
-            )
-
-
-        galaxyButtons.forEach(
-            button => {
-
-                button.disabled =
-                    true
-
+                this.isTransitioning = false
+                return
             }
-        )
 
-
-        this.backButton.disabled =
-            true
-
-
-        /* =====================================================
-           HIDE GALAXIES
-           ===================================================== */
-
-        this.hide()
-
-
-        /* =====================================================
-           ENTER PHYSICS
-           ===================================================== */
-
-        setTimeout(
-            () => {
-
-
-                console.log(
-                    '🌀 Opening Physics Galaxy'
-                )
-
-
-                if (
-                    typeof this.physicsGalaxyUI.updateLanguage ===
-                    'function'
-                ) {
-
-                    this.physicsGalaxyUI.updateLanguage()
-
-                }
-
-
-                this.physicsGalaxyUI.show()
-
-
-                this.isTransitioning =
-                    false
-
-            },
-            700
-        )
-
-    }
-
-
-    /* =========================================================
-       OPEN BIOLOGY GALAXY
-       ========================================================= */
-
-    openBiologyGalaxy() {
-
-
-        if (
-            this.isTransitioning
-        ) {
-
-            return
-
-        }
-
-
-        if (
-            !this.biologyWorldUI
-        ) {
-
-            console.error(
-                '❌ BiologyWorldUI is not available'
-            )
-
-            return
-
-        }
-
-
-        console.log(
-            '🧬 Preparing Biology Galaxy...'
-        )
-
-
-        this.isTransitioning =
-            true
-
-
-        /* =====================================================
-           DISABLE GALAXY BUTTONS
-           ===================================================== */
-
-        const galaxyButtons =
-            this.galaxies.querySelectorAll(
-                '.awtaar-galaxy'
-            )
-
-
-        galaxyButtons.forEach(
-            button => {
-
-                button.disabled =
-                    true
-
-            }
-        )
-
-
-        this.backButton.disabled =
-            true
-
-
-        /* =====================================================
-           HIDE GALAXIES
-           ===================================================== */
-
-        this.hide()
-
-
-        /* =====================================================
-           ENTER BIOLOGY
-           ===================================================== */
-
-        setTimeout(
-            () => {
-
-
-                console.log(
-                    '🧬 Opening Biology Galaxy'
-                )
-
-
-                /* =================================================
-                   MAKE SURE SCENE IS CURRENT
-                   ================================================= */
-
-                if (
-                    typeof this.biologyWorldUI.setScene ===
-                    'function'
-                ) {
-
-                    this.biologyWorldUI.setScene(
-                        this.scene
-                    )
-
-                }
-
-
-                /* =================================================
-                   UPDATE LANGUAGE
-                   ================================================= */
-
-                if (
-                    typeof this.biologyWorldUI.updateLanguage ===
-                    'function'
-                ) {
-
-                    this.biologyWorldUI.updateLanguage()
-
-                }
-
-
-                /* =================================================
-                   SHOW BIOLOGY WORLD SELECTOR
-                   ================================================= */
-
-                if (
-                    typeof this.biologyWorldUI.show ===
-                    'function'
-                ) {
-
-                    this.biologyWorldUI.show()
-
-                }
-
-
-                this.isTransitioning =
-                    false
-
-            },
-            700
-        )
-
-    }
-
-
-    /* =========================================================
-       RETURN TO EXPLORATION
-       ========================================================= */
-
-    returnToExploration() {
-
-
-        if (
-            this.isTransitioning
-        ) {
-
-            return
-
-        }
-
-
-        console.log(
-            '↩️ Returning to Exploration'
-        )
-
-
-        this.isTransitioning =
-            true
-
-
-        this.backButton.disabled =
-            true
-
-
-        this.hide()
-
-
-        /* =====================================================
-           RETURN
-           ===================================================== */
-
-        setTimeout(
-            () => {
-
-
-                if (
-                    this.explorationUI
-                ) {
-
-
-                    if (
-                        typeof this.explorationUI.updateLanguage ===
-                        'function'
-                    ) {
-
-                        this.explorationUI.updateLanguage()
-
-                    }
-
-
-                    if (
-                        typeof this.explorationUI.show ===
-                        'function'
-                    ) {
-
-                        this.explorationUI.show()
-
-                    }
-
-                }
-
-
-                this.isTransitioning =
-                    false
-
-            },
-            700
-        )
-
-    }
-
-
-    /* =========================================================
-       RETURN FROM PHYSICS GALAXY
-       ========================================================= */
-
-    returnFromPhysicsGalaxy() {
-
-
-        if (
-            this.isTransitioning
-        ) {
-
-            return
-
-        }
-
-
-        this.isTransitioning =
-            true
-
-
-        if (
-            this.physicsGalaxyUI
-        ) {
-
-            this.physicsGalaxyUI.hide()
-
-        }
-
-
-        setTimeout(
-            () => {
-
-
-                this.show()
-
-
-                this.isTransitioning =
-                    false
-
-            },
-            700
-        )
-
-    }
-
-
-    /* =========================================================
-       RETURN FROM BIOLOGY GALAXY
-       ========================================================= */
-
-    returnFromBiologyGalaxy() {
-
-
-        if (
-            this.isTransitioning
-        ) {
-
-            return
-
-        }
-
-
-        this.isTransitioning =
-            true
-
-
-        console.log(
-            '↩️ Returning from Biology Galaxy'
-        )
-
-
-        /* =====================================================
-           HIDE BIOLOGY
-           ===================================================== */
-
-        if (
-            this.biologyWorldUI
-        ) {
 
             if (
-                typeof this.biologyWorldUI.hide ===
+                typeof this.physicsGalaxyUI.setScene ===
                 'function'
             ) {
 
-                this.biologyWorldUI.hide()
-
+                this.physicsGalaxyUI.setScene(
+                    this.scene
+                )
             }
 
-        }
+
+            if (
+                typeof this.physicsGalaxyUI.updateLanguage ===
+                'function'
+            ) {
+
+                this.physicsGalaxyUI.updateLanguage()
+            }
 
 
-        /* =====================================================
-           SHOW GALAXIES
-           ===================================================== */
-
-        setTimeout(
-            () => {
+            this.physicsGalaxyUI.show()
 
 
-                this.show()
+            this.isTransitioning = false
 
-
-                this.isTransitioning =
-                    false
-
-            },
-            700
-        )
-
+        }, 700)
     }
 
 
-    /* =========================================================
-       SET SCENE
-       ========================================================= */
+    // =============================================================
+    // OPEN BIOLOGY
+    // =============================================================
 
-    setScene(
-        scene
-    ) {
+    openBiologyGalaxy() {
+
+        if (
+            !this.biologyWorldUI ||
+            this.isTransitioning
+        ) {
+
+            return
+        }
 
 
-        this.scene =
-            scene
+        this.isTransitioning = true
 
 
-        /* =====================================================
-           PHYSICS
-           ===================================================== */
+        Object.values(
+            this.galaxyButtons
+        ).forEach(button => {
+
+            button.disabled = true
+        })
+
+
+        if (this.backButton) {
+            this.backButton.disabled = true
+        }
+
+
+        this.hide()
+
+
+        setTimeout(() => {
+
+            if (!this.biologyWorldUI) {
+
+                this.isTransitioning = false
+                return
+            }
+
+
+            if (
+                typeof this.biologyWorldUI.setScene ===
+                'function'
+            ) {
+
+                this.biologyWorldUI.setScene(
+                    this.scene
+                )
+            }
+
+
+            if (
+                typeof this.biologyWorldUI.updateLanguage ===
+                'function'
+            ) {
+
+                this.biologyWorldUI.updateLanguage()
+            }
+
+
+            this.biologyWorldUI.show()
+
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // OPEN ASTRONOMY
+    // =============================================================
+
+    openAstronomyWorld() {
+
+        if (
+            !this.astronomyWorldUI ||
+            this.isTransitioning
+        ) {
+
+            return
+        }
+
+
+        this.isTransitioning = true
+
+
+        Object.values(
+            this.galaxyButtons
+        ).forEach(button => {
+
+            button.disabled = true
+        })
+
+
+        if (this.backButton) {
+            this.backButton.disabled = true
+        }
+
+
+        this.hide()
+
+
+        setTimeout(() => {
+
+            if (!this.astronomyWorldUI) {
+
+                this.isTransitioning = false
+                return
+            }
+
+
+            if (
+                typeof this.astronomyWorldUI.setScene ===
+                'function'
+            ) {
+
+                this.astronomyWorldUI.setScene(
+                    this.scene
+                )
+            }
+
+
+            if (
+                typeof this.astronomyWorldUI.updateLanguage ===
+                'function'
+            ) {
+
+                this.astronomyWorldUI.updateLanguage()
+            }
+
+
+            this.astronomyWorldUI.show()
+
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // OPEN EARTH
+    // =============================================================
+
+    openEarthWorld() {
+
+        if (
+            !this.earthWorldUI ||
+            this.isTransitioning
+        ) {
+
+            return
+        }
+
+
+        this.isTransitioning = true
+
+
+        Object.values(
+            this.galaxyButtons
+        ).forEach(button => {
+
+            button.disabled = true
+        })
+
+
+        if (this.backButton) {
+            this.backButton.disabled = true
+        }
+
+
+        this.hide()
+
+
+        setTimeout(() => {
+
+            if (!this.earthWorldUI) {
+
+                this.isTransitioning = false
+                return
+            }
+
+
+            if (
+                typeof this.earthWorldUI.setScene ===
+                'function'
+            ) {
+
+                this.earthWorldUI.setScene(
+                    this.scene
+                )
+            }
+
+
+            if (
+                typeof this.earthWorldUI.updateLanguage ===
+                'function'
+            ) {
+
+                this.earthWorldUI.updateLanguage()
+            }
+
+
+            this.earthWorldUI.show()
+
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // RETURN FROM PHYSICS
+    // =============================================================
+
+    returnFromPhysicsGalaxy() {
+
+        if (this.isTransitioning) {
+            return
+        }
+
+
+        this.isTransitioning = true
+
+
+        if (this.physicsGalaxyUI) {
+
+            this.physicsGalaxyUI.hide()
+        }
+
+
+        setTimeout(() => {
+
+            this.show()
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // RETURN FROM BIOLOGY
+    // =============================================================
+
+    returnFromBiologyGalaxy() {
+
+        if (this.isTransitioning) {
+            return
+        }
+
+
+        this.isTransitioning = true
+
+
+        if (this.biologyWorldUI) {
+
+            this.biologyWorldUI.hide()
+        }
+
+
+        setTimeout(() => {
+
+            this.show()
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // RETURN FROM ASTRONOMY
+    // =============================================================
+
+    returnFromAstronomyWorld() {
+
+        if (this.isTransitioning) {
+            return
+        }
+
+
+        this.isTransitioning = true
+
+
+        if (this.astronomyWorldUI) {
+
+            this.astronomyWorldUI.hide()
+        }
+
+
+        setTimeout(() => {
+
+            this.show()
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // RETURN FROM EARTH
+    // =============================================================
+
+    returnFromEarthWorld() {
+
+        if (this.isTransitioning) {
+            return
+        }
+
+
+        this.isTransitioning = true
+
+
+        if (this.earthWorldUI) {
+
+            this.earthWorldUI.hide()
+        }
+
+
+        setTimeout(() => {
+
+            this.show()
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // RETURN TO EXPLORATION
+    // =============================================================
+
+    returnToExploration() {
+
+        if (this.isTransitioning) {
+            return
+        }
+
+
+        this.isTransitioning = true
+
+
+        this.hide()
+
+
+        setTimeout(() => {
+
+            if (
+                this.explorationUI &&
+                typeof this.explorationUI.show ===
+                'function'
+            ) {
+
+                this.explorationUI.show()
+            }
+
+
+            this.isTransitioning = false
+
+        }, 700)
+    }
+
+
+    // =============================================================
+    // SET SCENE
+    // =============================================================
+
+    setScene(scene) {
+
+        this.scene = scene
+
 
         if (
             this.physicsGalaxyUI &&
@@ -1269,13 +1023,8 @@ export default class GalaxiesUI {
             this.physicsGalaxyUI.setScene(
                 scene
             )
-
         }
 
-
-        /* =====================================================
-           BIOLOGY
-           ===================================================== */
 
         if (
             this.biologyWorldUI &&
@@ -1286,24 +1035,39 @@ export default class GalaxiesUI {
             this.biologyWorldUI.setScene(
                 scene
             )
-
         }
 
+
+        if (
+            this.astronomyWorldUI &&
+            typeof this.astronomyWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.astronomyWorldUI.setScene(
+                scene
+            )
+        }
+
+
+        if (
+            this.earthWorldUI &&
+            typeof this.earthWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.earthWorldUI.setScene(
+                scene
+            )
+        }
     }
 
 
-    /* =========================================================
-       UPDATE
-       ========================================================= */
+    // =============================================================
+    // UPDATE
+    // =============================================================
 
-    update(
-        delta = 0
-    ) {
-
-
-        /* =====================================================
-           PHYSICS
-           ===================================================== */
+    update(delta = 0) {
 
         if (
             this.physicsGalaxyUI &&
@@ -1314,13 +1078,8 @@ export default class GalaxiesUI {
             this.physicsGalaxyUI.update(
                 delta
             )
-
         }
 
-
-        /* =====================================================
-           BIOLOGY
-           ===================================================== */
 
         if (
             this.biologyWorldUI &&
@@ -1331,22 +1090,43 @@ export default class GalaxiesUI {
             this.biologyWorldUI.update(
                 delta
             )
-
         }
 
+
+        if (
+            this.astronomyWorldUI &&
+            typeof this.astronomyWorldUI.update ===
+            'function'
+        ) {
+
+            this.astronomyWorldUI.update(
+                delta
+            )
+        }
+
+
+        if (
+            this.earthWorldUI &&
+            typeof this.earthWorldUI.update ===
+            'function'
+        ) {
+
+            this.earthWorldUI.update(
+                delta
+            )
+        }
     }
 
 
-    /* =========================================================
-       DESTROY
-       ========================================================= */
+    // =============================================================
+    // DESTROY
+    // =============================================================
 
     destroy() {
 
-
-        /* =====================================================
-           PHYSICS
-           ===================================================== */
+        // ---------------------------------------------------------
+        // Physics
+        // ---------------------------------------------------------
 
         if (
             this.physicsGalaxyUI &&
@@ -1355,13 +1135,12 @@ export default class GalaxiesUI {
         ) {
 
             this.physicsGalaxyUI.destroy()
-
         }
 
 
-        /* =====================================================
-           BIOLOGY
-           ===================================================== */
+        // ---------------------------------------------------------
+        // Biology
+        // ---------------------------------------------------------
 
         if (
             this.biologyWorldUI &&
@@ -1370,22 +1149,56 @@ export default class GalaxiesUI {
         ) {
 
             this.biologyWorldUI.destroy()
-
         }
 
 
-        /* =====================================================
-           CONTAINER
-           ===================================================== */
+        // ---------------------------------------------------------
+        // Astronomy
+        // ---------------------------------------------------------
 
         if (
-            this.container
+            this.astronomyWorldUI &&
+            typeof this.astronomyWorldUI.destroy ===
+            'function'
         ) {
+
+            this.astronomyWorldUI.destroy()
+        }
+
+
+        // ---------------------------------------------------------
+        // Earth
+        // ---------------------------------------------------------
+
+        if (
+            this.earthWorldUI &&
+            typeof this.earthWorldUI.destroy ===
+            'function'
+        ) {
+
+            this.earthWorldUI.destroy()
+        }
+
+
+        // ---------------------------------------------------------
+        // Main container
+        // ---------------------------------------------------------
+
+        if (this.container) {
 
             this.container.remove()
 
+            this.container = null
         }
 
-    }
 
+        this.galaxyButtons = {}
+
+        this.physicsGalaxyUI = null
+        this.biologyWorldUI = null
+        this.astronomyWorldUI = null
+        this.earthWorldUI = null
+        this.explorationUI = null
+        this.scene = null
+    }
 }
