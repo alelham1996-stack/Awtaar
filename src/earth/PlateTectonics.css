@@ -1,0 +1,985 @@
+/* =========================================================
+   AWTAAR — PLATE TECTONICS
+   ========================================================= */
+
+.awtaar-plate-tectonics {
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 55%,
+            rgba(90, 39, 20, 0.12),
+            transparent 55%
+        ),
+        #090706;
+
+    color: #ead9c5;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 9000;
+
+    transition:
+        opacity 550ms ease;
+}
+
+
+.awtaar-plate-tectonics.visible {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+.awtaar-plate-tectonics-canvas {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    display: block;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.awtaar-plate-header {
+    position: absolute;
+
+    top: 32px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(
+        680px,
+        calc(100vw - 40px)
+    );
+
+    text-align: center;
+
+    z-index: 20;
+
+    pointer-events: none;
+}
+
+
+.awtaar-plate-header h1 {
+    margin: 0 0 8px;
+
+    font-size: 24px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.03em;
+
+    color: #ead8c0;
+
+    text-shadow:
+        0 2px 16px
+        rgba(0, 0, 0, 0.55);
+}
+
+
+.awtaar-plate-header p {
+    margin: 0;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+
+    color:
+        rgba(
+            220,
+            196,
+            168,
+            0.72
+        );
+}
+
+
+/* =========================================================
+   MAIN MODES
+   ========================================================= */
+
+.awtaar-plate-modes {
+    position: absolute;
+
+    top: 132px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 6px;
+
+    border:
+        1px solid
+        rgba(
+            190,
+            139,
+            88,
+            0.18
+        );
+
+    border-radius: 10px;
+
+    background:
+        rgba(
+            12,
+            8,
+            6,
+            0.74
+        );
+
+    backdrop-filter:
+        blur(12px);
+
+    z-index: 30;
+}
+
+
+.awtaar-plate-mode {
+    min-width: 112px;
+
+    height: 38px;
+
+    padding: 0 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    border:
+        1px solid
+        rgba(
+            190,
+            139,
+            88,
+            0.13
+        );
+
+    border-radius: 7px;
+
+    background:
+        rgba(
+            25,
+            16,
+            11,
+            0.5
+        );
+
+    color:
+        rgba(
+            222,
+            199,
+            173,
+            0.62
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background 220ms ease,
+        border-color 220ms ease,
+        color 220ms ease,
+        transform 220ms ease;
+}
+
+
+.awtaar-plate-mode:hover {
+    border-color:
+        rgba(
+            215,
+            164,
+            105,
+            0.38
+        );
+
+    color: #ead0ae;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.awtaar-plate-mode.active {
+    border-color:
+        rgba(
+            215,
+            164,
+            105,
+            0.58
+        );
+
+    background:
+        rgba(
+            75,
+            43,
+            23,
+            0.58
+        );
+
+    color: #efd2aa;
+
+    box-shadow:
+        0 0 22px
+        rgba(
+            193,
+            120,
+            57,
+            0.08
+        );
+}
+
+
+.awtaar-plate-mode-icon {
+    font-size: 15px;
+
+    line-height: 1;
+
+    opacity: 0.88;
+}
+
+
+/* =========================================================
+   CONVERGENT PANEL
+   ========================================================= */
+
+.awtaar-plate-convergent-panel {
+    position: absolute;
+
+    top: 188px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        translateY(-7px);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 5px 7px;
+
+    border:
+        1px solid
+        rgba(
+            190,
+            139,
+            88,
+            0.16
+        );
+
+    border-radius: 9px;
+
+    background:
+        rgba(
+            12,
+            8,
+            6,
+            0.7
+        );
+
+    backdrop-filter:
+        blur(12px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    z-index: 31;
+
+    transition:
+        opacity 220ms ease,
+        transform 220ms ease,
+        visibility 220ms ease;
+}
+
+
+.awtaar-plate-convergent-panel.visible {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+.awtaar-plate-convergent-title {
+    padding:
+        0 7px;
+
+    color:
+        rgba(
+            205,
+            178,
+            149,
+            0.56
+        );
+
+    font-size: 9px;
+
+    white-space: nowrap;
+}
+
+
+.awtaar-plate-convergent-button {
+    height: 31px;
+
+    min-width: 74px;
+
+    padding: 0 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    border:
+        1px solid
+        rgba(
+            190,
+            139,
+            88,
+            0.11
+        );
+
+    border-radius: 6px;
+
+    background:
+        rgba(
+            27,
+            17,
+            11,
+            0.46
+        );
+
+    color:
+        rgba(
+            218,
+            192,
+            161,
+            0.58
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    transition:
+        background 200ms ease,
+        border-color 200ms ease,
+        color 200ms ease,
+        transform 200ms ease;
+}
+
+
+.awtaar-plate-convergent-button:hover {
+    border-color:
+        rgba(
+            215,
+            164,
+            105,
+            0.35
+        );
+
+    color: #ead0ae;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.awtaar-plate-convergent-button.active {
+    background:
+        rgba(
+            78,
+            45,
+            23,
+            0.58
+        );
+
+    border-color:
+        rgba(
+            215,
+            164,
+            105,
+            0.52
+        );
+
+    color: #efd2aa;
+}
+
+
+.awtaar-plate-convergent-icon {
+    font-size: 13px;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   INFO
+   ========================================================= */
+
+.awtaar-plate-info {
+    position: absolute;
+
+    bottom: 106px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: min(
+        560px,
+        calc(100vw - 40px)
+    );
+
+    padding:
+        13px 17px;
+
+    border:
+        1px solid
+        rgba(
+            190,
+            139,
+            88,
+            0.16
+        );
+
+    border-radius: 9px;
+
+    background:
+        rgba(
+            12,
+            8,
+            6,
+            0.78
+        );
+
+    backdrop-filter:
+        blur(13px);
+
+    text-align: center;
+
+    z-index: 25;
+
+    pointer-events: none;
+}
+
+
+.awtaar-plate-info > div:first-child {
+    margin-bottom: 4px;
+
+    color: #e5c9a8;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+
+.awtaar-plate-info > div:last-child {
+    color:
+        rgba(
+            218,
+            193,
+            164,
+            0.68
+        );
+
+    font-size: 10px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.awtaar-plate-controls {
+    position: absolute;
+
+    bottom: 30px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    gap: 7px;
+
+    z-index: 40;
+}
+
+
+.awtaar-plate-control {
+    min-width: 105px;
+
+    height: 34px;
+
+    padding: 0 14px;
+
+    border:
+        1px solid
+        rgba(
+            190,
+            139,
+            88,
+            0.2
+        );
+
+    border-radius: 7px;
+
+    background:
+        rgba(
+            14,
+            9,
+            7,
+            0.82
+        );
+
+    color:
+        rgba(
+            229,
+            207,
+            181,
+            0.72
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    transition:
+        background 220ms ease,
+        border-color 220ms ease,
+        color 220ms ease,
+        transform 220ms ease;
+}
+
+
+.awtaar-plate-control:hover {
+    border-color:
+        rgba(
+            215,
+            164,
+            105,
+            0.5
+        );
+
+    background:
+        rgba(
+            40,
+            24,
+            15,
+            0.92
+        );
+
+    color: #efd2aa;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   EXIT
+   ========================================================= */
+
+.awtaar-plate-exit {
+    position: absolute;
+
+    right: 30px;
+    bottom: 30px;
+
+    min-width: 150px;
+
+    height: 36px;
+
+    padding: 0 15px;
+
+    border:
+        1px solid
+        rgba(
+            190,
+            139,
+            88,
+            0.28
+        );
+
+    border-radius: 8px;
+
+    background:
+        rgba(
+            14,
+            9,
+            7,
+            0.82
+        );
+
+    color:
+        rgba(
+            229,
+            207,
+            181,
+            0.78
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    z-index: 50;
+
+    pointer-events: auto;
+
+    transition:
+        background 220ms ease,
+        border-color 220ms ease,
+        color 220ms ease,
+        transform 220ms ease;
+}
+
+
+[dir="rtl"] .awtaar-plate-exit {
+    right: auto;
+
+    left: 30px;
+}
+
+
+.awtaar-plate-exit:hover {
+    border-color:
+        rgba(
+            215,
+            164,
+            105,
+            0.55
+        );
+
+    background:
+        rgba(
+            40,
+            24,
+            15,
+            0.92
+        );
+
+    color: #efd2aa;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .awtaar-plate-header {
+        top: 24px;
+    }
+
+
+    .awtaar-plate-header h1 {
+        font-size: 20px;
+    }
+
+
+    .awtaar-plate-header p {
+        font-size: 10px;
+    }
+
+
+    .awtaar-plate-modes {
+        top: 108px;
+    }
+
+
+    .awtaar-plate-mode {
+        min-width: 88px;
+
+        height: 34px;
+
+        font-size: 9px;
+    }
+
+
+    .awtaar-plate-convergent-panel {
+        top: 154px;
+
+        max-width:
+            calc(100vw - 24px);
+
+        overflow-x: auto;
+    }
+
+
+    .awtaar-plate-convergent-title {
+        display: none;
+    }
+
+
+    .awtaar-plate-convergent-button {
+        min-width: 68px;
+
+        height: 29px;
+
+        font-size: 9px;
+    }
+
+
+    .awtaar-plate-info {
+        bottom: 95px;
+
+        width:
+            calc(100vw - 30px);
+
+        padding:
+            11px 13px;
+    }
+
+
+    .awtaar-plate-info > div:first-child {
+        font-size: 12px;
+    }
+
+
+    .awtaar-plate-info > div:last-child {
+        font-size: 9px;
+    }
+
+
+    .awtaar-plate-controls {
+        bottom: 20px;
+    }
+
+
+    .awtaar-plate-control {
+        min-width: 90px;
+
+        height: 32px;
+
+        font-size: 9px;
+    }
+
+
+    .awtaar-plate-exit {
+        display: block;
+
+        right: 20px;
+        bottom: 20px;
+
+        min-width: 125px;
+
+        height: 33px;
+
+        padding: 0 12px;
+
+        font-size: 10px;
+    }
+
+
+    [dir="rtl"] .awtaar-plate-exit {
+        right: auto;
+
+        left: 20px;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .awtaar-plate-header {
+        top: 18px;
+    }
+
+
+    .awtaar-plate-header h1 {
+        font-size: 17px;
+    }
+
+
+    .awtaar-plate-header p {
+        font-size: 9px;
+    }
+
+
+    .awtaar-plate-modes {
+        top: 88px;
+
+        gap: 4px;
+
+        padding: 4px;
+    }
+
+
+    .awtaar-plate-mode {
+        min-width: 74px;
+
+        height: 31px;
+
+        padding: 0 8px;
+
+        font-size: 8px;
+    }
+
+
+    .awtaar-plate-mode-icon {
+        font-size: 12px;
+    }
+
+
+    .awtaar-plate-convergent-panel {
+        top: 129px;
+
+        gap: 4px;
+
+        padding: 4px;
+    }
+
+
+    .awtaar-plate-convergent-button {
+        min-width: 60px;
+
+        height: 27px;
+
+        padding: 0 7px;
+
+        font-size: 8px;
+    }
+
+
+    .awtaar-plate-convergent-icon {
+        font-size: 11px;
+    }
+
+
+    .awtaar-plate-info {
+        bottom: 82px;
+
+        padding:
+            9px 10px;
+    }
+
+
+    .awtaar-plate-info > div:first-child {
+        font-size: 10px;
+    }
+
+
+    .awtaar-plate-info > div:last-child {
+        font-size: 8px;
+
+        line-height: 1.65;
+    }
+
+
+    .awtaar-plate-controls {
+        bottom: 16px;
+
+        gap: 4px;
+    }
+
+
+    .awtaar-plate-control {
+        min-width: 78px;
+
+        height: 30px;
+
+        padding: 0 9px;
+
+        font-size: 8px;
+    }
+
+
+    .awtaar-plate-exit {
+        right: 12px;
+        bottom: 16px;
+
+        min-width: 112px;
+
+        height: 31px;
+
+        font-size: 9px;
+    }
+
+
+    [dir="rtl"] .awtaar-plate-exit {
+        right: auto;
+
+        left: 12px;
+    }
+}

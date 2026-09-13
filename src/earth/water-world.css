@@ -1,0 +1,1252 @@
+/* =========================================================
+   AWTAAR — WATER WORLD
+   WATER WORLD
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-water-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding:
+        clamp(5.5rem, 10vh, 7rem)
+        clamp(1.2rem, 4vw, 4rem)
+        clamp(4.5rem, 8vh, 6rem);
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(36, 146, 165, 0.16),
+            transparent 38%
+        ),
+
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(16, 93, 118, 0.13),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            135deg,
+            #031218 0%,
+            #061c24 42%,
+            #041116 100%
+        );
+
+    color: #f5f1e8;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    transition:
+        opacity 550ms ease,
+        visibility 550ms ease;
+}
+
+
+/* =========================================================
+   SUBTLE WATER LIGHT
+   ========================================================= */
+
+.awtaar-water-world::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -10%;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(96, 210, 218, 0.10),
+            transparent 42%
+        ),
+
+        linear-gradient(
+            105deg,
+            transparent 25%,
+            rgba(90, 212, 224, 0.035) 42%,
+            rgba(160, 240, 244, 0.055) 50%,
+            rgba(90, 212, 224, 0.035) 58%,
+            transparent 75%
+        );
+
+    opacity: 0.9;
+
+    z-index: 0;
+
+    animation:
+        awtaar-water-light
+        14s
+        ease-in-out
+        infinite;
+}
+
+
+/* =========================================================
+   FLOATING WATER DROPLETS
+   ========================================================= */
+
+.awtaar-water-world::after {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    opacity: 0.62;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(166, 239, 244, 0.70) 0 2px,
+            rgba(91, 210, 222, 0.28) 3px,
+            transparent 7px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(210, 249, 250, 0.58) 0 1.5px,
+            rgba(86, 204, 217, 0.22) 3px,
+            transparent 6px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(132, 230, 237, 0.58) 0 2px,
+            rgba(70, 190, 205, 0.20) 3px,
+            transparent 7px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(211, 250, 251, 0.50) 0 1px,
+            rgba(90, 210, 222, 0.18) 3px,
+            transparent 6px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(118, 223, 233, 0.48) 0 2px,
+            rgba(72, 187, 201, 0.16) 4px,
+            transparent 8px
+        );
+
+    background-repeat:
+        no-repeat;
+
+    background-size:
+        22px 22px,
+        14px 14px,
+        20px 20px,
+        12px 12px,
+        24px 24px;
+
+    background-position:
+        12% 105%,
+        31% 120%,
+        57% 112%,
+        76% 125%,
+        91% 108%;
+
+    animation:
+        awtaar-water-droplets
+        18s
+        linear
+        infinite;
+}
+
+
+/* =========================================================
+   WATER LIGHT ANIMATION
+   ========================================================= */
+
+@keyframes awtaar-water-light {
+
+    0% {
+
+        transform:
+            translateX(-2%)
+            translateY(0)
+            scale(1);
+    }
+
+    50% {
+
+        transform:
+            translateX(2%)
+            translateY(1%)
+            scale(1.04);
+    }
+
+    100% {
+
+        transform:
+            translateX(-2%)
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   DROPLET ANIMATION
+   ========================================================= */
+
+@keyframes awtaar-water-droplets {
+
+    0% {
+
+        background-position:
+            12% 108%,
+            31% 124%,
+            57% 116%,
+            76% 129%,
+            91% 111%;
+
+        opacity: 0;
+    }
+
+    8% {
+
+        opacity: 0.62;
+    }
+
+    45% {
+
+        background-position:
+            15% 55%,
+            29% 68%,
+            60% 62%,
+            73% 70%,
+            94% 58%;
+    }
+
+    75% {
+
+        opacity: 0.48;
+    }
+
+    100% {
+
+        background-position:
+            18% -18%,
+            27% -10%,
+            63% -22%,
+            70% -15%,
+            96% -20%;
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   CONTENT LAYER
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-title,
+
+.awtaar-water-world
+.awtaar-earth-child-description,
+
+.awtaar-water-world
+.awtaar-earth-child-experiments,
+
+.awtaar-water-world
+.awtaar-earth-child-back {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-title {
+
+    margin: 0;
+
+    max-width: 900px;
+
+    text-align: center;
+
+    font-size:
+        clamp(2rem, 4vw, 3.4rem);
+
+    font-weight: 500;
+
+    letter-spacing: 0.025em;
+
+    line-height: 1.2;
+
+    color:
+        #f5f1e8;
+
+    text-shadow:
+        0 0 28px
+        rgba(74, 207, 218, 0.15);
+
+    animation:
+        awtaar-water-title
+        7s
+        ease-in-out
+        infinite;
+}
+
+
+/* =========================================================
+   TITLE BREATHING
+   ========================================================= */
+
+@keyframes awtaar-water-title {
+
+    0%,
+    100% {
+
+        text-shadow:
+            0 0 28px
+            rgba(74, 207, 218, 0.12);
+    }
+
+    50% {
+
+        text-shadow:
+            0 0 38px
+            rgba(74, 207, 218, 0.24);
+    }
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-description {
+
+    max-width: 760px;
+
+    margin:
+        1rem auto
+        clamp(2rem, 4vh, 3rem);
+
+    text-align: center;
+
+    font-size:
+        clamp(0.95rem, 1.4vw, 1.15rem);
+
+    font-weight: 300;
+
+    line-height: 1.9;
+
+    color:
+        rgba(226, 241, 240, 0.72);
+}
+
+
+/* =========================================================
+   EXPERIMENTS CONTAINER
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-experiments {
+
+    width:
+        min(1120px, 100%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap:
+        clamp(1rem, 1.8vw, 1.4rem);
+
+    margin-top:
+        0.3rem;
+
+    padding:
+        0.3rem;
+
+    overflow: visible;
+
+    scrollbar-width: auto;
+}
+
+
+/* =========================================================
+   EXPERIMENT CARD
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-card {
+
+    position: relative;
+
+    min-height:
+        176px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding:
+        1.55rem
+        1.35rem
+        1.45rem;
+
+    border:
+        1px solid
+        rgba(108, 202, 211, 0.20);
+
+    border-radius:
+        20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(14, 49, 57, 0.68),
+            rgba(4, 23, 29, 0.84)
+        );
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 12px 34px
+        rgba(0, 0, 0, 0.25),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.045);
+
+    cursor:
+        pointer;
+
+    overflow:
+        hidden;
+
+    text-align:
+        center;
+
+    isolation:
+        isolate;
+
+    transition:
+        transform 320ms ease,
+        border-color 320ms ease,
+        box-shadow 320ms ease,
+        background 320ms ease;
+}
+
+
+/* =========================================================
+   CARD TOP HAIRLINE
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 12%;
+
+    width: 76%;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(164, 238, 241, 0.34),
+            transparent
+        );
+
+    opacity:
+        0.8;
+
+    pointer-events:
+        none;
+
+    z-index:
+        1;
+}
+
+
+/* =========================================================
+   CARD WATER REFLECTION
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-card::after {
+
+    content: '';
+
+    position: absolute;
+
+    left: -20%;
+
+    bottom: 0;
+
+    width: 140%;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(92, 214, 224, 0.32),
+            rgba(164, 238, 241, 0.16),
+            rgba(92, 214, 224, 0.32),
+            transparent
+        );
+
+    opacity:
+        0.5;
+
+    pointer-events:
+        none;
+
+    transform:
+        translateX(-8%);
+
+    animation:
+        awtaar-card-water-line
+        6s
+        ease-in-out
+        infinite;
+
+    z-index:
+        1;
+}
+
+
+/* =========================================================
+   CARD WATER LINE
+   ========================================================= */
+
+@keyframes awtaar-card-water-line {
+
+    0%,
+    100% {
+
+        transform:
+            translateX(-8%)
+            scaleX(0.92);
+
+        opacity:
+            0.3;
+    }
+
+    50% {
+
+        transform:
+            translateX(8%)
+            scaleX(1);
+
+        opacity:
+            0.68;
+    }
+}
+
+
+/* =========================================================
+   AVAILABLE HOVER
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-card:not(.is-coming-soon):hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(112, 220, 225, 0.44);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17, 64, 73, 0.78),
+            rgba(5, 27, 34, 0.91)
+        );
+
+    box-shadow:
+        0 20px 44px
+        rgba(0, 0, 0, 0.32),
+
+        0 0 28px
+        rgba(55, 185, 198, 0.07),
+
+        inset 0 1px 0
+        rgba(180, 244, 245, 0.055);
+}
+
+
+/* =========================================================
+   CARD CORE
+   ========================================================= */
+
+.awtaar-water-world
+.earth-child-card-core {
+
+    position:
+        relative;
+
+    width:
+        50px;
+
+    height:
+        50px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-bottom:
+        0.8rem;
+
+    border:
+        1px solid
+        rgba(105, 210, 218, 0.30);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(99, 215, 225, 0.15),
+            rgba(5, 26, 33, 0.92) 70%
+        );
+
+    color:
+        #d9f5f3;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        1.3rem;
+
+    box-shadow:
+        0 0 20px
+        rgba(63, 197, 208, 0.07),
+
+        inset 0 0 16px
+        rgba(95, 207, 218, 0.05);
+
+    flex-shrink:
+        0;
+
+    transition:
+        transform 320ms ease,
+        border-color 320ms ease,
+        box-shadow 320ms ease;
+}
+
+
+/* =========================================================
+   CARD CORE WATER MOTION
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-card:not(.is-coming-soon)
+.earth-child-card-core {
+
+    animation:
+        awtaar-water-core
+        5s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes awtaar-water-core {
+
+    0%,
+    100% {
+
+        box-shadow:
+            0 0 20px
+            rgba(63, 197, 208, 0.07),
+
+            inset 0 0 16px
+            rgba(95, 207, 218, 0.05);
+    }
+
+    50% {
+
+        box-shadow:
+            0 0 27px
+            rgba(63, 197, 208, 0.13),
+
+            inset 0 0 20px
+            rgba(95, 207, 218, 0.08);
+    }
+}
+
+
+/* =========================================================
+   CORE HOVER
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-card:not(.is-coming-soon):hover
+.earth-child-card-core {
+
+    transform:
+        scale(1.07);
+
+    border-color:
+        rgba(117, 226, 230, 0.58);
+
+    box-shadow:
+        0 0 28px
+        rgba(75, 202, 214, 0.13),
+
+        inset 0 0 18px
+        rgba(95, 207, 218, 0.08);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.awtaar-water-world
+.earth-child-card-content {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    z-index:
+        2;
+}
+
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.awtaar-water-world
+.earth-child-card-title {
+
+    margin:
+        0;
+
+    font-size:
+        clamp(1rem, 1.35vw, 1.16rem);
+
+    font-weight:
+        500;
+
+    line-height:
+        1.4;
+
+    letter-spacing:
+        0.01em;
+
+    color:
+        #f2eee5;
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+   ========================================================= */
+
+.awtaar-water-world
+.earth-child-card-description {
+
+    max-width:
+        280px;
+
+    margin:
+        0.45rem auto
+        0;
+
+    font-size:
+        clamp(0.74rem, 0.92vw, 0.84rem);
+
+    font-weight:
+        300;
+
+    line-height:
+        1.65;
+
+    color:
+        rgba(216, 235, 234, 0.58);
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.awtaar-water-world
+.earth-child-card-status {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-height:
+        23px;
+
+    margin-top:
+        0.75rem;
+
+    padding:
+        0.2rem
+        0.68rem;
+
+    border:
+        1px solid
+        rgba(99, 208, 216, 0.22);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(55, 167, 180, 0.07);
+
+    color:
+        rgba(151, 226, 228, 0.74);
+
+    font-size:
+        0.68rem;
+
+    font-weight:
+        400;
+
+    letter-spacing:
+        0.025em;
+}
+
+
+/* =========================================================
+   LOCKED / COMING SOON
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-card.is-coming-soon {
+
+    cursor:
+        default;
+
+    opacity:
+        0.55;
+
+    border-color:
+        rgba(150, 177, 179, 0.10);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12, 35, 41, 0.55),
+            rgba(5, 20, 25, 0.72)
+        );
+
+    filter:
+        saturate(0.65);
+}
+
+
+.awtaar-water-world
+.awtaar-earth-child-card.is-coming-soon
+.earth-child-card-core {
+
+    border-color:
+        rgba(150, 183, 184, 0.16);
+
+    color:
+        rgba(204, 220, 219, 0.48);
+
+    box-shadow:
+        none;
+
+    animation:
+        none;
+}
+
+
+.awtaar-water-world
+.awtaar-earth-child-card.is-coming-soon
+.earth-child-card-status {
+
+    color:
+        rgba(190, 205, 204, 0.45);
+
+    border-color:
+        rgba(170, 190, 190, 0.12);
+
+    background:
+        rgba(170, 190, 190, 0.035);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-water-world
+.awtaar-earth-child-back {
+
+    margin-top:
+        clamp(2rem, 4vh, 3rem);
+
+    padding:
+        0.7rem
+        1.3rem;
+
+    border:
+        1px solid
+        rgba(218, 190, 113, 0.28);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(218, 190, 113, 0.035);
+
+    color:
+        rgba(237, 220, 176, 0.82);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        0.86rem;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    transition:
+        background 280ms ease,
+        border-color 280ms ease,
+        color 280ms ease,
+        transform 280ms ease;
+}
+
+
+.awtaar-water-world
+.awtaar-earth-child-back:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(218, 190, 113, 0.08);
+
+    border-color:
+        rgba(218, 190, 113, 0.55);
+
+    color:
+        #f1dfb2;
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+.awtaar-water-world[dir='rtl'] {
+
+    direction:
+        rtl;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.awtaar-water-world::-webkit-scrollbar {
+
+    width:
+        6px;
+}
+
+
+.awtaar-water-world::-webkit-scrollbar-track {
+
+    background:
+        rgba(0, 0, 0, 0.12);
+}
+
+
+.awtaar-water-world::-webkit-scrollbar-thumb {
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(86, 188, 199, 0.25);
+}
+
+
+.awtaar-water-world::-webkit-scrollbar-thumb:hover {
+
+    background:
+        rgba(86, 188, 199, 0.4);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .awtaar-water-world {
+
+        padding-top:
+            5.5rem;
+    }
+
+
+    .awtaar-water-world
+    .awtaar-earth-child-experiments {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 620px) {
+
+    .awtaar-water-world {
+
+        padding:
+            5rem
+            1rem
+            4rem;
+    }
+
+
+    .awtaar-water-world
+    .awtaar-earth-child-title {
+
+        font-size:
+            2rem;
+    }
+
+
+    .awtaar-water-world
+    .awtaar-earth-child-description {
+
+        margin-bottom:
+            2rem;
+
+        font-size:
+            0.9rem;
+
+        line-height:
+            1.8;
+    }
+
+
+    .awtaar-water-world
+    .awtaar-earth-child-experiments {
+
+        grid-template-columns:
+            1fr;
+
+        width:
+            min(430px, 100%);
+    }
+
+
+    .awtaar-water-world
+    .awtaar-earth-child-card {
+
+        min-height:
+            168px;
+
+        padding:
+            1.4rem
+            1.15rem;
+    }
+
+
+    .awtaar-water-world
+    .earth-child-card-core {
+
+        width:
+            48px;
+
+        height:
+            48px;
+
+        margin-bottom:
+            0.7rem;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .awtaar-water-world {
+
+        padding-left:
+            0.8rem;
+
+        padding-right:
+            0.8rem;
+    }
+
+
+    .awtaar-water-world
+    .awtaar-earth-child-card {
+
+        min-height:
+            160px;
+
+        padding:
+            1.25rem
+            1rem;
+    }
+
+
+    .awtaar-water-world
+    .earth-child-card-core {
+
+        width:
+            46px;
+
+        height:
+            46px;
+
+        font-size:
+            1.2rem;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .awtaar-water-world::before,
+
+    .awtaar-water-world::after,
+
+    .awtaar-water-world
+    .awtaar-earth-child-title,
+
+    .awtaar-water-world
+    .awtaar-earth-child-card::before,
+
+    .awtaar-water-world
+    .awtaar-earth-child-card::after,
+
+    .awtaar-water-world
+    .awtaar-earth-child-card:not(.is-coming-soon)
+    .earth-child-card-core {
+
+        animation:
+            none;
+    }
+
+}

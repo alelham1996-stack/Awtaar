@@ -7,6 +7,8 @@ import './geology-world.css';
 import RockCycleExperiment from './RockCycleExperiment.js';
 import RockCycleUI from './RockCycleUI.js';
 
+import PlateTectonics from './PlateTectonics.js';
+
 import { t, getLanguage } from '../locales/i18n.js';
 
 
@@ -20,17 +22,20 @@ export default class GeologyWorldUI {
         this.container = null;
         this.experimentItems = [];
 
+
         /* -------------------------------------------------
            ROCK CYCLE
-           -------------------------------------------------
-           لا ننشئ التجربة هنا.
-           
-           سيتم إنشاؤها فقط عند الضغط على بطاقة
-           دورة الصخور.
-        ------------------------------------------------- */
+           ------------------------------------------------- */
 
         this.rockCycleExperiment = null;
         this.rockCycleUI = null;
+
+
+        /* -------------------------------------------------
+           PLATE TECTONICS
+           ------------------------------------------------- */
+
+        this.plateTectonics = null;
 
 
         this.createUI();
@@ -475,7 +480,7 @@ export default class GeologyWorldUI {
 
         /* -------------------------------------------------
            ROCK CYCLE UI
-           ------------------------------------------------- */
+        ------------------------------------------------- */
 
         if (
             this.rockCycleUI &&
@@ -484,6 +489,20 @@ export default class GeologyWorldUI {
         ) {
 
             this.rockCycleUI.updateLanguage();
+        }
+
+
+        /* -------------------------------------------------
+           PLATE TECTONICS
+        ------------------------------------------------- */
+
+        if (
+            this.plateTectonics &&
+            typeof this.plateTectonics.updateLanguage ===
+            'function'
+        ) {
+
+            this.plateTectonics.updateLanguage();
         }
     }
 
@@ -563,10 +582,7 @@ export default class GeologyWorldUI {
 
             case 'plateTectonics':
 
-                /*
-                 * سيتم ربط تجربة حركة الصفائح
-                 * لاحقًا عند بنائها.
-                 */
+                this.openPlateTectonicsExperiment();
 
                 break;
 
@@ -600,18 +616,25 @@ export default class GeologyWorldUI {
 
         /* -------------------------------------------------
            EXPERIMENT
+
+           مهم جدًا:
+           لا نمرر this.scene هنا.
+
+           تجربة دورة الصخور تحتاج Scene مستقلًا
+           حتى لا ترسم نجوم أو AwtaarCore أو أي
+           عناصر من عالم أوتار الأساسي خلفها.
         ------------------------------------------------- */
 
         this.rockCycleExperiment =
             new RockCycleExperiment(
-                this.scene,
+                null,
                 document.body
             );
 
 
         /* -------------------------------------------------
            UI
-        ------------------------------------------------- */
+           ------------------------------------------------- */
 
         this.rockCycleUI =
             new RockCycleUI(
@@ -622,7 +645,7 @@ export default class GeologyWorldUI {
 
         /* -------------------------------------------------
            LANGUAGE
-        ------------------------------------------------- */
+           ------------------------------------------------- */
 
         if (
             this.rockCycleUI &&
@@ -691,6 +714,108 @@ export default class GeologyWorldUI {
 
 
     /* =====================================================
+       CREATE PLATE TECTONICS
+       ===================================================== */
+
+    createPlateTectonics() {
+
+        /*
+         * إذا كانت التجربة موجودة بالفعل
+         * فلا ننشئ نسخة ثانية.
+         */
+
+        if (this.plateTectonics) {
+
+            return true;
+        }
+
+
+        /* -------------------------------------------------
+           IMPORTANT
+
+           لا نمرر this.scene.
+
+           تجربة حركة الصفائح تستخدم Scene مستقلًا
+           حتى لا تظهر نجوم أو AwtaarCore أو أي
+           عناصر من المشهد الأساسي خلف التجربة.
+        ------------------------------------------------- */
+
+        this.plateTectonics =
+            new PlateTectonics(
+                this,
+                document.body
+            );
+
+
+        /* -------------------------------------------------
+           LANGUAGE
+           ------------------------------------------------- */
+
+        if (
+            this.plateTectonics &&
+            typeof this.plateTectonics.updateLanguage ===
+            'function'
+        ) {
+
+            this.plateTectonics.updateLanguage();
+        }
+
+
+        return true;
+    }
+
+
+    /* =====================================================
+       OPEN PLATE TECTONICS EXPERIMENT
+       ===================================================== */
+
+    openPlateTectonicsExperiment() {
+
+        /*
+         * ننشئ التجربة فقط عند الضغط
+         * على بطاقة حركة الصفائح.
+         */
+
+        if (
+            !this.createPlateTectonics()
+        ) {
+
+            return;
+        }
+
+
+        /* -------------------------------------------------
+           HIDE GEOLOGY WORLD
+        ------------------------------------------------- */
+
+        this.hide();
+
+
+        /* -------------------------------------------------
+           SHOW EXPERIMENT
+        ------------------------------------------------- */
+
+        window.setTimeout(
+            () => {
+
+                if (!this.plateTectonics) return;
+
+
+                if (
+                    typeof this.plateTectonics.show ===
+                    'function'
+                ) {
+
+                    this.plateTectonics.show();
+                }
+
+            },
+            550
+        );
+    }
+
+
+    /* =====================================================
        RETURN TO EARTH WORLD
        ===================================================== */
 
@@ -723,9 +848,9 @@ export default class GeologyWorldUI {
 
     update(delta) {
 
-        /*
-         * لا يوجد شيء لتحديثه قبل فتح التجربة.
-         */
+        /* -------------------------------------------------
+           ROCK CYCLE
+           ------------------------------------------------- */
 
         if (
             this.rockCycleExperiment &&
@@ -749,6 +874,22 @@ export default class GeologyWorldUI {
                 delta
             );
         }
+
+
+        /* -------------------------------------------------
+           PLATE TECTONICS
+           ------------------------------------------------- */
+
+        if (
+            this.plateTectonics &&
+            typeof this.plateTectonics.update ===
+            'function'
+        ) {
+
+            this.plateTectonics.update(
+                delta
+            );
+        }
     }
 
 
@@ -758,32 +899,33 @@ export default class GeologyWorldUI {
 
     setScene(scene) {
 
+        /*
+         * نحتفظ بالمشهد هنا من أجل
+         * GeologyWorldUI نفسه.
+
+         * لا نرسله إلى التجارب.
+
+         * كل تجربة جيولوجية تعمل داخل Scene
+         * مستقل حتى لا تظهر عناصر عالم أوتار
+         * الأساسي خلفها.
+         */
+
         this.scene =
             scene;
 
 
-        if (
-            this.rockCycleExperiment &&
-            typeof this.rockCycleExperiment.setScene ===
-            'function'
-        ) {
-
-            this.rockCycleExperiment.setScene(
-                scene
-            );
-        }
-
-
-        if (
-            this.rockCycleUI &&
-            typeof this.rockCycleUI.setScene ===
-            'function'
-        ) {
-
-            this.rockCycleUI.setScene(
-                scene
-            );
-        }
+        /*
+         * لا نستدعي:
+         *
+         * this.rockCycleExperiment.setScene(scene)
+         *
+         * ولا:
+         *
+         * this.plateTectonics.setScene(scene)
+         *
+         * لأن ذلك سيعيد التجارب إلى المشهد
+         * الأساسي.
+         */
     }
 
 
@@ -799,7 +941,7 @@ export default class GeologyWorldUI {
 
         /* -------------------------------------------------
            ROCK CYCLE UI
-        ------------------------------------------------- */
+           ------------------------------------------------- */
 
         if (
             this.rockCycleUI &&
@@ -816,7 +958,7 @@ export default class GeologyWorldUI {
 
         /* -------------------------------------------------
            ROCK CYCLE EXPERIMENT
-        ------------------------------------------------- */
+           ------------------------------------------------- */
 
         if (
             this.rockCycleExperiment &&
@@ -832,8 +974,25 @@ export default class GeologyWorldUI {
 
 
         /* -------------------------------------------------
+           PLATE TECTONICS
+           ------------------------------------------------- */
+
+        if (
+            this.plateTectonics &&
+            typeof this.plateTectonics.destroy ===
+            'function'
+        ) {
+
+            this.plateTectonics.destroy();
+
+            this.plateTectonics =
+                null;
+        }
+
+
+        /* -------------------------------------------------
            GEOLOGY WORLD
-        ------------------------------------------------- */
+           ------------------------------------------------- */
 
         if (this.container) {
 

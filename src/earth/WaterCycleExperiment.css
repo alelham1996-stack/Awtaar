@@ -1,0 +1,1280 @@
+/* =========================================================
+   AWTAAR — WATER CYCLE EXPERIMENT
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-water-cycle-experiment {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2500;
+
+    display: flex;
+
+    flex-direction: column;
+
+    box-sizing: border-box;
+
+    width: 100vw;
+
+    height: 100vh;
+
+    padding:
+        34px
+        42px
+        28px;
+
+    overflow: hidden;
+
+    color: #e8f5f5;
+
+    background:
+        radial-gradient(
+            circle at 50% 12%,
+            rgba(70, 150, 165, 0.12),
+            transparent 38%
+        ),
+
+        radial-gradient(
+            circle at 18% 85%,
+            rgba(30, 110, 120, 0.14),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            145deg,
+            #061116 0%,
+            #081b20 48%,
+            #061014 100%
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 550ms ease,
+        visibility 550ms ease;
+}
+
+
+/* =========================================================
+   VISIBLE STATE
+   ========================================================= */
+
+.awtaar-water-cycle-experiment.is-visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   ATMOSPHERIC GLOW
+   ========================================================= */
+
+.awtaar-water-cycle-experiment::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -20%;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 72% 18%,
+            rgba(116, 204, 215, 0.055),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 28% 72%,
+            rgba(38, 145, 157, 0.045),
+            transparent 30%
+        );
+
+    animation:
+        water-cycle-atmosphere
+        14s
+        ease-in-out
+        infinite alternate;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.water-cycle-header {
+
+    position: relative;
+
+    z-index: 3;
+
+    flex: 0 0 auto;
+
+    width: min(
+        1180px,
+        100%
+    );
+
+    margin:
+        0
+        auto
+        18px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.water-cycle-eyebrow {
+
+    margin-bottom: 7px;
+
+    color:
+        rgba(
+            127,
+            202,
+            210,
+            0.78
+        );
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.24em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.water-cycle-title {
+
+    margin: 0;
+
+    color: #eefafa;
+
+    font-size:
+        clamp(
+            1.8rem,
+            3vw,
+            2.65rem
+        );
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    letter-spacing: 0.01em;
+
+    text-shadow:
+        0 0 28px
+        rgba(
+            113,
+            204,
+            216,
+            0.12
+        );
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.water-cycle-description {
+
+    width: min(
+        680px,
+        100%
+    );
+
+    margin:
+        9px
+        auto
+        0;
+
+    color:
+        rgba(
+            207,
+            229,
+            231,
+            0.7
+        );
+
+    font-size:
+        clamp(
+            0.82rem,
+            1.2vw,
+            0.96rem
+        );
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MAIN BODY
+   ========================================================= */
+
+.water-cycle-body {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(250px, 315px);
+
+    gap: 22px;
+
+    flex: 1 1 auto;
+
+    width: min(
+        1180px,
+        100%
+    );
+
+    min-height: 0;
+
+    margin:
+        0
+        auto;
+}
+
+
+/* =========================================================
+   THREE.JS SCENE
+   ========================================================= */
+
+.water-cycle-scene {
+
+    position: relative;
+
+    min-width: 0;
+
+    min-height: 320px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(
+            112,
+            201,
+            211,
+            0.18
+        );
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(
+                9,
+                36,
+                43,
+                0.72
+            ),
+            rgba(
+                4,
+                20,
+                25,
+                0.88
+            )
+        );
+
+    box-shadow:
+        0 22px 70px
+        rgba(
+            0,
+            0,
+            0,
+            0.3
+        ),
+
+        inset 0 0 50px
+        rgba(
+            86,
+            182,
+            195,
+            0.025
+        );
+}
+
+
+/* =========================================================
+   SCENE BORDER GLOW
+   ========================================================= */
+
+.water-cycle-scene::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    border-radius: inherit;
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(
+            192,
+            235,
+            237,
+            0.025
+        );
+}
+
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+.water-cycle-canvas {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+}
+
+
+/* =========================================================
+   PHASE PANEL
+   ========================================================= */
+
+.water-cycle-phase {
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    min-width: 0;
+
+    padding:
+        27px
+        25px;
+
+    border:
+        1px solid
+        rgba(
+            116,
+            203,
+            212,
+            0.15
+        );
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                12,
+                42,
+                48,
+                0.78
+            ),
+            rgba(
+                6,
+                25,
+                30,
+                0.78
+            )
+        );
+
+    box-shadow:
+        0 18px 50px
+        rgba(
+            0,
+            0,
+            0,
+            0.2
+        );
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+}
+
+
+/* =========================================================
+   PHASE ACCENT
+   ========================================================= */
+
+.water-cycle-phase::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 22px;
+
+    bottom: 22px;
+
+    left: 0;
+
+    width: 2px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(
+                105,
+                207,
+                218,
+                0.75
+            ),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   PHASE KICKER
+   ========================================================= */
+
+.water-cycle-phase-kicker {
+
+    margin-bottom: 10px;
+
+    color:
+        rgba(
+            116,
+            203,
+            212,
+            0.72
+        );
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PHASE TITLE
+   ========================================================= */
+
+.water-cycle-phase-title {
+
+    margin: 0;
+
+    color: #edfafa;
+
+    font-size:
+        clamp(
+            1.35rem,
+            2vw,
+            1.75rem
+        );
+
+    font-weight: 600;
+
+    line-height: 1.25;
+}
+
+
+/* =========================================================
+   PHASE DESCRIPTION
+   ========================================================= */
+
+.water-cycle-phase-description {
+
+    margin:
+        13px
+        0
+        0;
+
+    color:
+        rgba(
+            209,
+            230,
+            232,
+            0.68
+        );
+
+    font-size: 0.86rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.water-cycle-footer {
+
+    position: relative;
+
+    z-index: 4;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 18px;
+
+    width: min(
+        1180px,
+        100%
+    );
+
+    margin:
+        18px
+        auto
+        0;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.water-cycle-status {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 38px;
+
+    padding:
+        8px
+        15px;
+
+    border:
+        1px solid
+        rgba(
+            103,
+            198,
+            210,
+            0.15
+        );
+
+    border-radius: 999px;
+
+    color:
+        rgba(
+            216,
+            239,
+            241,
+            0.72
+        );
+
+    background:
+        rgba(
+            11,
+            41,
+            47,
+            0.55
+        );
+
+    font-size: 0.76rem;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.water-cycle-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   CONTROL BUTTON
+   ========================================================= */
+
+.water-cycle-control {
+
+    min-width: 125px;
+
+    min-height: 40px;
+
+    padding:
+        9px
+        17px;
+
+    border:
+        1px solid
+        rgba(
+            118,
+            203,
+            212,
+            0.18
+        );
+
+    border-radius: 10px;
+
+    color:
+        rgba(
+            229,
+            247,
+            248,
+            0.86
+        );
+
+    background:
+        rgba(
+            12,
+            42,
+            48,
+            0.72
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 0.76rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 220ms ease,
+        border-color 220ms ease,
+        background 220ms ease,
+        color 220ms ease,
+        box-shadow 220ms ease;
+}
+
+
+/* =========================================================
+   CONTROL HOVER
+   ========================================================= */
+
+.water-cycle-control:hover {
+
+    transform:
+        translateY(-1px);
+
+    border-color:
+        rgba(
+            126,
+            216,
+            225,
+            0.42
+        );
+
+    color: #f2ffff;
+
+    background:
+        rgba(
+            19,
+            62,
+            69,
+            0.82
+        );
+
+    box-shadow:
+        0 8px 24px
+        rgba(
+            0,
+            0,
+            0,
+            0.18
+        );
+}
+
+
+/* =========================================================
+   CONTROL ACTIVE
+   ========================================================= */
+
+.water-cycle-control:active {
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   EXIT BUTTON
+   ========================================================= */
+
+.water-cycle-exit {
+
+    min-width: 155px;
+
+    min-height: 40px;
+
+    padding:
+        9px
+        18px;
+
+    border:
+        1px solid
+        rgba(
+            205,
+            181,
+            119,
+            0.28
+        );
+
+    border-radius: 10px;
+
+    color:
+        rgba(
+            238,
+            224,
+            188,
+            0.9
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                69,
+                56,
+                34,
+                0.52
+            ),
+            rgba(
+                42,
+                35,
+                24,
+                0.48
+            )
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 0.76rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 22px
+        rgba(
+            0,
+            0,
+            0,
+            0.14
+        );
+
+    transition:
+        transform 220ms ease,
+        border-color 220ms ease,
+        background 220ms ease,
+        color 220ms ease,
+        box-shadow 220ms ease;
+}
+
+
+/* =========================================================
+   EXIT BUTTON HOVER
+   ========================================================= */
+
+.water-cycle-exit:hover {
+
+    transform:
+        translateY(-1px);
+
+    border-color:
+        rgba(
+            218,
+            193,
+            128,
+            0.58
+        );
+
+    color:
+        #f5e8c4;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                86,
+                69,
+                40,
+                0.68
+            ),
+            rgba(
+                55,
+                44,
+                28,
+                0.62
+            )
+        );
+
+    box-shadow:
+        0 9px 28px
+        rgba(
+            0,
+            0,
+            0,
+            0.2
+        ),
+
+        0 0 18px
+        rgba(
+            207,
+            181,
+            113,
+            0.07
+        );
+}
+
+
+/* =========================================================
+   EXIT BUTTON ACTIVE
+   ========================================================= */
+
+.water-cycle-exit:active {
+
+    transform:
+        translateY(0);
+
+    box-shadow:
+        0 5px 16px
+        rgba(
+            0,
+            0,
+            0,
+            0.16
+        );
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+.awtaar-water-cycle-experiment[dir='rtl'] {
+
+    text-align: right;
+}
+
+
+.awtaar-water-cycle-experiment[dir='rtl']
+.water-cycle-header {
+
+    text-align: center;
+}
+
+
+.awtaar-water-cycle-experiment[dir='rtl']
+.water-cycle-phase {
+
+    text-align: right;
+}
+
+
+.awtaar-water-cycle-experiment[dir='rtl']
+.water-cycle-phase::before {
+
+    left: auto;
+
+    right: 0;
+}
+
+
+.awtaar-water-cycle-experiment[dir='rtl']
+.water-cycle-controls {
+
+    justify-content: flex-start;
+}
+
+
+/* =========================================================
+   LTR
+   ========================================================= */
+
+.awtaar-water-cycle-experiment[dir='ltr']
+.water-cycle-phase {
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (
+
+    max-width: 900px
+
+) {
+
+    .awtaar-water-cycle-experiment {
+
+        padding:
+            25px
+            25px
+            22px;
+    }
+
+
+    .water-cycle-body {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(220px, 270px);
+
+        gap: 16px;
+    }
+
+
+    .water-cycle-phase {
+
+        padding:
+            22px
+            20px;
+    }
+
+
+    .water-cycle-control {
+
+        min-width: 112px;
+    }
+
+
+    .water-cycle-exit {
+
+        min-width: 140px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+
+    max-width: 700px
+
+) {
+
+    .awtaar-water-cycle-experiment {
+
+        padding:
+            20px
+            16px
+            18px;
+
+        overflow-y: auto;
+    }
+
+
+    .water-cycle-header {
+
+        margin-bottom: 14px;
+    }
+
+
+    .water-cycle-eyebrow {
+
+        font-size: 0.62rem;
+    }
+
+
+    .water-cycle-title {
+
+        font-size: 1.65rem;
+    }
+
+
+    .water-cycle-description {
+
+        font-size: 0.78rem;
+
+        line-height: 1.6;
+    }
+
+
+    .water-cycle-body {
+
+        display: flex;
+
+        flex-direction: column;
+
+        flex: 0 0 auto;
+
+        min-height: auto;
+    }
+
+
+    .water-cycle-scene {
+
+        min-height: 360px;
+
+        height: 48vh;
+
+        max-height: 470px;
+    }
+
+
+    .water-cycle-phase {
+
+        min-height: 180px;
+
+        padding:
+            21px
+            20px;
+    }
+
+
+    .water-cycle-footer {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        margin-top: 14px;
+    }
+
+
+    .water-cycle-status {
+
+        justify-content: center;
+    }
+
+
+    .water-cycle-controls {
+
+        justify-content: center;
+
+        width: 100%;
+    }
+
+
+    .water-cycle-control {
+
+        flex:
+            1 1 120px;
+
+        min-width: 0;
+    }
+
+
+    .water-cycle-exit {
+
+        flex:
+            1 1 120px;
+
+        min-width: 0;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (
+
+    max-width: 430px
+
+) {
+
+    .awtaar-water-cycle-experiment {
+
+        padding:
+            16px
+            12px
+            14px;
+    }
+
+
+    .water-cycle-scene {
+
+        min-height: 300px;
+
+        height: 42vh;
+    }
+
+
+    .water-cycle-phase {
+
+        min-height: 165px;
+
+        padding:
+            18px
+            17px;
+    }
+
+
+    .water-cycle-phase-title {
+
+        font-size: 1.25rem;
+    }
+
+
+    .water-cycle-phase-description {
+
+        margin-top: 9px;
+
+        font-size: 0.78rem;
+
+        line-height: 1.7;
+    }
+
+
+    .water-cycle-controls {
+
+        gap: 6px;
+    }
+
+
+    .water-cycle-control {
+
+        padding:
+            8px
+            11px;
+
+        font-size: 0.7rem;
+    }
+
+
+    .water-cycle-exit {
+
+        padding:
+            8px
+            11px;
+
+        font-size: 0.7rem;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (
+
+    prefers-reduced-motion: reduce
+
+) {
+
+    .awtaar-water-cycle-experiment::before {
+
+        animation: none;
+    }
+
+
+    .water-cycle-control {
+
+        transition: none;
+    }
+
+
+    .water-cycle-exit {
+
+        transition: none;
+    }
+}
+
+
+/* =========================================================
+   ATMOSPHERIC ANIMATION
+   ========================================================= */
+
+@keyframes water-cycle-atmosphere {
+
+    0% {
+
+        transform:
+            scale(1)
+            translate3d(
+                0,
+                0,
+                0
+            );
+    }
+
+
+    100% {
+
+        transform:
+            scale(1.04)
+            translate3d(
+                1%,
+                -1%,
+                0
+            );
+    }
+}

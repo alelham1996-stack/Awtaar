@@ -206,13 +206,13 @@ export default {
     relativeWorld: {
 
         eyebrow:
-            'Relativity',
+            'RELATIVITY',
 
         title:
             'Relativity World',
 
         description:
-            'Where time changes, spacetime bends, and our view of the universe is transformed.',
+            'Where time changes, spacetime bends, and our perception of the universe transforms.',
 
         hint:
             'Choose an experiment to explore one of the strangest consequences of relativity.',
@@ -226,7 +226,7 @@ export default {
                 'Time Dilation',
 
             description:
-                'What happens to time as you approach the speed of light?',
+                'What happens to time when you approach the speed of light?',
 
             observer:
                 'Observer Time',
@@ -244,7 +244,7 @@ export default {
                 'Resume Experiment',
 
             reset:
-                'Restart Experiment',
+                'Reset Experiment',
 
             exit:
                 'Exit Experiment'
@@ -253,7 +253,7 @@ export default {
         spacetime: {
 
             title:
-                'Spacetime Curvature',
+                'Curvature of Spacetime',
 
             description:
                 'How does mass change the shape of spacetime and the paths of objects?',
@@ -274,7 +274,7 @@ export default {
                 'Resume Experiment',
 
             reset:
-                'Restart Experiment',
+                'Reset Experiment',
 
             exit:
                 'Exit Experiment',
@@ -294,7 +294,7 @@ export default {
     waveWorld: {
 
         eyebrow:
-            'Waves',
+            'WAVES',
 
         title:
             'Waves World',
@@ -314,7 +314,7 @@ export default {
                 'Wave Interference',
 
             description:
-                'See how waves from two sources overlap to create an interference pattern.',
+                'Watch how waves from two sources overlap to create an interference pattern.',
 
             amplitude:
                 'Amplitude',
@@ -335,7 +335,7 @@ export default {
                 'Resume Experiment',
 
             reset:
-                'Restart Experiment',
+                'Reset Experiment',
 
             exit:
                 'Exit Experiment',
@@ -355,7 +355,7 @@ export default {
     energyWorld: {
 
         eyebrow:
-            'Energy',
+            'ENERGY',
 
         title:
             'Energy World',
@@ -375,7 +375,7 @@ export default {
                 'Energy Conversion',
 
             description:
-                'See how energy transforms from one form to another while total energy is conserved.',
+                'Watch how energy changes from one form to another while total energy is conserved.',
 
             input:
                 'Input Energy',
@@ -408,7 +408,7 @@ export default {
                 'Resume Experiment',
 
             reset:
-                'Restart Experiment',
+                'Reset Experiment',
 
             exit:
                 'Exit Experiment',
@@ -459,22 +459,13 @@ export default {
                 'Resume Experiment',
 
             reset:
-                'Restart Experiment',
+                'Reset Experiment',
 
             exit:
                 'Exit Experiment',
 
             note:
                 'Change the distance and transfer rate and observe how the received energy changes.'
-        },
-
-        circuit: {
-
-            title:
-                'The Secret of the Closed Circuit',
-
-            description:
-                'Discover why a bulb lights up, what happens when the path is broken, and how series and parallel circuits differ.'
         },
 
         comingSoon: {
@@ -497,7 +488,7 @@ export default {
     mechanicsWorld: {
 
         eyebrow:
-            'Mechanics',
+            'MECHANICS',
 
         title:
             'Mechanics World',
@@ -523,7 +514,7 @@ export default {
         collision: {
 
             title:
-                'The Moment of Impact',
+                'The Moment of Collision',
 
             description:
                 'Discover what happens to momentum and energy during a collision.',
@@ -582,7 +573,7 @@ export default {
             'Resume Experiment',
 
         reset:
-            'Restart Experiment',
+            'Reset Experiment',
 
         exit:
             'Exit Experiment',
@@ -594,7 +585,7 @@ export default {
             'Object is Moving',
 
         noMotion:
-            'Force is Not Sufficient',
+            'Force Is Not Sufficient',
 
         forceApplied:
             'Force Applied',
@@ -610,7 +601,7 @@ export default {
                     'First Law',
 
                 description:
-                    'An object remains at rest or moves at constant velocity unless acted upon by a net force.'
+                    'An object remains at rest or moves at a constant velocity unless acted upon by a net force.'
             },
 
             second: {
@@ -643,22 +634,22 @@ export default {
     collision: {
 
         title:
-            'The Moment of Impact',
+            'The Moment of Collision',
 
         subtitle:
-            'Discover what happens to momentum and energy when two moving objects meet.',
+            'Discover what happens to momentum and energy when two moving objects collide.',
 
         interactive:
             'Interactive Experiment',
 
         guideTitle:
-            'What Happens at the Moment of Impact?',
+            'What Happens at the Moment of Collision?',
 
         mass1:
-            'Mass of Object One',
+            'Mass of Object 1',
 
         mass2:
-            'Mass of Object Two',
+            'Mass of Object 2',
 
         momentum:
             'Total Momentum',
@@ -667,40 +658,40 @@ export default {
             'Kinetic Energy',
 
         velocity1:
-            'Velocity of Object One',
+            'Velocity of Object 1',
 
         velocity2:
-            'Velocity of Object Two',
+            'Velocity of Object 2',
 
         start:
             'Start Collision',
 
         formulas:
-            'Equations',
+            'Formulas',
 
         note:
             'Change the mass and velocity, then start the experiment and observe what remains conserved during the collision.',
 
         sceneCaption:
-            'Momentum is conserved in an elastic collision',
+            'Momentum is conserved in the elastic collision',
 
         readyMessage:
-            'Change the mass and velocity if you wish, then start the collision and observe what happens at the moment of impact.',
+            'Change the mass and velocity if you wish, then start the collision and watch what happens at the moment of impact.',
 
         ready:
-            'Ready for Experiment',
+            'Ready for the Experiment',
 
         pausedMessage:
-            'Motion is temporarily paused. You can resume the experiment.',
+            'The motion is temporarily paused. You can continue the experiment.',
 
         paused:
             'Experiment Paused',
 
         impactMessage:
-            'The collision has occurred! Observe how the velocities changed while momentum remained conserved.',
+            'The collision occurred! Watch how the velocities changed while momentum remained conserved.',
 
         impact:
-            'Moment of Impact',
+            'Moment of Collision',
 
         completeMessage:
             'The collision is complete. Change the values and start a new experiment.',
@@ -709,16 +700,16 @@ export default {
             'Experiment Complete',
 
         runningMessage:
-            'The two objects are moving toward the moment of impact. Observe momentum and energy before the collision.',
+            'The two objects are moving toward the moment of collision. Observe momentum and energy before impact.',
 
         running:
             'Objects in Motion',
 
         educationalTitle:
-            'The Moment of Impact',
+            'The Moment of Collision',
 
         educationalMessage:
-            'Start the experiment and observe how the velocities change while total momentum remains conserved.',
+            'Start the experiment and watch how the velocities change while total momentum remains conserved.',
 
         educationalImpactTitle:
             'Momentum Does Not Disappear',
@@ -730,7 +721,7 @@ export default {
             'The Objects Are Approaching',
 
         educationalRunningMessage:
-            'Observe the mass, velocity, and momentum before the two objects reach the moment of impact.',
+            'Observe the mass, velocity, and momentum before the two objects reach the moment of collision.',
 
         educationalCompleteTitle:
             'Motion Complete',
@@ -755,13 +746,13 @@ export default {
     biologyWorld: {
 
         eyebrow:
-            'Biology Galaxy',
+            'BIOLOGY GALAXY',
 
         title:
             'Biology World',
 
         description:
-            'Explore the secrets of life, from cells and genes to biological diversity.',
+            'Explore the secrets of life, from cells and genes to biodiversity.',
 
         back:
             'Back to Biology Galaxy',
@@ -789,7 +780,7 @@ export default {
             'Cell World',
 
         cellDescription:
-            'Enter the smallest living unit and explore its inner world.',
+            'Approach the smallest unit of life and explore its inner world.',
 
 
         /*
@@ -828,7 +819,7 @@ export default {
             'Human Body World',
 
         humanBodyDescription:
-            'Discover the organs and systems that work together to sustain life.',
+            'Discover the systems and organs that work together to sustain life.',
 
 
         /*
@@ -854,7 +845,7 @@ export default {
             'Evolution & Diversity World',
 
         evolutionDescription:
-            'Discover how biological diversity emerged and changed over time.'
+            'Discover how biodiversity emerged and changed over time.'
     },
 
 
@@ -899,10 +890,10 @@ export default {
                 'Labels',
 
             infoKicker:
-                'Explore the Organelles',
+                'Explore Organelles',
 
             infoTitle:
-                'Click on any part of the cell',
+                'Click Any Part of the Cell',
 
             infoDescription:
                 'Select an organelle to learn about its role inside the cell.',
@@ -938,7 +929,7 @@ export default {
                     'Endoplasmic Reticulum',
 
                 endoplasmicReticulumSub:
-                    'Protein Synthesis & Transport',
+                    'Protein Production & Transport',
 
                 golgi:
                     'Golgi Apparatus',
@@ -950,7 +941,7 @@ export default {
                     'Lysosome',
 
                 lysosomeSub:
-                    'Cleanup & Recycling',
+                    'Cleaning & Recycling',
 
                 ribosome:
                     'Ribosomes',
@@ -989,7 +980,7 @@ export default {
                         'Mitochondria',
 
                     description:
-                        'Produce most of the energy the cell needs to carry out its functions.'
+                        'Produce most of the energy the cell needs to perform its functions.'
                 },
 
                 endoplasmicReticulum: {
@@ -1025,7 +1016,7 @@ export default {
                         'Ribosomes',
 
                     description:
-                        'Sites where proteins are built according to genetic instructions.'
+                        'Sites where proteins are synthesized according to genetic instructions.'
                 },
 
                 centrosome: {
@@ -1034,7 +1025,7 @@ export default {
                         'Centrosome',
 
                     description:
-                        'Helps organize microtubules that are important for cell structure and cell division.'
+                        'Helps organize microtubules that are important for cell structure and division.'
                 },
 
                 fallback: {
@@ -1045,7 +1036,9 @@ export default {
                     description:
                         'A specialized part of the cell that performs a specific function.'
                 }
+
             }
+
         },
 
 
@@ -1082,7 +1075,7 @@ export default {
                 'Available to Explore',
 
             comingSoon:
-                'Coming Later',
+                'Coming Soon',
 
 
             experiments: {
@@ -1093,7 +1086,7 @@ export default {
                         'The Code of Life',
 
                     description:
-                        'Explore the structure of DNA and how genetic bases store information within it.'
+                        'Explore the structure of DNA and how genetic bases store information.'
                 },
 
                 geneExpression: {
@@ -1104,7 +1097,9 @@ export default {
                     description:
                         'Follow the journey of genetic information from DNA to RNA and then to protein.'
                 }
+
             }
+
         },
 
 
@@ -1167,7 +1162,7 @@ export default {
                         'Copying the Information',
 
                     description:
-                        'During transcription, one strand of DNA is used as a template to create a messenger RNA molecule.'
+                        'During transcription, one strand of DNA is used as a template to create messenger RNA.'
                 },
 
                 mrna: {
@@ -1179,7 +1174,7 @@ export default {
                         'Messenger RNA',
 
                     description:
-                        'mRNA carries a copy of genetic information from DNA to the ribosome.'
+                        'mRNA carries a copy of the genetic information from DNA to the ribosome.'
                 },
 
                 translation: {
@@ -1188,7 +1183,7 @@ export default {
                         'Translation',
 
                     title:
-                        'Decoding the Message',
+                        'Translating the Code',
 
                     description:
                         'The ribosome reads the mRNA sequence and converts it into a specific sequence of amino acids.'
@@ -1205,6 +1200,7 @@ export default {
                     description:
                         'Amino acids join together to form a protein chain that can fold into a functional structure.'
                 }
+
             },
 
 
@@ -1223,7 +1219,7 @@ export default {
                     'Resume Experiment',
 
                 reset:
-                    'Restart Experiment',
+                    'Reset Experiment',
 
                 exit:
                     'Exit Experiment'
@@ -1241,10 +1237,10 @@ export default {
                 default: {
 
                     title:
-                        'Explore the Journey of Information',
+                        'Explore the Information Journey',
 
                     text:
-                        'Click on an element in the scene to learn about its role in the transfer of information from gene to protein.'
+                        'Click one of the elements in the scene to learn about its role in transferring information from gene to protein.'
                 },
 
                 basePair: {
@@ -1253,7 +1249,7 @@ export default {
                         'Base Pair',
 
                     text:
-                        'Nitrogenous bases within DNA pair complementarily, helping store genetic information accurately.'
+                        'Nitrogenous bases in DNA pair with complementary bases, helping genetic information remain accurately stored.'
                 },
 
                 gene: {
@@ -1280,7 +1276,7 @@ export default {
                         'Ribosome',
 
                     text:
-                        'The ribosome is the site where the mRNA code is read and the amino acid chain is assembled.'
+                        'The ribosome is the site where the mRNA code is read and the amino acid chain is built.'
                 },
 
                 trna: {
@@ -1309,7 +1305,9 @@ export default {
                     text:
                         'A protein is a chain of amino acids that folds into a specific structure to perform a function inside a cell or organism.'
                 }
+
             }
+
         },
 
 
@@ -1331,7 +1329,7 @@ export default {
                 'The Code of Life',
 
             description:
-                'Discover how the structure of DNA stores genetic information within a precise sequence of bases.',
+                'Discover how the structure of DNA stores genetic information in a precise sequence of bases.',
 
             exit:
                 '← Genetics World',
@@ -1363,7 +1361,7 @@ export default {
                     'Select a Base Pair',
 
                 emptyDescription:
-                    'Click on one of the base pairs in the DNA molecule to explore their relationship.',
+                    'Click one of the base pairs in the DNA molecule to explore their relationship.',
 
                 pairStatus:
                     'Pair {pair} selected'
@@ -1387,27 +1385,29 @@ export default {
                     'Resume Motion',
 
                 reset:
-                    'Restart Experiment'
+                    'Reset Experiment'
             },
 
             pairs: {
 
                 at:
-                    'Adenine (A) pairs complementarily with Thymine (T) through two hydrogen bonds.',
+                    'Adenine (A) pairs complementarily with thymine (T) through two hydrogen bonds.',
 
                 ta:
-                    'Thymine (T) pairs complementarily with Adenine (A) through two hydrogen bonds.',
+                    'Thymine (T) pairs complementarily with adenine (A) through two hydrogen bonds.',
 
                 cg:
-                    'Cytosine (C) pairs complementarily with Guanine (G) through three hydrogen bonds.',
+                    'Cytosine (C) pairs complementarily with guanine (G) through three hydrogen bonds.',
 
                 gc:
-                    'Guanine (G) pairs complementarily with Cytosine (C) through three hydrogen bonds.',
+                    'Guanine (G) pairs complementarily with cytosine (C) through three hydrogen bonds.',
 
                 fallback:
-                    'This is a complementary base pair within the DNA molecule.'
+                    'This is a complementary base pair within a DNA molecule.'
             }
+
         }
+
     },
 
 
@@ -1514,7 +1514,7 @@ export default {
                     'Plate Tectonics',
 
                 description:
-                    'Explore how tectonic plates move and reshape the surface of Earth.'
+                    'Explore how tectonic plates move and reshape Earth’s surface.'
             },
 
             erosion: {
@@ -1523,18 +1523,258 @@ export default {
                     'Erosion',
 
                 description:
-                    'See how water, wind, and ice gradually reshape Earth’s surface.'
+                    'Watch how water, wind, and ice gradually reshape Earth’s surface.'
             },
 
             earthLayers: {
 
                 title:
-                    "Earth's Layers",
+                    'Earth’s Layers',
 
                 description:
-                    'Discover the internal structure of Earth, from the crust to the core.'
+                    'Discover Earth’s internal structure, from the crust all the way to the core.'
             }
         }
+    },
+
+
+    /*
+     * =====================================================
+     * WATER WORLD
+     * =====================================================
+     */
+
+    waterWorld: {
+
+        title:
+            'Water World',
+
+        description:
+            'Explore water, its properties, its cycle, and the phenomena that make it essential to life on Earth.',
+
+        back:
+            'Back to Earth World',
+
+        comingSoon:
+            'Coming Soon',
+
+        hint:
+            'Choose an experiment to explore the secrets of water.',
+
+
+        /*
+         * =================================================
+         * WATER EXPERIMENTS
+         * =================================================
+         */
+
+        experiments: {
+
+            waterCycle: {
+
+                title:
+                    'Water Cycle',
+
+                description:
+                    'Follow the journey of water through evaporation, condensation, precipitation, and surface runoff.'
+            },
+
+           surfaceTension: {
+
+    title:
+        'Surface Tension',
+
+    description:
+        'Discover how cohesive forces between water molecules make the surface behave like an elastic film.'
+},
+
+            waterStates: {
+
+                title:
+                    'States of Water',
+
+                description:
+                    'Explore how water transitions between its solid, liquid, and gaseous states.'
+            },
+
+            oceanCurrents: {
+
+                title:
+                    'Oceans & Currents',
+
+                description:
+                    'Discover how water moves through the oceans and how ocean currents influence Earth’s climate.'
+            },
+
+            groundwater: {
+
+                title:
+                    'Groundwater',
+
+                description:
+                    'Explore water stored beneath Earth’s surface and how it moves through rocks and soil.'
+            },
+
+            waterErosion: {
+
+                title:
+                    'Water Erosion',
+
+                description:
+                    'See how water shapes Earth’s surface and gradually carves rocks and landforms over time.'
+            }
+
+        },
+
+
+        /*
+         * =================================================
+         * WATER EXPERIMENTS
+         * =================================================
+         */
+
+        experiment: {
+
+            waterCycle: {
+
+                title:
+                    'Water Cycle',
+
+                description:
+                    'The continuous journey of water between the ocean, atmosphere, and Earth’s surface.',
+
+                pause:
+                    'Pause',
+
+                continue:
+                    'Continue',
+
+                reset:
+                    'Restart',
+
+                back:
+                    'Back to Water World',
+
+                status:
+                    'Phase {current} of {total}',
+
+                heating: {
+
+                    title:
+                        'Heating',
+
+                    description:
+                        'The Sun warms the ocean surface and provides the energy needed to begin the cycle.'
+                },
+
+                evaporation: {
+
+                    title:
+                        'Evaporation',
+
+                    description:
+                        'Water molecules leave the ocean surface and rise into the atmosphere as water vapor.'
+                },
+
+                condensation: {
+
+                    title:
+                        'Condensation',
+
+                    description:
+                        'Water vapor cools and condenses inside clouds, forming tiny water droplets.'
+                },
+
+                precipitation: {
+
+                    title:
+                        'Precipitation',
+
+                    description:
+                        'When water droplets become heavy enough, they begin falling from clouds as rain.'
+                },
+
+                runoff: {
+
+                    title:
+                        'Surface Runoff',
+
+                    description:
+                        'Water flows across the land through valleys and streams until it eventually returns to the ocean.'
+                }
+            },
+
+
+            surfaceTension: {
+
+                title:
+                    'Surface Tension',
+
+                description:
+                    'Discover how cohesive forces between water molecules make the surface behave like an elastic film.',
+
+                pause:
+                    'Pause',
+
+                continue:
+                    'Continue',
+
+                reset:
+                    'Restart',
+
+                back:
+                    'Back to Water World',
+
+                status:
+                    'Phase {current} of {total}',
+
+                cohesion: {
+
+                    title:
+                        'Molecular Cohesion',
+
+                    description:
+                        'Water molecules attract one another through cohesive forces.'
+                },
+
+                surface: {
+
+                    title:
+                        'The Water Surface',
+
+                    description:
+                        'Molecules at the surface experience unbalanced forces, making the surface different from the water below.'
+                },
+
+                tension: {
+
+                    title:
+                        'Surface Tension',
+
+                    description:
+                        'Surface tension arises from molecular cohesion, allowing the water surface to resist deformation.'
+                },
+
+                impact: {
+
+                    title:
+                        'An Object Meets the Surface',
+
+                    description:
+                        'When a small object touches the water, the surface bends around it because of surface tension.'
+                },
+
+                recovery: {
+
+                    title:
+                        'Surface Recovery',
+
+                    description:
+                        'After the disturbance ends, cohesive forces pull the surface back while ripples spread outward.'
+                }
+            }
+        }
+
     },
 
 
@@ -1550,7 +1790,7 @@ export default {
             'Astronomy World',
 
         description:
-            'Explore the worlds of stars, the universe, and phenomena that reveal the secrets of the sky.',
+            'Explore the worlds of stars, the universe, and the phenomena that reveal the secrets of the sky.',
 
         back:
             'Back to Astronomy Galaxy',
@@ -1589,19 +1829,19 @@ export default {
                     'Birth of a Star',
 
                 description:
-                    'Follow the journey of a star from a vast cloud of gas and dust to a stable star radiating energy.',
+                    'Follow the journey of a star being born from a vast cloud of gas and dust into a stable star radiating energy.',
 
                 exit:
                     'Exit Experiment',
 
                 reset:
-                    'Restart Experiment',
+                    'Reset Experiment',
 
                 continue:
                     'Continue',
 
                 replay:
-                    'Watch Again',
+                    'Watch the Experiment Again',
 
 
                 phases: {
@@ -1612,7 +1852,7 @@ export default {
                             'Molecular Cloud',
 
                         description:
-                            'The story begins inside a vast, cold cloud of gas and dust. Matter is spread through space, while gravity slowly brings it together.'
+                            'The story begins inside a vast, cold cloud of gas and dust. The material is spread throughout space, but gravity slowly gathers it together.'
                     },
 
                     collapse: {
@@ -1621,7 +1861,7 @@ export default {
                             'Gravitational Collapse',
 
                         description:
-                            'When a region of the cloud becomes gravitationally unstable, matter begins collapsing inward, increasing in density and temperature.'
+                            'When a region of the cloud becomes gravitationally unstable, its material begins collapsing inward, increasing in density and temperature.'
                     },
 
                     protostar: {
@@ -1630,7 +1870,7 @@ export default {
                             'Protostar',
 
                         description:
-                            'A dense, hot center called a protostar forms, while matter continues falling toward it and an accreting structure develops around it.'
+                            'A dense, hot center called a protostar forms while material continues falling toward it and an accreting structure develops around it.'
                     },
 
                     fusion: {
@@ -1639,7 +1879,7 @@ export default {
                             'Nuclear Fusion Begins',
 
                         description:
-                            'As the temperature and pressure at the core rise enormously, hydrogen fusion begins, producing energy capable of supporting the star.'
+                            'As the temperature and pressure in the core rise dramatically, hydrogen fusion begins in the nucleus, producing enough energy to support the star.'
                     },
 
                     star: {
@@ -1648,7 +1888,7 @@ export default {
                             'Main Sequence Star',
 
                         description:
-                            'The star reaches a relatively stable stage, where hydrogen fusion in its core maintains a balance between gravity and internal pressure.'
+                            'The star reaches a relatively stable stage where hydrogen fusion in its core maintains a balance between gravity and internal pressure.'
                     }
                 }
             },
@@ -1669,19 +1909,19 @@ export default {
                     'Star Life & Fate',
 
                 description:
-                    "Discover how a star's mass determines its journey from birth to its final fate.",
+                    'Discover how a star’s mass determines its path from birth to its final stage.',
 
                 exit:
                     'Exit Experiment',
 
                 reset:
-                    'Restart Experiment',
+                    'Reset Experiment',
 
                 continue:
                     'Continue Journey',
 
                 replay:
-                    'Watch Journey Again',
+                    'Watch the Journey Again',
 
                 choosePath:
                     'Choose Star Mass',
@@ -1715,7 +1955,7 @@ export default {
                             'Red Giant',
 
                         description:
-                            'After most of the hydrogen in the core is exhausted, the star expands dramatically and its surface becomes cooler and redder.'
+                            'After most of the hydrogen in the core is depleted, the star expands dramatically and its surface becomes cooler and redder.'
                     },
 
                     planetaryNebula: {
@@ -1724,7 +1964,7 @@ export default {
                             'Planetary Nebula',
 
                         description:
-                            'The star ejects its outer layers into space, causing the material to glow around the remaining hot core.'
+                            'The star ejects its outer layers into space, causing the material to glow around the hot remaining core.'
                     },
 
                     whiteDwarf: {
@@ -1748,19 +1988,19 @@ export default {
                     advancedFusion: {
 
                         title:
-                            'Heavy Element Fusion',
+                            'Fusion of Heavy Elements',
 
                         description:
-                            'After hydrogen is exhausted, the core enters advanced stages of fusion, producing increasingly heavier elements inside the star.'
+                            'After hydrogen is depleted, the core begins advanced stages of fusion, producing heavier elements inside the star.'
                     },
 
                     ironCore: {
 
                         title:
-                            'Iron-Rich Core',
+                            'Iron-rich Core',
 
                         description:
-                            'An iron-rich core eventually forms. Iron fusion cannot provide the energy needed to support the star against collapse.'
+                            'An iron-rich core eventually forms. Iron fusion cannot provide the energy needed to resist the star’s collapse.'
                     },
 
                     supernova: {
@@ -1769,7 +2009,7 @@ export default {
                             'Supernova',
 
                         description:
-                            'The core of the massive star collapses rapidly, followed by a supernova explosion that ejects the outer layers into space.'
+                            'The core of the massive star collapses extremely rapidly, followed by a supernova explosion that ejects the outer layers into space.'
                     },
 
                     compactRemnant: {
@@ -1808,22 +2048,22 @@ export default {
                     'Gravitational Lensing',
 
                 description:
-                    'See how gravity bends the path of light as it passes near a massive object.',
+                    'Watch how gravity changes the path of light as it passes near a massive object.',
 
                 exit:
                     'Exit Experiment',
 
                 reset:
-                    'Restart Experiment',
+                    'Reset Experiment',
 
                 continue:
                     'Continue',
 
                 replay:
-                    'Watch Again',
+                    'Watch the Experiment Again',
 
                 statusLabel:
-                    'Lensing Status',
+                    'Gravitational Lensing Status',
 
                 alignment:
                     'Source Alignment',
@@ -1838,7 +2078,7 @@ export default {
                     'Observer',
 
                 alignmentTitle:
-                    'When the Objects Align',
+                    'When Objects Align',
 
                 alignmentDescription:
                     'When the light source, gravitational lens, and observer are nearly aligned, a ring of light known as an Einstein Ring can form around the lens.',
@@ -1878,13 +2118,13 @@ export default {
                             'Strong Gravitational Lensing',
 
                         description:
-                            'As the source moves slightly away from alignment, light bends around the lens and multiple images of the light source appear.'
+                            'When the source moves slightly away from alignment, light bends around the lens and multiple images of the light source appear.'
                     },
 
                     offset: {
 
                         title:
-                            'Source Far from Alignment',
+                            'Source Away from Alignment',
 
                         description:
                             'As the light source moves farther from alignment, the gravitational lensing effect becomes less pronounced and the images move away from the center of the lens.'
@@ -1928,7 +2168,7 @@ export default {
                 },
 
                 note:
-                    'Move the light source and observe how its image and light paths change as spacetime curves around the massive object.'
+                    'Move the light source and observe how its images and light paths change as a result of spacetime curvature around the massive object.'
             },
 
 
@@ -1956,7 +2196,7 @@ export default {
                     'Experiment Paused',
 
                 info:
-                    'Galaxies are not expanding away from a single central point. Instead, space itself is expanding, increasing the distances between galaxies over time.',
+                    'Galaxies are not moving away from a single central point. Instead, space itself is expanding, increasing the distances between galaxies over time.',
 
                 pause:
                     'Pause Experiment',
@@ -1965,7 +2205,7 @@ export default {
                     'Continue Experiment',
 
                 reset:
-                    'Restart Experiment',
+                    'Reset Experiment',
 
                 exit:
                     'Exit Experiment'

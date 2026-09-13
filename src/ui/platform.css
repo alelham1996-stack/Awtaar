@@ -25,9 +25,15 @@
     inset: 0;
 
     width: 100%;
+
     height: 100%;
 
-    z-index: 20;
+    /*
+     * رفع المنصة فوق طبقة Three.js
+     * حتى تصل النقرات إلى الأزرار.
+     */
+
+    z-index: 2000;
 
     pointer-events: none;
 
@@ -41,7 +47,6 @@
 
     color:
         #f4ead8;
-
 }
 
 
@@ -54,7 +59,9 @@
     position: absolute;
 
     top: 0;
+
     left: 0;
+
     right: 0;
 
     height: 92px;
@@ -71,7 +78,6 @@
     box-sizing: border-box;
 
     z-index: 100;
-
 }
 
 
@@ -99,7 +105,6 @@
     text-shadow:
         0 0 20px
         rgba(241, 210, 139, 0.20);
-
 }
 
 
@@ -161,7 +166,6 @@
         background 0.3s ease,
         border-color 0.3s ease,
         transform 0.3s ease;
-
 }
 
 
@@ -178,7 +182,6 @@
 
     transform:
         translateY(-1px);
-
 }
 
 
@@ -227,7 +230,6 @@
         transform 0.35s ease,
         border-color 0.35s ease,
         background 0.35s ease;
-
 }
 
 
@@ -247,7 +249,6 @@
     transition:
         transform 0.35s ease,
         opacity 0.25s ease;
-
 }
 
 
@@ -261,7 +262,6 @@
 
     background:
         rgba(241, 210, 139, 0.06);
-
 }
 
 
@@ -276,7 +276,6 @@
 
     background:
         rgba(241, 210, 139, 0.07);
-
 }
 
 
@@ -285,7 +284,6 @@
     transform:
         translateY(6px)
         rotate(45deg);
-
 }
 
 
@@ -293,7 +291,6 @@
 
     opacity:
         0;
-
 }
 
 
@@ -302,7 +299,6 @@
     transform:
         translateY(-6px)
         rotate(-45deg);
-
 }
 
 
@@ -314,16 +310,7 @@
 
     position: fixed;
 
-    /*
-     * أسفل منطقة الهيدر
-     * حتى لا تغطي زر الثلاث خطوط
-     */
-
     top: 104px;
-
-    /*
-     * الوضع العربي الافتراضي
-     */
 
     left: 54px;
 
@@ -355,7 +342,6 @@
     box-shadow:
         0 25px 70px
         rgba(0, 0, 0, 0.42),
-
         inset 0 0 30px
         rgba(241, 210, 139, 0.025);
 
@@ -387,7 +373,6 @@
             1
         ),
         visibility 0.35s ease;
-
 }
 
 
@@ -410,7 +395,6 @@
         translateY(0)
         translateX(0)
         scale(1);
-
 }
 
 
@@ -434,7 +418,6 @@
 
     transform-origin:
         right top;
-
 }
 
 
@@ -449,7 +432,6 @@
         translateY(0)
         translateX(0)
         scale(1);
-
 }
 
 
@@ -480,7 +462,6 @@
 
     opacity:
         0.8;
-
 }
 
 
@@ -503,7 +484,6 @@
             rgba(241, 210, 139, 0.75),
             transparent
         );
-
 }
 
 
@@ -534,7 +514,6 @@
 
     text-align:
         left;
-
 }
 
 
@@ -599,7 +578,6 @@
         background 0.28s ease,
         border-color 0.28s ease,
         transform 0.28s ease;
-
 }
 
 
@@ -625,7 +603,6 @@
     transition:
         background 0.28s ease,
         box-shadow 0.28s ease;
-
 }
 
 
@@ -642,7 +619,6 @@
 
     transform:
         translateX(3px);
-
 }
 
 
@@ -654,7 +630,6 @@
     box-shadow:
         0 0 9px
         rgba(241, 210, 139, 0.55);
-
 }
 
 
@@ -683,6 +658,11 @@
     text-align:
         right;
 
+    pointer-events:
+        auto;
+
+    z-index:
+        200;
 }
 
 
@@ -720,7 +700,6 @@
     text-shadow:
         0 5px 35px
         rgba(0, 0, 0, 0.70);
-
 }
 
 
@@ -755,7 +734,6 @@
     text-shadow:
         0 3px 18px
         rgba(0, 0, 0, 0.65);
-
 }
 
 
@@ -767,6 +745,9 @@
 
     position:
         relative;
+
+    z-index:
+        210;
 
     padding:
         13px 28px;
@@ -800,6 +781,9 @@
     pointer-events:
         auto;
 
+    touch-action:
+        manipulation;
+
     backdrop-filter:
         blur(12px);
 
@@ -815,7 +799,6 @@
         background 0.35s ease,
         border-color 0.35s ease,
         box-shadow 0.35s ease;
-
 }
 
 
@@ -833,7 +816,6 @@
     box-shadow:
         0 0 28px
         rgba(241, 210, 139, 0.12);
-
 }
 
 
@@ -841,7 +823,6 @@
 
     transform:
         translateY(0);
-
 }
 
 
@@ -855,7 +836,6 @@
 
     transform:
         none;
-
 }
 
 
@@ -877,8 +857,12 @@
     height:
         100%;
 
+    /*
+     * طبقة الاستكشاف فوق المنصة والمشهد.
+     */
+
     z-index:
-        60;
+        2100;
 
     pointer-events:
         none;
@@ -895,7 +879,6 @@
 
     color:
         #f4ead8;
-
 }
 
 
@@ -957,7 +940,6 @@
 
     z-index:
         70;
-
 }
 
 
@@ -1004,7 +986,6 @@
         background 0.3s ease,
         border-color 0.3s ease,
         transform 0.3s ease;
-
 }
 
 
@@ -1015,7 +996,6 @@
 
     background:
         rgba(241, 210, 139, 0.045);
-
 }
 
 
@@ -1029,7 +1009,6 @@
 
     background:
         rgba(241, 210, 139, 0.075);
-
 }
 
 
@@ -1104,7 +1083,6 @@
 
     z-index:
         70;
-
 }
 
 
@@ -1122,7 +1100,6 @@
 
     color:
         #f1d28b;
-
 }
 
 
@@ -1139,7 +1116,6 @@
 
         width:
             560px;
-
     }
 
 
@@ -1147,7 +1123,6 @@
 
         font-size:
             62px;
-
     }
 
 }
@@ -1166,7 +1141,6 @@
 
         padding:
             0 32px;
-
     }
 
 
@@ -1181,6 +1155,11 @@
         max-width:
             48vw;
 
+        pointer-events:
+            auto;
+
+        z-index:
+            200;
     }
 
 
@@ -1188,7 +1167,6 @@
 
         font-size:
             clamp(34px, 5vw, 50px);
-
     }
 
 
@@ -1196,7 +1174,6 @@
 
         font-size:
             16px;
-
     }
 
 
@@ -1207,7 +1184,6 @@
 
         top:
             94px;
-
     }
 
 
@@ -1218,7 +1194,6 @@
 
         top:
             94px;
-
     }
 
 
@@ -1230,7 +1205,6 @@
 
         right:
             32px;
-
     }
 
 }
@@ -1249,7 +1223,6 @@
 
         padding:
             0 22px;
-
     }
 
 
@@ -1260,7 +1233,6 @@
 
         letter-spacing:
             6px;
-
     }
 
 
@@ -1271,7 +1243,6 @@
 
         height:
             40px;
-
     }
 
 
@@ -1294,7 +1265,6 @@
 
         font-size:
             11px;
-
     }
 
 
@@ -1311,7 +1281,6 @@
 
         width:
             250px;
-
     }
 
 
@@ -1323,7 +1292,6 @@
 
         right:
             18px;
-
     }
 
 
@@ -1347,6 +1315,11 @@
         transform:
             translateY(-50%);
 
+        pointer-events:
+            auto;
+
+        z-index:
+            200;
     }
 
 
@@ -1360,7 +1333,6 @@
 
         font-weight:
             400;
-
     }
 
 
@@ -1377,7 +1349,6 @@
 
         line-height:
             1.9;
-
     }
 
 
@@ -1389,6 +1360,11 @@
         font-size:
             14px;
 
+        z-index:
+            210;
+
+        pointer-events:
+            auto;
     }
 
 
@@ -1411,7 +1387,6 @@
 
         scrollbar-width:
             none;
-
     }
 
 
@@ -1419,7 +1394,6 @@
 
         display:
             none;
-
     }
 
 
@@ -1430,7 +1404,6 @@
 
         font-size:
             12px;
-
     }
 
 
@@ -1444,7 +1417,6 @@
 
         font-size:
             12px;
-
     }
 
 }

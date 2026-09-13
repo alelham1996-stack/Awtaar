@@ -1,3 +1,9 @@
+/* =========================================================
+   AWTAAR — PLATFORM UI
+   Elegant / Scientific / Premium
+   Arabic / English
+   ========================================================= */
+
 import ExplorationUI from './ExplorationUI.js'
 
 import {
@@ -22,6 +28,19 @@ export default class PlatformUI {
 
         this.scene =
             scene
+
+
+        /*
+         * =====================================================
+         * STATE
+         * =====================================================
+         */
+
+        this.isExploring =
+            false
+
+        this.explorationTimer =
+            null
 
 
         /*
@@ -107,6 +126,9 @@ export default class PlatformUI {
         this.languageButton =
             document.createElement('button')
 
+        this.languageButton.type =
+            'button'
+
         this.languageButton.className =
             'awtaar-language-button'
 
@@ -117,6 +139,7 @@ export default class PlatformUI {
 
 
         /*
+         * =================================================
          * LANGUAGE EVENT
          * =================================================
          */
@@ -140,6 +163,9 @@ export default class PlatformUI {
         this.menuButton =
             document.createElement('button')
 
+        this.menuButton.type =
+            'button'
+
         this.menuButton.className =
             'awtaar-menu-button'
 
@@ -150,6 +176,7 @@ export default class PlatformUI {
 
 
         /*
+         * =================================================
          * MENU LINES
          * =================================================
          */
@@ -161,6 +188,7 @@ export default class PlatformUI {
 
 
         /*
+         * =================================================
          * MENU EVENT
          * =================================================
          */
@@ -217,6 +245,7 @@ export default class PlatformUI {
 
 
         /*
+         * =================================================
          * TITLE
          * =================================================
          */
@@ -231,6 +260,7 @@ export default class PlatformUI {
 
 
         /*
+         * =================================================
          * DESCRIPTION
          * =================================================
          */
@@ -253,6 +283,9 @@ export default class PlatformUI {
         this.exploreButton =
             document.createElement('button')
 
+        this.exploreButton.type =
+            'button'
+
         this.exploreButton.className =
             'awtaar-explore-button'
 
@@ -260,6 +293,13 @@ export default class PlatformUI {
             t(
                 'platform.explore'
             )
+
+        this.exploreButton.setAttribute(
+            'aria-label',
+            t(
+                'platform.explore'
+            )
+        )
 
 
         /*
@@ -331,7 +371,11 @@ export default class PlatformUI {
 
         this.exploreButton.addEventListener(
             'click',
-            () => {
+            (event) => {
+
+                event.preventDefault()
+
+                event.stopPropagation()
 
                 this.startExploration()
 
@@ -456,14 +500,14 @@ export default class PlatformUI {
                 const button =
                     document.createElement('button')
 
+                button.type =
+                    'button'
 
                 button.className =
                     'awtaar-platform-menu-item'
 
-
                 button.dataset.menu =
                     item.key
-
 
                 button.textContent =
                     t(
@@ -477,7 +521,11 @@ export default class PlatformUI {
 
                 button.addEventListener(
                     'click',
-                    () => {
+                    (event) => {
+
+                        event.preventDefault()
+
+                        event.stopPropagation()
 
                         this.selectMenuItem(
                             item.key
@@ -494,7 +542,6 @@ export default class PlatformUI {
                 this.menu.appendChild(
                     button
                 )
-
 
                 this.menuButtons.push(
                     button
@@ -549,6 +596,13 @@ export default class PlatformUI {
      */
 
     openMenu() {
+
+        if (
+            this.isExploring
+        ) {
+            return
+        }
+
 
         this.menu.classList.add(
             'open'
@@ -757,7 +811,8 @@ export default class PlatformUI {
 
         if (
             this.explorationUI &&
-            this.explorationUI.updateLanguage
+            typeof this.explorationUI.updateLanguage ===
+            'function'
         ) {
 
             this.explorationUI.updateLanguage()
@@ -781,10 +836,16 @@ export default class PlatformUI {
          * =================================================
          */
 
-        this.title.textContent =
-            t(
-                'platform.title'
-            )
+        if (
+            this.title
+        ) {
+
+            this.title.textContent =
+                t(
+                    'platform.title'
+                )
+
+        }
 
 
         /*
@@ -793,10 +854,16 @@ export default class PlatformUI {
          * =================================================
          */
 
-        this.description.textContent =
-            t(
-                'platform.description'
-            )
+        if (
+            this.description
+        ) {
+
+            this.description.textContent =
+                t(
+                    'platform.description'
+                )
+
+        }
 
 
         /*
@@ -805,10 +872,23 @@ export default class PlatformUI {
          * =================================================
          */
 
-        this.exploreButton.textContent =
-            t(
-                'platform.explore'
+        if (
+            this.exploreButton
+        ) {
+
+            this.exploreButton.textContent =
+                t(
+                    'platform.explore'
+                )
+
+            this.exploreButton.setAttribute(
+                'aria-label',
+                t(
+                    'platform.explore'
+                )
             )
+
+        }
 
 
         /*
@@ -817,10 +897,16 @@ export default class PlatformUI {
          * =================================================
          */
 
-        this.languageButton.textContent =
-            getLanguage() === 'ar'
-                ? 'EN'
-                : 'AR'
+        if (
+            this.languageButton
+        ) {
+
+            this.languageButton.textContent =
+                getLanguage() === 'ar'
+                    ? 'EN'
+                    : 'AR'
+
+        }
 
 
         /*
@@ -909,6 +995,50 @@ export default class PlatformUI {
 
     startExploration() {
 
+        /*
+         * =================================================
+         * PROTECTION
+         * =================================================
+         */
+
+        if (
+            this.isExploring
+        ) {
+
+            return
+
+        }
+
+
+        /*
+         * =================================================
+         * VERIFY EXPLORATION UI
+         * =================================================
+         */
+
+        if (
+            !this.explorationUI
+        ) {
+
+            console.error(
+                '❌ Awtaar: ExplorationUI is not available.'
+            )
+
+            return
+
+        }
+
+
+        /*
+         * =================================================
+         * STATE
+         * =================================================
+         */
+
+        this.isExploring =
+            true
+
+
         console.log(
             '🌌 Awtaar Exploration Started'
         )
@@ -916,12 +1046,18 @@ export default class PlatformUI {
 
         /*
          * =================================================
-         * PREVENT REPEATED CLICK
+         * DISABLE EXPLORE BUTTON
          * =================================================
          */
 
-        this.exploreButton.disabled =
-            true
+        if (
+            this.exploreButton
+        ) {
+
+            this.exploreButton.disabled =
+                true
+
+        }
 
 
         /*
@@ -935,7 +1071,27 @@ export default class PlatformUI {
 
         /*
          * =================================================
-         * HIDE PLATFORM
+         * CANCEL PREVIOUS TIMER
+         * =================================================
+         */
+
+        if (
+            this.explorationTimer
+        ) {
+
+            clearTimeout(
+                this.explorationTimer
+            )
+
+            this.explorationTimer =
+                null
+
+        }
+
+
+        /*
+         * =================================================
+         * FADE PLATFORM OUT
          * =================================================
          */
 
@@ -952,24 +1108,45 @@ export default class PlatformUI {
          * =================================================
          */
 
-        setTimeout(
-            () => {
+        this.explorationTimer =
+            setTimeout(
+                () => {
 
-                this.container.style.visibility =
-                    'hidden'
+                    this.explorationTimer =
+                        null
 
 
-                if (
-                    this.explorationUI
-                ) {
+                    /*
+                     * HIDE PLATFORM
+                     */
 
-                    this.explorationUI.show()
+                    this.container.style.visibility =
+                        'hidden'
 
-                }
 
-            },
-            1200
-        )
+                    /*
+                     * SHOW EXPLORATION
+                     */
+
+                    if (
+                        this.explorationUI &&
+                        typeof this.explorationUI.show ===
+                        'function'
+                    ) {
+
+                        this.explorationUI.show()
+
+                    } else {
+
+                        console.error(
+                            '❌ Awtaar: ExplorationUI.show() is not available.'
+                        )
+
+                    }
+
+                },
+                1200
+            )
 
     }
 
@@ -983,22 +1160,64 @@ export default class PlatformUI {
     show() {
 
         /*
+         * =================================================
+         * RESET EXPLORATION STATE
+         * =================================================
+         */
+
+        this.isExploring =
+            false
+
+
+        /*
+         * =================================================
+         * CANCEL TRANSITION
+         * =================================================
+         */
+
+        if (
+            this.explorationTimer
+        ) {
+
+            clearTimeout(
+                this.explorationTimer
+            )
+
+            this.explorationTimer =
+                null
+
+        }
+
+
+        /*
+         * =================================================
          * UPDATE LANGUAGE
+         * =================================================
          */
 
         this.updateLanguage()
 
 
         /*
+         * =================================================
          * ENABLE EXPLORE BUTTON
+         * =================================================
          */
 
-        this.exploreButton.disabled =
-            false
+        if (
+            this.exploreButton
+        ) {
+
+            this.exploreButton.disabled =
+                false
+
+        }
 
 
         /*
+         * =================================================
          * SHOW PLATFORM
+         * =================================================
          */
 
         this.container.style.visibility =
@@ -1029,14 +1248,18 @@ export default class PlatformUI {
     hide() {
 
         /*
+         * =================================================
          * CLOSE MENU
+         * =================================================
          */
 
         this.closeMenu()
 
 
         /*
+         * =================================================
          * FADE OUT
+         * =================================================
          */
 
         this.container.style.opacity =
@@ -1047,7 +1270,9 @@ export default class PlatformUI {
 
 
         /*
+         * =================================================
          * HIDE COMPLETELY
+         * =================================================
          */
 
         setTimeout(
