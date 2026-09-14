@@ -1,0 +1,822 @@
+/* =========================================================
+   AWTAAR — CHEMISTRY WORLD
+   Elegant Sapphire / Deep Blue
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+#awtaar-chemistry-world,
+.awtaar-chemistry-world {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 120;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: 34px 30px 24px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    color: #eef4ff;
+
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(65, 112, 220, 0.22),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 18% 72%,
+            rgba(20, 55, 135, 0.18),
+            transparent 36%
+        ),
+
+        radial-gradient(
+            circle at 82% 70%,
+            rgba(32, 75, 165, 0.16),
+            transparent 38%
+        ),
+
+        linear-gradient(
+            180deg,
+            #071630 0%,
+            #061229 38%,
+            #040d20 72%,
+            #020817 100%
+        ) !important;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease;
+
+    scrollbar-width: none;
+}
+
+
+/* =========================================================
+   HIDE SCROLLBAR
+   ========================================================= */
+
+#awtaar-chemistry-world::-webkit-scrollbar,
+.awtaar-chemistry-world::-webkit-scrollbar {
+
+    display: none;
+}
+
+
+/* =========================================================
+   BACKGROUND LIGHT
+   ========================================================= */
+
+.awtaar-chemistry-world::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 42%,
+            rgba(0, 4, 15, 0.34) 100%
+        );
+
+    z-index: 0;
+}
+
+
+.awtaar-chemistry-world::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 700px;
+    height: 300px;
+
+    left: 50%;
+    top: 8%;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(78, 125, 230, 0.09),
+            transparent 70%
+        );
+
+    filter: blur(35px);
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+   CONTENT LAYER
+   ========================================================= */
+
+.awtaar-chemistry-world > * {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.awtaar-chemistry-title {
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: clamp(28px, 3vw, 42px);
+
+    font-weight: 500;
+
+    letter-spacing: 0.04em;
+
+    text-align: center;
+
+    color: #f4f7ff;
+
+    text-shadow:
+        0 0 24px rgba(96, 144, 255, 0.18);
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.awtaar-chemistry-description {
+
+    flex-shrink: 0;
+
+    max-width: 680px;
+
+    margin: 10px auto 0;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    font-weight: 300;
+
+    text-align: center;
+
+    color: rgba(222, 232, 255, 0.68);
+}
+
+
+/* =========================================================
+   EXPERIMENT GRID
+   ========================================================= */
+
+.awtaar-chemistry-experiments {
+
+    width: min(720px, 100%);
+
+    margin-top: 28px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(145px, 1fr));
+
+    gap: 18px;
+
+    box-sizing: border-box;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   EXPERIMENT CARD
+   ========================================================= */
+
+.awtaar-chemistry-experiment {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 145px;
+
+    padding: 18px 14px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    border-radius: 16px;
+
+    border: 1px solid rgba(105, 158, 255, 0.34);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 43, 91, 0.82),
+            rgba(5, 17, 42, 0.92)
+        );
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+
+        inset 0 0 0 1px
+        rgba(255, 255, 255, 0.025),
+
+        0 0 22px
+        rgba(58, 106, 210, 0.07);
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    font-family: 'Tajawal', sans-serif;
+
+    color: #eef4ff;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+
+/* =========================================================
+   CARD TOP LIGHT
+   ========================================================= */
+
+.awtaar-chemistry-experiment::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: -60px;
+    left: 50%;
+
+    width: 130px;
+    height: 100px;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(105, 158, 255, 0.12),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.awtaar-chemistry-experiment:not(.locked):hover {
+
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(125, 174, 255, 0.68);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 55, 112, 0.88),
+            rgba(6, 20, 48, 0.96)
+        );
+
+    box-shadow:
+        0 16px 34px rgba(0, 0, 0, 0.34),
+
+        0 0 28px
+        rgba(62, 116, 235, 0.14);
+}
+
+
+/* =========================================================
+   SYMBOL
+   ========================================================= */
+
+.awtaar-chemistry-experiment-symbol {
+
+    width: 56px;
+    height: 56px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    border: 1px solid
+        rgba(123, 170, 255, 0.38);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(47, 84, 155, 0.34),
+            rgba(8, 25, 58, 0.62)
+        );
+
+    color: #dce8ff;
+
+    font-size: 25px;
+
+    font-weight: 400;
+
+    box-shadow:
+        inset 0 0 18px
+        rgba(102, 151, 255, 0.07),
+
+        0 0 16px
+        rgba(74, 121, 220, 0.07);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.awtaar-chemistry-experiment-content {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.awtaar-chemistry-experiment-title {
+
+    margin: 0;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 15px;
+
+    line-height: 1.45;
+
+    font-weight: 500;
+
+    color: #f0f5ff;
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+   ========================================================= */
+
+.awtaar-chemistry-experiment-description {
+
+    margin: 4px 0 0;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+
+    font-weight: 300;
+
+    color: rgba(216, 228, 255, 0.58);
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.awtaar-chemistry-experiment-status {
+
+    margin-top: 5px;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 9px;
+
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+
+    color:
+        rgba(135, 176, 255, 0.72);
+}
+
+
+/* =========================================================
+   LOCKED
+   ========================================================= */
+
+.awtaar-chemistry-experiment.locked {
+
+    cursor: default;
+
+    opacity: 0.43;
+
+    filter: saturate(0.72);
+
+    border-color:
+        rgba(85, 118, 180, 0.20);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13, 29, 60, 0.66),
+            rgba(4, 12, 30, 0.82)
+        );
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.22);
+}
+
+
+.awtaar-chemistry-experiment.locked
+.awtaar-chemistry-experiment-symbol {
+
+    border-color:
+        rgba(90, 125, 190, 0.22);
+
+    color:
+        rgba(185, 202, 235, 0.52);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-chemistry-back {
+
+    flex-shrink: 0;
+
+    margin-top: 22px;
+
+    margin-bottom: 4px;
+
+    padding: 9px 22px;
+
+    border: 1px solid
+        rgba(105, 158, 255, 0.36);
+
+    border-radius: 999px;
+
+    background:
+        rgba(7, 20, 46, 0.72);
+
+    color:
+        rgba(224, 234, 255, 0.82);
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 22px
+        rgba(0, 0, 0, 0.22),
+
+        inset 0 0 12px
+        rgba(95, 140, 230, 0.04);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        background 0.3s ease;
+}
+
+
+.awtaar-chemistry-back:hover {
+
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(130, 176, 255, 0.66);
+
+    color: #ffffff;
+
+    background:
+        rgba(14, 34, 72, 0.86);
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+[dir='rtl'] .awtaar-chemistry-world {
+
+    direction: rtl;
+}
+
+
+/* =========================================================
+   LTR
+   ========================================================= */
+
+[dir='ltr'] .awtaar-chemistry-world {
+
+    direction: ltr;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    #awtaar-chemistry-world,
+    .awtaar-chemistry-world {
+
+        padding:
+            28px
+            22px
+            20px;
+    }
+
+
+    .awtaar-chemistry-experiments {
+
+        width: min(620px, 100%);
+
+        grid-template-columns:
+            repeat(3, minmax(130px, 1fr));
+
+        gap: 15px;
+    }
+
+
+    .awtaar-chemistry-experiment {
+
+        min-height: 132px;
+
+        padding:
+            15px
+            10px;
+    }
+
+
+    .awtaar-chemistry-experiment-symbol {
+
+        width: 50px;
+        height: 50px;
+
+        font-size: 22px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    #awtaar-chemistry-world,
+    .awtaar-chemistry-world {
+
+        padding:
+            24px
+            16px
+            18px;
+    }
+
+
+    .awtaar-chemistry-title {
+
+        font-size: 27px;
+    }
+
+
+    .awtaar-chemistry-description {
+
+        max-width: 430px;
+
+        font-size: 12px;
+
+        line-height: 1.7;
+    }
+
+
+    .awtaar-chemistry-experiments {
+
+        width: min(440px, 100%);
+
+        grid-template-columns:
+            repeat(2, minmax(120px, 1fr));
+
+        gap: 13px;
+
+        margin-top: 22px;
+    }
+
+
+    .awtaar-chemistry-experiment {
+
+        min-height: 125px;
+
+        border-radius: 14px;
+    }
+
+
+    .awtaar-chemistry-experiment-symbol {
+
+        width: 46px;
+        height: 46px;
+
+        border-radius: 13px;
+
+        font-size: 20px;
+    }
+
+
+    .awtaar-chemistry-experiment-title {
+
+        font-size: 14px;
+    }
+
+
+    .awtaar-chemistry-experiment-description {
+
+        font-size: 10px;
+    }
+
+
+    .awtaar-chemistry-experiment-status {
+
+        font-size: 8px;
+    }
+
+
+    .awtaar-chemistry-back {
+
+        margin-top: 18px;
+
+        padding:
+            8px
+            20px;
+
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .awtaar-chemistry-world {
+
+        padding:
+            20px
+            12px
+            15px;
+    }
+
+
+    .awtaar-chemistry-title {
+
+        font-size: 24px;
+    }
+
+
+    .awtaar-chemistry-description {
+
+        font-size: 11px;
+    }
+
+
+    .awtaar-chemistry-experiments {
+
+        grid-template-columns:
+            repeat(2, minmax(110px, 1fr));
+
+        gap: 10px;
+    }
+
+
+    .awtaar-chemistry-experiment {
+
+        min-height: 112px;
+
+        padding:
+            12px
+            8px;
+    }
+
+
+    .awtaar-chemistry-experiment-symbol {
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 18px;
+    }
+
+
+    .awtaar-chemistry-experiment-title {
+
+        font-size: 13px;
+    }
+
+
+    .awtaar-chemistry-experiment-description {
+
+        display: none;
+    }
+
+
+    .awtaar-chemistry-experiment-status {
+
+        margin-top: 3px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #awtaar-chemistry-world,
+    .awtaar-chemistry-world,
+    .awtaar-chemistry-experiment,
+    .awtaar-chemistry-back {
+
+        transition: none;
+    }
+}

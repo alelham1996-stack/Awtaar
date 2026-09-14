@@ -4,7 +4,7 @@
 
 import './water-world.css';
 
-import { t, getLanguage } from '../locales/i18n.js';
+import { t, getLanguage } from '../../locales/i18n.js';
 
 import WaterCycleExperiment from './WaterCycleExperiment.js';
 import SurfaceTensionExperiment from './SurfaceTensionExperiment.js';
@@ -24,9 +24,6 @@ export default class WaterWorldUI {
 
         /*
          * تجربة دورة الماء
-         *
-         * سيتم إنشاؤها عند فتح التجربة
-         * وليس عند إنشاء عالم المياه.
          */
 
         this.waterCycleExperiment = null;
@@ -34,9 +31,6 @@ export default class WaterWorldUI {
 
         /*
          * تجربة التوتر السطحي
-         *
-         * سيتم إنشاؤها عند فتح التجربة
-         * وليس عند إنشاء عالم المياه.
          */
 
         this.surfaceTensionExperiment = null;
@@ -668,27 +662,122 @@ export default class WaterWorldUI {
 
     hide() {
 
-        if (!this.container) return;
+        /*
+         * حتى لو لم تكن واجهة عالم المياه ظاهرة،
+         * يجب إغلاق أي تجربة تم إنشاؤها سابقًا.
+         */
+
+        if (this.container) {
+
+            this.container.style.opacity =
+                '0';
+
+            this.container.style.pointerEvents =
+                'none';
+        }
 
 
-        this.container.style.opacity =
-            '0';
+        /* =================================================
+           إخفاء تجربة دورة الماء
+           ================================================= */
 
-        this.container.style.pointerEvents =
-            'none';
+        if (this.waterCycleExperiment) {
+
+            /*
+             * أولًا نستخدم hide() إن كانت موجودة.
+             */
+
+            if (
+                typeof this.waterCycleExperiment.hide ===
+                'function'
+            ) {
+
+                this.waterCycleExperiment.hide();
+            }
 
 
-        window.setTimeout(
-            () => {
+            /*
+             * ثم نفرض الإخفاء على الجذر الداخلي
+             * لتجنب بقاء الـ overlay ظاهرًا.
+             */
 
-                if (!this.container) return;
+            const waterCycleRoot =
+                this.waterCycleExperiment.root;
 
-                this.container.style.visibility =
+            if (waterCycleRoot) {
+
+                waterCycleRoot.style.opacity =
+                    '0';
+
+                waterCycleRoot.style.visibility =
                     'hidden';
 
-            },
-            550
-        );
+                waterCycleRoot.style.pointerEvents =
+                    'none';
+            }
+        }
+
+
+        /* =================================================
+           إخفاء تجربة التوتر السطحي
+           ================================================= */
+
+        if (this.surfaceTensionExperiment) {
+
+            /*
+             * أولًا نستخدم hide() إن كانت موجودة.
+             */
+
+            if (
+                typeof this.surfaceTensionExperiment.hide ===
+                'function'
+            ) {
+
+                this.surfaceTensionExperiment.hide();
+            }
+
+
+            /*
+             * ثم نفرض الإخفاء على الجذر الداخلي.
+             *
+             * تجربة التوتر السطحي تستخدم rootElement.
+             */
+
+            const surfaceTensionRoot =
+                this.surfaceTensionExperiment.rootElement;
+
+            if (surfaceTensionRoot) {
+
+                surfaceTensionRoot.style.opacity =
+                    '0';
+
+                surfaceTensionRoot.style.visibility =
+                    'hidden';
+
+                surfaceTensionRoot.style.pointerEvents =
+                    'none';
+            }
+        }
+
+
+        /* =================================================
+           إخفاء عالم المياه بالكامل
+           ================================================= */
+
+        if (this.container) {
+
+            window.setTimeout(
+                () => {
+
+                    if (!this.container) return;
+
+                    this.container.style.visibility =
+                        'hidden';
+
+                },
+                550
+            );
+        }
     }
 
 
@@ -708,7 +797,8 @@ export default class WaterWorldUI {
             case 'waterCycle': {
 
                 /*
-                 * إخفاء عالم المياه
+                 * إخفاء عالم المياه وأي تجربة أخرى
+                 * كانت مفتوحة سابقًا.
                  */
 
                 this.hide();
@@ -754,7 +844,8 @@ export default class WaterWorldUI {
             case 'surfaceTension': {
 
                 /*
-                 * إخفاء عالم المياه
+                 * إخفاء عالم المياه وأي تجربة أخرى
+                 * كانت مفتوحة سابقًا.
                  */
 
                 this.hide();
@@ -842,6 +933,10 @@ export default class WaterWorldUI {
        ===================================================== */
 
     returnToEarthWorld() {
+
+        /*
+         * إغلاق عالم المياه وأي تجربة مرتبطة به.
+         */
 
         this.hide();
 

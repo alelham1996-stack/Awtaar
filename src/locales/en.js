@@ -25,19 +25,23 @@ export default {
      * =====================================================
      */
 
-    exploration: {
+ exploration: {
 
-        galaxies:
-            'Galaxies',
+    title:
+        'Awtaar Exploration',
 
-        phenomena:
-            'Phenomena',
+    subtitle:
+        'Choose your gateway and begin a new journey through the universe.',
 
-        simulation:
-            'Simulation',
+    galaxies:
+        'Awtaar Galaxies',
 
-        discover:
-            'Discover'
+    galaxiesDescription:
+        'Explore Awtaar’s scientific worlds, where every galaxy has its own world and laws.',
+
+    watar:
+        'Watar’s World',
+
     },
 
 
@@ -147,7 +151,7 @@ export default {
     physicsWorld: {
 
         title:
-            'Physics World',
+            'Physics Galaxy',
 
         description:
             'Choose a world to explore the laws of physics.',
@@ -749,7 +753,7 @@ export default {
             'BIOLOGY GALAXY',
 
         title:
-            'Biology World',
+            'Biology Galaxy',
 
         description:
             'Explore the secrets of life, from cells and genes to biodiversity.',
@@ -1420,7 +1424,7 @@ export default {
     earthWorld: {
 
         title:
-            'Earth World',
+            'Earth Galaxy',
 
         description:
             'Explore planet Earth through its sciences, structure, and natural systems.',
@@ -1787,7 +1791,7 @@ export default {
     astronomyWorld: {
 
         title:
-            'Astronomy World',
+            'Astronomy Galaxy',
 
         description:
             'Explore the worlds of stars, the universe, and the phenomena that reveal the secrets of the sky.',

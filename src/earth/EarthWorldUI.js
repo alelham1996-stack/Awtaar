@@ -4,8 +4,8 @@
 
 import './earth-world.css';
 
-import GeologyWorldUI from './GeologyWorldUI.js';
-import WaterWorldUI from './WaterWorldUI.js';
+import GeologyWorldUI from './geology/GeologyWorldUI.js';
+import WaterWorldUI from './water/WaterWorldUI.js';
 
 import { t, getLanguage } from '../locales/i18n.js';
 
@@ -51,6 +51,7 @@ export default class EarthWorldUI {
 
         this.worldItems = [];
 
+
         this.createUI();
         this.updateLanguage();
     }
@@ -69,7 +70,8 @@ export default class EarthWorldUI {
            MAIN CONTAINER
            ===================================================== */
 
-        this.container = document.createElement('section');
+        this.container =
+            document.createElement('section');
 
         this.container.id =
             'awtaar-earth-world';
@@ -79,6 +81,7 @@ export default class EarthWorldUI {
          * مهم:
          * نجعل الحاوية نفسها Stack Context مستقلًا.
          */
+
         this.container.style.position =
             'fixed';
 
@@ -97,12 +100,14 @@ export default class EarthWorldUI {
            TITLE
            ===================================================== */
 
-        const title = document.createElement('h2');
+        const title =
+            document.createElement('h2');
 
         title.className =
             'awtaar-earth-world-title';
 
-        this.titleElement = title;
+        this.titleElement =
+            title;
 
         this.makeUIElementForeground(title);
 
@@ -275,7 +280,8 @@ export default class EarthWorldUI {
         ];
 
 
-        this.worldData = worldData;
+        this.worldData =
+            worldData;
 
 
         /* =====================================================
@@ -288,7 +294,8 @@ export default class EarthWorldUI {
                 const button =
                     document.createElement('button');
 
-                button.type = 'button';
+                button.type =
+                    'button';
 
                 button.className =
                     'awtaar-earth-world-item';
@@ -301,7 +308,9 @@ export default class EarthWorldUI {
                  * ضمان أن البطاقات فوق الخلفية.
                  */
 
-                this.makeUIElementForeground(button);
+                this.makeUIElementForeground(
+                    button
+                );
 
 
                 if (!world.available) {
@@ -310,7 +319,8 @@ export default class EarthWorldUI {
                         'is-coming-soon'
                     );
 
-                    button.disabled = true;
+                    button.disabled =
+                        true;
                 }
 
 
@@ -357,7 +367,6 @@ export default class EarthWorldUI {
 
                     status.dataset.status =
                         'coming-soon';
-
                 }
 
 
@@ -388,7 +397,6 @@ export default class EarthWorldUI {
                             this.selectWorld(
                                 world.id
                             );
-
                         }
                     );
                 }
@@ -396,11 +404,21 @@ export default class EarthWorldUI {
 
                 worlds.appendChild(button);
 
+
                 this.worldItems.push({
-                    data: world,
-                    element: button,
-                    nameElement: name,
-                    statusElement: status
+
+                    data:
+                        world,
+
+                    element:
+                        button,
+
+                    nameElement:
+                        name,
+
+                    statusElement:
+                        status
+
                 });
 
             }
@@ -414,7 +432,8 @@ export default class EarthWorldUI {
         const backButton =
             document.createElement('button');
 
-        backButton.type = 'button';
+        backButton.type =
+            'button';
 
         backButton.className =
             'awtaar-earth-world-back';
@@ -433,7 +452,6 @@ export default class EarthWorldUI {
             () => {
 
                 this.returnToGalaxy();
-
             }
         );
 
@@ -442,7 +460,9 @@ export default class EarthWorldUI {
            APPEND UI
            ===================================================== */
 
-        this.container.appendChild(title);
+        this.container.appendChild(
+            title
+        );
 
         this.container.appendChild(
             description
@@ -492,7 +512,6 @@ export default class EarthWorldUI {
 
         if (!element) return;
 
-
         element.style.position =
             'relative';
 
@@ -512,7 +531,6 @@ export default class EarthWorldUI {
 
         canvas.className =
             'earth-world-background';
-
 
         canvas.setAttribute(
             'aria-hidden',
@@ -547,7 +565,6 @@ export default class EarthWorldUI {
         this.backgroundCanvas =
             canvas;
 
-
         this.backgroundContext =
             canvas.getContext('2d');
 
@@ -575,14 +592,15 @@ export default class EarthWorldUI {
             () => {
 
                 this.resizeEarthBackground();
-
             };
 
 
         window.addEventListener(
             'resize',
             this.backgroundResizeHandler,
-            { passive: true }
+            {
+                passive: true
+            }
         );
 
 
@@ -590,7 +608,6 @@ export default class EarthWorldUI {
             () => {
 
                 this.resizeEarthBackground();
-
             }
         );
     }
@@ -693,7 +710,8 @@ export default class EarthWorldUI {
                 }
 
 
-                this.backgroundTime += 0.008;
+                this.backgroundTime +=
+                    0.008;
 
 
                 this.drawEarthBackground();
@@ -721,7 +739,6 @@ export default class EarthWorldUI {
 
         const ctx =
             this.backgroundContext;
-
 
         const width =
             this.backgroundWidth;
@@ -998,7 +1015,6 @@ export default class EarthWorldUI {
         const baseY =
             height * baseRatio;
 
-
         const amplitude =
             height * amplitudeRatio;
 
@@ -1083,19 +1099,17 @@ export default class EarthWorldUI {
         ctx.fillStyle =
             color;
 
-
         ctx.fill();
 
 
         /* -----------------------------------------------------
            SUBTLE RIDGES
-        ----------------------------------------------------- */
+           ----------------------------------------------------- */
 
         ctx.save();
 
         ctx.globalAlpha =
             0.18;
-
 
         ctx.strokeStyle =
             'rgba(180, 133, 72, 0.35)';
@@ -1232,7 +1246,7 @@ export default class EarthWorldUI {
 
         /* -----------------------------------------------------
            MAIN ROCK MASS
-        ----------------------------------------------------- */
+           ----------------------------------------------------- */
 
         ctx.beginPath();
 
@@ -1293,35 +1307,39 @@ export default class EarthWorldUI {
         ctx.fillStyle =
             '#17110c';
 
-
         ctx.fill();
 
 
         /* -----------------------------------------------------
            GEOLOGICAL LAYERS
-        ----------------------------------------------------- */
+           ----------------------------------------------------- */
 
         const layers = [
+
             {
                 y: 0.875,
                 color: 'rgba(111, 76, 43, 0.34)',
                 thickness: 7
             },
+
             {
                 y: 0.905,
                 color: 'rgba(166, 119, 68, 0.22)',
                 thickness: 5
             },
+
             {
                 y: 0.935,
                 color: 'rgba(78, 55, 35, 0.48)',
                 thickness: 9
             },
+
             {
                 y: 0.965,
                 color: 'rgba(187, 137, 76, 0.15)',
                 thickness: 4
             }
+
         ];
 
 
@@ -1369,10 +1387,8 @@ export default class EarthWorldUI {
                 ctx.strokeStyle =
                     layer.color;
 
-
                 ctx.lineWidth =
                     layer.thickness;
-
 
                 ctx.stroke();
             }
@@ -1407,7 +1423,7 @@ export default class EarthWorldUI {
 
         /* -----------------------------------------------------
            WATER BODY
-        ----------------------------------------------------- */
+           ----------------------------------------------------- */
 
         const waterGradient =
             ctx.createLinearGradient(
@@ -1448,7 +1464,7 @@ export default class EarthWorldUI {
 
         /* -----------------------------------------------------
            MOVING WATER LINES
-        ----------------------------------------------------- */
+           ----------------------------------------------------- */
 
         for (
             let row = 0;
@@ -1539,7 +1555,6 @@ export default class EarthWorldUI {
             ctx.strokeStyle =
                 `rgba(171, 151, 111, ${0.10 - row * 0.006})`;
 
-
             ctx.lineWidth =
                 row % 3 === 0
                     ? 1.4
@@ -1552,7 +1567,7 @@ export default class EarthWorldUI {
 
         /* -----------------------------------------------------
            MOVING REFLECTION
-        ----------------------------------------------------- */
+           ----------------------------------------------------- */
 
         const reflectionX =
             width *
@@ -1653,7 +1668,8 @@ export default class EarthWorldUI {
 
             const drift =
                 Math.sin(
-                    time * (
+                    time *
+                    (
                         0.25 +
                         (i % 5) * 0.035
                     ) +
@@ -1702,6 +1718,7 @@ export default class EarthWorldUI {
 
 
             ctx.beginPath();
+
 
             ctx.arc(
                 x,
@@ -1877,6 +1894,51 @@ export default class EarthWorldUI {
 
         if (!this.container) return;
 
+
+        /* =====================================================
+           HIDE GEOLOGY WORLD
+           ===================================================== */
+
+        if (
+            this.geologyWorldUI &&
+            typeof this.geologyWorldUI.hide ===
+            'function'
+        ) {
+
+            this.geologyWorldUI.hide();
+        }
+
+
+        /* =====================================================
+           HIDE WATER WORLD
+           ===================================================== */
+
+        /*
+         * مهم جدًا:
+         *
+         * WaterWorldUI يحتوي على تجارب مستقلة
+         * تُضاف مباشرة إلى document.body.
+         *
+         * لذلك لا يكفي إخفاء EarthWorldUI فقط.
+         *
+         * يجب أن يصل hide() إلى WaterWorldUI حتى
+         * يغلق WaterCycleExperiment و
+         * SurfaceTensionExperiment أيضًا.
+         */
+
+        if (
+            this.waterWorldUI &&
+            typeof this.waterWorldUI.hide ===
+            'function'
+        ) {
+
+            this.waterWorldUI.hide();
+        }
+
+
+        /* =====================================================
+           HIDE EARTH WORLD CONTAINER
+           ===================================================== */
 
         this.container.style.opacity =
             '0';
@@ -2106,7 +2168,9 @@ export default class EarthWorldUI {
             'function'
         ) {
 
-            this.geologyWorldUI.setScene(scene);
+            this.geologyWorldUI.setScene(
+                scene
+            );
         }
 
 
@@ -2116,7 +2180,9 @@ export default class EarthWorldUI {
             'function'
         ) {
 
-            this.waterWorldUI.setScene(scene);
+            this.waterWorldUI.setScene(
+                scene
+            );
         }
     }
 
@@ -2197,12 +2263,16 @@ export default class EarthWorldUI {
 
             this.container.remove();
 
-            this.container = null;
+            this.container =
+                null;
         }
 
 
-        this.backgroundCanvas = null;
-        this.backgroundContext = null;
+        this.backgroundCanvas =
+            null;
+
+        this.backgroundContext =
+            null;
     }
 
 }

@@ -4,7 +4,7 @@ import './WaterCycleExperiment.css'
 import {
     t,
     getLanguage
-} from '../locales/i18n.js'
+} from '../../locales/i18n.js'
 
 
 export default class WaterCycleExperiment {

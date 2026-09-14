@@ -1,0 +1,752 @@
+/* =========================================================
+   AWTAAR — ATOMIC STRUCTURE EXPERIMENT
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-atomic-structure {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2147483647;
+
+    isolation: isolate;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    width: 100vw;
+
+    height: 100vh;
+
+    padding: 30px 34px 28px;
+
+    overflow: hidden;
+
+    /*
+     * الواجهة نفسها تبقى داكنة ونظيفة.
+     *
+     * المركز فقط يحتوي على منطقة شفافة
+     * تسمح بظهور الذرة الموجودة داخل
+     * Three.js Canvas.
+     */
+
+    background:
+        radial-gradient(
+            circle at 50% 48%,
+
+            transparent 0%,
+
+            transparent 14%,
+
+            rgba(2, 7, 20, 0.22) 19%,
+
+            rgba(2, 7, 20, 0.78) 28%,
+
+            rgba(2, 7, 20, 0.96) 42%,
+
+            rgba(1, 4, 12, 1) 68%,
+
+            rgba(1, 4, 12, 1) 100%
+        );
+
+    color: #f3f5ff;
+
+    font-family: 'Tajawal', sans-serif;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 550ms ease,
+        visibility 550ms ease;
+}
+
+
+/* =========================================================
+   SOFT ATMOSPHERIC LIGHT
+   ========================================================= */
+
+.awtaar-atomic-structure::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 46%,
+
+            rgba(80, 105, 210, 0.08) 0%,
+
+            rgba(40, 65, 150, 0.035) 28%,
+
+            transparent 58%
+        );
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.awtaar-atomic-topbar {
+
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: min(1180px, 100%);
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.awtaar-atomic-title {
+
+    margin: 0;
+
+    font-size: clamp(25px, 2.4vw, 38px);
+
+    font-weight: 600;
+
+    letter-spacing: 0.02em;
+
+    line-height: 1.2;
+
+    color: #f5f7ff;
+
+    text-shadow:
+        0 0 20px rgba(130, 150, 255, 0.18);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-atomic-back {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 150px;
+
+    height: 42px;
+
+    padding: 0 20px;
+
+    border: 1px solid rgba(130, 150, 255, 0.28);
+
+    border-radius: 10px;
+
+    background:
+        rgba(5, 12, 32, 0.82);
+
+    color: #dfe5ff;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 220ms ease,
+        border-color 220ms ease,
+        transform 220ms ease;
+}
+
+
+.awtaar-atomic-back:hover {
+
+    background:
+        rgba(18, 30, 70, 0.92);
+
+    border-color:
+        rgba(150, 170, 255, 0.48);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.awtaar-atomic-intro {
+
+    position: relative;
+
+    z-index: 3;
+
+    width: min(760px, 100%);
+
+    margin: 0 auto;
+
+    text-align: center;
+
+    color: rgba(225, 231, 255, 0.72);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   INFO PANEL
+   ========================================================= */
+
+.awtaar-atomic-info {
+
+    position: absolute;
+
+    top: 118px;
+
+    right: 34px;
+
+    z-index: 5;
+
+    width: min(260px, 25vw);
+
+    box-sizing: border-box;
+
+    padding: 18px 20px;
+
+    border: 1px solid rgba(120, 145, 220, 0.18);
+
+    border-radius: 14px;
+
+    background:
+        rgba(3, 9, 25, 0.82);
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    color: rgba(235, 239, 255, 0.88);
+
+    font-size: 13px;
+
+    line-height: 1.75;
+
+    transition:
+        opacity 250ms ease;
+}
+
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
+.awtaar-atomic-legend {
+
+    position: absolute;
+
+    left: 34px;
+
+    bottom: 34px;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 12px 16px;
+
+    border: 1px solid rgba(120, 145, 220, 0.16);
+
+    border-radius: 12px;
+
+    background:
+        rgba(3, 9, 25, 0.82);
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   LEGEND ITEM
+   ========================================================= */
+
+.awtaar-atomic-legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: rgba(230, 235, 255, 0.82);
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   LEGEND DOT
+   ========================================================= */
+
+.awtaar-atomic-legend-dot {
+
+    width: 10px;
+
+    height: 10px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   PROTON
+   ========================================================= */
+
+.awtaar-atomic-proton {
+
+    background:
+        #d99a35;
+
+    box-shadow:
+        0 0 10px rgba(217, 154, 53, 0.55);
+}
+
+
+/* =========================================================
+   NEUTRON
+   ========================================================= */
+
+.awtaar-atomic-neutron {
+
+    background:
+        #9da7bc;
+
+    box-shadow:
+        0 0 10px rgba(157, 167, 188, 0.42);
+}
+
+
+/* =========================================================
+   ELECTRON
+   ========================================================= */
+
+.awtaar-atomic-electron {
+
+    background:
+        #78a7ff;
+
+    box-shadow:
+        0 0 10px rgba(120, 167, 255, 0.62);
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.awtaar-atomic-controls {
+
+    position: absolute;
+
+    right: 34px;
+
+    bottom: 34px;
+
+    z-index: 6;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   RESET BUTTON
+   ========================================================= */
+
+.awtaar-atomic-reset {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 145px;
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    border: 1px solid rgba(217, 170, 76, 0.34);
+
+    border-radius: 10px;
+
+    background:
+        rgba(12, 12, 18, 0.82);
+
+    color: #e7c477;
+
+    font-family: 'Tajawal', sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 220ms ease,
+        border-color 220ms ease,
+        transform 220ms ease;
+}
+
+
+.awtaar-atomic-reset:hover {
+
+    background:
+        rgba(30, 25, 18, 0.94);
+
+    border-color:
+        rgba(217, 170, 76, 0.58);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   RTL
+   ========================================================= */
+
+.awtaar-atomic-structure[dir='rtl']
+.awtaar-atomic-info {
+
+    right: auto;
+
+    left: 34px;
+
+    text-align: right;
+}
+
+
+.awtaar-atomic-structure[dir='rtl']
+.awtaar-atomic-legend {
+
+    left: auto;
+
+    right: 34px;
+
+    direction: rtl;
+}
+
+
+.awtaar-atomic-structure[dir='rtl']
+.awtaar-atomic-controls {
+
+    right: auto;
+
+    left: 34px;
+
+    direction: rtl;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .awtaar-atomic-structure {
+
+        padding:
+            24px 22px 24px;
+    }
+
+
+    .awtaar-atomic-info {
+
+        top: 108px;
+
+        right: 22px;
+
+        width: 220px;
+    }
+
+
+    .awtaar-atomic-structure[dir='rtl']
+    .awtaar-atomic-info {
+
+        right: auto;
+
+        left: 22px;
+    }
+
+
+    .awtaar-atomic-legend {
+
+        left: 22px;
+
+        bottom: 22px;
+    }
+
+
+    .awtaar-atomic-structure[dir='rtl']
+    .awtaar-atomic-legend {
+
+        left: auto;
+
+        right: 22px;
+    }
+
+
+    .awtaar-atomic-controls {
+
+        right: 22px;
+
+        bottom: 22px;
+    }
+
+
+    .awtaar-atomic-structure[dir='rtl']
+    .awtaar-atomic-controls {
+
+        right: auto;
+
+        left: 22px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    .awtaar-atomic-structure {
+
+        padding:
+            20px 16px 20px;
+    }
+
+
+    .awtaar-atomic-topbar {
+
+        margin-bottom: 12px;
+    }
+
+
+    .awtaar-atomic-title {
+
+        font-size: 24px;
+    }
+
+
+    .awtaar-atomic-back {
+
+        min-width: auto;
+
+        height: 38px;
+
+        padding:
+            0 13px;
+
+        font-size: 12px;
+    }
+
+
+    .awtaar-atomic-intro {
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+
+    .awtaar-atomic-info {
+
+        top: auto;
+
+        right: 16px;
+
+        left: 16px;
+
+        bottom: 92px;
+
+        width: auto;
+
+        padding: 13px 15px;
+
+        font-size: 12px;
+
+        text-align: center;
+    }
+
+
+    .awtaar-atomic-structure[dir='rtl']
+    .awtaar-atomic-info {
+
+        right: 16px;
+
+        left: 16px;
+
+        text-align: center;
+    }
+
+
+    .awtaar-atomic-legend {
+
+        left: 16px;
+
+        right: 16px;
+
+        bottom: 58px;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        padding: 9px 10px;
+    }
+
+
+    .awtaar-atomic-structure[dir='rtl']
+    .awtaar-atomic-legend {
+
+        left: 16px;
+
+        right: 16px;
+    }
+
+
+    .awtaar-atomic-legend-item {
+
+        font-size: 10px;
+
+        gap: 5px;
+    }
+
+
+    .awtaar-atomic-legend-dot {
+
+        width: 8px;
+
+        height: 8px;
+    }
+
+
+    .awtaar-atomic-controls {
+
+        right: 16px;
+
+        bottom: 12px;
+
+        left: 16px;
+
+        justify-content: center;
+    }
+
+
+    .awtaar-atomic-structure[dir='rtl']
+    .awtaar-atomic-controls {
+
+        right: 16px;
+
+        left: 16px;
+    }
+
+
+    .awtaar-atomic-reset {
+
+        min-width: 135px;
+
+        height: 38px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .awtaar-atomic-title {
+
+        font-size: 21px;
+    }
+
+
+    .awtaar-atomic-back {
+
+        padding:
+            0 10px;
+
+        font-size: 11px;
+    }
+
+
+    .awtaar-atomic-intro {
+
+        display: none;
+    }
+
+
+    .awtaar-atomic-info {
+
+        bottom: 88px;
+    }
+
+}

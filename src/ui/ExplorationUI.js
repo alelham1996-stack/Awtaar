@@ -1,3 +1,8 @@
+/* =========================================================
+   AWTAAR — EXPLORATION UI
+   PREMIUM SCIENTIFIC GATEWAY
+   ========================================================= */
+
 import './exploration.css'
 
 import GalaxiesUI from './GalaxiesUI.js'
@@ -16,7 +21,9 @@ export default class ExplorationUI {
     ) {
 
         /*
-         * مشهد Three.js
+         * =====================================================
+         * SCENE
+         * =====================================================
          */
 
         this.scene =
@@ -24,7 +31,9 @@ export default class ExplorationUI {
 
 
         /*
-         * الصفحة الرئيسية
+         * =====================================================
+         * PLATFORM
+         * =====================================================
          */
 
         this.platformUI =
@@ -32,7 +41,9 @@ export default class ExplorationUI {
 
 
         /*
-         * إنشاء واجهة المجرات
+         * =====================================================
+         * GALAXIES
+         * =====================================================
          */
 
         this.galaxiesUI =
@@ -43,7 +54,9 @@ export default class ExplorationUI {
 
 
         /*
-         * إنشاء واجهة الاستكشاف
+         * =====================================================
+         * CREATE UI
+         * =====================================================
          */
 
         this.createUI()
@@ -52,10 +65,16 @@ export default class ExplorationUI {
 
 
     /*
-     * إنشاء الواجهة
+     * =========================================================
+     * CREATE UI
+     * =========================================================
      */
 
     createUI() {
+
+        /*
+         * الصفحة الرئيسية
+         */
 
         this.container =
             document.createElement('div')
@@ -65,7 +84,55 @@ export default class ExplorationUI {
 
 
         /*
-         * شريط الاستكشاف
+         * =====================================================
+         * HEADER
+         * =====================================================
+         */
+
+        this.header =
+            document.createElement('div')
+
+        this.header.className =
+            'awtaar-exploration-header'
+
+
+        this.title =
+            document.createElement('h1')
+
+        this.title.className =
+            'awtaar-exploration-title'
+
+        this.title.textContent =
+            t(
+                'exploration.title'
+            )
+
+
+        this.subtitle =
+            document.createElement('p')
+
+        this.subtitle.className =
+            'awtaar-exploration-subtitle'
+
+        this.subtitle.textContent =
+            t(
+                'exploration.subtitle'
+            )
+
+
+        this.header.appendChild(
+            this.title
+        )
+
+        this.header.appendChild(
+            this.subtitle
+        )
+
+
+        /*
+         * =====================================================
+         * SPACE GATEWAYS
+         * =====================================================
          */
 
         this.navigation =
@@ -76,47 +143,68 @@ export default class ExplorationUI {
 
 
         /*
-         * عناصر الاستكشاف
+         * =====================================================
+         * SECTIONS
+         * =====================================================
          */
 
         this.items = [
 
+            /*
+             * المجرات
+             */
+
             {
                 key: 'galaxies',
+
                 translationKey:
-                    'exploration.galaxies'
+                    'exploration.galaxies',
+
+                iconType:
+                    'galaxies',
+
+                available:
+                    true
+
             },
 
-            {
-                key: 'phenomena',
-                translationKey:
-                    'exploration.phenomena'
-            },
+
+            /*
+             * عالم وتر
+             */
 
             {
-                key: 'simulation',
-                translationKey:
-                    'exploration.simulation'
-            },
+                key: 'watar',
 
-            {
-                key: 'discover',
                 translationKey:
-                    'exploration.discover'
+                    'exploration.watar',
+
+                iconType:
+                    'watar',
+
+                available:
+                    false
+
             }
 
         ]
 
 
         /*
-         * إنشاء عناصر التنقل
+         * =====================================================
+         * CREATE GATEWAYS
+         * =====================================================
          */
 
         this.items.forEach(
-            (item, index) => {
+            (item) => {
 
                 const button =
                     document.createElement('button')
+
+
+                button.type =
+                    'button'
 
 
                 button.className =
@@ -127,22 +215,196 @@ export default class ExplorationUI {
                     item.key
 
 
-                button.textContent =
+                /*
+                 * حالة العنصر
+                 */
+
+                if (
+                    !item.available
+                ) {
+
+                    button.classList.add(
+                        'coming-soon'
+                    )
+
+                } else {
+
+                    button.classList.add(
+                        'available'
+                    )
+
+                }
+
+
+                /*
+                 * =================================================
+                 * المدار
+                 * =================================================
+                 */
+
+                const orbit =
+                    document.createElement('span')
+
+                orbit.className =
+                    'awtaar-exploration-orbit'
+
+
+                /*
+                 * =================================================
+                 * نقاط ضوء صغيرة
+                 * =================================================
+                 */
+
+                const particleOne =
+                    document.createElement('span')
+
+                particleOne.className =
+                    'awtaar-orbit-particle'
+
+
+                const particleTwo =
+                    document.createElement('span')
+
+                particleTwo.className =
+                    'awtaar-orbit-particle'
+
+
+                orbit.appendChild(
+                    particleOne
+                )
+
+                orbit.appendChild(
+                    particleTwo
+                )
+
+
+                /*
+                 * =================================================
+                 * CORE
+                 * =================================================
+                 */
+
+                const core =
+                    document.createElement('span')
+
+                core.className =
+                    'awtaar-exploration-core'
+
+
+                /*
+                 * =================================================
+                 * ICON
+                 * =================================================
+                 */
+
+                const icon =
+                    document.createElement('span')
+
+                icon.className =
+                    'awtaar-exploration-icon'
+
+                icon.classList.add(
+                    `awtaar-exploration-icon-${item.iconType}`
+                )
+
+
+                /*
+                 * SVG الخاص بكل عالم
+                 */
+
+                icon.innerHTML =
+                    this.createIcon(
+                        item.iconType
+                    )
+
+
+                /*
+                 * =================================================
+                 * TEXT
+                 * =================================================
+                 */
+
+                const content =
+                    document.createElement('span')
+
+                content.className =
+                    'awtaar-exploration-content'
+
+
+                const name =
+                    document.createElement('span')
+
+                name.className =
+                    'awtaar-exploration-name'
+
+                name.textContent =
                     t(
                         item.translationKey
                     )
 
 
+                content.appendChild(
+                    name
+                )
+
+
+                /*
+                 * =================================================
+                 * COMING SOON
+                 * =================================================
+                 */
+
                 if (
-                    index === 0
+                    !item.available
                 ) {
 
-                    button.classList.add(
-                        'active'
+                    const status =
+                        document.createElement('span')
+
+                    status.className =
+                        'awtaar-exploration-status'
+
+                    status.textContent =
+                        t(
+                            'common.comingSoon'
+                        )
+
+
+                    content.appendChild(
+                        status
                     )
 
                 }
 
+
+                /*
+                 * =================================================
+                 * BUILD GATEWAY
+                 * =================================================
+                 */
+
+                core.appendChild(
+                    icon
+                )
+
+                orbit.appendChild(
+                    core
+                )
+
+                button.appendChild(
+                    orbit
+                )
+
+                button.appendChild(
+                    content
+                )
+
+
+                /*
+                 * =================================================
+                 * INTERACTION
+                 * =================================================
+                 */
 
                 button.addEventListener(
                     'click',
@@ -166,11 +428,16 @@ export default class ExplorationUI {
 
 
         /*
-         * زر العودة
+         * =====================================================
+         * BACK BUTTON
+         * =====================================================
          */
 
         this.backButton =
             document.createElement('button')
+
+        this.backButton.type =
+            'button'
 
         this.backButton.className =
             'awtaar-exploration-back'
@@ -192,8 +459,14 @@ export default class ExplorationUI {
 
 
         /*
-         * تجميع الواجهة
+         * =====================================================
+         * ASSEMBLE
+         * =====================================================
          */
+
+        this.container.appendChild(
+            this.header
+        )
 
         this.container.appendChild(
             this.navigation
@@ -210,7 +483,9 @@ export default class ExplorationUI {
 
 
         /*
-         * الحالة الابتدائية
+         * =====================================================
+         * INITIAL STATE
+         * =====================================================
          */
 
         this.container.style.opacity =
@@ -223,16 +498,319 @@ export default class ExplorationUI {
             'none'
 
 
+        /*
+         * =====================================================
+         * LANGUAGE
+         * =====================================================
+         */
+
         this.updateLanguage()
 
     }
 
 
     /*
-     * تحديث اللغة
+     * =========================================================
+     * CREATE ICON
+     * =========================================================
+     */
+
+    createIcon(
+        type
+    ) {
+
+        /*
+         * =====================================================
+         * GALAXIES
+         * =====================================================
+         */
+
+        if (
+            type === 'galaxies'
+        ) {
+
+            return `
+
+                <svg
+                    viewBox="0 0 100 100"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                >
+
+                    <defs>
+
+                        <linearGradient
+                            id="awtaarGalaxyGold"
+                            x1="0"
+                            y1="0"
+                            x2="1"
+                            y2="1"
+                        >
+
+                            <stop
+                                offset="0%"
+                                stop-color="#f7d994"
+                            />
+
+                            <stop
+                                offset="45%"
+                                stop-color="#d4aa5a"
+                            />
+
+                            <stop
+                                offset="100%"
+                                stop-color="#73501c"
+                            />
+
+                        </linearGradient>
+
+                    </defs>
+
+
+                    <!-- Main galactic orbit -->
+
+                    <ellipse
+                        cx="50"
+                        cy="50"
+                        rx="36"
+                        ry="15"
+                        transform="rotate(-24 50 50)"
+                        fill="none"
+                        stroke="url(#awtaarGalaxyGold)"
+                        stroke-width="2"
+                        opacity="0.95"
+                    />
+
+
+                    <!-- Secondary orbit -->
+
+                    <ellipse
+                        cx="50"
+                        cy="50"
+                        rx="28"
+                        ry="11"
+                        transform="rotate(35 50 50)"
+                        fill="none"
+                        stroke="#d4aa5a"
+                        stroke-width="1.2"
+                        opacity="0.48"
+                    />
+
+
+                    <!-- Galactic core -->
+
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="7"
+                        fill="url(#awtaarGalaxyGold)"
+                    />
+
+
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="3"
+                        fill="#fff0c8"
+                    />
+
+
+                    <!-- Stars -->
+
+                    <circle
+                        cx="25"
+                        cy="35"
+                        r="1.7"
+                        fill="#f5d88f"
+                    />
+
+                    <circle
+                        cx="76"
+                        cy="67"
+                        r="1.5"
+                        fill="#d4aa5a"
+                    />
+
+                    <circle
+                        cx="69"
+                        cy="28"
+                        r="1.2"
+                        fill="#fff0c8"
+                    />
+
+                    <circle
+                        cx="31"
+                        cy="72"
+                        r="1.1"
+                        fill="#d4aa5a"
+                    />
+
+                </svg>
+            `
+
+        }
+
+
+        /*
+         * =====================================================
+         * WATAR
+         * =====================================================
+         */
+
+        if (
+            type === 'watar'
+        ) {
+
+            return `
+
+                <svg
+                    viewBox="0 0 100 100"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                >
+
+                    <defs>
+
+                        <linearGradient
+                            id="awtaarWatarGold"
+                            x1="0"
+                            y1="0"
+                            x2="1"
+                            y2="1"
+                        >
+
+                            <stop
+                                offset="0%"
+                                stop-color="#f4d58d"
+                            />
+
+                            <stop
+                                offset="50%"
+                                stop-color="#d4aa5a"
+                            />
+
+                            <stop
+                                offset="100%"
+                                stop-color="#76531f"
+                            />
+
+                        </linearGradient>
+
+                    </defs>
+
+
+                    <!-- String / cosmic wave -->
+
+                    <path
+                        d="
+                            M 13 58
+                            C 23 25,
+                              38 25,
+                              50 50
+                            C 62 75,
+                              77 75,
+                              87 42
+                        "
+                        fill="none"
+                        stroke="url(#awtaarWatarGold)"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                    />
+
+
+                    <!-- Second dimensional thread -->
+
+                    <path
+                        d="
+                            M 15 42
+                            C 27 70,
+                              39 70,
+                              50 50
+                            C 61 30,
+                              74 30,
+                              85 58
+                        "
+                        fill="none"
+                        stroke="#8f6929"
+                        stroke-width="1.4"
+                        stroke-linecap="round"
+                        opacity="0.72"
+                    />
+
+
+                    <!-- Central energy point -->
+
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="5"
+                        fill="#e9c979"
+                    />
+
+                    <circle
+                        cx="50"
+                        cy="50"
+                        r="9"
+                        fill="none"
+                        stroke="#d4aa5a"
+                        stroke-width="1"
+                        opacity="0.35"
+                    />
+
+                </svg>
+            `
+
+        }
+
+
+        return ''
+
+    }
+
+
+    /*
+     * =========================================================
+     * UPDATE LANGUAGE
+     * =========================================================
      */
 
     updateLanguage() {
+
+        /*
+         * العنوان
+         */
+
+        if (
+            this.title
+        ) {
+
+            this.title.textContent =
+                t(
+                    'exploration.title'
+                )
+
+        }
+
+
+        /*
+         * الوصف
+         */
+
+        if (
+            this.subtitle
+        ) {
+
+            this.subtitle.textContent =
+                t(
+                    'exploration.subtitle'
+                )
+
+        }
+
+
+        /*
+         * البوابات
+         */
 
         const buttons =
             this.navigation.querySelectorAll(
@@ -248,12 +826,45 @@ export default class ExplorationUI {
 
 
                 if (
-                    item
+                    !item
                 ) {
 
-                    button.textContent =
+                    return
+
+                }
+
+
+                const name =
+                    button.querySelector(
+                        '.awtaar-exploration-name'
+                    )
+
+
+                const status =
+                    button.querySelector(
+                        '.awtaar-exploration-status'
+                    )
+
+
+                if (
+                    name
+                ) {
+
+                    name.textContent =
                         t(
                             item.translationKey
+                        )
+
+                }
+
+
+                if (
+                    status
+                ) {
+
+                    status.textContent =
+                        t(
+                            'common.comingSoon'
                         )
 
                 }
@@ -262,11 +873,19 @@ export default class ExplorationUI {
         )
 
 
+        /*
+         * العودة
+         */
+
         this.backButton.textContent =
             t(
                 'common.home'
             )
 
+
+        /*
+         * اتجاه الصفحة
+         */
 
         if (
             getLanguage() === 'ar'
@@ -283,6 +902,10 @@ export default class ExplorationUI {
         }
 
 
+        /*
+         * تحديث المجرات
+         */
+
         if (
             this.galaxiesUI &&
             this.galaxiesUI.updateLanguage
@@ -296,7 +919,9 @@ export default class ExplorationUI {
 
 
     /*
-     * إظهار واجهة الاستكشاف
+     * =========================================================
+     * SHOW
+     * =========================================================
      */
 
     show() {
@@ -324,7 +949,9 @@ export default class ExplorationUI {
 
 
     /*
-     * إخفاء واجهة الاستكشاف
+     * =========================================================
+     * HIDE
+     * =========================================================
      */
 
     hide() {
@@ -350,7 +977,9 @@ export default class ExplorationUI {
 
 
     /*
-     * العودة إلى الصفحة الرئيسية
+     * =========================================================
+     * RETURN TO PLATFORM
+     * =========================================================
      */
 
     returnToPlatform() {
@@ -399,7 +1028,9 @@ export default class ExplorationUI {
 
 
     /*
-     * اختيار القسم
+     * =========================================================
+     * SELECT SECTION
+     * =========================================================
      */
 
     selectSection(
@@ -407,32 +1038,10 @@ export default class ExplorationUI {
         activeButton
     ) {
 
-        const buttons =
-            this.navigation.querySelectorAll(
-                '.awtaar-exploration-item'
-            )
-
-
-        buttons.forEach(
-            (button) => {
-
-                button.classList.remove(
-                    'active'
-                )
-
-            }
-        )
-
-
-        activeButton.classList.add(
-            'active'
-        )
-
-
         /*
-         * =========================
-         * المجرات
-         * =========================
+         * =====================================================
+         * GALAXIES
+         * =====================================================
          */
 
         if (
@@ -478,56 +1087,42 @@ export default class ExplorationUI {
 
 
         /*
-         * =========================
-         * الظواهر
-         * =========================
+         * =====================================================
+         * WATAR
+         * =====================================================
          */
 
         if (
-            section === 'phenomena'
+            section === 'watar'
         ) {
 
             console.log(
-                '✨ Phenomena section selected'
+                '🧵 Watar World — Coming Soon'
             )
 
-            return
 
-        }
+            if (
+                activeButton
+            ) {
 
-
-        /*
-         * =========================
-         * المحاكاة
-         * =========================
-         */
-
-        if (
-            section === 'simulation'
-        ) {
-
-            console.log(
-                '🧪 Simulation section selected'
-            )
-
-            return
-
-        }
+                activeButton.classList.add(
+                    'pulse'
+                )
 
 
-        /*
-         * =========================
-         * الاكتشاف
-         * =========================
-         */
+                setTimeout(
+                    () => {
 
-        if (
-            section === 'discover'
-        ) {
+                        activeButton.classList.remove(
+                            'pulse'
+                        )
 
-            console.log(
-                '🔭 Discover section selected'
-            )
+                    },
+                    700
+                )
+
+            }
+
 
             return
 
@@ -537,16 +1132,9 @@ export default class ExplorationUI {
 
 
     /*
-     * =====================================================
+     * =========================================================
      * UPDATE
-     * =====================================================
-     *
-     * هذه هي الإضافة المهمة.
-     *
-     * تمرر delta إلى GalaxiesUI
-     * حتى تستمر سلسلة التحديث إلى
-     * PhysicsGalaxyUI ثم PhysicsWorldUI
-     * ثم تجربة تمدد الزمن.
+     * =========================================================
      */
 
     update(

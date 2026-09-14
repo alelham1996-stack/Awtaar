@@ -9,8 +9,7 @@ import RockCycleUI from './RockCycleUI.js';
 
 import PlateTectonics from './PlateTectonics.js';
 
-import { t, getLanguage } from '../locales/i18n.js';
-
+import { t, getLanguage } from '../../locales/i18n.js';
 
 export default class GeologyWorldUI {
 
