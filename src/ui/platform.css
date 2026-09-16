@@ -1,5 +1,5 @@
 /* =========================================================
-   AWTAAR PLATFORM UI
+   AWTAAR — PLATFORM UI
    Elegant / Scientific / Premium
    Arabic / English
    ========================================================= */
@@ -15,7 +15,7 @@
 
 
 /* =========================================================
-   PLATFORM ROOT
+   ROOT
    ========================================================= */
 
 #awtaar-platform {
@@ -25,13 +25,7 @@
     inset: 0;
 
     width: 100%;
-
     height: 100%;
-
-    /*
-     * رفع المنصة فوق طبقة Three.js
-     * حتى تصل النقرات إلى الأزرار.
-     */
 
     z-index: 2000;
 
@@ -59,9 +53,7 @@
     position: absolute;
 
     top: 0;
-
     left: 0;
-
     right: 0;
 
     height: 92px;
@@ -73,11 +65,11 @@
 
     align-items: center;
 
-    justify-content: space-between;
-
     box-sizing: border-box;
 
-    z-index: 100;
+    z-index: 2100;
+
+    pointer-events: none;
 }
 
 
@@ -87,24 +79,66 @@
 
 .awtaar-platform-logo {
 
+    position: absolute;
+
+    top: 50%;
+    left: 54px;
+
+    transform:
+        translateY(-50%);
+
+    pointer-events: none;
+
     font-family:
         'Tajawal',
         sans-serif;
 
-    font-size: 20px;
+    font-size:
+        20px;
 
-    font-weight: 400;
+    font-weight:
+        400;
 
-    letter-spacing: 8px;
+    letter-spacing:
+        8px;
 
     color:
         #f1d28b;
 
-    opacity: 0.96;
+    opacity:
+        0.96;
 
     text-shadow:
         0 0 20px
         rgba(241, 210, 139, 0.20);
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
+
+.awtaar-header-actions {
+
+    position: absolute;
+
+    top: 50%;
+
+    right: 54px;
+    left: auto;
+
+    transform:
+        translateY(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap:
+        10px;
+
+    pointer-events:
+        auto;
 }
 
 
@@ -114,27 +148,35 @@
 
 .awtaar-language-button {
 
-    position: absolute;
+    position: relative;
 
-    top: 104px;
+    width:
+        42px;
 
-    right: 116px;
-
-    min-width: 42px;
-
-    height: 32px;
+    height:
+        34px;
 
     padding:
-        0 12px;
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
 
     border:
         1px solid
-        rgba(241, 210, 139, 0.28);
+        rgba(241, 210, 139, 0.25);
 
-    border-radius: 20px;
+    border-radius:
+        18px;
 
     background:
-        rgba(5, 5, 15, 0.32);
+        rgba(5, 5, 15, 0.42);
 
     color:
         rgba(245, 236, 223, 0.72);
@@ -143,29 +185,36 @@
         'Tajawal',
         sans-serif;
 
-    font-size: 12px;
+    font-size:
+        11px;
 
-    font-weight: 400;
+    font-weight:
+        400;
 
-    cursor: pointer;
+    letter-spacing:
+        1px;
 
-    pointer-events: auto;
+    cursor:
+        pointer;
+
+    pointer-events:
+        auto;
 
     backdrop-filter:
-        blur(14px);
+        blur(18px);
 
     -webkit-backdrop-filter:
-        blur(14px);
+        blur(18px);
 
     box-shadow:
-        0 6px 25px
-        rgba(0, 0, 0, 0.16);
+        0 8px 30px
+        rgba(0, 0, 0, 0.20);
 
     transition:
-        color 0.3s ease,
-        background 0.3s ease,
-        border-color 0.3s ease,
-        transform 0.3s ease;
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
 }
 
 
@@ -178,7 +227,7 @@
         rgba(241, 210, 139, 0.07);
 
     border-color:
-        rgba(241, 210, 139, 0.62);
+        rgba(241, 210, 139, 0.58);
 
     transform:
         translateY(-1px);
@@ -186,166 +235,211 @@
 
 
 /* =========================================================
-   MENU BUTTON
+   USER BUTTON
    ========================================================= */
 
-.awtaar-menu-button {
+.awtaar-user-button {
 
-    width: 44px;
+    position: relative;
 
-    height: 44px;
+    width:
+        42px;
 
-    padding: 0;
+    height:
+        42px;
 
-    display: flex;
+    padding:
+        0;
 
-    flex-direction: column;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
-
-    gap: 5px;
+    justify-content:
+        center;
 
     border:
         1px solid
-        rgba(241, 210, 139, 0.28);
+        rgba(241, 210, 139, 0.30);
 
-    border-radius: 50%;
-
-    background:
-        rgba(5, 5, 15, 0.22);
-
-    backdrop-filter:
-        blur(12px);
-
-    -webkit-backdrop-filter:
-        blur(12px);
-
-    cursor: pointer;
-
-    pointer-events: auto;
-
-    transition:
-        transform 0.35s ease,
-        border-color 0.35s ease,
-        background 0.35s ease;
-}
-
-
-.awtaar-menu-button span {
-
-    width: 13px;
-
-    height: 1px;
-
-    display: block;
+    border-radius:
+        50%;
 
     background:
+        rgba(5, 5, 15, 0.48);
+
+    color:
         #f1d28b;
 
-    opacity: 0.85;
+    cursor:
+        pointer;
+
+    pointer-events:
+        auto;
+
+    touch-action:
+        manipulation;
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 8px 32px
+        rgba(0, 0, 0, 0.24),
+        inset 0 0 18px
+        rgba(241, 210, 139, 0.025);
 
     transition:
-        transform 0.35s ease,
-        opacity 0.25s ease;
+        transform 0.28s ease,
+        background 0.28s ease,
+        border-color 0.28s ease,
+        box-shadow 0.28s ease;
 }
 
 
-.awtaar-menu-button:hover {
+.awtaar-user-button:hover {
 
     transform:
-        scale(1.06);
+        translateY(-1px);
 
     border-color:
-        rgba(241, 210, 139, 0.65);
+        rgba(241, 210, 139, 0.72);
 
     background:
-        rgba(241, 210, 139, 0.06);
-}
+        rgba(241, 210, 139, 0.07);
 
-
-/* =========================================================
-   MENU BUTTON ACTIVE
-   ========================================================= */
-
-.awtaar-menu-button.active {
-
-    border-color:
-        rgba(241, 210, 139, 0.62);
-
-    background:
+    box-shadow:
+        0 10px 34px
+        rgba(0, 0, 0, 0.28),
+        0 0 22px
         rgba(241, 210, 139, 0.07);
 }
 
 
-.awtaar-menu-button.active span:nth-child(1) {
+.awtaar-user-button.active {
 
-    transform:
-        translateY(6px)
-        rotate(45deg);
-}
+    border-color:
+        rgba(241, 210, 139, 0.78);
 
+    background:
+        rgba(241, 210, 139, 0.09);
 
-.awtaar-menu-button.active span:nth-child(2) {
-
-    opacity:
-        0;
-}
-
-
-.awtaar-menu-button.active span:nth-child(3) {
-
-    transform:
-        translateY(-6px)
-        rotate(-45deg);
+    box-shadow:
+        0 0 24px
+        rgba(241, 210, 139, 0.10);
 }
 
 
 /* =========================================================
-   PLATFORM SIDE MENU
+   USER ICON
    ========================================================= */
 
-.awtaar-platform-menu {
+.awtaar-user-icon {
 
-    position: fixed;
+    width:
+        20px;
 
-    top: 104px;
+    height:
+        20px;
 
-    left: 54px;
+    display:
+        flex;
 
-    width: 250px;
+    align-items:
+        center;
 
-    padding: 18px;
+    justify-content:
+        center;
 
-    box-sizing: border-box;
+    pointer-events:
+        none;
+}
+
+
+.awtaar-user-icon svg {
+
+    width:
+        20px;
+
+    height:
+        20px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.35;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+    pointer-events:
+        none;
+}
+
+
+/* =========================================================
+   PROFILE PANEL
+   ========================================================= */
+
+.awtaar-profile-panel {
+
+    position: absolute;
+
+    top:
+        76px;
+
+    right:
+        54px;
+
+    width:
+        292px;
+
+    padding:
+        18px;
+
+    box-sizing:
+        border-box;
 
     border:
         1px solid
-        rgba(241, 210, 139, 0.20);
+        rgba(241, 210, 139, 0.24);
 
-    border-radius: 22px;
+    border-radius:
+        20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(13, 13, 24, 0.84),
-            rgba(5, 5, 15, 0.72)
+            rgba(14, 14, 25, 0.96),
+            rgba(5, 5, 15, 0.92)
         );
 
     backdrop-filter:
-        blur(24px);
+        blur(26px);
 
     -webkit-backdrop-filter:
-        blur(24px);
+        blur(26px);
 
     box-shadow:
-        0 25px 70px
-        rgba(0, 0, 0, 0.42),
-        inset 0 0 30px
+        0 28px 80px
+        rgba(0, 0, 0, 0.48),
+        inset 0 0 35px
         rgba(241, 210, 139, 0.025);
 
-    z-index: 120;
+    z-index:
+        2200;
 
     opacity:
         0;
@@ -357,30 +451,20 @@
         none;
 
     transform:
-        translateY(-10px)
-        translateX(-16px)
+        translateY(-8px)
         scale(0.97);
 
     transform-origin:
-        left top;
+        top right;
 
     transition:
-        opacity 0.35s ease,
-        transform 0.45s cubic-bezier(
-            0.22,
-            1,
-            0.36,
-            1
-        ),
-        visibility 0.35s ease;
+        opacity 0.25s ease,
+        transform 0.30s ease,
+        visibility 0.25s ease;
 }
 
 
-/* =========================================================
-   MENU OPEN
-   ========================================================= */
-
-.awtaar-platform-menu.open {
+.awtaar-profile-panel.open {
 
     opacity:
         1;
@@ -393,124 +477,158 @@
 
     transform:
         translateY(0)
-        translateX(0)
         scale(1);
 }
 
 
 /* =========================================================
-   ENGLISH MENU POSITION
+   PROFILE HEADER
    ========================================================= */
 
-#awtaar-platform[dir="ltr"]
-.awtaar-platform-menu {
+.awtaar-profile-header {
 
-    left:
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    min-height:
+        58px;
+
+    pointer-events:
         auto;
-
-    right:
-        54px;
-
-    transform:
-        translateY(-10px)
-        translateX(16px)
-        scale(0.97);
-
-    transform-origin:
-        right top;
 }
 
 
 /* =========================================================
-   ENGLISH MENU OPEN
+   AVATAR
    ========================================================= */
 
-#awtaar-platform[dir="ltr"]
-.awtaar-platform-menu.open {
+.awtaar-profile-avatar {
 
-    transform:
-        translateY(0)
-        translateX(0)
-        scale(1);
-}
+    flex:
+        0 0 auto;
 
+    width:
+        46px;
 
-/* =========================================================
-   MENU DECORATIVE LINE
-   ========================================================= */
+    height:
+        46px;
 
-.awtaar-platform-menu::before {
+    display:
+        flex;
 
-    content: '';
+    align-items:
+        center;
 
-    position: absolute;
+    justify-content:
+        center;
 
-    top: 18px;
-
-    left: 18px;
-
-    width: 32px;
-
-    height: 1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(241, 210, 139, 0.75),
-            transparent
-        );
-
-    opacity:
-        0.8;
-}
-
-
-/* =========================================================
-   ENGLISH DECORATIVE LINE
-   ========================================================= */
-
-#awtaar-platform[dir="ltr"]
-.awtaar-platform-menu::before {
-
-    left:
-        auto;
-
-    right:
-        18px;
-
-    background:
-        linear-gradient(
-            270deg,
-            rgba(241, 210, 139, 0.75),
-            transparent
-        );
-}
-
-
-/* =========================================================
-   MENU TITLE
-   ========================================================= */
-
-.awtaar-platform-menu-title {
-
-    padding:
-        14px 10px 17px;
-
-    margin-bottom:
-        7px;
-
-    border-bottom:
+    border:
         1px solid
-        rgba(241, 210, 139, 0.10);
+        rgba(241, 210, 139, 0.38);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(241, 210, 139, 0.12),
+            rgba(5, 5, 15, 0.30)
+        );
 
     color:
-        rgba(241, 210, 139, 0.78);
+        #f1d28b;
+
+    font-size:
+        16px;
+
+    font-weight:
+        400;
+
+    box-shadow:
+        0 0 22px
+        rgba(241, 210, 139, 0.06);
+}
+
+
+/* =========================================================
+   IDENTITY
+   ========================================================= */
+
+.awtaar-profile-identity {
+
+    min-width:
+        0;
+
+    flex:
+        1;
+}
+
+
+/* =========================================================
+   PROFILE NAME
+   ========================================================= */
+
+.awtaar-profile-name {
+
+    overflow:
+        hidden;
+
+    white-space:
+        nowrap;
+
+    text-overflow:
+        ellipsis;
+
+    color:
+        #f4ead8;
+
+    font-size:
+        15px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1.5;
+}
+
+
+/* =========================================================
+   PROFILE EMAIL
+   ========================================================= */
+
+.awtaar-profile-email {
+
+    margin-top:
+        2px;
+
+    overflow:
+        hidden;
+
+    white-space:
+        nowrap;
+
+    text-overflow:
+        ellipsis;
+
+    color:
+        rgba(245, 236, 223, 0.48);
 
     font-size:
         11px;
 
-    letter-spacing:
-        4px;
+    font-weight:
+        300;
+
+    direction:
+        ltr;
 
     text-align:
         left;
@@ -518,35 +636,216 @@
 
 
 /* =========================================================
-   MENU ITEMS
+   GUEST SECTION
    ========================================================= */
 
-.awtaar-platform-menu-item {
+.awtaar-guest-section {
 
-    position: relative;
-
-    width: 100%;
-
-    min-height: 44px;
+    margin-top:
+        18px;
 
     padding:
-        10px 13px;
+        14px 2px 4px;
+
+    border-top:
+        1px solid
+        rgba(241, 210, 139, 0.10);
+}
+
+
+.awtaar-guest-title {
+
+    color:
+        #f1d28b;
+
+    font-size:
+        14px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.6;
+}
+
+
+.awtaar-guest-description {
+
+    margin-top:
+        5px;
+
+    color:
+        rgba(245, 236, 223, 0.54);
+
+    font-size:
+        11px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.8;
+}
+
+
+/* =========================================================
+   GUEST ACTIONS
+   ========================================================= */
+
+.awtaar-guest-actions {
+
+    display:
+        flex;
+
+    gap:
+        8px;
+
+    margin-top:
+        13px;
+}
+
+
+/* =========================================================
+   AUTH ACTION
+   ========================================================= */
+
+.awtaar-auth-action {
+
+    flex:
+        1;
+
+    min-height:
+        38px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.25);
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255, 255, 255, 0.015);
+
+    color:
+        rgba(245, 236, 223, 0.74);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    pointer-events:
+        auto;
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.awtaar-auth-action:hover {
+
+    color:
+        #f1d28b;
+
+    border-color:
+        rgba(241, 210, 139, 0.60);
+
+    background:
+        rgba(241, 210, 139, 0.06);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   SIGNUP — PRIMARY
+   ========================================================= */
+
+.awtaar-auth-signup {
+
+    background:
+        rgba(241, 210, 139, 0.075);
+
+    border-color:
+        rgba(241, 210, 139, 0.38);
+
+    color:
+        #f1d28b;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.awtaar-profile-divider {
+
+    width:
+        100%;
+
+    height:
+        1px;
 
     margin:
-        3px 0;
+        14px 0 9px;
 
-    box-sizing: border-box;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(241, 210, 139, 0.15),
+            transparent
+        );
+}
 
-    display: flex;
 
-    align-items: center;
+/* =========================================================
+   PROFILE ACTIONS
+   ========================================================= */
+
+.awtaar-profile-action,
+.awtaar-profile-logout {
+
+    width:
+        100%;
+
+    min-height:
+        42px;
+
+    padding:
+        0 11px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
 
     border:
         1px solid
         transparent;
 
     border-radius:
-        12px;
+        11px;
 
     background:
         transparent;
@@ -559,13 +858,10 @@
         sans-serif;
 
     font-size:
-        13px;
+        12px;
 
     font-weight:
         400;
-
-    text-align:
-        left;
 
     cursor:
         pointer;
@@ -573,40 +869,18 @@
     pointer-events:
         auto;
 
+    box-sizing:
+        border-box;
+
     transition:
-        color 0.28s ease,
-        background 0.28s ease,
-        border-color 0.28s ease,
-        transform 0.28s ease;
+        color 0.24s ease,
+        background 0.24s ease,
+        border-color 0.24s ease,
+        transform 0.24s ease;
 }
 
 
-.awtaar-platform-menu-item::before {
-
-    content: '';
-
-    width:
-        4px;
-
-    height:
-        4px;
-
-    margin-right:
-        10px;
-
-    border-radius:
-        50%;
-
-    background:
-        rgba(241, 210, 139, 0.35);
-
-    transition:
-        background 0.28s ease,
-        box-shadow 0.28s ease;
-}
-
-
-.awtaar-platform-menu-item:hover {
+.awtaar-profile-action:hover {
 
     color:
         #f1d28b;
@@ -615,21 +889,72 @@
         rgba(241, 210, 139, 0.055);
 
     border-color:
-        rgba(241, 210, 139, 0.12);
+        rgba(241, 210, 139, 0.13);
 
     transform:
-        translateX(3px);
+        translateX(-2px);
 }
 
 
-.awtaar-platform-menu-item:hover::before {
+.awtaar-profile-logout:hover {
 
-    background:
+    color:
         #f1d28b;
 
-    box-shadow:
-        0 0 9px
-        rgba(241, 210, 139, 0.55);
+    background:
+        rgba(241, 210, 139, 0.045);
+
+    border-color:
+        rgba(241, 210, 139, 0.10);
+
+    transform:
+        translateX(-2px);
+}
+
+
+.awtaar-profile-action:disabled,
+.awtaar-profile-logout:disabled {
+
+    opacity:
+        0.45;
+
+    cursor:
+        wait;
+
+    transform:
+        none;
+}
+
+
+/* =========================================================
+   ACTION ICON
+   ========================================================= */
+
+.awtaar-action-icon {
+
+    width:
+        25px;
+
+    height:
+        25px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        rgba(241, 210, 139, 0.75);
+
+    font-size:
+        15px;
+
+    flex:
+        0 0 auto;
 }
 
 
@@ -639,15 +964,20 @@
 
 .awtaar-content {
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: 50%;
+    top:
+        50%;
 
-    left: 8%;
+    left:
+        8%;
 
-    width: 520px;
+    width:
+        520px;
 
-    max-width: 42vw;
+    max-width:
+        42vw;
 
     transform:
         translateY(-40%);
@@ -662,12 +992,12 @@
         auto;
 
     z-index:
-        200;
+        2050;
 }
 
 
 /* =========================================================
-   MAIN TITLE
+   TITLE
    ========================================================= */
 
 .awtaar-content h1 {
@@ -730,10 +1060,6 @@
 
     color:
         rgba(245, 236, 223, 0.62);
-
-    text-shadow:
-        0 3px 18px
-        rgba(0, 0, 0, 0.65);
 }
 
 
@@ -743,308 +1069,27 @@
 
 .awtaar-explore-button {
 
-    position:
-        relative;
-
-    z-index:
-        210;
-
-    padding:
-        13px 28px;
-
-    border:
-        1px solid
-        rgba(241, 210, 139, 0.48);
-
-    border-radius:
-        30px;
-
-    background:
-        rgba(241, 210, 139, 0.035);
-
-    color:
-        #f1d28b;
-
-    font-family:
-        'Tajawal',
-        sans-serif;
-
-    font-size:
-        15px;
-
-    font-weight:
-        400;
-
-    cursor:
-        pointer;
-
-    pointer-events:
-        auto;
-
-    touch-action:
-        manipulation;
-
-    backdrop-filter:
-        blur(12px);
-
-    -webkit-backdrop-filter:
-        blur(12px);
-
-    box-shadow:
-        0 0 30px
-        rgba(0, 0, 0, 0.12);
-
-    transition:
-        transform 0.35s ease,
-        background 0.35s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease;
-}
-
-
-.awtaar-explore-button:hover {
-
-    transform:
-        translateY(-2px);
-
-    background:
-        rgba(241, 210, 139, 0.09);
-
-    border-color:
-        rgba(241, 210, 139, 0.78);
-
-    box-shadow:
-        0 0 28px
-        rgba(241, 210, 139, 0.12);
-}
-
-
-.awtaar-explore-button:active {
-
-    transform:
-        translateY(0);
-}
-
-
-.awtaar-explore-button:disabled {
-
-    opacity:
-        0.45;
-
-    cursor:
-        default;
-
-    transform:
-        none;
-}
-
-
-/* =========================================================
-   EXPLORATION
-   ========================================================= */
-
-#awtaar-exploration {
-
-    position:
-        fixed;
-
-    inset:
-        0;
-
-    width:
-        100%;
+    min-width:
+        150px;
 
     height:
-        100%;
-
-    /*
-     * طبقة الاستكشاف فوق المنصة والمشهد.
-     */
-
-    z-index:
-        2100;
-
-    pointer-events:
-        none;
-
-    overflow:
-        hidden;
-
-    box-sizing:
-        border-box;
-
-    font-family:
-        'Tajawal',
-        sans-serif;
-
-    color:
-        #f4ead8;
-}
-
-
-/* =========================================================
-   EXPLORATION NAVIGATION
-   ========================================================= */
-
-.awtaar-exploration-nav {
-
-    position:
-        fixed;
-
-    top:
-        30px;
-
-    left:
-        50%;
-
-    transform:
-        translateX(-50%);
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        4px;
+        46px;
 
     padding:
-        6px;
+        0 25px;
 
     border:
         1px solid
-        rgba(241, 210, 139, 0.18);
-
-    border-radius:
-        32px;
-
-    background:
-        rgba(5, 5, 15, 0.38);
-
-    backdrop-filter:
-        blur(18px);
-
-    -webkit-backdrop-filter:
-        blur(18px);
-
-    box-shadow:
-        0 10px 40px
-        rgba(0, 0, 0, 0.22);
-
-    pointer-events:
-        auto;
-
-    z-index:
-        70;
-}
-
-
-/* =========================================================
-   EXPLORATION ITEMS
-   ========================================================= */
-
-.awtaar-exploration-item {
-
-    padding:
-        9px 18px;
-
-    border:
-        1px solid
-        transparent;
+        rgba(241, 210, 139, 0.40);
 
     border-radius:
         24px;
 
     background:
-        transparent;
-
-    color:
-        rgba(245, 236, 223, 0.58);
-
-    font-family:
-        'Tajawal',
-        sans-serif;
-
-    font-size:
-        14px;
-
-    font-weight:
-        400;
-
-    cursor:
-        pointer;
-
-    white-space:
-        nowrap;
-
-    transition:
-        color 0.3s ease,
-        background 0.3s ease,
-        border-color 0.3s ease,
-        transform 0.3s ease;
-}
-
-
-.awtaar-exploration-item:hover {
+        rgba(241, 210, 139, 0.055);
 
     color:
         #f1d28b;
-
-    background:
-        rgba(241, 210, 139, 0.045);
-}
-
-
-.awtaar-exploration-item.active {
-
-    color:
-        #f1d28b;
-
-    border-color:
-        rgba(241, 210, 139, 0.28);
-
-    background:
-        rgba(241, 210, 139, 0.075);
-}
-
-
-/* =========================================================
-   EXPLORATION BACK BUTTON
-   ========================================================= */
-
-.awtaar-exploration-back {
-
-    position:
-        fixed;
-
-    bottom:
-        34px;
-
-    left:
-        50%;
-
-    transform:
-        translateX(-50%);
-
-    padding:
-        10px 23px;
-
-    border:
-        1px solid
-        rgba(241, 210, 139, 0.28);
-
-    border-radius:
-        26px;
-
-    background:
-        rgba(5, 5, 15, 0.42);
-
-    color:
-        rgba(241, 210, 139, 0.82);
 
     font-family:
         'Tajawal',
@@ -1062,9 +1107,6 @@
     pointer-events:
         auto;
 
-    white-space:
-        nowrap;
-
     backdrop-filter:
         blur(15px);
 
@@ -1072,31 +1114,331 @@
         blur(15px);
 
     box-shadow:
-        0 8px 30px
-        rgba(0, 0, 0, 0.25);
+        0 12px 35px
+        rgba(0, 0, 0, 0.20);
 
     transition:
-        transform 0.3s ease,
-        background 0.3s ease,
-        border-color 0.3s ease,
-        color 0.3s ease;
-
-    z-index:
-        70;
+        transform 0.30s ease,
+        background 0.30s ease,
+        border-color 0.30s ease,
+        box-shadow 0.30s ease;
 }
 
 
-.awtaar-exploration-back:hover {
+.awtaar-explore-button:hover {
 
     transform:
-        translateX(-50%)
         translateY(-2px);
 
     background:
-        rgba(241, 210, 139, 0.065);
+        rgba(241, 210, 139, 0.10);
 
     border-color:
-        rgba(241, 210, 139, 0.62);
+        rgba(241, 210, 139, 0.72);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.27),
+        0 0 24px
+        rgba(241, 210, 139, 0.06);
+}
+
+
+.awtaar-explore-button:disabled {
+
+    opacity:
+        0.55;
+
+    cursor:
+        default;
+
+    transform:
+        none;
+}
+
+
+/* =========================================================
+   PROFILE PAGE
+   ========================================================= */
+
+.awtaar-profile-page {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        2300;
+
+    overflow-y:
+        auto;
+
+    overflow-x:
+        hidden;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        92px 8vw 65px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 18%,
+            rgba(241, 210, 139, 0.055),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 15% 80%,
+            rgba(241, 210, 139, 0.025),
+            transparent 35%
+        ),
+        rgba(3, 3, 10, 0.985);
+
+    opacity:
+        0;
+
+    visibility:
+        hidden;
+
+    pointer-events:
+        none;
+
+    transform:
+        translateY(16px);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.40s ease,
+        visibility 0.35s ease;
+}
+
+
+.awtaar-profile-page.open {
+
+    opacity:
+        1;
+
+    visibility:
+        visible;
+
+    pointer-events:
+        auto;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   PROFILE PAGE GLOW
+   ========================================================= */
+
+.awtaar-profile-page-glow {
+
+    position:
+        absolute;
+
+    top:
+        -180px;
+
+    left:
+        50%;
+
+    width:
+        700px;
+
+    height:
+        420px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(241, 210, 139, 0.075),
+            transparent 68%
+        );
+
+    filter:
+        blur(20px);
+
+    pointer-events:
+        none;
+}
+
+
+/* =========================================================
+   PROFILE PAGE HEADER
+   ---------------------------------------------------------
+   يحتوي الآن على:
+   - زر العودة
+   - عنوان الصفحة داخل مستطيل ذهبي
+   - الوصف أسفله
+   ========================================================= */
+
+.awtaar-profile-page-header {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(980px, 100%);
+
+    margin:
+        0 auto 34px;
+
+    padding:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    text-align:
+        center;
+
+    box-sizing:
+        border-box;
+}
+
+
+/* =========================================================
+   PROFILE BACK BUTTON
+   Elegant Gold / Black
+   ========================================================= */
+
+.awtaar-profile-back {
+
+    align-self:
+        flex-start;
+
+    min-width:
+        94px;
+
+    height:
+        34px;
+
+    margin-bottom:
+        26px;
+
+    padding:
+        0 13px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        7px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.42);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(241, 210, 139, 0.18),
+            rgba(10, 10, 15, 0.92) 58%,
+            rgba(241, 210, 139, 0.07)
+        );
+
+    color:
+        #f1d28b;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        inset 0 0 18px
+        rgba(241, 210, 139, 0.035),
+        0 7px 22px
+        rgba(0, 0, 0, 0.25);
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.awtaar-profile-back:hover {
+
+    color:
+        #fff1c7;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(241, 210, 139, 0.28),
+            rgba(8, 8, 12, 0.94) 58%,
+            rgba(241, 210, 139, 0.11)
+        );
+
+    border-color:
+        rgba(241, 210, 139, 0.78);
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        inset 0 0 20px
+        rgba(241, 210, 139, 0.05),
+        0 9px 25px
+        rgba(0, 0, 0, 0.30),
+        0 0 18px
+        rgba(241, 210, 139, 0.05);
+}
+
+
+.awtaar-profile-back-icon {
+
+    font-size:
+        14px;
+
+    line-height:
+        1;
 
     color:
         #f1d28b;
@@ -1104,109 +1446,1587 @@
 
 
 /* =========================================================
-   LARGE SCREENS
+   PROFILE PAGE TITLE
+   ---------------------------------------------------------
+   العنوان داخل مستطيل أنيق في منتصف الصفحة
    ========================================================= */
 
-@media (min-width: 1400px) {
+.awtaar-profile-page-title {
 
-    .awtaar-content {
+    width:
+        min(620px, 100%);
 
-        left:
-            9%;
+    margin:
+        0;
 
-        width:
-            560px;
-    }
+    padding:
+        17px 34px;
 
+    box-sizing:
+        border-box;
 
-    .awtaar-content h1 {
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.42);
 
-        font-size:
-            62px;
-    }
+    border-radius:
+        10px;
 
+    background:
+        linear-gradient(
+            135deg,
+            rgba(241, 210, 139, 0.17),
+            rgba(9, 9, 14, 0.96) 58%,
+            rgba(241, 210, 139, 0.065)
+        );
+
+    color:
+        #f1d28b;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(22px, 2.5vw, 30px);
+
+    line-height:
+        1.45;
+
+    font-weight:
+        400;
+
+    text-align:
+        center;
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(241, 210, 139, 0.035),
+        0 12px 35px
+        rgba(0, 0, 0, 0.24);
+
+    text-shadow:
+        0 0 20px
+        rgba(241, 210, 139, 0.08);
 }
 
 
 /* =========================================================
-   TABLET
+   PROFILE PAGE SUBTITLE
    ========================================================= */
 
-@media (max-width: 900px) {
+.awtaar-profile-page-subtitle {
 
-    .awtaar-header {
+    width:
+        min(620px, 100%);
 
-        height:
-            82px;
+    margin:
+        13px auto 0;
 
-        padding:
-            0 32px;
-    }
+    color:
+        rgba(245, 236, 223, 0.48);
 
+    font-family:
+        'Tajawal',
+        sans-serif;
 
-    .awtaar-content {
+    font-size:
+        12px;
 
-        left:
-            6%;
+    line-height:
+        1.9;
 
-        width:
-            460px;
+    font-weight:
+        300;
 
-        max-width:
-            48vw;
-
-        pointer-events:
-            auto;
-
-        z-index:
-            200;
-    }
+    text-align:
+        center;
+}
 
 
-    .awtaar-content h1 {
+/* =========================================================
+   PROFILE HERO
+   ========================================================= */
 
-        font-size:
-            clamp(34px, 5vw, 50px);
-    }
+.awtaar-profile-hero {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(980px, 100%);
+
+    margin:
+        0 auto;
+
+    padding:
+        6px 0 43px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    text-align:
+        center;
+
+    border-bottom:
+        1px solid
+        rgba(241, 210, 139, 0.10);
+
+    order:
+        2;
+}
 
 
-    .awtaar-content p {
+/* =========================================================
+   PROFILE PAGE AVATAR
+   ========================================================= */
 
-        font-size:
-            16px;
-    }
+.awtaar-profile-page-avatar {
+
+    width:
+        82px;
+
+    height:
+        82px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.48);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            rgba(241, 210, 139, 0.17),
+            rgba(5, 5, 15, 0.72)
+        );
+
+    color:
+        #f1d28b;
+
+    font-size:
+        27px;
+
+    font-weight:
+        400;
+
+    box-shadow:
+        0 0 45px
+        rgba(241, 210, 139, 0.08),
+        inset 0 0 30px
+        rgba(241, 210, 139, 0.025);
+}
 
 
-    .awtaar-language-button {
+/* =========================================================
+   PROFILE PAGE NAME
+   ========================================================= */
 
-        right:
-            92px;
+.awtaar-profile-page-name {
 
-        top:
-            94px;
-    }
+    margin:
+        19px 0 0;
+
+    color:
+        #f5ecdf;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        clamp(26px, 3vw, 38px);
+
+    line-height:
+        1.35;
+
+    font-weight:
+        400;
+
+    letter-spacing:
+        -0.2px;
+}
 
 
-    .awtaar-platform-menu {
+/* =========================================================
+   PROFILE PAGE EMAIL
+   ========================================================= */
 
-        left:
-            32px;
+.awtaar-profile-page-email {
 
-        top:
-            94px;
-    }
+    margin-top:
+        6px;
+
+    color:
+        rgba(245, 236, 223, 0.42);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        300;
+
+    direction:
+        ltr;
+}
 
 
-    #awtaar-platform[dir="ltr"]
-    .awtaar-platform-menu {
+/* =========================================================
+   CURRENT PROFILE INFO CARD
+   ---------------------------------------------------------
+   معلومات الحساب
+   ========================================================= */
 
-        left:
-            auto;
+.awtaar-profile-info-card {
 
-        right:
-            32px;
-    }
+    position:
+        relative;
 
+    z-index:
+        2;
+
+    width:
+        min(980px, 100%);
+
+    margin:
+        28px auto 0;
+
+    padding:
+        25px 28px 28px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.40);
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            105deg,
+            rgba(241, 210, 139, 0.15),
+            rgba(241, 210, 139, 0.055) 42%,
+            rgba(7, 7, 12, 0.95) 100%
+        );
+
+    box-shadow:
+        inset 0 0 35px
+        rgba(241, 210, 139, 0.035),
+        0 12px 34px
+        rgba(0, 0, 0, 0.25);
+
+    order:
+        5;
+}
+
+
+/* =========================================================
+   ACCOUNT CARD GOLD ACCENT
+   ========================================================= */
+
+.awtaar-profile-info-card::before {
+
+    content:
+        '';
+
+    position:
+        absolute;
+
+    top:
+        12px;
+
+    bottom:
+        12px;
+
+    right:
+        0;
+
+    width:
+        2px;
+
+    border-radius:
+        2px;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            #f1d28b,
+            transparent
+        );
+
+    opacity:
+        0.72;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-info-card::before {
+
+    right:
+        auto;
+
+    left:
+        0;
+}
+
+
+/* =========================================================
+   PROFILE INFO GRID
+   ========================================================= */
+
+.awtaar-profile-info-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        14px;
+
+    margin-top:
+        18px;
+}
+
+
+/* =========================================================
+   PROFILE INFO ITEM
+   ========================================================= */
+
+.awtaar-profile-info-item {
+
+    min-height:
+        72px;
+
+    padding:
+        14px 17px;
+
+    box-sizing:
+        border-box;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.12);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(5, 5, 15, 0.42);
+}
+
+
+/* =========================================================
+   PROFILE INFO LABEL
+   ========================================================= */
+
+.awtaar-profile-info-label {
+
+    color:
+        rgba(245, 236, 223, 0.42);
+
+    font-size:
+        10px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.6;
+}
+
+
+/* =========================================================
+   PROFILE INFO VALUE
+   ========================================================= */
+
+.awtaar-profile-info-value {
+
+    margin-top:
+        5px;
+
+    color:
+        #f5ecdf;
+
+    font-size:
+        13px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.6;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   PROFILE JOURNEY CARD
+   ---------------------------------------------------------
+   رحلتي في أوتار
+   ========================================================= */
+
+.awtaar-profile-journey-card {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(980px, 100%);
+
+    margin:
+        42px auto 0;
+
+    padding:
+        28px 28px 30px;
+
+    box-sizing:
+        border-box;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.40);
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(241, 210, 139, 0.15),
+            rgba(9, 9, 14, 0.96) 58%,
+            rgba(241, 210, 139, 0.055)
+        );
+
+    box-shadow:
+        inset 0 0 35px
+        rgba(241, 210, 139, 0.035),
+        0 12px 34px
+        rgba(0, 0, 0, 0.25);
+
+    order:
+        4;
+}
+
+
+/* =========================================================
+   JOURNEY GOLD ACCENT
+   ========================================================= */
+
+.awtaar-profile-journey-card::before {
+
+    content:
+        '';
+
+    position:
+        absolute;
+
+    top:
+        12px;
+
+    bottom:
+        12px;
+
+    right:
+        0;
+
+    width:
+        2px;
+
+    border-radius:
+        2px;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            #f1d28b,
+            transparent
+        );
+
+    opacity:
+        0.72;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-journey-card::before {
+
+    right:
+        auto;
+
+    left:
+        0;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.awtaar-profile-section-title {
+
+    margin:
+        0;
+
+    color:
+        #f1d28b;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        19px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.55;
+
+    letter-spacing:
+        -0.1px;
+}
+
+
+/* =========================================================
+   JOURNEY DESCRIPTION
+   ========================================================= */
+
+.awtaar-profile-journey-description {
+
+    margin:
+        7px 0 23px;
+
+    max-width:
+        680px;
+
+    color:
+        rgba(245, 236, 223, 0.46);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.9;
+
+    font-weight:
+        300;
+}
+
+
+/* =========================================================
+   STATS GRID
+   ========================================================= */
+
+.awtaar-profile-stats {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:
+        14px;
+
+    margin-top:
+        20px;
+}
+
+
+/* =========================================================
+   STAT CARD
+   ========================================================= */
+
+.awtaar-profile-stat {
+
+    min-height:
+        150px;
+
+    padding:
+        23px 20px;
+
+    box-sizing:
+        border-box;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.13);
+
+    border-radius:
+        18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(241, 210, 139, 0.045),
+            rgba(255, 255, 255, 0.012)
+        );
+
+    box-shadow:
+        inset 0 0 35px
+        rgba(241, 210, 139, 0.015);
+
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        background 0.28s ease;
+}
+
+
+.awtaar-profile-stat:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(241, 210, 139, 0.30);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(241, 210, 139, 0.065),
+            rgba(255, 255, 255, 0.015)
+        );
+}
+
+
+/* =========================================================
+   STAT ICON
+   ========================================================= */
+
+.awtaar-profile-stat-icon {
+
+    width:
+        34px;
+
+    height:
+        34px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        rgba(241, 210, 139, 0.72);
+
+    font-size:
+        18px;
+
+    margin-bottom:
+        9px;
+}
+
+
+/* =========================================================
+   STAT VALUE
+   ========================================================= */
+
+.awtaar-profile-stat-value {
+
+    color:
+        #f5ecdf;
+
+    font-size:
+        28px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.2;
+}
+
+
+/* =========================================================
+   STAT LABEL
+   ========================================================= */
+
+.awtaar-profile-stat-label {
+
+    margin-top:
+        7px;
+
+    color:
+        rgba(245, 236, 223, 0.46);
+
+    font-size:
+        11px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.6;
+}
+
+
+/* =========================================================
+   JOURNEY EMPTY STATE
+   ========================================================= */
+
+.awtaar-profile-journey-empty {
+
+    margin-top:
+        20px;
+
+    padding:
+        18px 20px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.10);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(5, 5, 15, 0.30);
+}
+
+
+.awtaar-profile-journey-empty-icon {
+
+    flex:
+        0 0 auto;
+
+    color:
+        rgba(241, 210, 139, 0.55);
+
+    font-size:
+        17px;
+}
+
+
+.awtaar-profile-journey-empty-text {
+
+    color:
+        rgba(245, 236, 223, 0.42);
+
+    font-size:
+        11px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.8;
+}
+
+
+/* =========================================================
+   OLD / COMPATIBILITY JOURNEY
+   ========================================================= */
+
+.awtaar-profile-journey,
+.awtaar-last-exploration,
+.awtaar-profile-account {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(980px, 100%);
+
+    margin:
+        0 auto;
+}
+
+
+/* =========================================================
+   OLD JOURNEY COMPATIBILITY
+   ========================================================= */
+
+.awtaar-profile-journey {
+
+    padding:
+        42px 0 30px;
+}
+
+
+/* =========================================================
+   SECTION DESCRIPTION COMPATIBILITY
+   ========================================================= */
+
+.awtaar-profile-section-description {
+
+    margin:
+        5px 0 23px;
+
+    max-width:
+        620px;
+
+    color:
+        rgba(245, 236, 223, 0.46);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.9;
+
+    font-weight:
+        300;
+}
+
+
+/* =========================================================
+   LAST EXPLORATION
+   ========================================================= */
+
+.awtaar-last-exploration {
+
+    padding:
+        15px 0 35px;
+}
+
+
+.awtaar-last-exploration-card {
+
+    margin-top:
+        16px;
+
+    min-height:
+        94px;
+
+    padding:
+        17px 20px;
+
+    box-sizing:
+        border-box;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.12);
+
+    border-radius:
+        16px;
+
+    background:
+        rgba(255, 255, 255, 0.012);
+}
+
+
+.awtaar-last-exploration-icon {
+
+    flex:
+        0 0 auto;
+
+    width:
+        44px;
+
+    height:
+        44px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.20);
+
+    border-radius:
+        50%;
+
+    color:
+        #f1d28b;
+
+    background:
+        rgba(241, 210, 139, 0.035);
+
+    font-size:
+        16px;
+}
+
+
+.awtaar-last-exploration-text {
+
+    min-width:
+        0;
+}
+
+
+.awtaar-last-exploration-name {
+
+    color:
+        rgba(245, 236, 223, 0.78);
+
+    font-size:
+        13px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.6;
+}
+
+
+.awtaar-last-exploration-description {
+
+    margin-top:
+        4px;
+
+    color:
+        rgba(245, 236, 223, 0.42);
+
+    font-size:
+        11px;
+
+    font-weight:
+        300;
+
+    line-height:
+        1.7;
+}
+
+
+/* =========================================================
+   OLD ACCOUNT COMPATIBILITY
+   ========================================================= */
+
+.awtaar-profile-account {
+
+    padding:
+        15px 0 60px;
+}
+
+
+.awtaar-profile-account
+.awtaar-profile-section-title {
+
+    margin-bottom:
+        2px;
+}
+
+
+.awtaar-profile-account-card {
+
+    position:
+        relative;
+
+    margin-top:
+        16px;
+
+    min-height:
+        76px;
+
+    padding:
+        14px 20px;
+
+    box-sizing:
+        border-box;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.40);
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            105deg,
+            rgba(241, 210, 139, 0.15),
+            rgba(241, 210, 139, 0.055) 42%,
+            rgba(7, 7, 12, 0.94) 100%
+        );
+
+    box-shadow:
+        inset 0 0 35px
+        rgba(241, 210, 139, 0.035),
+        0 12px 34px
+        rgba(0, 0, 0, 0.25);
+}
+
+
+.awtaar-profile-account-card::before {
+
+    content:
+        '';
+
+    position:
+        absolute;
+
+    top:
+        12px;
+
+    bottom:
+        12px;
+
+    right:
+        0;
+
+    width:
+        2px;
+
+    border-radius:
+        2px;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            #f1d28b,
+            transparent
+        );
+
+    opacity:
+        0.70;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-account-card::before {
+
+    right:
+        auto;
+
+    left:
+        0;
+}
+
+
+.awtaar-profile-account-status {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    color:
+        rgba(245, 236, 223, 0.66);
+
+    font-size:
+        12px;
+
+    font-weight:
+        300;
+}
+
+
+.awtaar-profile-account-dot {
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    background:
+        #f1d28b;
+
+    box-shadow:
+        0 0 10px
+        rgba(241, 210, 139, 0.45);
+}
+
+
+/* =========================================================
+   PROFILE PAGE FOOTER
+   ========================================================= */
+
+.awtaar-profile-page-footer {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(980px, 100%);
+
+    margin:
+        30px auto 0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        0 0 10px;
+
+    order:
+        6;
+}
+
+
+/* =========================================================
+   PROFILE PAGE CLOSE
+   ========================================================= */
+
+.awtaar-profile-page-close {
+
+    min-width:
+        34px;
+
+    height:
+        34px;
+
+    padding:
+        0;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.22);
+
+    border-radius:
+        8px;
+
+    background:
+        rgba(5, 5, 15, 0.70);
+
+    color:
+        rgba(245, 236, 223, 0.68);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        17px;
+
+    cursor:
+        pointer;
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.awtaar-profile-page-close:hover {
+
+    color:
+        #f1d28b;
+
+    background:
+        rgba(241, 210, 139, 0.08);
+
+    border-color:
+        rgba(241, 210, 139, 0.55);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   CONTINUE EXPLORATION
+   ========================================================= */
+
+.awtaar-profile-continue {
+
+    min-width:
+        138px;
+
+    height:
+        38px;
+
+    padding:
+        0 18px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(241, 210, 139, 0.42);
+
+    border-radius:
+        9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(241, 210, 139, 0.16),
+            rgba(8, 8, 13, 0.94) 62%
+        );
+
+    color:
+        #f1d28b;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        400;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        inset 0 0 18px
+        rgba(241, 210, 139, 0.025),
+        0 8px 24px
+        rgba(0, 0, 0, 0.22);
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.awtaar-profile-continue:hover {
+
+    color:
+        #fff1c7;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(241, 210, 139, 0.25),
+            rgba(8, 8, 13, 0.96) 62%
+        );
+
+    border-color:
+        rgba(241, 210, 139, 0.72);
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 10px 28px
+        rgba(0, 0, 0, 0.28),
+        0 0 18px
+        rgba(241, 210, 139, 0.045);
+}
+
+
+/* =========================================================
+   PROFILE EMPTY STATE — COMPATIBILITY
+   ========================================================= */
+
+.awtaar-profile-empty-icon {
+
+    color:
+        rgba(241, 210, 139, 0.55);
+
+    font-size:
+        18px;
+}
+
+
+.awtaar-profile-empty-title {
+
+    color:
+        rgba(245, 236, 223, 0.76);
+
+    font-size:
+        13px;
+
+    font-weight:
+        400;
+}
+
+
+.awtaar-profile-empty-text {
+
+    color:
+        rgba(245, 236, 223, 0.40);
+
+    font-size:
+        11px;
+
+    font-weight:
+        300;
+}
+
+
+/* =========================================================
+   PROFILE PAGE ORDER
+   ---------------------------------------------------------
+   الترتيب الجديد:
+   1 — العنوان والوصف
+   2 — بيانات المستخدم
+   4 — رحلتي في أوتار
+   5 — معلومات الحساب
+   6 — زر الاستكشاف
+   ========================================================= */
+
+.awtaar-profile-page-header {
+
+    order:
+        1;
+}
+
+
+.awtaar-profile-info-card {
+
+    order:
+        5;
+}
+
+
+.awtaar-profile-journey-card {
+
+    order:
+        4;
+}
+
+
+.awtaar-profile-page-footer {
+
+    order:
+        6;
+}
+
+
+/* =========================================================
+   ENGLISH
+   ========================================================= */
+
+#awtaar-platform[dir="ltr"]
+.awtaar-content {
+
+    left:
+        auto;
+
+    right:
+        8%;
+
+    direction:
+        ltr;
+
+    text-align:
+        left;
+}
+
+
+/* =========================================================
+   PROFILE PANEL — ENGLISH
+   ========================================================= */
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-panel {
+
+    right:
+        54px;
+
+    left:
+        auto;
+
+    transform-origin:
+        top right;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-panel.open {
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-action:hover,
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-logout:hover {
+
+    transform:
+        translateX(2px);
+}
+
+
+/* =========================================================
+   PROFILE PAGE — ENGLISH
+   ========================================================= */
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-page {
+
+    direction:
+        ltr;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-page-header {
+
+    align-items:
+        center;
+
+    text-align:
+        center;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-back {
+
+    align-self:
+        flex-start;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-section-description,
+
+#awtaar-platform[dir="ltr"]
+.awtaar-profile-journey-description {
+
+    text-align:
+        left;
+}
+
+
+#awtaar-platform[dir="ltr"]
+.awtaar-last-exploration-card {
+
+    text-align:
+        left;
 }
 
 
@@ -1214,7 +3034,7 @@
    MOBILE
    ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
     .awtaar-header {
 
@@ -1222,86 +3042,93 @@
             76px;
 
         padding:
-            0 22px;
+            0 20px;
     }
 
 
     .awtaar-platform-logo {
 
+        left:
+            20px;
+
         font-size:
-            17px;
+            16px;
 
         letter-spacing:
             6px;
     }
 
 
-    .awtaar-menu-button {
+    .awtaar-header-actions {
 
-        width:
-            40px;
+        right:
+            20px;
 
-        height:
-            40px;
+        left:
+            auto;
+
+        gap:
+            7px;
     }
 
 
     .awtaar-language-button {
 
-        top:
-            84px;
-
-        right:
-            70px;
-
-        min-width:
+        width:
             38px;
 
         height:
-            29px;
-
-        padding:
-            0 9px;
-
-        font-size:
-            11px;
+            32px;
     }
 
 
-    .awtaar-platform-menu {
+    .awtaar-user-button {
+
+        width:
+            40px;
+
+        height:
+            40px;
+    }
+
+
+    .awtaar-profile-panel {
 
         top:
-            88px;
-
-        left:
-            18px;
+            66px;
 
         right:
+            20px;
+
+        left:
             auto;
 
         width:
-            250px;
+            min(
+                292px,
+                calc(100vw - 40px)
+            );
     }
 
 
     #awtaar-platform[dir="ltr"]
-    .awtaar-platform-menu {
+    .awtaar-profile-panel {
+
+        right:
+            20px;
 
         left:
             auto;
-
-        right:
-            18px;
     }
 
 
     .awtaar-content {
 
         left:
-            24px;
+            20px;
 
         right:
-            24px;
+            20px;
 
         width:
             auto;
@@ -1310,42 +3137,42 @@
             none;
 
         top:
-            56%;
+            52%;
 
         transform:
-            translateY(-50%);
+            translateY(-40%);
+    }
 
-        pointer-events:
-            auto;
 
-        z-index:
-            200;
+    #awtaar-platform[dir="ltr"]
+    .awtaar-content {
+
+        left:
+            20px;
+
+        right:
+            20px;
     }
 
 
     .awtaar-content h1 {
 
         font-size:
-            34px;
-
-        line-height:
-            1.4;
-
-        font-weight:
-            400;
+            clamp(
+                32px,
+                10vw,
+                46px
+            );
     }
 
 
     .awtaar-content p {
 
-        margin:
-            17px 0 25px;
-
         max-width:
             100%;
 
         font-size:
-            14px;
+            15px;
 
         line-height:
             1.9;
@@ -1354,69 +3181,468 @@
 
     .awtaar-explore-button {
 
+        min-width:
+            140px;
+
+        height:
+            44px;
+    }
+
+
+    /* =====================================================
+       PROFILE PAGE — MOBILE
+       ===================================================== */
+
+    .awtaar-profile-page {
+
         padding:
-            11px 23px;
+            80px 20px 45px;
+    }
+
+
+    .awtaar-profile-page-header {
+
+        margin-bottom:
+            28px;
+    }
+
+
+    .awtaar-profile-back {
+
+        min-width:
+            88px;
+
+        height:
+            33px;
+
+        padding:
+            0 11px;
+
+        margin-bottom:
+            22px;
+
+        font-size:
+            10px;
+    }
+
+
+    .awtaar-profile-page-title {
+
+        width:
+            100%;
+
+        padding:
+            15px 20px;
+
+        font-size:
+            22px;
+
+        border-radius:
+            9px;
+    }
+
+
+    .awtaar-profile-page-subtitle {
+
+        width:
+            100%;
+
+        margin-top:
+            11px;
+
+        font-size:
+            11px;
+
+        line-height:
+            1.8;
+    }
+
+
+    .awtaar-profile-hero {
+
+        padding-bottom:
+            36px;
+    }
+
+
+    .awtaar-profile-page-avatar {
+
+        width:
+            70px;
+
+        height:
+            70px;
+
+        font-size:
+            23px;
+    }
+
+
+    .awtaar-profile-page-name {
+
+        margin-top:
+            16px;
+
+        font-size:
+            26px;
+    }
+
+
+    .awtaar-profile-page-email {
+
+        font-size:
+            10px;
+    }
+
+
+    /* =====================================================
+       JOURNEY CARD — MOBILE
+       ===================================================== */
+
+    .awtaar-profile-journey-card {
+
+        margin-top:
+            28px;
+
+        padding:
+            23px 18px 22px;
+
+        border-radius:
+            12px;
+    }
+
+
+    .awtaar-profile-section-title {
+
+        font-size:
+            18px;
+    }
+
+
+    .awtaar-profile-journey-description {
+
+        margin-top:
+            5px;
+
+        margin-bottom:
+            18px;
+
+        font-size:
+            11px;
+    }
+
+
+    .awtaar-profile-stats {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            10px;
+    }
+
+
+    .awtaar-profile-stat {
+
+        min-height:
+            105px;
+
+        padding:
+            16px;
+    }
+
+
+    .awtaar-profile-stat-icon {
+
+        margin-bottom:
+            4px;
+    }
+
+
+    .awtaar-profile-stat-value {
+
+        font-size:
+            24px;
+    }
+
+
+    .awtaar-profile-stat-label {
+
+        margin-top:
+            4px;
+    }
+
+
+    /* =====================================================
+       ACCOUNT CARD — MOBILE
+       ===================================================== */
+
+    .awtaar-profile-info-card {
+
+        margin-top:
+            24px;
+
+        padding:
+            22px 18px 20px;
+
+        border-radius:
+            12px;
+    }
+
+
+    .awtaar-profile-info-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            10px;
+
+        margin-top:
+            16px;
+    }
+
+
+    .awtaar-profile-info-item {
+
+        min-height:
+            66px;
+
+        padding:
+            12px 14px;
+    }
+
+
+    /* =====================================================
+       EMPTY JOURNEY
+       ===================================================== */
+
+    .awtaar-profile-journey-empty {
+
+        align-items:
+            flex-start;
+
+        padding:
+            15px;
+
+        margin-top:
+            16px;
+    }
+
+
+    .awtaar-profile-journey-empty-text {
+
+        font-size:
+            10px;
+
+        line-height:
+            1.8;
+    }
+
+
+    /* =====================================================
+       OLD COMPATIBILITY
+       ===================================================== */
+
+    .awtaar-last-exploration-card {
+
+        padding:
+            15px;
+
+        align-items:
+            flex-start;
+    }
+
+
+    .awtaar-last-exploration-icon {
+
+        width:
+            40px;
+
+        height:
+            40px;
+    }
+
+
+    .awtaar-profile-account {
+
+        padding-bottom:
+            30px;
+    }
+
+
+    .awtaar-profile-account-card {
+
+        min-height:
+            70px;
+
+        padding:
+            13px 16px;
+    }
+
+
+    /* =====================================================
+       CONTINUE
+       ===================================================== */
+
+    .awtaar-profile-page-footer {
+
+        margin-top:
+            25px;
+    }
+
+
+    .awtaar-profile-continue {
+
+        min-width:
+            128px;
+
+        height:
+            36px;
+
+        padding:
+            0 15px;
+
+        font-size:
+            10px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .awtaar-header {
+
+        padding:
+            0 15px;
+    }
+
+
+    .awtaar-platform-logo {
+
+        left:
+            15px;
 
         font-size:
             14px;
 
-        z-index:
-            210;
+        letter-spacing:
+            5px;
+    }
 
-        pointer-events:
+
+    .awtaar-header-actions {
+
+        right:
+            15px;
+
+        left:
             auto;
     }
 
 
-    .awtaar-exploration-nav {
+    .awtaar-profile-panel {
 
-        top:
-            20px;
+        right:
+            15px;
+
+        left:
+            auto;
 
         width:
-            calc(100% - 24px);
+            calc(100vw - 30px);
+    }
 
-        padding:
-            5px;
 
-        gap:
-            1px;
+    #awtaar-platform[dir="ltr"]
+    .awtaar-profile-panel {
 
-        overflow-x:
+        right:
+            15px;
+
+        left:
             auto;
 
-        scrollbar-width:
-            none;
+        width:
+            calc(100vw - 30px);
     }
 
 
-    .awtaar-exploration-nav::-webkit-scrollbar {
+    .awtaar-profile-page {
 
-        display:
-            none;
+        padding-left:
+            15px;
+
+        padding-right:
+            15px;
     }
 
 
-    .awtaar-exploration-item {
+    .awtaar-profile-page-title {
 
         padding:
-            8px 10px;
+            14px 16px;
+
+        font-size:
+            20px;
+    }
+
+
+    .awtaar-profile-page-subtitle {
+
+        font-size:
+            10px;
+    }
+
+
+    .awtaar-profile-section-title {
+
+        font-size:
+            17px;
+    }
+
+
+    .awtaar-profile-section-description {
 
         font-size:
             12px;
     }
 
 
-    .awtaar-exploration-back {
+    .awtaar-profile-back {
 
-        bottom:
-            22px;
+        min-width:
+            84px;
 
-        padding:
-            9px 18px;
+        height:
+            32px;
 
         font-size:
-            12px;
+            10px;
     }
 
+
+    .awtaar-profile-info-card {
+
+        padding:
+            20px 15px 18px;
+    }
+
+
+    .awtaar-profile-journey-card {
+
+        padding:
+            21px 15px 19px;
+    }
+
+
+    .awtaar-profile-account-card {
+
+        padding:
+            12px 14px;
+    }
 }

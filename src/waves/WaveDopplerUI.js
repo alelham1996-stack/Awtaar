@@ -66,7 +66,6 @@ export default class WaveDopplerUI {
         this.sceneVisibilityBackup =
             []
 
-
         this.sceneIsolated =
             false
 
@@ -285,6 +284,9 @@ export default class WaveDopplerUI {
         hudLabel.className =
             'wave-doppler-hud-label'
 
+        hudLabel.dataset.i18n =
+            'waves.doppler.observe'
+
         hudLabel.textContent =
             this.translate(
                 'waves.doppler.observe',
@@ -408,6 +410,9 @@ export default class WaveDopplerUI {
         panelSubtitle.className =
             'wave-doppler-panel-subtitle'
 
+        panelSubtitle.dataset.i18n =
+            'waves.doppler.parameters'
+
         panelSubtitle.textContent =
             this.translate(
                 'waves.doppler.parameters',
@@ -502,6 +507,9 @@ export default class WaveDopplerUI {
         resultsTitle.className =
             'wave-doppler-section-title'
 
+        resultsTitle.dataset.i18n =
+            'waves.doppler.results'
+
         resultsTitle.textContent =
             this.translate(
                 'waves.doppler.results',
@@ -550,6 +558,9 @@ export default class WaveDopplerUI {
 
         controlsTitle.className =
             'wave-doppler-section-title'
+
+        controlsTitle.dataset.i18n =
+            'waves.doppler.adjust'
 
         controlsTitle.textContent =
             this.translate(
@@ -1377,7 +1388,6 @@ export default class WaveDopplerUI {
 
         this.sceneVisibilityBackup =
             []
-
 
         this.sceneIsolated =
             false

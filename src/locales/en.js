@@ -25,22 +25,22 @@ export default {
      * =====================================================
      */
 
- exploration: {
+    exploration: {
 
-    title:
-        'Awtaar Exploration',
+        title:
+            'Awtaar Exploration',
 
-    subtitle:
-        'Choose your gateway and begin a new journey through the universe.',
+        subtitle:
+            'Choose your gateway and begin a new journey through the universe.',
 
-    galaxies:
-        'Awtaar Galaxies',
+        galaxies:
+            'Awtaar Galaxies',
 
-    galaxiesDescription:
-        'Explore Awtaar’s scientific worlds, where every galaxy has its own world and laws.',
+        galaxiesDescription:
+            'Explore Awtaar’s scientific worlds, where every galaxy has its own world and laws.',
 
-    watar:
-        'Watar’s World',
+        watar:
+            'Watar’s World',
 
     },
 
@@ -352,6 +352,85 @@ export default {
 
     /*
      * =====================================================
+     * WAVES — DOPPLER EFFECT
+     * =====================================================
+     */
+
+    waves: {
+
+        doppler: {
+
+            title:
+                'Doppler Effect',
+
+            description:
+                'Observe how the perceived frequency changes when the source or observer is moving.',
+
+            back:
+                'Back',
+
+            results:
+                'Observed Result',
+
+            observedFrequency:
+                'Observed Frequency',
+
+            observedWavelength:
+                'Observed Wavelength',
+
+            relativeChange:
+                'Relative Change',
+
+            adjust:
+                'Adjust Parameters',
+
+            running:
+                'Experiment Running',
+
+            sourceSpeed:
+                'Source Speed',
+
+            frequency:
+                'Source Frequency',
+
+            waveSpeed:
+                'Wave Speed',
+
+            wavelength:
+                'Wavelength',
+
+            waveCount:
+                'Number of Waves',
+
+            approaching:
+                'Source Approaching',
+
+            receding:
+                'Source Receding',
+
+            controls:
+                'Controls',
+
+            play:
+                'Start Experiment',
+
+            pause:
+                'Pause Experiment',
+
+            reset:
+                'Reset Experiment',
+
+            note:
+                'Observe how the waves become closer together in front of the source and farther apart behind it.',
+
+            ready:
+                'Experiment Ready'
+        }
+    },
+
+
+    /*
+     * =====================================================
      * ENERGY WORLD
      * =====================================================
      */
@@ -384,6 +463,9 @@ export default {
             input:
                 'Input Energy',
 
+            inputEnergy:
+                'Input Energy',
+
             efficiency:
                 'Conversion Efficiency',
 
@@ -391,6 +473,9 @@ export default {
                 'Conversion Speed',
 
             output:
+                'Output Energy',
+
+            outputEnergy:
                 'Output Energy',
 
             outputMode:
@@ -1583,14 +1668,14 @@ export default {
                     'Follow the journey of water through evaporation, condensation, precipitation, and surface runoff.'
             },
 
-           surfaceTension: {
+            surfaceTension: {
 
-    title:
-        'Surface Tension',
+                title:
+                    'Surface Tension',
 
-    description:
-        'Discover how cohesive forces between water molecules make the surface behave like an elastic film.'
-},
+                description:
+                    'Discover how cohesive forces between water molecules make the surface behave like an elastic film.'
+            },
 
             waterStates: {
 
@@ -2246,6 +2331,98 @@ export default {
 
         life:
             'Life in the Universe World'
+    },
+
+
+    /*
+     * =====================================================
+     * CHEMISTRY WORLD
+     * =====================================================
+     */
+
+    chemistryWorld: {
+
+        title:
+            'Chemistry Galaxy',
+
+        description:
+            'Explore the world of atoms, bonds, elements, and reactions that build the matter around us.',
+
+        back:
+            'Back to Chemistry Galaxy',
+
+        hint:
+            'Choose an experiment to explore the secrets of matter.',
+
+        available:
+            'Available to Explore',
+
+        comingSoon:
+            'Coming Soon',
+
+
+        /*
+         * =================================================
+         * CHEMISTRY EXPERIMENTS
+         * =================================================
+         */
+
+        experiments: {
+
+            atomicStructure: {
+
+                title:
+                    'Atomic Structure',
+
+                description:
+                    'Explore the components of the atom and how protons, neutrons, and electrons are arranged.'
+            },
+
+            chemicalBonds: {
+
+                title:
+                    'Chemical Bonds',
+
+                description:
+                    'Discover how atoms bond together to form molecules and compounds.'
+            },
+
+            periodicTable: {
+
+                title:
+                    'Periodic Table',
+
+                description:
+                    'Explore the chemical elements and their relationships within the periodic table.'
+            },
+
+            chemicalReactions: {
+
+                title:
+                    'Chemical Reactions',
+
+                description:
+                    'Watch how substances transform when atoms and molecules interact with one another.'
+            },
+
+            acidsBases: {
+
+                title:
+                    'Acids & Bases',
+
+                description:
+                    'Explore the properties of acids and bases and the pH scale.'
+            },
+
+            crystals: {
+
+                title:
+                    'Crystal Structures',
+
+                description:
+                    'Discover how atoms and molecules arrange themselves to form crystal structures.'
+            }
+        }
     }
 
 };

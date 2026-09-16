@@ -1,0 +1,1840 @@
+/* =========================================================
+   AWTAAR — AUTHENTICATION
+   Cosmic Gateway / Black / Gold / Pearl
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+#awtaar-auth {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    z-index: 100000;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    color: #f4efe4;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgba(204, 170, 94, 0.055),
+            transparent 34%
+        ),
+        radial-gradient(
+            ellipse at 18% 22%,
+            rgba(226, 219, 201, 0.028),
+            transparent 28%
+        ),
+        radial-gradient(
+            ellipse at 84% 78%,
+            rgba(181, 149, 78, 0.025),
+            transparent 32%
+        ),
+        #020204;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+
+/* =========================================================
+   VISIBLE
+   ========================================================= */
+
+#awtaar-auth.is-visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   COSMIC BACKGROUND
+   ========================================================= */
+
+.awtaar-auth-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            ellipse 34% 18%
+            at 50% 50%,
+            rgba(
+                218,
+                187,
+                117,
+                0.11
+            ),
+            rgba(
+                218,
+                187,
+                117,
+                0.035
+            ) 35%,
+            transparent 72%
+        ),
+
+        radial-gradient(
+            ellipse 48% 23%
+            at 50% 50%,
+            transparent 42%,
+            rgba(
+                204,
+                174,
+                106,
+                0.028
+            ) 53%,
+            transparent 72%
+        ),
+
+        radial-gradient(
+            ellipse 70% 30%
+            at 50% 50%,
+            transparent 48%,
+            rgba(
+                232,
+                225,
+                207,
+                0.018
+            ) 58%,
+            transparent 76%
+        );
+
+}
+
+
+/* =========================================================
+   GALACTIC VIGNETTE
+   ========================================================= */
+
+.awtaar-auth-background::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: -25%;
+
+    background:
+
+        radial-gradient(
+            ellipse 42% 17%
+            at 50% 50%,
+            transparent 0 32%,
+            rgba(
+                214,
+                184,
+                117,
+                0.045
+            ) 39%,
+            transparent 55%
+        ),
+
+        radial-gradient(
+            ellipse 66% 27%
+            at 50% 50%,
+            transparent 0 46%,
+            rgba(
+                231,
+                223,
+                203,
+                0.024
+            ) 49%,
+            transparent 59%
+        ),
+
+        radial-gradient(
+            ellipse at center,
+            transparent 20%,
+            rgba(
+                0,
+                0,
+                0,
+                0.18
+            ) 62%,
+            rgba(
+                0,
+                0,
+                0,
+                0.78
+            ) 100%
+        );
+
+    transform:
+        rotate(-11deg);
+
+    animation:
+        awtaar-auth-galaxy-drift
+        32s
+        ease-in-out
+        infinite alternate;
+
+}
+
+
+/* =========================================================
+   SECOND GALAXY ARM LAYER
+   ========================================================= */
+
+.awtaar-auth-background::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 120vw;
+
+    height: 38vw;
+
+    min-height: 260px;
+
+    max-height: 540px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(19deg);
+
+    border-radius:
+        50%;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 0 23%,
+            rgba(
+                210,
+                178,
+                108,
+                0.035
+            ) 29%,
+            transparent 43%
+        ),
+
+        radial-gradient(
+            ellipse at center,
+            transparent 0 38%,
+            rgba(
+                234,
+                228,
+                215,
+                0.022
+            ) 43%,
+            transparent 52%
+        );
+
+    filter:
+        blur(5px);
+
+    opacity:
+        0.8;
+
+    animation:
+        awtaar-auth-galaxy-rotate
+        48s
+        linear
+        infinite;
+
+}
+
+
+/* =========================================================
+   STAR FIELD — SMALL
+   ========================================================= */
+
+.awtaar-auth-particles {
+
+    position: absolute;
+
+    inset: -10%;
+
+    opacity: 0.62;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(
+                238,
+                221,
+                177,
+                0.65
+            ) 0 0.8px,
+            transparent 1.5px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(
+                255,
+                255,
+                255,
+                0.30
+            ) 0 0.65px,
+            transparent 1.35px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(
+                202,
+                169,
+                101,
+                0.30
+            ) 0 0.55px,
+            transparent 1.2px
+        );
+
+    background-size:
+        165px 165px,
+        235px 235px,
+        315px 315px;
+
+    background-position:
+        12px 22px,
+        88px 120px,
+        174px 42px;
+
+    animation:
+        awtaar-auth-stars
+        38s
+        linear
+        infinite;
+
+}
+
+
+/* =========================================================
+   INNER STAR FIELD
+   ========================================================= */
+
+.awtaar-auth-particles::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(
+                245,
+                231,
+                193,
+                0.75
+            ) 0 0.9px,
+            transparent 1.7px
+        );
+
+    background-size:
+        510px 510px;
+
+    background-position:
+        240px 80px;
+
+    opacity:
+        0.32;
+
+    animation:
+        awtaar-auth-stars-near
+        24s
+        linear
+        infinite;
+
+}
+
+
+/* =========================================================
+   GOLDEN COSMIC CORE
+   ========================================================= */
+
+.awtaar-auth-glow {
+
+    position: absolute;
+
+    width: 820px;
+
+    height: 820px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border-radius:
+        50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(
+                210,
+                177,
+                104,
+                0.075
+            ) 0%,
+            rgba(
+                210,
+                177,
+                104,
+                0.032
+            ) 24%,
+            rgba(
+                210,
+                177,
+                104,
+                0.012
+            ) 42%,
+            transparent 70%
+        );
+
+    filter:
+        blur(18px);
+
+    animation:
+        awtaar-auth-breathe
+        10s
+        ease-in-out
+        infinite;
+
+}
+
+
+/* =========================================================
+   GALAXY RING
+   ========================================================= */
+
+.awtaar-auth-glow::before {
+
+    content: '';
+
+    position: absolute;
+
+    width: 610px;
+
+    height: 215px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(
+            -16deg
+        );
+
+    border-radius:
+        50%;
+
+    background:
+
+        radial-gradient(
+            ellipse,
+            transparent 0 44%,
+            rgba(
+                218,
+                187,
+                118,
+                0.045
+            ) 49%,
+            transparent 57%
+        );
+
+    filter:
+        blur(1px);
+
+    opacity:
+        0.9;
+
+}
+
+
+/* =========================================================
+   SUBTLE ORBIT
+   ========================================================= */
+
+.awtaar-auth-glow::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 470px;
+
+    height: 155px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(
+            -16deg
+        );
+
+    border:
+        1px solid
+        rgba(
+            216,
+            183,
+            112,
+            0.055
+        );
+
+    border-radius:
+        50%;
+
+    box-shadow:
+
+        0 0 40px
+        rgba(
+            202,
+            169,
+            91,
+            0.028
+        );
+
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.awtaar-auth-card {
+
+    position: relative;
+
+    width:
+        min(
+            430px,
+            calc(100vw - 40px)
+        );
+
+    box-sizing:
+        border-box;
+
+    padding:
+        40px
+        42px
+        28px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            189,
+            126,
+            0.18
+        );
+
+    border-radius:
+        24px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(
+                19,
+                18,
+                17,
+                0.64
+            ),
+            rgba(
+                5,
+                5,
+                6,
+                0.72
+            )
+        );
+
+    box-shadow:
+
+        0 35px 110px
+        rgba(
+            0,
+            0,
+            0,
+            0.76
+        ),
+
+        0 0 100px
+        rgba(
+            191,
+            151,
+            72,
+            0.055
+        ),
+
+        inset 0 1px 0
+        rgba(
+            255,
+            255,
+            255,
+            0.055
+        );
+
+    backdrop-filter:
+        blur(30px);
+
+    -webkit-backdrop-filter:
+        blur(30px);
+
+    animation:
+        awtaar-auth-card-in
+        0.95s
+        cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        )
+        both;
+
+}
+
+
+/* =========================================================
+   CARD TOP LIGHT
+   ========================================================= */
+
+.awtaar-auth-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    left: 12%;
+
+    width: 76%;
+
+    height: 1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(
+                231,
+                204,
+                147,
+                0.52
+            ),
+            transparent
+        );
+
+    opacity:
+        0.68;
+
+}
+
+
+/* =========================================================
+   CARD INNER GLOW
+   ========================================================= */
+
+.awtaar-auth-card::after {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 1px;
+
+    border-radius:
+        23px;
+
+    pointer-events:
+        none;
+
+    background:
+
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(
+                224,
+                194,
+                132,
+                0.035
+            ),
+            transparent 42%
+        );
+
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.awtaar-auth-brand {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    text-align:
+        center;
+
+    margin-bottom:
+        29px;
+
+}
+
+
+/* =========================================================
+   AWTAAR LOGO
+   ========================================================= */
+
+.awtaar-auth-logo {
+
+    font-family:
+        Georgia,
+        'Times New Roman',
+        serif;
+
+    font-size:
+        30px;
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.38em;
+
+    padding-left:
+        0.38em;
+
+    color:
+        #d9bd7d;
+
+    text-shadow:
+
+        0 0 18px
+        rgba(
+            220,
+            188,
+            111,
+            0.18
+        ),
+
+        0 0 48px
+        rgba(
+            214,
+            180,
+            98,
+            0.065
+        );
+
+}
+
+
+/* =========================================================
+   TAGLINE
+   ========================================================= */
+
+.awtaar-auth-tagline {
+
+    margin-top:
+        11px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        300;
+
+    letter-spacing:
+        0.015em;
+
+    color:
+
+        rgba(
+            239,
+            234,
+            222,
+            0.68
+        );
+
+}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.awtaar-auth-tabs {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        5px;
+
+    padding:
+        4px;
+
+    margin-bottom:
+        25px;
+
+    border-radius:
+        13px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.022
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.055
+        );
+
+}
+
+
+/* =========================================================
+   TAB
+   ========================================================= */
+
+.awtaar-auth-tab {
+
+    appearance:
+        none;
+
+    border:
+        0;
+
+    outline:
+        none;
+
+    border-radius:
+        9px;
+
+    padding:
+        11px 8px;
+
+    background:
+        transparent;
+
+    color:
+
+        rgba(
+            238,
+            232,
+            218,
+            0.48
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        13px;
+
+    cursor:
+        pointer;
+
+    transition:
+
+        background 0.25s ease,
+
+        color 0.25s ease,
+
+        box-shadow 0.25s ease;
+
+}
+
+
+.awtaar-auth-tab:hover {
+
+    color:
+
+        rgba(
+            245,
+            239,
+            225,
+            0.82
+        );
+
+}
+
+
+.awtaar-auth-tab.active {
+
+    color:
+        #e4c987;
+
+    background:
+
+        rgba(
+            205,
+            170,
+            91,
+            0.09
+        );
+
+    box-shadow:
+
+        inset 0 0 0 1px
+        rgba(
+            205,
+            170,
+            91,
+            0.13
+        ),
+
+        0 0 20px
+        rgba(
+            205,
+            170,
+            91,
+            0.025
+        );
+
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.awtaar-auth-form {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        16px;
+
+}
+
+
+/* =========================================================
+   FIELD
+   ========================================================= */
+
+.awtaar-auth-field {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+
+}
+
+
+.awtaar-auth-field label {
+
+    padding-inline:
+        2px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        400;
+
+    color:
+
+        rgba(
+            236,
+            229,
+            213,
+            0.64
+        );
+
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.awtaar-auth-field input {
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.085
+        );
+
+    border-radius:
+        11px;
+
+    outline:
+        none;
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.025
+        );
+
+    color:
+        #f5efe3;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        14px;
+
+    transition:
+
+        border-color 0.25s ease,
+
+        background 0.25s ease,
+
+        box-shadow 0.25s ease,
+
+        transform 0.25s ease;
+
+}
+
+
+.awtaar-auth-field input:hover {
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.038
+        );
+
+}
+
+
+.awtaar-auth-field input:focus {
+
+    border-color:
+
+        rgba(
+            211,
+            177,
+            100,
+            0.48
+        );
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.045
+        );
+
+    box-shadow:
+
+        0 0 0 3px
+        rgba(
+            199,
+            163,
+            86,
+            0.055
+        ),
+
+        0 0 25px
+        rgba(
+            199,
+            163,
+            86,
+            0.035
+        );
+
+}
+
+
+.awtaar-auth-field input::placeholder {
+
+    color:
+
+        rgba(
+            235,
+            229,
+            217,
+            0.25
+        );
+
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.awtaar-auth-message {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    min-height:
+        18px;
+
+    margin-top:
+        -1px;
+
+    text-align:
+        center;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.7;
+
+    color:
+
+        rgba(
+            238,
+            232,
+            218,
+            0.68
+        );
+
+}
+
+
+.awtaar-auth-message.error {
+
+    color:
+        #d7a9a1;
+
+}
+
+
+.awtaar-auth-message.success {
+
+    color:
+        #cdb77e;
+
+}
+
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+.awtaar-auth-submit {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        100%;
+
+    height:
+        50px;
+
+    margin-top:
+        2px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            187,
+            112,
+            0.48
+        );
+
+    border-radius:
+        11px;
+
+    outline:
+        none;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #b9934c,
+            #d2b36d
+        );
+
+    color:
+        #17130c;
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        14px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+
+        0 8px 28px
+        rgba(
+            183,
+            145,
+            67,
+            0.10
+        );
+
+    transition:
+
+        transform 0.25s ease,
+
+        box-shadow 0.25s ease,
+
+        filter 0.25s ease;
+
+}
+
+
+.awtaar-auth-submit:hover {
+
+    transform:
+        translateY(-1px);
+
+    filter:
+        brightness(1.055);
+
+    box-shadow:
+
+        0 12px 34px
+        rgba(
+            183,
+            145,
+            67,
+            0.17
+        );
+
+}
+
+
+.awtaar-auth-submit:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+.awtaar-auth-submit:disabled {
+
+    cursor:
+        wait;
+
+    opacity:
+        0.62;
+
+    transform:
+        none;
+
+    filter:
+        none;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.awtaar-auth-footer {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    margin-top:
+        22px;
+
+}
+
+
+.awtaar-auth-language {
+
+    appearance:
+        none;
+
+    border:
+        0;
+
+    background:
+        transparent;
+
+    color:
+
+        rgba(
+            230,
+            220,
+            199,
+            0.44
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size:
+        12px;
+
+    cursor:
+        pointer;
+
+    transition:
+        color 0.25s ease;
+
+}
+
+
+.awtaar-auth-language:hover {
+
+    color:
+        #d5b76f;
+
+}
+
+
+/* =========================================================
+   SIGNUP FIELDS
+   ========================================================= */
+
+.awtaar-auth-field[data-signup-only] {
+
+    transition:
+        opacity 0.25s ease;
+
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+#awtaar-auth ::selection {
+
+    background:
+
+        rgba(
+            205,
+            170,
+            91,
+            0.28
+        );
+
+    color:
+        #fff8e8;
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+#awtaar-auth::-webkit-scrollbar {
+
+    width:
+        5px;
+
+}
+
+
+#awtaar-auth::-webkit-scrollbar-track {
+
+    background:
+        transparent;
+
+}
+
+
+#awtaar-auth::-webkit-scrollbar-thumb {
+
+    background:
+
+        rgba(
+            205,
+            170,
+            91,
+            0.25
+        );
+
+    border-radius:
+        10px;
+
+}
+
+
+/* =========================================================
+   CARD ENTRANCE
+   ========================================================= */
+
+@keyframes awtaar-auth-card-in {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+
+            translateY(20px)
+            scale(0.982);
+
+    }
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   COSMIC BREATHING
+   ========================================================= */
+
+@keyframes awtaar-auth-breathe {
+
+    0%,
+    100% {
+
+        opacity:
+            0.48;
+
+        transform:
+
+            translate(
+                -50%,
+                -50%
+            )
+
+            scale(0.96);
+
+    }
+
+    50% {
+
+        opacity:
+            0.90;
+
+        transform:
+
+            translate(
+                -50%,
+                -50%
+            )
+
+            scale(1.045);
+
+    }
+
+}
+
+
+/* =========================================================
+   GALAXY DRIFT
+   ========================================================= */
+
+@keyframes awtaar-auth-galaxy-drift {
+
+    from {
+
+        transform:
+            rotate(-11deg)
+            scale(1);
+
+    }
+
+    to {
+
+        transform:
+            rotate(-7deg)
+            scale(1.045);
+
+    }
+
+}
+
+
+/* =========================================================
+   GALAXY ROTATION
+   ========================================================= */
+
+@keyframes awtaar-auth-galaxy-rotate {
+
+    from {
+
+        transform:
+            translate(-50%, -50%)
+            rotate(19deg);
+
+    }
+
+    to {
+
+        transform:
+            translate(-50%, -50%)
+            rotate(379deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   STAR DRIFT
+   ========================================================= */
+
+@keyframes awtaar-auth-stars {
+
+    from {
+
+        transform:
+            translate3d(
+                0,
+                0,
+                0
+            );
+
+    }
+
+    to {
+
+        transform:
+            translate3d(
+                90px,
+                45px,
+                0
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   NEAR STAR DRIFT
+   ========================================================= */
+
+@keyframes awtaar-auth-stars-near {
+
+    from {
+
+        transform:
+            translate3d(
+                0,
+                0,
+                0
+            );
+
+    }
+
+    to {
+
+        transform:
+            translate3d(
+                -75px,
+                38px,
+                0
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 600px
+) {
+
+    #awtaar-auth {
+
+        padding:
+            20px;
+
+        overflow-y:
+            auto;
+
+    }
+
+
+    .awtaar-auth-card {
+
+        width:
+            100%;
+
+        max-width:
+            430px;
+
+        padding:
+
+            32px
+            24px
+            25px;
+
+        border-radius:
+            19px;
+
+    }
+
+
+    .awtaar-auth-card::after {
+
+        border-radius:
+            18px;
+
+    }
+
+
+    .awtaar-auth-logo {
+
+        font-size:
+            25px;
+
+        letter-spacing:
+            0.3em;
+
+        padding-left:
+            0.3em;
+
+    }
+
+
+    .awtaar-auth-tagline {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .awtaar-auth-tabs {
+
+        margin-bottom:
+            22px;
+
+    }
+
+
+    .awtaar-auth-field input {
+
+        height:
+            46px;
+
+    }
+
+
+    .awtaar-auth-submit {
+
+        height:
+            48px;
+
+    }
+
+
+    .awtaar-auth-glow {
+
+        width:
+            560px;
+
+        height:
+            560px;
+
+    }
+
+
+    .awtaar-auth-background::after {
+
+        width:
+            170vw;
+
+        height:
+            55vw;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 380px
+) {
+
+    .awtaar-auth-card {
+
+        padding:
+
+            28px
+            19px
+            22px;
+
+    }
+
+
+    .awtaar-auth-brand {
+
+        margin-bottom:
+            24px;
+
+    }
+
+
+    .awtaar-auth-form {
+
+        gap:
+            14px;
+
+    }
+
+
+    .awtaar-auth-logo {
+
+        font-size:
+            23px;
+
+    }
+
+}

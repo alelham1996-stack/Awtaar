@@ -6,6 +6,8 @@ import './chemistry-world.css';
 
 import AtomicStructureExperiment from './atomic/AtomicStructureExperiment.js';
 
+import ChemicalBondsExperiment from './bonds/ChemicalBondsExperiment.js';
+
 import {
     t,
     getLanguage
@@ -75,13 +77,15 @@ export default class ChemistryWorldUI {
             );
 
 
-        /*
-         * التجربة الثانية ستتم إضافتها لاحقًا
-         * بعد بناء ملفها بشكل مستقل.
-         */
+        /* =================================================
+           CHEMICAL BONDS EXPERIMENT
+           ================================================= */
 
         this.chemicalBondsExperiment =
-            null;
+            new ChemicalBondsExperiment(
+                this.scene,
+                this
+            );
 
     }
 
@@ -604,8 +608,35 @@ export default class ChemistryWorldUI {
             'atomicStructure'
         ) {
 
+            /*
+             * أولًا نخفي عالم الكيمياء نفسه.
+             */
+
             this.hide();
 
+
+            /*
+             * ثم نخفي الواجهة الأب
+             * (GalaxiesUI)
+             *
+             * حتى لا تبقى واجهة أوتار خلف التجربة.
+             */
+
+            if (
+                this.parentUI &&
+                typeof this.parentUI.hide ===
+                'function'
+            ) {
+
+                this.parentUI.hide();
+
+            }
+
+
+            /*
+             * الآن نفتح تجربة الذرة
+             * وحدها فوق المشهد.
+             */
 
             if (
                 this.atomicStructureExperiment &&
@@ -631,7 +662,23 @@ export default class ChemistryWorldUI {
             'chemicalBonds'
         ) {
 
+            /*
+             * نفس التسلسل للتجربة الثانية
+             * عندما يتم بناؤها.
+             */
+
             this.hide();
+
+
+            if (
+                this.parentUI &&
+                typeof this.parentUI.hide ===
+                'function'
+            ) {
+
+                this.parentUI.hide();
+
+            }
 
 
             if (

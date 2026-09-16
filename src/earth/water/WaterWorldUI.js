@@ -36,6 +36,35 @@ export default class WaterWorldUI {
         this.surfaceTensionExperiment = null;
 
 
+        /* =====================================================
+           WORLD TRANSITION
+           ===================================================== */
+
+        /*
+         * مؤقت الانتقال بين:
+         *
+         * Water World
+         * والتجارب
+         * وEarth World
+         */
+
+        this.worldTransitionTimeout = null;
+
+
+        /* =====================================================
+           VISIBILITY TRANSITION
+           ===================================================== */
+
+        /*
+         * مؤقت إخفاء حاوية Water World.
+         *
+         * منفصل عن worldTransitionTimeout
+         * حتى لا يتداخل مؤقت الإخفاء مع مؤقت العودة.
+         */
+
+        this.visibilityTimeout = null;
+
+
         this.createUI();
         this.updateLanguage();
     }
@@ -598,12 +627,71 @@ export default class WaterWorldUI {
 
 
     /* =====================================================
+       CLEAR WORLD TRANSITION
+       ===================================================== */
+
+    clearWorldTransition() {
+
+        if (
+            this.worldTransitionTimeout !== null
+        ) {
+
+            window.clearTimeout(
+                this.worldTransitionTimeout
+            );
+
+            this.worldTransitionTimeout =
+                null;
+        }
+    }
+
+
+    /* =====================================================
+       CLEAR VISIBILITY TIMEOUT
+       ===================================================== */
+
+    clearVisibilityTimeout() {
+
+        if (
+            this.visibilityTimeout !== null
+        ) {
+
+            window.clearTimeout(
+                this.visibilityTimeout
+            );
+
+            this.visibilityTimeout =
+                null;
+        }
+    }
+
+
+    /* =====================================================
        SHOW
        ===================================================== */
 
     show() {
 
         if (!this.container) return;
+
+
+        /*
+         * إلغاء أي انتقال قديم.
+         *
+         * مهم جدًا:
+         * إذا كان هناك callback سابق سيعود إلى
+         * Earth World أو يخفي Water World،
+         * يجب إلغاؤه قبل إظهار الواجهة.
+         */
+
+        this.clearWorldTransition();
+
+
+        /*
+         * إلغاء مؤقت الإخفاء السابق.
+         */
+
+        this.clearVisibilityTimeout();
 
 
         /*
@@ -661,6 +749,20 @@ export default class WaterWorldUI {
        ===================================================== */
 
     hide() {
+
+        /*
+         * إلغاء أي انتقال قديم.
+         */
+
+        this.clearWorldTransition();
+
+
+        /*
+         * إلغاء مؤقت visibility قديم.
+         */
+
+        this.clearVisibilityTimeout();
+
 
         /*
          * حتى لو لم تكن واجهة عالم المياه ظاهرة،
@@ -766,17 +868,27 @@ export default class WaterWorldUI {
 
         if (this.container) {
 
-            window.setTimeout(
-                () => {
+            /*
+             * نخزن مؤقت الإخفاء حتى يمكن إلغاؤه
+             * إذا تم استدعاء show() قبل انتهاء 550ms.
+             */
 
-                    if (!this.container) return;
+            this.visibilityTimeout =
+                window.setTimeout(
+                    () => {
 
-                    this.container.style.visibility =
-                        'hidden';
+                        this.visibilityTimeout =
+                            null;
 
-                },
-                550
-            );
+
+                        if (!this.container) return;
+
+                        this.container.style.visibility =
+                            'hidden';
+
+                    },
+                    550
+                );
         }
     }
 
@@ -786,6 +898,13 @@ export default class WaterWorldUI {
        ===================================================== */
 
     selectExperiment(experimentId) {
+
+        /*
+         * إلغاء أي انتقال سابق قبل فتح تجربة جديدة.
+         */
+
+        this.clearWorldTransition();
+
 
         switch (experimentId) {
 
@@ -930,9 +1049,16 @@ export default class WaterWorldUI {
 
     /* =====================================================
        RETURN TO EARTH WORLD
-       ===================================================== */
+       ================================================= */
 
     returnToEarthWorld() {
+
+        /*
+         * إلغاء أي انتقال سابق.
+         */
+
+        this.clearWorldTransition();
+
 
         /*
          * إغلاق عالم المياه وأي تجربة مرتبطة به.
@@ -941,20 +1067,33 @@ export default class WaterWorldUI {
         this.hide();
 
 
-        window.setTimeout(
-            () => {
+        /*
+         * تخزين مؤقت العودة بدل تركه مستقلًا.
+         *
+         * هذا يمنع callback قديم من استدعاء
+         * EarthWorldUI.show() بعد أن يكون المستخدم
+         * قد انتقل إلى واجهة أخرى.
+         */
 
-                if (
-                    this.earthWorldUI &&
-                    typeof this.earthWorldUI.show === 'function'
-                ) {
+        this.worldTransitionTimeout =
+            window.setTimeout(
+                () => {
 
-                    this.earthWorldUI.show();
-                }
+                    this.worldTransitionTimeout =
+                        null;
 
-            },
-            550
-        );
+
+                    if (
+                        this.earthWorldUI &&
+                        typeof this.earthWorldUI.show === 'function'
+                    ) {
+
+                        this.earthWorldUI.show();
+                    }
+
+                },
+                550
+            );
     }
 
 
@@ -1041,6 +1180,20 @@ export default class WaterWorldUI {
        ===================================================== */
 
     destroy() {
+
+        /*
+         * إلغاء أي انتقال مؤجل.
+         */
+
+        this.clearWorldTransition();
+
+
+        /*
+         * إلغاء أي مؤقت لإخفاء الحاوية.
+         */
+
+        this.clearVisibilityTimeout();
+
 
         /*
          * تدمير تجربة دورة الماء

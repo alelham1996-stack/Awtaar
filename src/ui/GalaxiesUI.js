@@ -4,6 +4,7 @@ import PhysicsGalaxyUI from './PhysicsGalaxyUI.js'
 import BiologyWorldUI from '../biology/BiologyWorldUI.js'
 import AstronomyWorldUI from '../astronomy/AstronomyWorldUI.js'
 import EarthWorldUI from '../earth/EarthWorldUI.js'
+import ChemistryWorldUI from '../chemistry/ChemistryWorldUI.js'
 
 import { t, getLanguage } from '../locales/i18n.js'
 
@@ -16,6 +17,12 @@ export default class GalaxiesUI {
         this.explorationUI = explorationUI
 
         this.isTransitioning = false
+
+        // =========================================================
+        // TRANSITION TIMEOUT
+        // =========================================================
+
+        this.transitionTimeout = null
 
         // =========================================================
         // CHILD WORLDS
@@ -45,6 +52,12 @@ export default class GalaxiesUI {
                 this.scene
             )
 
+        this.chemistryWorldUI =
+            new ChemistryWorldUI(
+                this,
+                this.scene
+            )
+
         // =========================================================
         // CREATE UI
         // =========================================================
@@ -54,13 +67,63 @@ export default class GalaxiesUI {
 
 
     // =============================================================
+    // CLEAR TRANSITION
+    // =============================================================
+
+    clearTransition() {
+
+        if (this.transitionTimeout !== null) {
+
+            window.clearTimeout(
+                this.transitionTimeout
+            )
+
+            this.transitionTimeout = null
+        }
+    }
+
+
+    // =============================================================
+    // HIDE ALL CHILD WORLDS
+    // =============================================================
+
+    hideAllWorlds() {
+
+        const worlds = [
+
+            this.physicsGalaxyUI,
+            this.biologyWorldUI,
+            this.astronomyWorldUI,
+            this.earthWorldUI,
+            this.chemistryWorldUI
+
+        ]
+
+
+        worlds.forEach(world => {
+
+            if (
+                world &&
+                typeof world.hide === 'function'
+            ) {
+
+                world.hide()
+            }
+
+        })
+    }
+
+
+    // =============================================================
     // CREATE UI
     // =============================================================
 
     createUI() {
 
-        // Remove old UI if it somehow exists
-        const old = document.getElementById('awtaar-galaxies')
+        const old =
+            document.getElementById(
+                'awtaar-galaxies'
+            )
 
         if (old) {
             old.remove()
@@ -408,6 +471,15 @@ export default class GalaxiesUI {
 
             this.earthWorldUI.updateLanguage()
         }
+
+
+        if (
+            this.chemistryWorldUI &&
+            typeof this.chemistryWorldUI.updateLanguage === 'function'
+        ) {
+
+            this.chemistryWorldUI.updateLanguage()
+        }
     }
 
 
@@ -422,6 +494,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = false
 
 
@@ -430,6 +504,10 @@ export default class GalaxiesUI {
 
 
         requestAnimationFrame(() => {
+
+            if (!this.container) {
+                return
+            }
 
             this.container.classList.add(
                 'visible'
@@ -447,11 +525,9 @@ export default class GalaxiesUI {
 
         if (this.backButton) {
 
-            this.backButton.disabled = false
+            this.backButton.disabled =
+                false
         }
-
-
-        this.updateLanguage()
     }
 
 
@@ -473,12 +549,16 @@ export default class GalaxiesUI {
 
         setTimeout(() => {
 
-            if (!this.container) {
-                return
-            }
+            if (
+                this.container &&
+                !this.container.classList.contains(
+                    'visible'
+                )
+            ) {
 
-            this.container.style.display =
-                'none'
+                this.container.style.display =
+                    'none'
+            }
 
         }, 600)
     }
@@ -497,19 +577,11 @@ export default class GalaxiesUI {
 
         switch (key) {
 
-            // =====================================================
-            // PHYSICS
-            // =====================================================
-
             case 'physics':
 
                 this.openPhysicsGalaxy()
                 break
 
-
-            // =====================================================
-            // BIOLOGY
-            // =====================================================
 
             case 'biology':
 
@@ -517,19 +589,11 @@ export default class GalaxiesUI {
                 break
 
 
-            // =====================================================
-            // ASTRONOMY
-            // =====================================================
-
             case 'astronomy':
 
                 this.openAstronomyWorld()
                 break
 
-
-            // =====================================================
-            // EARTH
-            // =====================================================
 
             case 'earth':
 
@@ -537,16 +601,9 @@ export default class GalaxiesUI {
                 break
 
 
-            // =====================================================
-            // CHEMISTRY — COMING SOON
-            // =====================================================
-
             case 'chemistry':
 
-                console.log(
-                    `Awtaar Galaxy "${name}" is coming soon.`
-                )
-
+                this.openChemistryWorld()
                 break
 
 
@@ -577,6 +634,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -593,44 +652,55 @@ export default class GalaxiesUI {
         }
 
 
+        // ---------------------------------------------------------
+        // Hide all other worlds first
+        // ---------------------------------------------------------
+
+        this.hideAllWorlds()
+
+
         this.hide()
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            if (!this.physicsGalaxyUI) {
+                this.transitionTimeout = null
+
+
+                if (!this.physicsGalaxyUI) {
+
+                    this.isTransitioning = false
+                    return
+                }
+
+
+                if (
+                    typeof this.physicsGalaxyUI.setScene ===
+                    'function'
+                ) {
+
+                    this.physicsGalaxyUI.setScene(
+                        this.scene
+                    )
+                }
+
+
+                if (
+                    typeof this.physicsGalaxyUI.updateLanguage ===
+                    'function'
+                ) {
+
+                    this.physicsGalaxyUI.updateLanguage()
+                }
+
+
+                this.physicsGalaxyUI.show()
+
 
                 this.isTransitioning = false
-                return
-            }
 
-
-            if (
-                typeof this.physicsGalaxyUI.setScene ===
-                'function'
-            ) {
-
-                this.physicsGalaxyUI.setScene(
-                    this.scene
-                )
-            }
-
-
-            if (
-                typeof this.physicsGalaxyUI.updateLanguage ===
-                'function'
-            ) {
-
-                this.physicsGalaxyUI.updateLanguage()
-            }
-
-
-            this.physicsGalaxyUI.show()
-
-
-            this.isTransitioning = false
-
-        }, 700)
+            }, 700)
     }
 
 
@@ -649,6 +719,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -665,44 +737,55 @@ export default class GalaxiesUI {
         }
 
 
+        // ---------------------------------------------------------
+        // Hide all other worlds first
+        // ---------------------------------------------------------
+
+        this.hideAllWorlds()
+
+
         this.hide()
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            if (!this.biologyWorldUI) {
+                this.transitionTimeout = null
+
+
+                if (!this.biologyWorldUI) {
+
+                    this.isTransitioning = false
+                    return
+                }
+
+
+                if (
+                    typeof this.biologyWorldUI.setScene ===
+                    'function'
+                ) {
+
+                    this.biologyWorldUI.setScene(
+                        this.scene
+                    )
+                }
+
+
+                if (
+                    typeof this.biologyWorldUI.updateLanguage ===
+                    'function'
+                ) {
+
+                    this.biologyWorldUI.updateLanguage()
+                }
+
+
+                this.biologyWorldUI.show()
+
 
                 this.isTransitioning = false
-                return
-            }
 
-
-            if (
-                typeof this.biologyWorldUI.setScene ===
-                'function'
-            ) {
-
-                this.biologyWorldUI.setScene(
-                    this.scene
-                )
-            }
-
-
-            if (
-                typeof this.biologyWorldUI.updateLanguage ===
-                'function'
-            ) {
-
-                this.biologyWorldUI.updateLanguage()
-            }
-
-
-            this.biologyWorldUI.show()
-
-
-            this.isTransitioning = false
-
-        }, 700)
+            }, 700)
     }
 
 
@@ -721,6 +804,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -737,44 +822,55 @@ export default class GalaxiesUI {
         }
 
 
+        // ---------------------------------------------------------
+        // Hide all other worlds first
+        // ---------------------------------------------------------
+
+        this.hideAllWorlds()
+
+
         this.hide()
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            if (!this.astronomyWorldUI) {
+                this.transitionTimeout = null
+
+
+                if (!this.astronomyWorldUI) {
+
+                    this.isTransitioning = false
+                    return
+                }
+
+
+                if (
+                    typeof this.astronomyWorldUI.setScene ===
+                    'function'
+                ) {
+
+                    this.astronomyWorldUI.setScene(
+                        this.scene
+                    )
+                }
+
+
+                if (
+                    typeof this.astronomyWorldUI.updateLanguage ===
+                    'function'
+                ) {
+
+                    this.astronomyWorldUI.updateLanguage()
+                }
+
+
+                this.astronomyWorldUI.show()
+
 
                 this.isTransitioning = false
-                return
-            }
 
-
-            if (
-                typeof this.astronomyWorldUI.setScene ===
-                'function'
-            ) {
-
-                this.astronomyWorldUI.setScene(
-                    this.scene
-                )
-            }
-
-
-            if (
-                typeof this.astronomyWorldUI.updateLanguage ===
-                'function'
-            ) {
-
-                this.astronomyWorldUI.updateLanguage()
-            }
-
-
-            this.astronomyWorldUI.show()
-
-
-            this.isTransitioning = false
-
-        }, 700)
+            }, 700)
     }
 
 
@@ -793,6 +889,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -809,44 +907,161 @@ export default class GalaxiesUI {
         }
 
 
+        // ---------------------------------------------------------
+        // Hide all other worlds first
+        // ---------------------------------------------------------
+
+        this.hideAllWorlds()
+
+
         this.hide()
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            if (!this.earthWorldUI) {
+                this.transitionTimeout = null
+
+
+                if (!this.earthWorldUI) {
+
+                    this.isTransitioning = false
+                    return
+                }
+
+
+                if (
+                    typeof this.earthWorldUI.setScene ===
+                    'function'
+                ) {
+
+                    this.earthWorldUI.setScene(
+                        this.scene
+                    )
+                }
+
+
+                if (
+                    typeof this.earthWorldUI.updateLanguage ===
+                    'function'
+                ) {
+
+                    this.earthWorldUI.updateLanguage()
+                }
+
+
+                this.earthWorldUI.show()
+
 
                 this.isTransitioning = false
-                return
-            }
+
+            }, 700)
+    }
 
 
-            if (
-                typeof this.earthWorldUI.setScene ===
-                'function'
-            ) {
+    // =============================================================
+    // OPEN CHEMISTRY
+    // =============================================================
 
-                this.earthWorldUI.setScene(
-                    this.scene
-                )
-            }
+    openChemistryWorld() {
 
+        if (
+            !this.chemistryWorldUI ||
+            this.isTransitioning
+        ) {
 
-            if (
-                typeof this.earthWorldUI.updateLanguage ===
-                'function'
-            ) {
-
-                this.earthWorldUI.updateLanguage()
-            }
+            return
+        }
 
 
-            this.earthWorldUI.show()
+        this.clearTransition()
+
+        this.isTransitioning = true
 
 
-            this.isTransitioning = false
+        Object.values(
+            this.galaxyButtons
+        ).forEach(button => {
 
-        }, 700)
+            button.disabled = true
+        })
+
+
+        if (this.backButton) {
+            this.backButton.disabled = true
+        }
+
+
+        // ---------------------------------------------------------
+        // Hide all other worlds first
+        // ---------------------------------------------------------
+
+        this.hideAllWorlds()
+
+
+        // ---------------------------------------------------------
+        // Hide Galaxies UI
+        // ---------------------------------------------------------
+
+        this.hide()
+
+
+        // ---------------------------------------------------------
+        // Hide Exploration UI
+        //
+        // This prevents the main Awtaar interface from remaining
+        // visible behind the Chemistry / Atomic experiment.
+        // ---------------------------------------------------------
+
+        if (
+            this.explorationUI &&
+            typeof this.explorationUI.hide ===
+            'function'
+        ) {
+
+            this.explorationUI.hide()
+        }
+
+
+        this.transitionTimeout =
+            window.setTimeout(() => {
+
+                this.transitionTimeout = null
+
+
+                if (!this.chemistryWorldUI) {
+
+                    this.isTransitioning = false
+                    return
+                }
+
+
+                if (
+                    typeof this.chemistryWorldUI.setScene ===
+                    'function'
+                ) {
+
+                    this.chemistryWorldUI.setScene(
+                        this.scene
+                    )
+                }
+
+
+                if (
+                    typeof this.chemistryWorldUI.updateLanguage ===
+                    'function'
+                ) {
+
+                    this.chemistryWorldUI.updateLanguage()
+                }
+
+
+                this.chemistryWorldUI.show()
+
+
+                this.isTransitioning = false
+
+            }, 700)
     }
 
 
@@ -861,6 +1076,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -870,13 +1087,16 @@ export default class GalaxiesUI {
         }
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            this.show()
+                this.transitionTimeout = null
 
-            this.isTransitioning = false
+                this.show()
 
-        }, 700)
+                this.isTransitioning = false
+
+            }, 700)
     }
 
 
@@ -891,6 +1111,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -900,13 +1122,16 @@ export default class GalaxiesUI {
         }
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            this.show()
+                this.transitionTimeout = null
 
-            this.isTransitioning = false
+                this.show()
 
-        }, 700)
+                this.isTransitioning = false
+
+            }, 700)
     }
 
 
@@ -921,6 +1146,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -930,13 +1157,16 @@ export default class GalaxiesUI {
         }
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            this.show()
+                this.transitionTimeout = null
 
-            this.isTransitioning = false
+                this.show()
 
-        }, 700)
+                this.isTransitioning = false
+
+            }, 700)
     }
 
 
@@ -951,6 +1181,8 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
@@ -960,13 +1192,51 @@ export default class GalaxiesUI {
         }
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            this.show()
+                this.transitionTimeout = null
 
-            this.isTransitioning = false
+                this.show()
 
-        }, 700)
+                this.isTransitioning = false
+
+            }, 700)
+    }
+
+
+    // =============================================================
+    // RETURN FROM CHEMISTRY
+    // =============================================================
+
+    returnFromChemistryWorld() {
+
+        if (this.isTransitioning) {
+            return
+        }
+
+
+        this.clearTransition()
+
+        this.isTransitioning = true
+
+
+        if (this.chemistryWorldUI) {
+
+            this.chemistryWorldUI.hide()
+        }
+
+
+        this.transitionTimeout =
+            window.setTimeout(() => {
+
+                this.transitionTimeout = null
+
+                this.show()
+
+                this.isTransitioning = false
+
+            }, 700)
     }
 
 
@@ -981,27 +1251,33 @@ export default class GalaxiesUI {
         }
 
 
+        this.clearTransition()
+
         this.isTransitioning = true
 
 
         this.hide()
 
 
-        setTimeout(() => {
+        this.transitionTimeout =
+            window.setTimeout(() => {
 
-            if (
-                this.explorationUI &&
-                typeof this.explorationUI.show ===
-                'function'
-            ) {
-
-                this.explorationUI.show()
-            }
+                this.transitionTimeout = null
 
 
-            this.isTransitioning = false
+                if (
+                    this.explorationUI &&
+                    typeof this.explorationUI.show ===
+                    'function'
+                ) {
 
-        }, 700)
+                    this.explorationUI.show()
+                }
+
+
+                this.isTransitioning = false
+
+            }, 700)
     }
 
 
@@ -1060,6 +1336,18 @@ export default class GalaxiesUI {
                 scene
             )
         }
+
+
+        if (
+            this.chemistryWorldUI &&
+            typeof this.chemistryWorldUI.setScene ===
+            'function'
+        ) {
+
+            this.chemistryWorldUI.setScene(
+                scene
+            )
+        }
     }
 
 
@@ -1115,6 +1403,18 @@ export default class GalaxiesUI {
                 delta
             )
         }
+
+
+        if (
+            this.chemistryWorldUI &&
+            typeof this.chemistryWorldUI.update ===
+            'function'
+        ) {
+
+            this.chemistryWorldUI.update(
+                delta
+            )
+        }
     }
 
 
@@ -1123,6 +1423,13 @@ export default class GalaxiesUI {
     // =============================================================
 
     destroy() {
+
+        // ---------------------------------------------------------
+        // Clear transition
+        // ---------------------------------------------------------
+
+        this.clearTransition()
+
 
         // ---------------------------------------------------------
         // Physics
@@ -1181,6 +1488,20 @@ export default class GalaxiesUI {
 
 
         // ---------------------------------------------------------
+        // Chemistry
+        // ---------------------------------------------------------
+
+        if (
+            this.chemistryWorldUI &&
+            typeof this.chemistryWorldUI.destroy ===
+            'function'
+        ) {
+
+            this.chemistryWorldUI.destroy()
+        }
+
+
+        // ---------------------------------------------------------
         // Main container
         // ---------------------------------------------------------
 
@@ -1198,6 +1519,7 @@ export default class GalaxiesUI {
         this.biologyWorldUI = null
         this.astronomyWorldUI = null
         this.earthWorldUI = null
+        this.chemistryWorldUI = null
         this.explorationUI = null
         this.scene = null
     }

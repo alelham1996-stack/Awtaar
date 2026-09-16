@@ -1,0 +1,1069 @@
+/* =========================================================
+   AWTAAR — CHEMICAL BONDS EXPERIMENT
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.awtaar-chemical-bonds-experiment {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    z-index: 20000;
+
+    color: rgba(238, 234, 226, 0.92);
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4, 15, 42, 0.88) 0%,
+            rgba(3, 10, 29, 0.94) 48%,
+            rgba(2, 7, 20, 0.98) 100%
+        );
+
+    transition:
+        opacity 550ms ease,
+        visibility 550ms ease;
+}
+
+
+/* =========================================================
+   RENDERER
+   ========================================================= */
+
+.awtaar-chemical-bonds-renderer {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: none;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.awtaar-bonds-topbar {
+
+    position: absolute;
+
+    top: 28px;
+
+    left: 34px;
+    right: 34px;
+
+    z-index: 20;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.awtaar-bonds-title {
+
+    margin: 0;
+
+    font-size:
+        clamp(
+            22px,
+            2vw,
+            31px
+        );
+
+    font-weight: 400;
+
+    letter-spacing: 0.08em;
+
+    color:
+        rgba(
+            239,
+            229,
+            207,
+            0.96
+        );
+
+    text-shadow:
+        0 0 22px
+        rgba(
+            218,
+            178,
+            91,
+            0.16
+        );
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.awtaar-bonds-description {
+
+    margin:
+        7px 0 0;
+
+    max-width:
+        min(
+            650px,
+            70vw
+        );
+
+    text-align: center;
+
+    font-size:
+        clamp(
+            11px,
+            1vw,
+            14px
+        );
+
+    line-height: 1.8;
+
+    font-weight: 300;
+
+    letter-spacing: 0.025em;
+
+    color:
+        rgba(
+            220,
+            224,
+            232,
+            0.62
+        );
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.awtaar-bonds-back {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    padding:
+        10px 17px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            178,
+            91,
+            0.18
+        );
+
+    border-radius: 10px;
+
+    background:
+        rgba(
+            3,
+            9,
+            22,
+            0.42
+        );
+
+    color:
+        rgba(
+            226,
+            216,
+            197,
+            0.76
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 300;
+
+    letter-spacing: 0.04em;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    backdrop-filter:
+        blur(8px);
+
+    -webkit-backdrop-filter:
+        blur(8px);
+
+    transition:
+        color 220ms ease,
+        border-color 220ms ease,
+        background 220ms ease,
+        transform 220ms ease;
+}
+
+
+.awtaar-bonds-back:hover {
+
+    color:
+        rgba(
+            239,
+            229,
+            207,
+            1
+        );
+
+    border-color:
+        rgba(
+            218,
+            178,
+            91,
+            0.42
+        );
+
+    background:
+        rgba(
+            9,
+            18,
+            39,
+            0.62
+        );
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   RTL / LTR BACK BUTTON
+   ========================================================= */
+
+.awtaar-chemical-bonds-experiment[dir="rtl"]
+.awtaar-bonds-back {
+
+    left: auto;
+
+    right: 0;
+}
+
+
+.awtaar-chemical-bonds-experiment[dir="ltr"]
+.awtaar-bonds-back {
+
+    left: 0;
+
+    right: auto;
+}
+
+
+/* =========================================================
+   SELECTOR
+   ========================================================= */
+
+.awtaar-bonds-selector {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 28px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 30;
+
+    width:
+        min(
+            760px,
+            calc(100vw - 40px)
+        );
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        12px 14px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            178,
+            91,
+            0.13
+        );
+
+    border-radius: 15px;
+
+    background:
+        rgba(
+            3,
+            9,
+            22,
+            0.55
+        );
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    box-shadow:
+        0 0 30px
+        rgba(
+            0,
+            0,
+            0,
+            0.18
+        ),
+
+        inset 0 0 20px
+        rgba(
+            218,
+            178,
+            91,
+            0.015
+        );
+}
+
+
+/* =========================================================
+   SELECTOR TITLE
+   ========================================================= */
+
+.awtaar-bonds-selector-title {
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+    color:
+        rgba(
+            224,
+            188,
+            112,
+            0.72
+        );
+}
+
+
+/* =========================================================
+   SELECTOR BUTTONS
+   ========================================================= */
+
+.awtaar-bonds-selector-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   BOND BUTTON
+   ========================================================= */
+
+.awtaar-bond-button {
+
+    min-width: 112px;
+
+    padding:
+        8px 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            178,
+            91,
+            0.11
+        );
+
+    border-radius: 9px;
+
+    background:
+        rgba(
+            5,
+            13,
+            30,
+            0.5
+        );
+
+    color:
+        rgba(
+            225,
+            227,
+            233,
+            0.62
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+    cursor: pointer;
+
+    transition:
+        all 220ms ease;
+}
+
+
+.awtaar-bond-button:hover {
+
+    border-color:
+        rgba(
+            218,
+            178,
+            91,
+            0.32
+        );
+
+    color:
+        rgba(
+            239,
+            229,
+            207,
+            0.92
+        );
+
+    background:
+        rgba(
+            11,
+            23,
+            48,
+            0.65
+        );
+}
+
+
+.awtaar-bond-button.active {
+
+    border-color:
+        rgba(
+            218,
+            178,
+            91,
+            0.55
+        );
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(
+                67,
+                48,
+                24,
+                0.55
+            ),
+            rgba(
+                15,
+                22,
+                38,
+                0.72
+            )
+        );
+
+    color:
+        rgba(
+            241,
+            226,
+            191,
+            0.98
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(
+            218,
+            178,
+            91,
+            0.08
+        );
+}
+
+
+/* =========================================================
+   SYMBOL
+   ========================================================= */
+
+.awtaar-bond-button-symbol {
+
+    font-size: 14px;
+
+    color:
+        rgba(
+            224,
+            188,
+            112,
+            0.9
+        );
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.awtaar-bond-button-label {
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   INFORMATION PANEL
+   ========================================================= */
+
+.awtaar-bonds-info {
+
+    position: absolute;
+
+    top: 50%;
+
+    right: 34px;
+
+    transform:
+        translateY(-50%);
+
+    z-index: 25;
+
+    width:
+        min(
+            245px,
+            22vw
+        );
+
+    padding:
+        17px 18px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            178,
+            91,
+            0.13
+        );
+
+    border-radius: 13px;
+
+    background:
+        rgba(
+            3,
+            9,
+            22,
+            0.48
+        );
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    box-shadow:
+        0 0 28px
+        rgba(
+            0,
+            0,
+            0,
+            0.16
+        );
+}
+
+
+.awtaar-chemical-bonds-experiment[dir="rtl"]
+.awtaar-bonds-info {
+
+    right: auto;
+
+    left: 34px;
+}
+
+
+.awtaar-chemical-bonds-experiment[dir="ltr"]
+.awtaar-bonds-info {
+
+    right: 34px;
+
+    left: auto;
+}
+
+
+/* =========================================================
+   INFO NAME
+   ========================================================= */
+
+.awtaar-bonds-info-name {
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    color:
+        rgba(
+            239,
+            229,
+            207,
+            0.92
+        );
+
+    letter-spacing: 0.03em;
+}
+
+
+/* =========================================================
+   INFO TEXT
+   ========================================================= */
+
+.awtaar-bonds-info-text {
+
+    font-size: 10px;
+
+    line-height: 1.9;
+
+    font-weight: 300;
+
+    color:
+        rgba(
+            220,
+            224,
+            232,
+            0.58
+        );
+}
+
+
+/* =========================================================
+   HINT
+   ========================================================= */
+
+.awtaar-bonds-hint {
+
+    position: absolute;
+
+    left: 32px;
+
+    bottom: 50%;
+
+    transform:
+        translateY(50%);
+
+    z-index: 20;
+
+    width:
+        min(
+            190px,
+            17vw
+        );
+
+    padding:
+        12px 14px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            178,
+            91,
+            0.10
+        );
+
+    border-radius: 11px;
+
+    background:
+        rgba(
+            3,
+            9,
+            22,
+            0.34
+        );
+
+    color:
+        rgba(
+            220,
+            224,
+            232,
+            0.48
+        );
+
+    font-size: 9px;
+
+    font-weight: 300;
+
+    line-height: 1.75;
+
+    pointer-events: none;
+
+    text-align: left;
+}
+
+
+.awtaar-chemical-bonds-experiment[dir="rtl"]
+.awtaar-bonds-hint {
+
+    left: auto;
+
+    right: 32px;
+
+    text-align: right;
+}
+
+
+.awtaar-chemical-bonds-experiment[dir="ltr"]
+.awtaar-bonds-hint {
+
+    left: 32px;
+
+    right: auto;
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.awtaar-bonds-reset {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 104px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 30;
+
+    padding:
+        8px 18px;
+
+    border:
+        1px solid
+        rgba(
+            218,
+            178,
+            91,
+            0.14
+        );
+
+    border-radius: 9px;
+
+    background:
+        rgba(
+            3,
+            9,
+            22,
+            0.42
+        );
+
+    color:
+        rgba(
+            224,
+            188,
+            112,
+            0.72
+        );
+
+    font-family:
+        'Tajawal',
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 300;
+
+    cursor: pointer;
+
+    backdrop-filter:
+        blur(8px);
+
+    -webkit-backdrop-filter:
+        blur(8px);
+
+    transition:
+        all 220ms ease;
+}
+
+
+.awtaar-bonds-reset:hover {
+
+    border-color:
+        rgba(
+            218,
+            178,
+            91,
+            0.38
+        );
+
+    color:
+        rgba(
+            239,
+            229,
+            207,
+            0.95
+        );
+
+    background:
+        rgba(
+            9,
+            18,
+            39,
+            0.62
+        );
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 850px
+) {
+
+    .awtaar-bonds-topbar {
+
+        top: 20px;
+
+        left: 18px;
+        right: 18px;
+    }
+
+
+    .awtaar-bonds-title {
+
+        font-size: 21px;
+    }
+
+
+    .awtaar-bonds-description {
+
+        max-width: 88vw;
+
+        font-size: 10px;
+    }
+
+
+    .awtaar-bonds-info {
+
+        top: auto;
+
+        bottom: 150px;
+
+        right: 50% !important;
+        left: auto !important;
+
+        transform:
+            translateX(50%);
+
+        width:
+            min(
+                300px,
+                calc(100vw - 36px)
+            );
+
+        padding: 11px 14px;
+    }
+
+
+    .awtaar-bonds-info-name {
+
+        font-size: 12px;
+    }
+
+
+    .awtaar-bonds-info-text {
+
+        font-size: 9px;
+
+        line-height: 1.65;
+    }
+
+
+    .awtaar-bonds-hint {
+
+        display: none;
+    }
+
+
+    .awtaar-bonds-selector {
+
+        bottom: 15px;
+
+        width:
+            calc(100vw - 24px);
+
+        padding: 9px;
+    }
+
+
+    .awtaar-bond-button {
+
+        min-width:
+            calc(
+                33.333% - 6px
+            );
+
+        padding:
+            7px 6px;
+
+        font-size: 9px;
+    }
+
+
+    .awtaar-bond-button-symbol {
+
+        font-size: 12px;
+    }
+
+
+    .awtaar-bonds-reset {
+
+        bottom: 122px;
+
+        font-size: 9px;
+    }
+
+
+    .awtaar-bonds-back {
+
+        padding:
+            8px 12px;
+
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 500px
+) {
+
+    .awtaar-bonds-topbar {
+
+        top: 15px;
+    }
+
+
+    .awtaar-bonds-description {
+
+        display: none;
+    }
+
+
+    .awtaar-bond-button {
+
+        min-width:
+            calc(
+                50% - 5px
+            );
+    }
+
+
+    .awtaar-bonds-info {
+
+        bottom: 184px;
+    }
+
+
+    .awtaar-bonds-reset {
+
+        bottom: 158px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    .awtaar-chemical-bonds-experiment,
+    .awtaar-bond-button,
+    .awtaar-bonds-back,
+    .awtaar-bonds-reset {
+
+        transition: none !important;
+    }
+}

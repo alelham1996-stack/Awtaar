@@ -52,6 +52,41 @@ export default class EarthWorldUI {
         this.worldItems = [];
 
 
+        /* =====================================================
+           WORLD TRANSITION
+           ===================================================== */
+
+        /*
+         * يحتفظ بالمؤقت الخاص بفتح عالم فرعي
+         * أو العودة من عالم فرعي.
+         *
+         * هذا يمنع مؤقتًا قديمًا من تنفيذ show()
+         * بعد أن يكون المستخدم قد انتقل إلى واجهة أخرى.
+         */
+
+        this.worldTransitionTimeout = null;
+
+
+        /* =====================================================
+           VISIBILITY TRANSITION
+           ===================================================== */
+
+        /*
+         * مؤقت مستقل لإخفاء Earth World بالكامل.
+         *
+         * مهم جدًا:
+         *
+         * لا نستخدم worldTransitionTimeout لهذا الغرض،
+         * لأن مؤقت visibility ومؤقت انتقال العالم
+         * لهما وظيفتان مختلفتان.
+         *
+         * فصل المؤقتين يمنع callback قديم من إخفاء
+         * Earth World بعد أن تم إظهاره من جديد.
+         */
+
+        this.visibilityTimeout = null;
+
+
         this.createUI();
         this.updateLanguage();
     }
@@ -1867,6 +1902,29 @@ export default class EarthWorldUI {
         if (!this.container) return;
 
 
+        /*
+         * إلغاء أي انتقال قديم.
+         */
+
+        this.clearWorldTransition();
+
+
+        /*
+         * مهم جدًا:
+         *
+         * إلغاء مؤقت الإخفاء القديم أيضًا.
+         *
+         * بدون هذا السطر يمكن أن يحدث التالي:
+         *
+         * 1. Earth World يبدأ بالاختفاء.
+         * 2. قبل مرور 550ms يتم استدعاء show().
+         * 3. callback القديم يعمل بعد ذلك.
+         * 4. الحاوية تصبح hidden رغم أن show() تم استدعاؤه.
+         */
+
+        this.clearVisibilityTimeout();
+
+
         this.container.style.visibility =
             'visible';
 
@@ -1887,12 +1945,72 @@ export default class EarthWorldUI {
 
 
     /* =========================================================
+       CLEAR WORLD TRANSITION
+       ========================================================= */
+
+    clearWorldTransition() {
+
+        if (
+            this.worldTransitionTimeout !== null
+        ) {
+
+            window.clearTimeout(
+                this.worldTransitionTimeout
+            );
+
+            this.worldTransitionTimeout =
+                null;
+        }
+    }
+
+
+    /* =========================================================
+       CLEAR VISIBILITY TIMEOUT
+       ========================================================= */
+
+    clearVisibilityTimeout() {
+
+        if (
+            this.visibilityTimeout !== null
+        ) {
+
+            window.clearTimeout(
+                this.visibilityTimeout
+            );
+
+            this.visibilityTimeout =
+                null;
+        }
+    }
+
+
+    /* =========================================================
        HIDE
        ========================================================= */
 
     hide() {
 
         if (!this.container) return;
+
+
+        /*
+         * مهم جدًا:
+         *
+         * إلغاء أي انتقال سابق قبل إخفاء عالم الأرض.
+         *
+         * هذا يمنع callback قديم من تنفيذ show()
+         * لعالم الجيولوجيا أو المياه بعد الانتقال
+         * إلى واجهة أخرى.
+         */
+
+        this.clearWorldTransition();
+
+
+        /*
+         * إلغاء مؤقت visibility سابق.
+         */
+
+        this.clearVisibilityTimeout();
 
 
         /* =====================================================
@@ -1947,17 +2065,29 @@ export default class EarthWorldUI {
             'none';
 
 
-        window.setTimeout(
-            () => {
+        /*
+         * نخزن المؤقت بدل تركه يعمل بشكل مستقل.
+         *
+         * هذا يمنع callback قديم من تنفيذ
+         * visibility = hidden بعد استدعاء show().
+         */
 
-                if (!this.container) return;
+        this.visibilityTimeout =
+            window.setTimeout(
+                () => {
 
-                this.container.style.visibility =
-                    'hidden';
+                    this.visibilityTimeout =
+                        null;
 
-            },
-            550
-        );
+
+                    if (!this.container) return;
+
+                    this.container.style.visibility =
+                        'hidden';
+
+                },
+                550
+            );
     }
 
 
@@ -1996,24 +2126,41 @@ export default class EarthWorldUI {
 
     enterGeologyWorld() {
 
+        /*
+         * إلغاء أي انتقال قديم قبل إنشاء انتقال جديد.
+         */
+
+        this.clearWorldTransition();
+
+
         this.hide();
 
 
-        window.setTimeout(
-            () => {
+        /*
+         * نخزن المؤقت حتى يمكن إلغاؤه إذا انتقل
+         * المستخدم إلى واجهة أخرى قبل انتهاء 550ms.
+         */
 
-                if (
-                    this.geologyWorldUI &&
-                    typeof this.geologyWorldUI.show ===
-                    'function'
-                ) {
+        this.worldTransitionTimeout =
+            window.setTimeout(
+                () => {
 
-                    this.geologyWorldUI.show();
-                }
+                    this.worldTransitionTimeout =
+                        null;
 
-            },
-            550
-        );
+
+                    if (
+                        this.geologyWorldUI &&
+                        typeof this.geologyWorldUI.show ===
+                        'function'
+                    ) {
+
+                        this.geologyWorldUI.show();
+                    }
+
+                },
+                550
+            );
     }
 
 
@@ -2023,24 +2170,41 @@ export default class EarthWorldUI {
 
     enterWaterWorld() {
 
+        /*
+         * إلغاء أي انتقال قديم قبل إنشاء انتقال جديد.
+         */
+
+        this.clearWorldTransition();
+
+
         this.hide();
 
 
-        window.setTimeout(
-            () => {
+        /*
+         * نخزن المؤقت حتى يمكن إلغاؤه إذا انتقل
+         * المستخدم إلى واجهة أخرى قبل انتهاء 550ms.
+         */
 
-                if (
-                    this.waterWorldUI &&
-                    typeof this.waterWorldUI.show ===
-                    'function'
-                ) {
+        this.worldTransitionTimeout =
+            window.setTimeout(
+                () => {
 
-                    this.waterWorldUI.show();
-                }
+                    this.worldTransitionTimeout =
+                        null;
 
-            },
-            550
-        );
+
+                    if (
+                        this.waterWorldUI &&
+                        typeof this.waterWorldUI.show ===
+                        'function'
+                    ) {
+
+                        this.waterWorldUI.show();
+                    }
+
+                },
+                550
+            );
     }
 
 
@@ -2060,14 +2224,31 @@ export default class EarthWorldUI {
         }
 
 
-        window.setTimeout(
-            () => {
+        /*
+         * إلغاء أي انتقال قديم.
+         */
 
-                this.show();
+        this.clearWorldTransition();
 
-            },
-            550
-        );
+
+        /*
+         * نخزن مؤقت العودة حتى يمكن إلغاؤه
+         * إذا انتقل المستخدم إلى واجهة أخرى.
+         */
+
+        this.worldTransitionTimeout =
+            window.setTimeout(
+                () => {
+
+                    this.worldTransitionTimeout =
+                        null;
+
+
+                    this.show();
+
+                },
+                550
+            );
     }
 
 
@@ -2087,14 +2268,31 @@ export default class EarthWorldUI {
         }
 
 
-        window.setTimeout(
-            () => {
+        /*
+         * إلغاء أي انتقال قديم.
+         */
 
-                this.show();
+        this.clearWorldTransition();
 
-            },
-            550
-        );
+
+        /*
+         * نخزن مؤقت العودة حتى يمكن إلغاؤه
+         * إذا انتقل المستخدم إلى واجهة أخرى.
+         */
+
+        this.worldTransitionTimeout =
+            window.setTimeout(
+                () => {
+
+                    this.worldTransitionTimeout =
+                        null;
+
+
+                    this.show();
+
+                },
+                550
+            );
     }
 
 
@@ -2104,24 +2302,51 @@ export default class EarthWorldUI {
 
     returnToGalaxy() {
 
+        /*
+         * مهم:
+         * إلغاء أي انتقال مؤجل قبل مغادرة Earth World.
+         */
+
+        this.clearWorldTransition();
+
+
+        /*
+         * إلغاء مؤقت visibility القديم أيضًا.
+         */
+
+        this.clearVisibilityTimeout();
+
+
         this.hide();
 
 
-        window.setTimeout(
-            () => {
+        /*
+         * نخزن انتقال العودة إلى مجرة الأرض.
+         *
+         * هذا يمنع انتقالًا قديمًا من استدعاء
+         * earthGalaxyUI.show() بعد تغيير الواجهة.
+         */
 
-                if (
-                    this.earthGalaxyUI &&
-                    typeof this.earthGalaxyUI.show ===
-                    'function'
-                ) {
+        this.worldTransitionTimeout =
+            window.setTimeout(
+                () => {
 
-                    this.earthGalaxyUI.show();
-                }
+                    this.worldTransitionTimeout =
+                        null;
 
-            },
-            550
-        );
+
+                    if (
+                        this.earthGalaxyUI &&
+                        typeof this.earthGalaxyUI.show ===
+                        'function'
+                    ) {
+
+                        this.earthGalaxyUI.show();
+                    }
+
+                },
+                550
+            );
     }
 
 
@@ -2192,6 +2417,20 @@ export default class EarthWorldUI {
        ========================================================= */
 
     destroy() {
+
+        /* =====================================================
+           CANCEL PENDING WORLD TRANSITION
+           ===================================================== */
+
+        this.clearWorldTransition();
+
+
+        /* =====================================================
+           CANCEL PENDING VISIBILITY TRANSITION
+           ===================================================== */
+
+        this.clearVisibilityTimeout();
+
 
         /* =====================================================
            STOP BACKGROUND ANIMATION

@@ -1510,6 +1510,23 @@ export default class QuantumWorldUI {
             this.getCurrentLanguage()
 
 
+        /*
+         * =================================================
+         * UPDATE LANGUAGE
+         * =================================================
+         */
+
+        this.updateLanguage(
+            language
+        )
+
+
+        /*
+         * =================================================
+         * APPLY LANGUAGE DIRECTION
+         * =================================================
+         */
+
         this.applyLanguageDirection(
             language
         )

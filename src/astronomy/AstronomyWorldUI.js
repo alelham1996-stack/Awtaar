@@ -19,6 +19,13 @@ export default class AstronomyWorldUI {
 
         this.container = null;
 
+        /* =====================================================
+           TRANSITION TIMEOUT
+           ===================================================== */
+
+        this.transitionTimeout = null;
+
+
         this.stellarWorldUI = new StellarWorldUI(
             this,
             scene
@@ -33,6 +40,23 @@ export default class AstronomyWorldUI {
 
         this.createUI();
         this.updateLanguage();
+    }
+
+
+    /* =========================================================
+       CLEAR TRANSITION
+       ========================================================= */
+
+    clearTransition() {
+
+        if (this.transitionTimeout !== null) {
+
+            window.clearTimeout(
+                this.transitionTimeout
+            );
+
+            this.transitionTimeout = null;
+        }
     }
 
 
@@ -576,6 +600,9 @@ export default class AstronomyWorldUI {
         if (!this.container) return;
 
 
+        this.clearTransition();
+
+
         this.container.style.visibility =
             'visible';
 
@@ -604,6 +631,9 @@ export default class AstronomyWorldUI {
         if (!this.container) return;
 
 
+        this.clearTransition();
+
+
         this.container.style.opacity =
             '0';
 
@@ -611,17 +641,21 @@ export default class AstronomyWorldUI {
             'none';
 
 
-        window.setTimeout(
-            () => {
+        this.transitionTimeout =
+            window.setTimeout(
+                () => {
 
-                if (!this.container) return;
+                    this.transitionTimeout =
+                        null;
 
-                this.container.style.visibility =
-                    'hidden';
+                    if (!this.container) return;
 
-            },
-            550
-        );
+                    this.container.style.visibility =
+                        'hidden';
+
+                },
+                550
+            );
     }
 
 
@@ -660,24 +694,29 @@ export default class AstronomyWorldUI {
 
     enterStellarWorld() {
 
+        this.clearTransition();
+
         this.hide();
 
+        this.transitionTimeout =
+            window.setTimeout(
+                () => {
 
-        window.setTimeout(
-            () => {
+                    this.transitionTimeout =
+                        null;
 
-                if (
-                    this.stellarWorldUI &&
-                    typeof this.stellarWorldUI.show ===
-                    'function'
-                ) {
+                    if (
+                        this.stellarWorldUI &&
+                        typeof this.stellarWorldUI.show ===
+                        'function'
+                    ) {
 
-                    this.stellarWorldUI.show();
-                }
+                        this.stellarWorldUI.show();
+                    }
 
-            },
-            550
-        );
+                },
+                550
+            );
     }
 
 
@@ -687,24 +726,29 @@ export default class AstronomyWorldUI {
 
     enterCosmicWorld() {
 
+        this.clearTransition();
+
         this.hide();
 
+        this.transitionTimeout =
+            window.setTimeout(
+                () => {
 
-        window.setTimeout(
-            () => {
+                    this.transitionTimeout =
+                        null;
 
-                if (
-                    this.cosmicWorldUI &&
-                    typeof this.cosmicWorldUI.show ===
-                    'function'
-                ) {
+                    if (
+                        this.cosmicWorldUI &&
+                        typeof this.cosmicWorldUI.show ===
+                        'function'
+                    ) {
 
-                    this.cosmicWorldUI.show();
-                }
+                        this.cosmicWorldUI.show();
+                    }
 
-            },
-            550
-        );
+                },
+                550
+            );
     }
 
 
@@ -713,6 +757,9 @@ export default class AstronomyWorldUI {
        ========================================================= */
 
     returnFromStellarWorld() {
+
+        this.clearTransition();
+
 
         if (
             this.stellarWorldUI &&
@@ -724,14 +771,18 @@ export default class AstronomyWorldUI {
         }
 
 
-        window.setTimeout(
-            () => {
+        this.transitionTimeout =
+            window.setTimeout(
+                () => {
 
-                this.show();
+                    this.transitionTimeout =
+                        null;
 
-            },
-            550
-        );
+                    this.show();
+
+                },
+                550
+            );
     }
 
 
@@ -740,6 +791,9 @@ export default class AstronomyWorldUI {
        ========================================================= */
 
     returnFromCosmicWorld() {
+
+        this.clearTransition();
+
 
         if (
             this.cosmicWorldUI &&
@@ -751,14 +805,18 @@ export default class AstronomyWorldUI {
         }
 
 
-        window.setTimeout(
-            () => {
+        this.transitionTimeout =
+            window.setTimeout(
+                () => {
 
-                this.show();
+                    this.transitionTimeout =
+                        null;
 
-            },
-            550
-        );
+                    this.show();
+
+                },
+                550
+            );
     }
 
 
@@ -768,24 +826,30 @@ export default class AstronomyWorldUI {
 
     returnToGalaxy() {
 
+        this.clearTransition();
+
         this.hide();
 
 
-        window.setTimeout(
-            () => {
+        this.transitionTimeout =
+            window.setTimeout(
+                () => {
 
-                if (
-                    this.astronomyGalaxyUI &&
-                    typeof this.astronomyGalaxyUI.show ===
-                    'function'
-                ) {
+                    this.transitionTimeout =
+                        null;
 
-                    this.astronomyGalaxyUI.show();
-                }
+                    if (
+                        this.astronomyGalaxyUI &&
+                        typeof this.astronomyGalaxyUI.show ===
+                        'function'
+                    ) {
 
-            },
-            550
-        );
+                        this.astronomyGalaxyUI.show();
+                    }
+
+                },
+                550
+            );
     }
 
 
@@ -851,6 +915,9 @@ export default class AstronomyWorldUI {
        ========================================================= */
 
     destroy() {
+
+        this.clearTransition();
+
 
         if (
             this.stellarWorldUI &&

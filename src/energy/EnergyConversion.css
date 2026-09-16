@@ -1721,3 +1721,30 @@
         transition: none;
     }
 }
+/* =========================================================
+   ENERGY STATUS — CLEAN TEXT
+   إزالة المستطيل من خلف نص حالة التجربة
+   ========================================================= */
+
+.energy-experiment-status {
+    padding: 0;
+    
+    border: none;
+    
+    border-radius: 0;
+    
+    background: transparent;
+    
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    
+    box-shadow: none;
+}
+
+.energy-experiment-status .energy-status-dot {
+    display: none;
+}
+
+.energy-experiment-status .energy-status-text {
+    color: rgba(255, 255, 255, 0.72);
+}

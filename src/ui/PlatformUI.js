@@ -1,10 +1,9 @@
 /* =========================================================
    AWTAAR — PLATFORM UI
-   Elegant / Scientific / Premium
-   Arabic / English
    ========================================================= */
 
 import ExplorationUI from './ExplorationUI.js'
+import AuthService from '../auth/AuthService.js'
 
 import {
     t,
@@ -15,39 +14,34 @@ import {
 
 export default class PlatformUI {
 
-
-    constructor(
-        scene = null
-    ) {
-
-        /*
-         * =====================================================
-         * SCENE
-         * =====================================================
-         */
+    constructor(scene = null) {
 
         this.scene =
             scene
 
+        /* =====================================================
+           AUTH
+           ===================================================== */
 
-        /*
-         * =====================================================
-         * STATE
-         * =====================================================
-         */
+        this.authService =
+            new AuthService()
 
-        this.isExploring =
-            false
-
-        this.explorationTimer =
+        this.currentUser =
             null
 
+        this.profileOpen =
+            false
 
-        /*
-         * =====================================================
-         * EXPLORATION UI
-         * =====================================================
-         */
+        this.profilePageOpen =
+            false
+
+        this.isSigningOut =
+            false
+
+
+        /* =====================================================
+           EXPLORATION
+           ===================================================== */
 
         this.explorationUI =
             new ExplorationUI(
@@ -56,30 +50,23 @@ export default class PlatformUI {
             )
 
 
-        /*
-         * =====================================================
-         * CREATE PLATFORM UI
-         * =====================================================
-         */
+        /* =====================================================
+           CREATE
+           ===================================================== */
 
         this.createUI()
-
     }
 
 
-    /*
-     * =====================================================
-     * CREATE UI
-     * =====================================================
-     */
+    /* =========================================================
+       CREATE UI
+       ========================================================= */
 
     createUI() {
 
-        /*
-         * =================================================
-         * MAIN CONTAINER
-         * =================================================
-         */
+        /* =====================================================
+           ROOT
+           ===================================================== */
 
         this.container =
             document.createElement('div')
@@ -88,11 +75,9 @@ export default class PlatformUI {
             'awtaar-platform'
 
 
-        /*
-         * =================================================
-         * HEADER
-         * =================================================
-         */
+        /* =====================================================
+           HEADER
+           ===================================================== */
 
         this.header =
             document.createElement('header')
@@ -101,11 +86,9 @@ export default class PlatformUI {
             'awtaar-header'
 
 
-        /*
-         * =================================================
-         * LOGO
-         * =================================================
-         */
+        /* =====================================================
+           LOGO
+           ===================================================== */
 
         this.logo =
             document.createElement('div')
@@ -117,11 +100,20 @@ export default class PlatformUI {
             'AWTAAR'
 
 
-        /*
-         * =================================================
-         * LANGUAGE BUTTON
-         * =================================================
-         */
+        /* =====================================================
+           HEADER ACTIONS
+           ===================================================== */
+
+        this.headerActions =
+            document.createElement('div')
+
+        this.headerActions.className =
+            'awtaar-header-actions'
+
+
+        /* =====================================================
+           LANGUAGE BUTTON
+           ===================================================== */
 
         this.languageButton =
             document.createElement('button')
@@ -137,105 +129,124 @@ export default class PlatformUI {
                 ? 'EN'
                 : 'AR'
 
-
-        /*
-         * =================================================
-         * LANGUAGE EVENT
-         * =================================================
-         */
+        this.languageButton.setAttribute(
+            'aria-label',
+            'Change language'
+        )
 
         this.languageButton.addEventListener(
             'click',
-            () => {
+            (event) => {
+
+                event.preventDefault()
+                event.stopPropagation()
 
                 this.toggleLanguage()
-
             }
         )
 
 
-        /*
-         * =================================================
-         * MENU BUTTON
-         * =================================================
-         */
+        /* =====================================================
+           USER BUTTON
+           ===================================================== */
 
-        this.menuButton =
+        this.userButton =
             document.createElement('button')
 
-        this.menuButton.type =
+        this.userButton.type =
             'button'
 
-        this.menuButton.className =
-            'awtaar-menu-button'
+        this.userButton.className =
+            'awtaar-user-button'
 
-        this.menuButton.setAttribute(
-            'aria-label',
-            'Open menu'
+        this.userButton.setAttribute(
+            'aria-expanded',
+            'false'
         )
 
+        this.userButton.setAttribute(
+            'aria-haspopup',
+            'true'
+        )
 
-        /*
-         * =================================================
-         * MENU LINES
-         * =================================================
-         */
+        this.userButton.innerHTML = `
+            <span class="awtaar-user-icon">
+                <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    focusable="false"
+                >
+                    <circle
+                        cx="12"
+                        cy="8"
+                        r="3.15"
+                    ></circle>
 
-        this.menuButton.innerHTML =
-            '<span></span>' +
-            '<span></span>' +
-            '<span></span>'
+                    <path
+                        d="
+                            M5.8 19.1
+                            C6.5 15.7
+                            8.7 14
+                            12 14
+                            C15.3 14
+                            17.5 15.7
+                            18.2 19.1
+                        "
+                    ></path>
+                </svg>
+            </span>
+        `
 
-
-        /*
-         * =================================================
-         * MENU EVENT
-         * =================================================
-         */
-
-        this.menuButton.addEventListener(
+        this.userButton.addEventListener(
             'click',
-            () => {
+            (event) => {
 
-                this.toggleMenu()
+                event.preventDefault()
+                event.stopPropagation()
 
+                this.toggleProfile()
             }
         )
 
 
-        /*
-         * =================================================
-         * BUILD HEADER
-         * =================================================
-         */
+        /* =====================================================
+           HEADER BUILD
+           ===================================================== */
+
+        this.headerActions.appendChild(
+            this.languageButton
+        )
+
+        this.headerActions.appendChild(
+            this.userButton
+        )
 
         this.header.appendChild(
             this.logo
         )
 
         this.header.appendChild(
-            this.languageButton
-        )
-
-        this.header.appendChild(
-            this.menuButton
+            this.headerActions
         )
 
 
-        /*
-         * =================================================
-         * CREATE MENU
-         * =================================================
-         */
+        /* =====================================================
+           PROFILE PANEL
+           ===================================================== */
 
-        this.createMenu()
+        this.createProfilePanel()
 
 
-        /*
-         * =================================================
-         * MAIN CONTENT
-         * =================================================
-         */
+        /* =====================================================
+           PROFILE PAGE
+           ===================================================== */
+
+        this.createProfilePage()
+
+
+        /* =====================================================
+           MAIN CONTENT
+           ===================================================== */
 
         this.content =
             document.createElement('main')
@@ -244,41 +255,31 @@ export default class PlatformUI {
             'awtaar-content'
 
 
-        /*
-         * =================================================
-         * TITLE
-         * =================================================
-         */
+        /* =====================================================
+           TITLE
+           ===================================================== */
 
         this.title =
             document.createElement('h1')
 
         this.title.textContent =
-            t(
-                'platform.title'
-            )
+            t('platform.title')
 
 
-        /*
-         * =================================================
-         * DESCRIPTION
-         * =================================================
-         */
+        /* =====================================================
+           DESCRIPTION
+           ===================================================== */
 
         this.description =
             document.createElement('p')
 
         this.description.textContent =
-            t(
-                'platform.description'
-            )
+            t('platform.description')
 
 
-        /*
-         * =================================================
-         * EXPLORE BUTTON
-         * =================================================
-         */
+        /* =====================================================
+           EXPLORE BUTTON
+           ===================================================== */
 
         this.exploreButton =
             document.createElement('button')
@@ -290,23 +291,12 @@ export default class PlatformUI {
             'awtaar-explore-button'
 
         this.exploreButton.textContent =
-            t(
-                'platform.explore'
-            )
-
-        this.exploreButton.setAttribute(
-            'aria-label',
-            t(
-                'platform.explore'
-            )
-        )
+            t('platform.explore')
 
 
-        /*
-         * =================================================
-         * BUILD CONTENT
-         * =================================================
-         */
+        /* =====================================================
+           CONTENT BUILD
+           ===================================================== */
 
         this.content.appendChild(
             this.title
@@ -321,11 +311,9 @@ export default class PlatformUI {
         )
 
 
-        /*
-         * =================================================
-         * BUILD PLATFORM
-         * =================================================
-         */
+        /* =====================================================
+           PLATFORM BUILD
+           ===================================================== */
 
         this.container.appendChild(
             this.header
@@ -336,22 +324,14 @@ export default class PlatformUI {
         )
 
 
-        /*
-         * =================================================
-         * ADD TO DOM
-         * =================================================
-         */
-
         document.body.appendChild(
             this.container
         )
 
 
-        /*
-         * =================================================
-         * INITIAL STATE
-         * =================================================
-         */
+        /* =====================================================
+           INITIAL STATE
+           ===================================================== */
 
         this.container.style.opacity =
             '0'
@@ -363,425 +343,1440 @@ export default class PlatformUI {
             'none'
 
 
-        /*
-         * =================================================
-         * EXPLORE BUTTON EVENT
-         * =================================================
-         */
+        /* =====================================================
+           EXPLORE
+           ===================================================== */
 
         this.exploreButton.addEventListener(
             'click',
             (event) => {
 
                 event.preventDefault()
-
                 event.stopPropagation()
 
                 this.startExploration()
-
             }
         )
 
 
-        /*
-         * =================================================
-         * INITIAL LANGUAGE
-         * =================================================
-         */
+        /* =====================================================
+           LANGUAGE
+           ===================================================== */
 
         this.updateLanguage()
 
+
+        /* =====================================================
+           USER
+           ===================================================== */
+
+        this.loadCurrentUser()
+
+
+        /* =====================================================
+           OUTSIDE CLICK
+           ===================================================== */
+
+        this.handleDocumentClick =
+            (event) => {
+
+                if (!this.profileOpen) {
+                    return
+                }
+
+                if (
+                    this.profilePanel &&
+                    this.profilePanel.contains(event.target)
+                ) {
+                    return
+                }
+
+                if (
+                    this.userButton &&
+                    this.userButton.contains(event.target)
+                ) {
+                    return
+                }
+
+                this.closeProfile()
+            }
+
+        document.addEventListener(
+            'click',
+            this.handleDocumentClick
+        )
+
+
+        /* =====================================================
+           ESCAPE
+           ===================================================== */
+
+        this.handleKeyDown =
+            (event) => {
+
+                if (
+                    event.key !== 'Escape'
+                ) {
+                    return
+                }
+
+                if (
+                    this.profilePageOpen
+                ) {
+                    this.closeProfilePage()
+                    return
+                }
+
+                if (
+                    this.profileOpen
+                ) {
+                    this.closeProfile()
+                }
+            }
+
+        document.addEventListener(
+            'keydown',
+            this.handleKeyDown
+        )
     }
 
 
-    /*
-     * =====================================================
-     * CREATE MENU
-     * =====================================================
-     */
+    /* =========================================================
+       PROFILE PANEL
+       ========================================================= */
 
-    createMenu() {
+    createProfilePanel() {
 
-        /*
-         * =================================================
-         * MENU CONTAINER
-         * =================================================
-         */
-
-        this.menu =
+        this.profilePanel =
             document.createElement('div')
 
-        this.menu.className =
-            'awtaar-platform-menu'
+        this.profilePanel.className =
+            'awtaar-profile-panel'
 
+        this.profilePanel.setAttribute(
+            'role',
+            'dialog'
+        )
 
-        /*
-         * =================================================
-         * MENU TITLE
-         * =================================================
-         */
-
-        this.menuTitle =
-            document.createElement('div')
-
-        this.menuTitle.className =
-            'awtaar-platform-menu-title'
-
-        this.menuTitle.textContent =
-            t(
-                'menu.title'
-            )
-
-
-        this.menu.appendChild(
-            this.menuTitle
+        this.profilePanel.setAttribute(
+            'aria-hidden',
+            'true'
         )
 
 
-        /*
-         * =================================================
-         * MENU ITEMS
-         * =================================================
-         */
+        /* =====================================================
+           PANEL HEADER
+           ===================================================== */
 
-        this.menuItems = [
+        this.profileHeader =
+            document.createElement('div')
 
-            {
-                key: 'home',
-                translation: 'menu.home'
-            },
-
-            {
-                key: 'galaxies',
-                translation: 'menu.galaxies'
-            },
-
-            {
-                key: 'phenomena',
-                translation: 'menu.phenomena'
-            },
-
-            {
-                key: 'simulation',
-                translation: 'menu.simulation'
-            },
-
-            {
-                key: 'discover',
-                translation: 'menu.discover'
-            },
-
-            {
-                key: 'about',
-                translation: 'menu.about'
-            }
-
-        ]
+        this.profileHeader.className =
+            'awtaar-profile-header'
 
 
-        /*
-         * =================================================
-         * MENU BUTTONS
-         * =================================================
-         */
+        /* =====================================================
+           AVATAR
+           ===================================================== */
 
-        this.menuButtons = []
+        this.profileAvatar =
+            document.createElement('div')
 
+        this.profileAvatar.className =
+            'awtaar-profile-avatar'
 
-        /*
-         * =================================================
-         * CREATE MENU BUTTONS
-         * =================================================
-         */
-
-        this.menuItems.forEach(
-            (item) => {
-
-                const button =
-                    document.createElement('button')
-
-                button.type =
-                    'button'
-
-                button.className =
-                    'awtaar-platform-menu-item'
-
-                button.dataset.menu =
-                    item.key
-
-                button.textContent =
-                    t(
-                        item.translation
-                    )
+        this.profileAvatar.textContent =
+            'A'
 
 
-                /*
-                 * BUTTON EVENT
-                 */
+        /* =====================================================
+           IDENTITY
+           ===================================================== */
 
-                button.addEventListener(
-                    'click',
-                    (event) => {
+        this.profileIdentity =
+            document.createElement('div')
 
-                        event.preventDefault()
-
-                        event.stopPropagation()
-
-                        this.selectMenuItem(
-                            item.key
-                        )
-
-                    }
-                )
+        this.profileIdentity.className =
+            'awtaar-profile-identity'
 
 
-                /*
-                 * ADD BUTTON
-                 */
+        this.profileName =
+            document.createElement('div')
 
-                this.menu.appendChild(
-                    button
-                )
+        this.profileName.className =
+            'awtaar-profile-name'
 
-                this.menuButtons.push(
-                    button
-                )
+        this.profileName.textContent =
+            'أوتار'
 
+
+        this.profileEmail =
+            document.createElement('div')
+
+        this.profileEmail.className =
+            'awtaar-profile-email'
+
+        this.profileEmail.textContent =
+            ''
+
+
+        this.profileIdentity.appendChild(
+            this.profileName
+        )
+
+        this.profileIdentity.appendChild(
+            this.profileEmail
+        )
+
+
+        this.profileHeader.appendChild(
+            this.profileAvatar
+        )
+
+        this.profileHeader.appendChild(
+            this.profileIdentity
+        )
+
+
+        /* =====================================================
+           GUEST MESSAGE
+           ===================================================== */
+
+        this.guestSection =
+            document.createElement('div')
+
+        this.guestSection.className =
+            'awtaar-guest-section'
+
+
+        this.guestTitle =
+            document.createElement('div')
+
+        this.guestTitle.className =
+            'awtaar-guest-title'
+
+
+        this.guestDescription =
+            document.createElement('div')
+
+        this.guestDescription.className =
+            'awtaar-guest-description'
+
+
+        this.guestSection.appendChild(
+            this.guestTitle
+        )
+
+        this.guestSection.appendChild(
+            this.guestDescription
+        )
+
+
+        /* =====================================================
+           LOGIN BUTTON
+           ===================================================== */
+
+        this.loginButton =
+            document.createElement('button')
+
+        this.loginButton.type =
+            'button'
+
+        this.loginButton.className =
+            'awtaar-auth-action awtaar-auth-login'
+
+
+        this.loginButton.addEventListener(
+            'click',
+            (event) => {
+
+                event.preventDefault()
+                event.stopPropagation()
+
+                this.openAuth('login')
             }
         )
 
 
-        /*
-         * =================================================
-         * ADD MENU TO PLATFORM
-         * =================================================
-         */
+        /* =====================================================
+           SIGNUP BUTTON
+           ===================================================== */
+
+        this.signupButton =
+            document.createElement('button')
+
+        this.signupButton.type =
+            'button'
+
+        this.signupButton.className =
+            'awtaar-auth-action awtaar-auth-signup'
+
+
+        this.signupButton.addEventListener(
+            'click',
+            (event) => {
+
+                event.preventDefault()
+                event.stopPropagation()
+
+                this.openAuth('signup')
+            }
+        )
+
+
+        /* =====================================================
+           AUTH ACTIONS
+           ===================================================== */
+
+        this.guestActions =
+            document.createElement('div')
+
+        this.guestActions.className =
+            'awtaar-guest-actions'
+
+        this.guestActions.appendChild(
+            this.loginButton
+        )
+
+        this.guestActions.appendChild(
+            this.signupButton
+        )
+
+
+        /* =====================================================
+           DIVIDER
+           ===================================================== */
+
+        this.profileDivider =
+            document.createElement('div')
+
+        this.profileDivider.className =
+            'awtaar-profile-divider'
+
+
+        /* =====================================================
+           PROFILE BUTTON
+           ===================================================== */
+
+        this.profileButton =
+            document.createElement('button')
+
+        this.profileButton.type =
+            'button'
+
+        this.profileButton.className =
+            'awtaar-profile-action'
+
+        this.profileButton.innerHTML = `
+            <span class="awtaar-action-icon">
+                ◇
+            </span>
+
+            <span class="awtaar-profile-action-text">
+                الملف الشخصي
+            </span>
+        `
+
+        this.profileButton.addEventListener(
+            'click',
+            (event) => {
+
+                event.preventDefault()
+                event.stopPropagation()
+
+                this.openProfilePage()
+            }
+        )
+
+
+        /* =====================================================
+           LOGOUT
+           ===================================================== */
+
+        this.logoutButton =
+            document.createElement('button')
+
+        this.logoutButton.type =
+            'button'
+
+        this.logoutButton.className =
+            'awtaar-profile-logout'
+
+        this.logoutButton.innerHTML = `
+            <span class="awtaar-action-icon">
+                ↪
+            </span>
+
+            <span class="awtaar-profile-logout-text">
+                تسجيل الخروج
+            </span>
+        `
+
+        this.logoutButton.addEventListener(
+            'click',
+            (event) => {
+
+                event.preventDefault()
+                event.stopPropagation()
+
+                this.signOut()
+            }
+        )
+
+
+        /* =====================================================
+           PANEL BUILD
+           ===================================================== */
+
+        this.profilePanel.appendChild(
+            this.profileHeader
+        )
+
+        this.profilePanel.appendChild(
+            this.guestSection
+        )
+
+        this.profilePanel.appendChild(
+            this.guestActions
+        )
+
+        this.profilePanel.appendChild(
+            this.profileDivider
+        )
+
+        this.profilePanel.appendChild(
+            this.profileButton
+        )
+
+        this.profilePanel.appendChild(
+            this.logoutButton
+        )
+
 
         this.container.appendChild(
-            this.menu
+            this.profilePanel
         )
 
+
+        this.profilePanel.addEventListener(
+            'click',
+            (event) => {
+                event.stopPropagation()
+            }
+        )
     }
 
 
-    /*
-     * =====================================================
-     * TOGGLE MENU
-     * =====================================================
-     */
+    /* =========================================================
+       PROFILE PAGE
+       ========================================================= */
 
-    toggleMenu() {
+    createProfilePage() {
 
-        if (
-            this.menu.classList.contains(
-                'open'
+        this.profilePage =
+            document.createElement('section')
+
+        this.profilePage.className =
+            'awtaar-profile-page'
+
+        this.profilePage.setAttribute(
+            'aria-hidden',
+            'true'
+        )
+
+
+        /* =====================================================
+           PAGE HEADER
+           ===================================================== */
+
+        this.profilePageHeader =
+            document.createElement('div')
+
+        this.profilePageHeader.className =
+            'awtaar-profile-page-header'
+
+
+        this.profileBackButton =
+            document.createElement('button')
+
+        this.profileBackButton.type =
+            'button'
+
+        this.profileBackButton.className =
+            'awtaar-profile-back'
+
+        this.profileBackButton.addEventListener(
+            'click',
+            (event) => {
+
+                event.preventDefault()
+                event.stopPropagation()
+
+                this.closeProfilePage()
+            }
+        )
+
+
+        this.profilePageTitle =
+            document.createElement('h2')
+
+        this.profilePageTitle.className =
+            'awtaar-profile-page-title'
+
+
+        this.profilePageSubtitle =
+            document.createElement('p')
+
+        this.profilePageSubtitle.className =
+            'awtaar-profile-page-subtitle'
+
+
+        this.profilePageHeader.appendChild(
+            this.profileBackButton
+        )
+
+        this.profilePageHeader.appendChild(
+            this.profilePageTitle
+        )
+
+        this.profilePageHeader.appendChild(
+            this.profilePageSubtitle
+        )
+
+
+        /* =====================================================
+           PROFILE HERO
+           ===================================================== */
+
+        this.profileHero =
+            document.createElement('div')
+
+        this.profileHero.className =
+            'awtaar-profile-hero'
+
+
+        this.profilePageAvatar =
+            document.createElement('div')
+
+        this.profilePageAvatar.className =
+            'awtaar-profile-page-avatar'
+
+
+        this.profilePageIdentity =
+            document.createElement('div')
+
+        this.profilePageIdentity.className =
+            'awtaar-profile-page-identity'
+
+
+        this.profilePageName =
+            document.createElement('h3')
+
+        this.profilePageName.className =
+            'awtaar-profile-page-name'
+
+
+        this.profilePageEmail =
+            document.createElement('p')
+
+        this.profilePageEmail.className =
+            'awtaar-profile-page-email'
+
+
+        this.profilePageIdentity.appendChild(
+            this.profilePageName
+        )
+
+        this.profilePageIdentity.appendChild(
+            this.profilePageEmail
+        )
+
+
+        this.profileHero.appendChild(
+            this.profilePageAvatar
+        )
+
+        this.profileHero.appendChild(
+            this.profilePageIdentity
+        )
+
+
+        /* =====================================================
+           ACCOUNT INFORMATION
+           ===================================================== */
+
+        this.profileInfoCard =
+            document.createElement('div')
+
+        this.profileInfoCard.className =
+            'awtaar-profile-info-card'
+
+
+        this.profileInfoTitle =
+            document.createElement('h3')
+
+        this.profileInfoTitle.className =
+            'awtaar-profile-section-title'
+
+
+        this.profileInfoGrid =
+            document.createElement('div')
+
+        this.profileInfoGrid.className =
+            'awtaar-profile-info-grid'
+
+
+        this.profileUsernameInfo =
+            this.createProfileInfoItem()
+
+        this.profileEmailInfo =
+            this.createProfileInfoItem()
+
+
+        this.profileInfoGrid.appendChild(
+            this.profileUsernameInfo.element
+        )
+
+        this.profileInfoGrid.appendChild(
+            this.profileEmailInfo.element
+        )
+
+
+        this.profileInfoCard.appendChild(
+            this.profileInfoTitle
+        )
+
+        this.profileInfoCard.appendChild(
+            this.profileInfoGrid
+        )
+
+
+        /* =====================================================
+           JOURNEY
+           ===================================================== */
+
+        this.profileJourneyCard =
+            document.createElement('div')
+
+        this.profileJourneyCard.className =
+            'awtaar-profile-journey-card'
+
+
+        this.profileJourneyTitle =
+            document.createElement('h3')
+
+        this.profileJourneyTitle.className =
+            'awtaar-profile-section-title'
+
+
+        this.profileJourneyDescription =
+            document.createElement('p')
+
+        this.profileJourneyDescription.className =
+            'awtaar-profile-journey-description'
+
+
+        /* =====================================================
+           STATS
+           ===================================================== */
+
+        this.profileStats =
+            document.createElement('div')
+
+        this.profileStats.className =
+            'awtaar-profile-stats'
+
+
+        this.profileStatGalaxies =
+            this.createProfileStat(
+                '0'
             )
-        ) {
 
-            this.closeMenu()
+        this.profileStatWorlds =
+            this.createProfileStat(
+                '0'
+            )
 
+        this.profileStatExperiments =
+            this.createProfileStat(
+                '0'
+            )
+
+
+        this.profileStats.appendChild(
+            this.profileStatGalaxies.element
+        )
+
+        this.profileStats.appendChild(
+            this.profileStatWorlds.element
+        )
+
+        this.profileStats.appendChild(
+            this.profileStatExperiments.element
+        )
+
+
+        this.profileJourneyCard.appendChild(
+            this.profileJourneyTitle
+        )
+
+        this.profileJourneyCard.appendChild(
+            this.profileJourneyDescription
+        )
+
+        this.profileJourneyCard.appendChild(
+            this.profileStats
+        )
+
+
+        /* =====================================================
+           EMPTY JOURNEY
+           ===================================================== */
+
+        this.profileJourneyEmpty =
+            document.createElement('div')
+
+        this.profileJourneyEmpty.className =
+            'awtaar-profile-journey-empty'
+
+
+        this.profileJourneyEmptyIcon =
+            document.createElement('div')
+
+        this.profileJourneyEmptyIcon.className =
+            'awtaar-profile-journey-empty-icon'
+
+        this.profileJourneyEmptyIcon.textContent =
+            '✦'
+
+
+        this.profileJourneyEmptyText =
+            document.createElement('p')
+
+
+        this.profileJourneyEmpty.appendChild(
+            this.profileJourneyEmptyIcon
+        )
+
+        this.profileJourneyEmpty.appendChild(
+            this.profileJourneyEmptyText
+        )
+
+
+        this.profileJourneyCard.appendChild(
+            this.profileJourneyEmpty
+        )
+
+
+        /* =====================================================
+           CLOSE / BACK ACTION
+           ===================================================== */
+
+        this.profilePageFooter =
+            document.createElement('div')
+
+        this.profilePageFooter.className =
+            'awtaar-profile-page-footer'
+
+
+        this.profileContinueButton =
+            document.createElement('button')
+
+        this.profileContinueButton.type =
+            'button'
+
+        this.profileContinueButton.className =
+            'awtaar-profile-continue'
+
+
+        this.profileContinueButton.addEventListener(
+            'click',
+            (event) => {
+
+                event.preventDefault()
+                event.stopPropagation()
+
+                this.closeProfilePage()
+            }
+        )
+
+
+        this.profilePageFooter.appendChild(
+            this.profileContinueButton
+        )
+
+
+        /* =====================================================
+           PAGE BUILD
+           ===================================================== */
+
+        this.profilePage.appendChild(
+            this.profilePageHeader
+        )
+
+        this.profilePage.appendChild(
+            this.profileHero
+        )
+
+        this.profilePage.appendChild(
+            this.profileInfoCard
+        )
+
+        this.profilePage.appendChild(
+            this.profileJourneyCard
+        )
+
+        this.profilePage.appendChild(
+            this.profilePageFooter
+        )
+
+
+        this.container.appendChild(
+            this.profilePage
+        )
+
+
+        this.profileBackButton.innerHTML = `
+            <span class="awtaar-profile-back-icon">
+                ←
+            </span>
+
+            <span class="awtaar-profile-back-text">
+                العودة
+            </span>
+        `
+    }
+
+
+    /* =========================================================
+       PROFILE INFO ITEM
+       ========================================================= */
+
+    createProfileInfoItem() {
+
+        const element =
+            document.createElement('div')
+
+        element.className =
+            'awtaar-profile-info-item'
+
+
+        const label =
+            document.createElement('span')
+
+        label.className =
+            'awtaar-profile-info-label'
+
+
+        const value =
+            document.createElement('strong')
+
+        value.className =
+            'awtaar-profile-info-value'
+
+
+        element.appendChild(
+            label
+        )
+
+        element.appendChild(
+            value
+        )
+
+
+        return {
+            element,
+            label,
+            value
+        }
+    }
+
+
+    /* =========================================================
+       PROFILE STAT
+       ========================================================= */
+
+    createProfileStat(valueText = '0') {
+
+        const element =
+            document.createElement('div')
+
+        element.className =
+            'awtaar-profile-stat'
+
+
+        const value =
+            document.createElement('strong')
+
+        value.className =
+            'awtaar-profile-stat-value'
+
+        value.textContent =
+            valueText
+
+
+        const label =
+            document.createElement('span')
+
+        label.className =
+            'awtaar-profile-stat-label'
+
+
+        element.appendChild(
+            value
+        )
+
+        element.appendChild(
+            label
+        )
+
+
+        return {
+            element,
+            value,
+            label
+        }
+    }
+
+
+    /* =========================================================
+       OPEN PROFILE PAGE
+       ========================================================= */
+
+    openProfilePage() {
+
+        if (!this.currentUser) {
+            return
+        }
+
+        this.closeProfile()
+
+        this.updateProfilePage()
+
+        this.profilePageOpen =
+            true
+
+        this.profilePage.classList.add(
+            'open'
+        )
+
+        this.profilePage.setAttribute(
+            'aria-hidden',
+            'false'
+        )
+
+        this.profilePage.scrollTop =
+            0
+    }
+
+
+    /* =========================================================
+       CLOSE PROFILE PAGE
+       ========================================================= */
+
+    closeProfilePage() {
+
+        this.profilePageOpen =
+            false
+
+        this.profilePage.classList.remove(
+            'open'
+        )
+
+        this.profilePage.setAttribute(
+            'aria-hidden',
+            'true'
+        )
+    }
+
+
+    /* =========================================================
+       UPDATE PROFILE PAGE
+       ========================================================= */
+
+    updateProfilePage() {
+
+        const isArabic =
+            getLanguage() === 'ar'
+
+
+        if (!this.currentUser) {
+            return
+        }
+
+
+        const username =
+            this.currentUser?.user_metadata?.username ||
+            this.currentUser?.email?.split('@')[0] ||
+            'AWTAAR'
+
+
+        const email =
+            this.currentUser?.email ||
+            ''
+
+
+        const firstLetter =
+            username
+                .charAt(0)
+                .toUpperCase()
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        this.profilePageTitle.textContent =
+            isArabic
+                ? 'ملفي في أوتار'
+                : 'My Awtaar Profile'
+
+
+        this.profilePageSubtitle.textContent =
+            isArabic
+                ? 'مساحتك الخاصة داخل رحلتك العلمية.'
+                : 'Your personal space in your scientific journey.'
+
+
+        this.profileBackButton.setAttribute(
+            'aria-label',
+            isArabic
+                ? 'العودة'
+                : 'Go back'
+        )
+
+
+        this.profileBackButton.querySelector(
+            '.awtaar-profile-back-icon'
+        ).textContent =
+            isArabic
+                ? '→'
+                : '←'
+
+
+        this.profileBackButton.querySelector(
+            '.awtaar-profile-back-text'
+        ).textContent =
+            isArabic
+                ? 'العودة'
+                : 'Back'
+
+
+        /* =====================================================
+           HERO
+           ===================================================== */
+
+        this.profilePageAvatar.textContent =
+            firstLetter
+
+        this.profilePageName.textContent =
+            username
+
+        this.profilePageEmail.textContent =
+            email
+
+
+        /* =====================================================
+           ACCOUNT INFORMATION
+           ===================================================== */
+
+        this.profileInfoTitle.textContent =
+            isArabic
+                ? 'معلومات الحساب'
+                : 'Account information'
+
+
+        this.profileUsernameInfo.label.textContent =
+            isArabic
+                ? 'اسم المستخدم'
+                : 'Username'
+
+
+        this.profileUsernameInfo.value.textContent =
+            username
+
+
+        this.profileEmailInfo.label.textContent =
+            isArabic
+                ? 'البريد الإلكتروني'
+                : 'Email'
+
+
+        this.profileEmailInfo.value.textContent =
+            email
+
+
+        /* =====================================================
+           JOURNEY
+           ===================================================== */
+
+        this.profileJourneyTitle.textContent =
+            isArabic
+                ? 'رحلتي في أوتار'
+                : 'My journey in Awtaar'
+
+
+        this.profileJourneyDescription.textContent =
+            isArabic
+                ? 'هنا ستظهر آثار رحلتك العلمية مع مرور الوقت.'
+                : 'Your scientific journey will gradually take shape here.'
+
+
+        /* =====================================================
+           STATS
+           ===================================================== */
+
+        this.profileStatGalaxies.label.textContent =
+            isArabic
+                ? 'المجرات المستكشفة'
+                : 'Galaxies explored'
+
+
+        this.profileStatWorlds.label.textContent =
+            isArabic
+                ? 'العوالم المستكشفة'
+                : 'Worlds explored'
+
+
+        this.profileStatExperiments.label.textContent =
+            isArabic
+                ? 'التجارب المكتملة'
+                : 'Experiments completed'
+
+
+        /* =====================================================
+           EMPTY JOURNEY
+           ===================================================== */
+
+        this.profileJourneyEmptyText.textContent =
+            isArabic
+                ? 'لم تبدأ رحلتك الاستكشافية بعد. ابدأ باستكشاف أوتار، وستظهر رحلتك هنا.'
+                : 'Your exploration has not begun yet. Start exploring Awtaar and your journey will appear here.'
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        this.profileContinueButton.textContent =
+            isArabic
+                ? 'متابعة الاستكشاف'
+                : 'Continue exploring'
+    }
+
+
+    /* =========================================================
+       LOAD CURRENT USER
+       ========================================================= */
+
+    async loadCurrentUser() {
+
+        const user =
+            await this.authService.getCurrentUser()
+
+        this.setUser(
+            user
+        )
+    }
+
+
+    /* =========================================================
+       SET USER
+       ========================================================= */
+
+    setUser(user = null) {
+
+        this.currentUser =
+            user || null
+
+
+        if (!user) {
+
+            this.closeProfilePage()
+
+            this.profileAvatar.textContent =
+                'A'
+
+            this.profileName.textContent =
+                getLanguage() === 'ar'
+                    ? 'مرحبًا بك في أوتار'
+                    : 'Welcome to Awtaar'
+
+            this.profileEmail.textContent =
+                getLanguage() === 'ar'
+                    ? 'استكشف المنصة بحرية'
+                    : 'Explore the platform freely'
+
+
+            this.guestSection.style.display =
+                'block'
+
+            this.guestActions.style.display =
+                'flex'
+
+            this.profileDivider.style.display =
+                'none'
+
+            this.profileButton.style.display =
+                'none'
+
+            this.logoutButton.style.display =
+                'none'
+
+            this.updateGuestLanguage()
+
+            return
+        }
+
+
+        const username =
+            user?.user_metadata?.username ||
+            user?.email?.split('@')[0] ||
+            'AWTAAR'
+
+        const email =
+            user?.email ||
+            ''
+
+
+        this.profileAvatar.textContent =
+            username
+                .charAt(0)
+                .toUpperCase()
+
+        this.profileName.textContent =
+            username
+
+        this.profileEmail.textContent =
+            email
+
+
+        this.guestSection.style.display =
+            'none'
+
+        this.guestActions.style.display =
+            'none'
+
+        this.profileDivider.style.display =
+            'block'
+
+        this.profileButton.style.display =
+            'flex'
+
+        this.logoutButton.style.display =
+            'flex'
+
+
+        this.updateProfilePage()
+    }
+
+
+    /* =========================================================
+       PROFILE TOGGLE
+       ========================================================= */
+
+    toggleProfile() {
+
+        if (this.profileOpen) {
+            this.closeProfile()
         } else {
-
-            this.openMenu()
-
+            this.openProfile()
         }
-
     }
 
 
-    /*
-     * =====================================================
-     * OPEN MENU
-     * =====================================================
-     */
+    /* =========================================================
+       OPEN PROFILE
+       ========================================================= */
 
-    openMenu() {
+    openProfile() {
 
-        if (
-            this.isExploring
-        ) {
-            return
-        }
+        this.profileOpen =
+            true
 
-
-        this.menu.classList.add(
+        this.profilePanel.classList.add(
             'open'
         )
 
-        this.menuButton.classList.add(
+        this.userButton.classList.add(
             'active'
         )
 
-        this.menuButton.setAttribute(
-            'aria-label',
-            'Close menu'
+        this.userButton.setAttribute(
+            'aria-expanded',
+            'true'
         )
 
+        this.profilePanel.setAttribute(
+            'aria-hidden',
+            'false'
+        )
     }
 
 
-    /*
-     * =====================================================
-     * CLOSE MENU
-     * =====================================================
-     */
+    /* =========================================================
+       CLOSE PROFILE
+       ========================================================= */
 
-    closeMenu() {
+    closeProfile() {
 
-        this.menu.classList.remove(
+        this.profileOpen =
+            false
+
+        this.profilePanel.classList.remove(
             'open'
         )
 
-        this.menuButton.classList.remove(
+        this.userButton.classList.remove(
             'active'
         )
 
-        this.menuButton.setAttribute(
-            'aria-label',
-            'Open menu'
+        this.userButton.setAttribute(
+            'aria-expanded',
+            'false'
         )
 
+        this.profilePanel.setAttribute(
+            'aria-hidden',
+            'true'
+        )
     }
 
 
-    /*
-     * =====================================================
-     * SELECT MENU ITEM
-     * =====================================================
-     */
+    /* =========================================================
+       OPEN AUTH
+       ========================================================= */
 
-    selectMenuItem(
-        key
-    ) {
+    openAuth(mode = 'login') {
 
-        /*
-         * CLOSE MENU FIRST
-         */
-
-        this.closeMenu()
+        this.closeProfile()
 
 
         /*
-         * =================================================
-         * HOME
-         * =================================================
+         * Engine owns the single AuthUI instance.
+         *
+         * PlatformUI only asks Engine to open it.
          */
 
-        if (
-            key === 'home'
-        ) {
-
-            this.show()
-
-            return
-
-        }
-
-
-        /*
-         * =================================================
-         * GALAXIES
-         * =================================================
-         */
-
-        if (
-            key === 'galaxies'
-        ) {
-
-            this.startExploration()
-
-            return
-
-        }
-
-
-        /*
-         * =================================================
-         * PHENOMENA
-         * =================================================
-         */
-
-        if (
-            key === 'phenomena'
-        ) {
-
-            console.log(
-                '🌌 Awtaar Phenomena'
+        window.dispatchEvent(
+            new CustomEvent(
+                'awtaar-open-auth',
+                {
+                    detail: {
+                        mode
+                    }
+                }
             )
-
-            return
-
-        }
-
-
-        /*
-         * =================================================
-         * SIMULATION
-         * =================================================
-         */
-
-        if (
-            key === 'simulation'
-        ) {
-
-            console.log(
-                '🧪 Awtaar Simulation'
-            )
-
-            return
-
-        }
-
-
-        /*
-         * =================================================
-         * DISCOVER
-         * =================================================
-         */
-
-        if (
-            key === 'discover'
-        ) {
-
-            console.log(
-                '✦ Awtaar Discover'
-            )
-
-            return
-
-        }
-
-
-        /*
-         * =================================================
-         * ABOUT
-         * =================================================
-         */
-
-        if (
-            key === 'about'
-        ) {
-
-            console.log(
-                '∞ About Awtaar'
-            )
-
-        }
-
+        )
     }
 
 
-    /*
-     * =====================================================
-     * TOGGLE LANGUAGE
-     * =====================================================
-     */
+    /* =========================================================
+       SIGN OUT
+       ========================================================= */
+
+    async signOut() {
+
+        if (this.isSigningOut) {
+            return
+        }
+
+        this.isSigningOut =
+            true
+
+        this.logoutButton.disabled =
+            true
+
+        const language =
+            getLanguage()
+
+        const originalHTML =
+            this.logoutButton.innerHTML
+
+        this.logoutButton.innerHTML = `
+            <span class="awtaar-action-icon">
+                …
+            </span>
+
+            <span>
+                ${
+                    language === 'ar'
+                        ? 'جارٍ تسجيل الخروج'
+                        : 'Signing out'
+                }
+            </span>
+        `
+
+
+        try {
+
+            const result =
+                await this.authService.signOut()
+
+
+            if (!result.success) {
+
+                console.error(
+                    'Awtaar: Sign out failed.',
+                    result.error
+                )
+
+                this.logoutButton.disabled =
+                    false
+
+                this.logoutButton.innerHTML =
+                    originalHTML
+
+                this.isSigningOut =
+                    false
+
+                return
+            }
+
+
+            /*
+             * The platform remains visible.
+             *
+             * The user simply becomes a guest.
+             */
+
+            this.setUser(
+                null
+            )
+
+            this.closeProfile()
+
+        } catch (error) {
+
+            console.error(
+                'Awtaar: Unexpected sign out error.',
+                error
+            )
+
+            this.logoutButton.disabled =
+                false
+
+            this.logoutButton.innerHTML =
+                originalHTML
+        }
+
+
+        this.isSigningOut =
+            false
+
+        this.logoutButton.disabled =
+            false
+    }
+
+
+    /* =========================================================
+       TOGGLE LANGUAGE
+       ========================================================= */
 
     toggleLanguage() {
 
         const currentLanguage =
             getLanguage()
-
 
         const newLanguage =
             currentLanguage === 'ar'
@@ -789,25 +1784,12 @@ export default class PlatformUI {
                 : 'ar'
 
 
-        /*
-         * SET LANGUAGE
-         */
-
         setLanguage(
             newLanguage
         )
 
-
-        /*
-         * UPDATE PLATFORM
-         */
-
         this.updateLanguage()
 
-
-        /*
-         * UPDATE EXPLORATION
-         */
 
         if (
             this.explorationUI &&
@@ -816,284 +1798,142 @@ export default class PlatformUI {
         ) {
 
             this.explorationUI.updateLanguage()
-
         }
-
     }
 
 
-    /*
-     * =====================================================
-     * UPDATE LANGUAGE
-     * =====================================================
-     */
+    /* =========================================================
+       UPDATE LANGUAGE
+       ========================================================= */
 
     updateLanguage() {
 
-        /*
-         * =================================================
-         * TITLE
-         * =================================================
-         */
-
-        if (
-            this.title
-        ) {
-
-            this.title.textContent =
-                t(
-                    'platform.title'
-                )
-
-        }
-
-
-        /*
-         * =================================================
-         * DESCRIPTION
-         * =================================================
-         */
-
-        if (
-            this.description
-        ) {
-
-            this.description.textContent =
-                t(
-                    'platform.description'
-                )
-
-        }
-
-
-        /*
-         * =================================================
-         * EXPLORE BUTTON
-         * =================================================
-         */
-
-        if (
-            this.exploreButton
-        ) {
-
-            this.exploreButton.textContent =
-                t(
-                    'platform.explore'
-                )
-
-            this.exploreButton.setAttribute(
-                'aria-label',
-                t(
-                    'platform.explore'
-                )
-            )
-
-        }
-
-
-        /*
-         * =================================================
-         * LANGUAGE BUTTON
-         * =================================================
-         */
-
-        if (
-            this.languageButton
-        ) {
-
-            this.languageButton.textContent =
-                getLanguage() === 'ar'
-                    ? 'EN'
-                    : 'AR'
-
-        }
-
-
-        /*
-         * =================================================
-         * DIRECTION
-         * =================================================
-         */
-
-        if (
+        const isArabic =
             getLanguage() === 'ar'
-        ) {
 
-            this.container.dir =
-                'rtl'
+
+        this.title.textContent =
+            t('platform.title')
+
+        this.description.textContent =
+            t('platform.description')
+
+        this.exploreButton.textContent =
+            t('platform.explore')
+
+
+        this.languageButton.textContent =
+            isArabic
+                ? 'EN'
+                : 'AR'
+
+
+        this.container.dir =
+            isArabic
+                ? 'rtl'
+                : 'ltr'
+
+
+        this.userButton.setAttribute(
+            'aria-label',
+            isArabic
+                ? 'فتح الحساب'
+                : 'Open account'
+        )
+
+
+        if (this.currentUser) {
+
+            const profileText =
+                this.profileButton.querySelector(
+                    '.awtaar-profile-action-text'
+                )
+
+            const logoutText =
+                this.logoutButton.querySelector(
+                    '.awtaar-profile-logout-text'
+                )
+
+
+            if (profileText) {
+
+                profileText.textContent =
+                    isArabic
+                        ? 'الملف الشخصي'
+                        : 'Profile'
+            }
+
+
+            if (logoutText) {
+
+                logoutText.textContent =
+                    isArabic
+                        ? 'تسجيل الخروج'
+                        : 'Sign out'
+            }
+
+            this.updateProfilePage()
 
         } else {
 
-            this.container.dir =
-                'ltr'
-
+            this.updateGuestLanguage()
         }
-
-
-        /*
-         * =================================================
-         * MENU TITLE
-         * =================================================
-         */
-
-        if (
-            this.menuTitle
-        ) {
-
-            this.menuTitle.textContent =
-                t(
-                    'menu.title'
-                )
-
-        }
-
-
-        /*
-         * =================================================
-         * MENU ITEMS
-         * =================================================
-         */
-
-        if (
-            this.menuButtons
-        ) {
-
-            this.menuButtons.forEach(
-                (
-                    button,
-                    index
-                ) => {
-
-                    const item =
-                        this.menuItems[index]
-
-
-                    if (
-                        item
-                    ) {
-
-                        button.textContent =
-                            t(
-                                item.translation
-                            )
-
-                    }
-
-                }
-            )
-
-        }
-
     }
 
 
-    /*
-     * =====================================================
-     * START EXPLORATION
-     * =====================================================
-     */
+    /* =========================================================
+       GUEST LANGUAGE
+       ========================================================= */
+
+    updateGuestLanguage() {
+
+        const isArabic =
+            getLanguage() === 'ar'
+
+
+        this.guestTitle.textContent =
+            isArabic
+                ? 'استكشف أوتار بحرية'
+                : 'Explore Awtaar freely'
+
+
+        this.guestDescription.textContent =
+            isArabic
+                ? 'أنشئ حسابًا لحفظ تقدمك وإنجازاتك.'
+                : 'Create an account to save your progress and achievements.'
+
+
+        this.loginButton.textContent =
+            isArabic
+                ? 'تسجيل الدخول'
+                : 'Sign in'
+
+
+        this.signupButton.textContent =
+            isArabic
+                ? 'إنشاء حساب'
+                : 'Create account'
+    }
+
+
+    /* =========================================================
+       START EXPLORATION
+       ========================================================= */
 
     startExploration() {
-
-        /*
-         * =================================================
-         * PROTECTION
-         * =================================================
-         */
-
-        if (
-            this.isExploring
-        ) {
-
-            return
-
-        }
-
-
-        /*
-         * =================================================
-         * VERIFY EXPLORATION UI
-         * =================================================
-         */
-
-        if (
-            !this.explorationUI
-        ) {
-
-            console.error(
-                '❌ Awtaar: ExplorationUI is not available.'
-            )
-
-            return
-
-        }
-
-
-        /*
-         * =================================================
-         * STATE
-         * =================================================
-         */
-
-        this.isExploring =
-            true
-
 
         console.log(
             '🌌 Awtaar Exploration Started'
         )
 
 
-        /*
-         * =================================================
-         * DISABLE EXPLORE BUTTON
-         * =================================================
-         */
-
-        if (
-            this.exploreButton
-        ) {
-
-            this.exploreButton.disabled =
-                true
-
-        }
+        this.exploreButton.disabled =
+            true
 
 
-        /*
-         * =================================================
-         * CLOSE MENU
-         * =================================================
-         */
+        this.closeProfile()
+        this.closeProfilePage()
 
-        this.closeMenu()
-
-
-        /*
-         * =================================================
-         * CANCEL PREVIOUS TIMER
-         * =================================================
-         */
-
-        if (
-            this.explorationTimer
-        ) {
-
-            clearTimeout(
-                this.explorationTimer
-            )
-
-            this.explorationTimer =
-                null
-
-        }
-
-
-        /*
-         * =================================================
-         * FADE PLATFORM OUT
-         * =================================================
-         */
 
         this.container.style.opacity =
             '0'
@@ -1102,123 +1942,39 @@ export default class PlatformUI {
             'none'
 
 
-        /*
-         * =================================================
-         * OPEN EXPLORATION
-         * =================================================
-         */
+        setTimeout(
+            () => {
 
-        this.explorationTimer =
-            setTimeout(
-                () => {
-
-                    this.explorationTimer =
-                        null
+                this.container.style.visibility =
+                    'hidden'
 
 
-                    /*
-                     * HIDE PLATFORM
-                     */
+                if (
+                    this.explorationUI
+                ) {
 
-                    this.container.style.visibility =
-                        'hidden'
+                    this.explorationUI.show()
+                }
 
-
-                    /*
-                     * SHOW EXPLORATION
-                     */
-
-                    if (
-                        this.explorationUI &&
-                        typeof this.explorationUI.show ===
-                        'function'
-                    ) {
-
-                        this.explorationUI.show()
-
-                    } else {
-
-                        console.error(
-                            '❌ Awtaar: ExplorationUI.show() is not available.'
-                        )
-
-                    }
-
-                },
-                1200
-            )
-
+            },
+            1200
+        )
     }
 
 
-    /*
-     * =====================================================
-     * SHOW PLATFORM
-     * =====================================================
-     */
+    /* =========================================================
+       SHOW
+       ========================================================= */
 
     show() {
 
-        /*
-         * =================================================
-         * RESET EXPLORATION STATE
-         * =================================================
-         */
-
-        this.isExploring =
-            false
-
-
-        /*
-         * =================================================
-         * CANCEL TRANSITION
-         * =================================================
-         */
-
-        if (
-            this.explorationTimer
-        ) {
-
-            clearTimeout(
-                this.explorationTimer
-            )
-
-            this.explorationTimer =
-                null
-
-        }
-
-
-        /*
-         * =================================================
-         * UPDATE LANGUAGE
-         * =================================================
-         */
-
         this.updateLanguage()
 
+        this.exploreButton.disabled =
+            false
 
-        /*
-         * =================================================
-         * ENABLE EXPLORE BUTTON
-         * =================================================
-         */
+        this.loadCurrentUser()
 
-        if (
-            this.exploreButton
-        ) {
-
-            this.exploreButton.disabled =
-                false
-
-        }
-
-
-        /*
-         * =================================================
-         * SHOW PLATFORM
-         * =================================================
-         */
 
         this.container.style.visibility =
             'visible'
@@ -1232,35 +1988,19 @@ export default class PlatformUI {
 
                 this.container.style.opacity =
                     '1'
-
             }
         )
-
     }
 
 
-    /*
-     * =====================================================
-     * HIDE PLATFORM
-     * =====================================================
-     */
+    /* =========================================================
+       HIDE
+       ========================================================= */
 
     hide() {
 
-        /*
-         * =================================================
-         * CLOSE MENU
-         * =================================================
-         */
-
-        this.closeMenu()
-
-
-        /*
-         * =================================================
-         * FADE OUT
-         * =================================================
-         */
+        this.closeProfile()
+        this.closeProfilePage()
 
         this.container.style.opacity =
             '0'
@@ -1268,12 +2008,6 @@ export default class PlatformUI {
         this.container.style.pointerEvents =
             'none'
 
-
-        /*
-         * =================================================
-         * HIDE COMPLETELY
-         * =================================================
-         */
 
         setTimeout(
             () => {
@@ -1284,15 +2018,12 @@ export default class PlatformUI {
             },
             1200
         )
-
     }
 
 
-    /*
-     * =====================================================
-     * UPDATE
-     * =====================================================
-     */
+    /* =========================================================
+       UPDATE
+       ========================================================= */
 
     update(delta) {
 
@@ -1305,9 +2036,56 @@ export default class PlatformUI {
             this.explorationUI.update(
                 delta
             )
-
         }
-
     }
 
+
+    /* =========================================================
+       DESTROY
+       ========================================================= */
+
+    destroy() {
+
+        if (
+            this.handleDocumentClick
+        ) {
+
+            document.removeEventListener(
+                'click',
+                this.handleDocumentClick
+            )
+        }
+
+
+        if (
+            this.handleKeyDown
+        ) {
+
+            document.removeEventListener(
+                'keydown',
+                this.handleKeyDown
+            )
+        }
+
+
+        if (
+            this.explorationUI &&
+            typeof this.explorationUI.destroy ===
+            'function'
+        ) {
+
+            this.explorationUI.destroy()
+        }
+
+
+        if (
+            this.container &&
+            this.container.parentNode
+        ) {
+
+            this.container.parentNode.removeChild(
+                this.container
+            )
+        }
+    }
 }
