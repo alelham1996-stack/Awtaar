@@ -18,16 +18,20 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 
 // =========================================================
-// Validate Environment
+// Supabase Availability
 // =========================================================
 
-if (
-    !SUPABASE_URL ||
-    !SUPABASE_PUBLISHABLE_KEY
-) {
+const SUPABASE_ENABLED =
+    Boolean(
+        SUPABASE_URL &&
+        SUPABASE_PUBLISHABLE_KEY
+    )
 
-    console.error(
-        'Awtaar Auth: Supabase environment variables are missing.'
+
+if (!SUPABASE_ENABLED) {
+
+    console.warn(
+        'Awtaar Auth: Supabase environment variables are missing. Auth is disabled.'
     )
 
 }
@@ -38,13 +42,12 @@ if (
 // =========================================================
 
 const supabase =
-    createClient(
-
-        SUPABASE_URL,
-
-        SUPABASE_PUBLISHABLE_KEY
-
-    )
+    SUPABASE_ENABLED
+        ? createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        )
+        : null
 
 
 // =========================================================
@@ -59,6 +62,13 @@ export default class AuthService {
     // =====================================================
 
     async getCurrentUser() {
+
+        if (!supabase) {
+
+            return null
+
+        }
+
 
         const {
             data,
@@ -84,6 +94,13 @@ export default class AuthService {
     // =====================================================
 
     async getSession() {
+
+        if (!supabase) {
+
+            return null
+
+        }
+
 
         const {
             data,
@@ -146,6 +163,24 @@ export default class AuthService {
 
                 error:
                     'Missing required fields.'
+
+            }
+
+        }
+
+
+        if (!supabase) {
+
+            return {
+
+                success: false,
+
+                user: null,
+
+                session: null,
+
+                error:
+                    'Authentication is currently unavailable.'
 
             }
 
@@ -253,6 +288,24 @@ export default class AuthService {
         }
 
 
+        if (!supabase) {
+
+            return {
+
+                success: false,
+
+                user: null,
+
+                session: null,
+
+                error:
+                    'Authentication is currently unavailable.'
+
+            }
+
+        }
+
+
         const {
             data,
             error
@@ -313,6 +366,19 @@ export default class AuthService {
 
     async signOut() {
 
+        if (!supabase) {
+
+            return {
+
+                success: true,
+
+                error: null
+
+            }
+
+        }
+
+
         const {
             error
         } =
@@ -356,6 +422,13 @@ export default class AuthService {
     onAuthStateChange(
         callback
     ) {
+
+        if (!supabase) {
+
+            return null
+
+        }
+
 
         const {
             data
